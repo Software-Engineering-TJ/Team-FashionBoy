@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface InstructorDao {
     Instructor QueryInstructorByEmailAndPassword(String email, String password);
+    Instructor QueryInstructorByEmail(String email);
     List<Instructor> QueryAllInstructors();
     int InsertInstructor(String email,String password);
     int InsertInstructor(String email);

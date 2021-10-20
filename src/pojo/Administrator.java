@@ -7,9 +7,7 @@ package pojo;
  * @since 2021/10/18  14:41
  */
 
-public class Administrator {
-    private String email;
-    private String password;
+public class Administrator extends User{
     private String nickname;
 
     public Administrator(){}
