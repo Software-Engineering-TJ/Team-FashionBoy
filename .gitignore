@@ -10,6 +10,7 @@
 *.tar.gz
 *.rar
 *.iml
+*.properties
 
 # Directories
 .idea/
