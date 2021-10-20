@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface StudentDao {
     Student QueryStudentByEmailAndPassword(String email, String password);
+    Student QueryStudentByEmail(String email);
     List<Student> QueryAllStudents();
     int InsertStudent(String email,String password);
     int InsertStudent(String email);

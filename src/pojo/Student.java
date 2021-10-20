@@ -7,9 +7,7 @@ package pojo;
  * @since 2021/10/18  14:41
  */
 
-public class Student {
-    private String email;
-    private String password;
+public class Student extends User{
     private String nickname;
     private int status;
 

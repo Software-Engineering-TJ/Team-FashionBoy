@@ -20,6 +20,12 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     }
 
     @Override
+    public Instructor QueryInstructorByEmail(String email) {
+        String sql = "select `email`,`password`,`nickname`,`status` from instructor where email = ?";
+        return queryForOne(Instructor.class,sql,email);
+    }
+
+    @Override
     public List<Instructor> QueryAllInstructors() {
         String sql = "select * from instructor";
         return queryForList(Instructor.class,sql);
