@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * UserServlet类的描述：
- *
+ * 处理用户请求：登录、注册、退出
  * @author 黄金坤（HJK）
  * @since 2021/10/20  13:47
  */
@@ -34,11 +34,16 @@ public class UserServlet extends BaseServlet{
         }
     }
 
+    protected void Logout(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        //1.清除网页记录的用户信息
+        //2.转到登录界面
+    }
+
     protected void Register(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-
 
         if(userService.ExistEmail(email)){
             //执行注册失败操作
@@ -46,6 +51,6 @@ public class UserServlet extends BaseServlet{
             User user = userService.Register(email,password);
             //跳转到注册成功界面
         }
-
     }
+
 }
