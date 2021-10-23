@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=S, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../static/img/icon.ico" />
+    <!-- 引入Element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入本页面样式 -->
+    <link rel="stylesheet" href="../static/css/login.css">
+    <!-- 引入Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- 引入Element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <title>济实-实验管理系统</title>
+</head>
+
+<body>
+    <div id="box">
+        <div class="main_wrap">
+            <h1><strong>济实-实验教学管理系统</strong></h1>
+            <el-container>
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="邮箱：" prop="email">
+                        <el-input type="text" v-model="ruleForm.email" placeholder="请输入您的邮箱" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码：" prop="password">
+                        <el-input type="password" v-model="ruleForm.password" placeholder="请输入您的密码" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="验证码：" prop="identify" v-if="ruleForm.judge">
+                        <el-input type="text" v-model="ruleForm.identify" placeholder="请输入您获得的验证码" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label-width="45px">
+                        <el-button type="primary" @click="submitForm('ruleForm')" icon="el-icon-magic-stick">登录</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        <el-button type="info" @click="changeStatus" :disabled="btnStatus" icon="el-icon-s-opportunity">激活</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-container>
+        </div>
+    </div>
+    <script src="../static/js/login.js">
+    </script>
+    </script>
+</body>
+
+</html>
