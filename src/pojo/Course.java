@@ -10,6 +10,7 @@ package pojo;
 public class Course {
     private String courseID;
     private String title;
+    private String instructorNumber;
 
     public Course(){}
 
@@ -29,11 +30,20 @@ public class Course {
         this.title = title;
     }
 
+    public String getInstructor() {
+        return instructorNumber;
+    }
+
+    public void setInstructor(String instructorNumber) {
+        this.instructorNumber = instructorNumber;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "courseID='" + courseID + '\'' +
                 ", title='" + title + '\'' +
+                ", instructorNumber='" + instructorNumber + '\'' +
                 '}';
     }
 }

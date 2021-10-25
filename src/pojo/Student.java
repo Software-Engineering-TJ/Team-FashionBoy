@@ -8,49 +8,28 @@ package pojo;
  */
 
 public class Student extends User{
-    private String nickname;
-    private int status;
+    private String studentNumber;
 
     public Student(){}
 
-    public String getEmail() {
-        return email;
+    public String getStudentNumber() {
+        return studentNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "email='" + email + '\'' +
+                "studentNumber='" + studentNumber + '\'' +
+                ", ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", sex=" + sex +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", status=" + status +
                 '}';
     }
