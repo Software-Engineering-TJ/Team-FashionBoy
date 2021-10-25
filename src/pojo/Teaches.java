@@ -8,19 +8,18 @@ package pojo;
  */
 
 public class Teaches {
-    private String email;
+    private String instructorNumber;
     private String courseID;
     private String classID;
-    private int status;
 
     public Teaches(){}
 
     public String getEmail() {
-        return email;
+        return instructorNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String instructorNumber) {
+        this.instructorNumber = instructorNumber;
     }
 
     public String getCourseID() {
@@ -39,21 +38,12 @@ public class Teaches {
         this.classID = classID;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "Teaches{" +
-                "email='" + email + '\'' +
+                "instructorNumber='" + instructorNumber + '\'' +
                 ", courseID='" + courseID + '\'' +
                 ", classID='" + classID + '\'' +
-                ", status=" + status +
                 '}';
     }
 }

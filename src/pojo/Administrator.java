@@ -8,7 +8,7 @@ package pojo;
  */
 
 public class Administrator extends User{
-    private String nickname;
+    private String name;
 
     public Administrator(){}
 
@@ -29,11 +29,11 @@ public class Administrator extends User{
     }
 
     public String getNickname() {
-        return nickname;
+        return name;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickname(String name) {
+        this.name = name;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Administrator extends User{
         return "Administrator{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
