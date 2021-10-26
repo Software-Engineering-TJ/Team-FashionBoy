@@ -24,7 +24,6 @@ public class Instructor extends User{
     public String toString() {
         return "Instructor{" +
                 "instructorNumber='" + instructorNumber + '\'' +
-                ", ID='" + ID + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

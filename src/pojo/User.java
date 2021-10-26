@@ -8,21 +8,12 @@ package pojo;
  */
 
 public abstract class User {
-    protected String ID;
     protected String name;
     protected String email;
     protected String password;
     protected int sex;
     protected String phoneNumber;
     protected int status;
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 
     public String getName() {
         return name;
