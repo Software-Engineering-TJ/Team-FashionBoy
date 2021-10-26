@@ -1,9 +1,8 @@
 package dao.impl;
 
-import dao.StudentDao;
+import dao.inter.StudentDao;
 import pojo.Student;
 
-import javax.management.Query;
 import java.util.List;
 
 /**
@@ -15,27 +14,33 @@ import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
     @Override
-    public Student QueryStudentByEmailAndPassword(String email, String password) {
-        String sql = "select `email`,`password`,`nickname`,`status` from student where email = ? and password = ?";
-        return queryForOne(Student.class,sql,email,password);
+    public Student QueryStudentByStudentNumberAndPassword(String studentNumber, String password) {
+        String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ? and password = ?";
+        return queryForOne(Student.class,sql,studentNumber,password);
     }
 
     @Override
     public Student QueryStudentByEmail(String email) {
-        String sql = "select `email`,`password`,`nickname`,`status` from student where email = ?";
+        String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where email = ?";
         return queryForOne(Student.class,sql,email);
     }
 
     @Override
+    public Student QueryStudentByStudentNumber(String studentNumber) {
+        String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ?";
+        return queryForOne(Student.class,sql,studentNumber);
+    }
+
+    @Override
     public List<Student> QueryAllStudents() {
-        String sql = "select * from student";
+        String sql = "select select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from from student";
         return queryForList(Student.class,sql);
     }
 
     @Override
-    public int InsertStudent(String email,String password) {
-        String sql = "insert into student(`email`,`password`) values(?,?)";
-        return update(sql,email,password);
+    public int InsertStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+        String sql = "insert into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        return update(sql,studentNumber,email,name,phoneNumber,sex);
     }
 
     @Override
@@ -57,8 +62,8 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
     }
 
     @Override
-    public int SetNickname(String email, String nickname) {
-        String sql = "update `student` set `nickname` = ? where (`email` = ?)";
-        return update(sql,nickname,email);
+    public int SetNickname(String email, String name) {
+        String sql = "update `student` set `name` = ? where (`email` = ?)";
+        return update(sql,name,email);
     }
 }

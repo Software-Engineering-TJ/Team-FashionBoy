@@ -8,12 +8,10 @@ package pojo;
  */
 
 public abstract class User {
-    protected String name;
     protected String email;
     protected String password;
-    protected int sex;
-    protected String phoneNumber;
-    protected int status;
+    protected String name;
+
 
     public String getName() {
         return name;
@@ -39,27 +37,27 @@ public abstract class User {
         this.password = password;
     }
 
-    public int getSex() {
-        return sex;
-    }
+    public abstract int getSex();
 
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
+    public abstract void setSex(int sex) ;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    public abstract String getPhoneNumber();
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    public abstract void setPhoneNumber(String phoneNumber);
 
-    public int getStatus() {
-        return status;
-    }
+    public abstract int getStatus();
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    public abstract void setStatus(int status);
+
+    public abstract String getStudentNumber();
+
+    public abstract void setStudentNumber(String studentNumber);
+
+    public abstract String getInstructorNumber();
+
+    public abstract void setInstructorNumber(String phoneNumber);
+
+    public abstract String getAdminNumber();
+
+    public abstract void setAdminNumber(String adminNumber) ;
 }

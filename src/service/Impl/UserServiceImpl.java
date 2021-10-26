@@ -1,8 +1,8 @@
 package service.Impl;
 
-import dao.AdministratorDao;
-import dao.InstructorDao;
-import dao.StudentDao;
+import dao.inter.AdministratorDao;
+import dao.inter.InstructorDao;
+import dao.inter.StudentDao;
 import dao.impl.AdministratorDaoImpl;
 import dao.impl.InstructorDaoImpl;
 import dao.impl.StudentDaoImpl;
@@ -10,7 +10,7 @@ import pojo.Administrator;
 import pojo.Instructor;
 import pojo.Student;
 import pojo.User;
-import service.UserService;
+import service.inter.UserService;
 
 /**
  * UserServiceImpl类的描述：
@@ -26,15 +26,20 @@ public class UserServiceImpl implements UserService{
     private StudentDao studentDao = new StudentDaoImpl();
 
     @Override
-    public User Login(String email, String password) {
+    public User Login(String userNumber, String password) {
         //先找学生
-        Student student = studentDao.QueryStudentByEmailAndPassword(email,password);
+        Student student = studentDao.QueryStudentByStudentNumberAndPassword(userNumber,password);
         if(student==null) {
             //找不到学生找老师
-            Instructor instructor = instructorDao.QueryInstructorByEmailAndPassword(email,password);
+            Instructor instructor = instructorDao.QueryInstructorByInstructorNumberAndPassword(userNumber,password);
             if(instructor==null){
                 //最后找管理员
-                return administratorDao.QueryAdministratorByEmailAndPassword(email,password);
+                Administrator administrator = administratorDao.QueryAdministratorByAdminNumberAndPassword(userNumber,password);
+                if(administrator == null){
+                    return null;
+                }else {
+                    return administrator;
+                }
             }else{
                 return instructor;
             }
@@ -44,17 +49,35 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean ExistEmail(String email) {
-        if(studentDao.QueryStudentByEmail(email)==null){
-            if(instructorDao.QueryInstructorByEmail(email)==null){
-                if(administratorDao.QueryAdministratorByEmail(email)==null){
-                    return false; //三个表都不存在时才返回“不存在”
+    public User ExistEmail(String email) {
+        Student student = studentDao.QueryStudentByEmail(email);
+        if(student == null){
+            Instructor instructor = instructorDao.QueryInstructorByEmail(email);
+            if(instructor == null){
+                Administrator administrator = administratorDao.QueryAdministratorByEmail(email);
+                if(administrator == null){
+                    return null; //三个表都不存在时才返回“不存在”
                 }
-                return true;
+                return administrator;
             }
-            return true;
+            return instructor;
         }
-        return true;
+        return student;
+    }
+
+    @Override
+    public User ifActivated(String userNumber) {
+        Student student = studentDao.QueryStudentByStudentNumber(userNumber);
+        if(student == null){
+            Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(userNumber);
+            if(instructor == null){
+                return null;
+            }else {
+                return instructor;
+            }
+        }else{
+            return student;
+        }
     }
 
     @Override

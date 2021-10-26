@@ -8,7 +8,15 @@ package pojo;
  */
 
 public class Administrator extends User{
-    private String name;
+    private String adminNumber;
+
+    public String getAdminNumber() {
+        return adminNumber;
+    }
+
+    public void setAdminNumber(String adminNumber) {
+        this.adminNumber = adminNumber;
+    }
 
     public Administrator(){}
 
@@ -28,12 +36,62 @@ public class Administrator extends User{
         this.password = password;
     }
 
-    public String getNickname() {
+    public String getName() {
         return name;
     }
 
-    public void setNickname(String name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int getSex() {
+        return 1; //应该用不到，默认男
+    }
+
+    @Override
+    public void setSex(int sex) {
+
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
+
+    @Override
+    public void setPhoneNumber(String phoneNumber) {
+
+    }
+
+    @Override
+    public int getStatus() {
+        return 1; //默认已经激活
+    }
+
+    @Override
+    public void setStatus(int status) {
+
+    }
+
+    @Override
+    public String getStudentNumber() {
+        return null;
+    }
+
+    @Override
+    public void setStudentNumber(String studentNumber) {
+
+    }
+
+    @Override
+    public String getInstructorNumber() {
+        return null;
+    }
+
+    @Override
+    public void setInstructorNumber(String phoneNumber) {
+
     }
 
     @Override

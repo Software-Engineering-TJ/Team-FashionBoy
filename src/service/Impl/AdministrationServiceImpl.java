@@ -1,12 +1,13 @@
 package service.Impl;
 
-import dao.InstructorDao;
-import dao.StudentDao;
+import dao.inter.InstructorDao;
+import dao.inter.StudentDao;
 import dao.impl.InstructorDaoImpl;
 import dao.impl.StudentDaoImpl;
+import pojo.Student;
 import pojo.Takes;
 import pojo.Teaches;
-import service.AdministrationService;
+import service.inter.AdministrationService;
 
 import java.util.List;
 
@@ -25,8 +26,21 @@ public class AdministrationServiceImpl implements AdministrationService {
 
 
     @Override
-    public boolean AddStudent(String email, String password) {
-        return false;
+    public String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+        String msg = null;  //用于记录添加结果是否成功的信息
+        //1.先检查Email是否重复
+        Student student = studentDao.QueryStudentByEmail(email);
+        if(student != null){
+            msg = "Email already exists!";
+            return msg;
+        }
+        //2.email没问题再插入学生信息
+        int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
+        if(insertResult == 1){
+            msg = "StudentNumber already exists!";
+        }
+        msg = "success";
+        return msg;  //如果没有任何意外，msg为"success"
     }
 
     @Override

@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.AdministratorDao;
+import dao.inter.AdministratorDao;
 import pojo.Administrator;
 
 /**
@@ -12,14 +12,14 @@ import pojo.Administrator;
 
 public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     @Override
-    public Administrator QueryAdministratorByEmailAndPassword(String email, String password) {
-        String sql = "select `email`,`password`,`nickname` from administrator where email = ? and password = ?";
-        return queryForOne(Administrator.class,sql,email,password);
+    public Administrator QueryAdministratorByAdminNumberAndPassword(String adminNumber, String password) {
+        String sql = "select `email`,`password`,`name` from administrator where adminNumber = ? and password = ?";
+        return queryForOne(Administrator.class,sql,adminNumber,password);
     }
 
     @Override
     public Administrator QueryAdministratorByEmail(String email) {
-        String sql = "select `email`,`password`,`nickname` from administrator where email = ?";
+        String sql = "select `email`,`password`,`name` from administrator where email = ?";
         return queryForOne(Administrator.class,sql,email);
     }
 
@@ -42,8 +42,8 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     }
 
     @Override
-    public int SetNickname(String email, String nickname) {
-        String sql = "update `administrator` set `nickname` = ? where (`email` = ?)";
-        return update(sql,nickname,email);
+    public int SetNickname(String email, String name) {
+        String sql = "update `administrator` set `name` = ? where (`email` = ?)";
+        return update(sql,name,email);
     }
 }
