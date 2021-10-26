@@ -1,5 +1,7 @@
 package web;
 
+import com.google.gson.Gson;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,9 @@ import java.lang.reflect.Method;
  */
 
 public abstract class BaseServlet extends HttpServlet {
+    //用于将java对象转化为Json
+    protected Gson gson = new Gson();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);

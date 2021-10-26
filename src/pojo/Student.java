@@ -63,7 +63,6 @@ public class Student extends User{
 
     @Override
     public void setAdminNumber(String adminNumber) {
-
     }
 
     @Override

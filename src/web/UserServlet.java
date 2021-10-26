@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.Gson;
+import pojo.Student;
 import pojo.User;
 import service.Impl.UserServiceImpl;
 import service.inter.UserService;
@@ -8,6 +9,7 @@ import service.inter.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +46,7 @@ public class UserServlet extends BaseServlet{
             status = user.getStatus();
         }else{
             //如果没有该用户，则返回如下内容
-            email = password = null;
+            email = password = null;  // 表示账号信息不存在（那么也肯定未激活）
             status = 0;
         }
         //需要返回的信息
@@ -53,7 +55,6 @@ public class UserServlet extends BaseServlet{
         userInformation.put("password",password);
         userInformation.put("status",status);
         //转Json-String格式
-        Gson gson = new Gson();
         String userInformationJson = gson.toJson(userInformation);
         //返回响应
         resp.getWriter().write(userInformationJson);
@@ -61,25 +62,29 @@ public class UserServlet extends BaseServlet{
 
     protected void login(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        //userService查找了三个表：student、instructor
+        //userService查找了三个表：student、instructor、administrator
         String userNumber = req.getParameter("userNumber");
         String password = req.getParameter("password");
         User user = userService.Login(userNumber,password);
 
-        if(user == null){
-            //转到登录界面
-        }else{
+        if(user != null){
+            //将必要信息添加到session
+            HttpSession session = req.getSession();
+            session.setAttribute("userNumber", userNumber);
             //转到登录成功后的界面
+            resp.sendRedirect("/pages/administrator/aIndex.html");
+        }else{
+            //留在登录界面
         }
     }
 
-    protected void Logout(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    protected void logout(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        //1.清除网页记录的用户信息
+        //1.清除网页记录的所有用户信息
         //2.转到登录界面
     }
 
-    protected void Register(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    protected void register(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String email = req.getParameter("email");
         String password = req.getParameter("password");

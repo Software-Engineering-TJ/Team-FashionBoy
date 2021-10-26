@@ -1,5 +1,6 @@
 package web;
 
+import com.google.gson.Gson;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 
@@ -7,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * AdministrationServlet类的描述：
@@ -19,27 +22,26 @@ public class AdministrationServlet extends BaseServlet{
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
 
-    protected void AddUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    protected void createStudent(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
 
+        String name = req.getParameter("name");
+        String sexString = req.getParameter("sex");
+        int sex = 0;
+        if(sexString.equals("男")){
+            sex = 1;
+        }
+        String studentNumber = req.getParameter("studentNumber");
         String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        //1.根据req中的具体请求，确定是添加老师or学生
-        String identity = req.getParameter("identity"); //用于标明希望添加的用户的身份的字段
-        boolean result;
-        if(identity.equals("student")){
-            result = administrationService.AddStudent(email,password);
-        }else{
-            result = administrationService.AddInstructor(email,password);
-        }
+        String phoneNumber = req.getParameter("phoneNumber");
 
-        if(!result){
-            //添加失败————因为有可能出现email已被使用的情况
-            //返回警告信息
-        }else{
-            //添加成功
-        }
-
+        String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
+        msg = administrationService.AddStudent(studentNumber,email,name,phoneNumber,sex);
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("msg",msg);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
     }
 
     protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException

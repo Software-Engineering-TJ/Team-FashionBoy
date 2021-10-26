@@ -38,9 +38,9 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
     }
 
     @Override
-    public int InsertStudent(String email,String password) {
-        String sql = "insert into student(`email`,`password`) values(?,?)";
-        return update(sql,email,password);
+    public int InsertStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+        String sql = "insert into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        return update(sql,studentNumber,email,name,phoneNumber,sex);
     }
 
     @Override

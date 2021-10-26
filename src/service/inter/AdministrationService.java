@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AdministrationService {
     //添加学生
-    boolean AddStudent(String email,String password);
+    String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex);
     //删除学生
     boolean DeleteStudent(String email);
     //添加老师
