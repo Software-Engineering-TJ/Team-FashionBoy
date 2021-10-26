@@ -33,8 +33,12 @@ public class UserServiceImpl implements UserService{
             //找不到学生找老师
             Instructor instructor = instructorDao.QueryInstructorByInstructorNumberAndPassword(userNumber,password);
             if(instructor==null){
-                //管理员用邮箱登录，username不查找
-                return null;
+                Administrator administrator = administratorDao.QueryAdministratorByAdminNumberAndPassword(userNumber,password);
+                if(administrator == null){
+                    return null;
+                }else {
+                    return administrator;
+                }
             }else{
                 return instructor;
             }
