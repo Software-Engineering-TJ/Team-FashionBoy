@@ -1,8 +1,6 @@
 package web;
 
-import pojo.Takes;
-import pojo.Teaches;
-import service.AdministrationService;
+import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 
 import javax.servlet.ServletException;

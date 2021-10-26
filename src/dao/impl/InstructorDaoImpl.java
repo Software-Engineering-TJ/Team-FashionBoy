@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.InstructorDao;
+import dao.inter.InstructorDao;
 import pojo.Instructor;
 
 import java.util.List;
@@ -14,20 +14,26 @@ import java.util.List;
 
 public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     @Override
-    public Instructor QueryInstructorByEmailAndPassword(String email, String password) {
-        String sql = "select `email`,`password`,`nickname`,`status` from instructor where email = ? and password = ?";
-        return queryForOne(Instructor.class,sql,email,password);
+    public Instructor QueryInstructorByInstructorNumberAndPassword(String instructorNumber, String password) {
+        String sql = "select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from instructor where instructorNumber = ? and password = ?";
+        return queryForOne(Instructor.class,sql,instructorNumber,password);
     }
 
     @Override
     public Instructor QueryInstructorByEmail(String email) {
-        String sql = "select `email`,`password`,`nickname`,`status` from instructor where email = ?";
+        String sql = "select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from instructor where email = ?";
         return queryForOne(Instructor.class,sql,email);
     }
 
     @Override
+    public Instructor QueryInstructorByInstructorNumber(String instructorNumber) {
+        String sql = "select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from instructor where instructorNumber = ?";
+        return queryForOne(Instructor.class,sql,instructorNumber);
+    }
+
+    @Override
     public List<Instructor> QueryAllInstructors() {
-        String sql = "select * from instructor";
+        String sql = "select select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from from instructor";
         return queryForList(Instructor.class,sql);
     }
 
@@ -56,8 +62,8 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     }
 
     @Override
-    public int SetNickname(String email, String nickname) {
-        String sql = "update `instructor` set `nickname` = ? where (`email` = ?)";
-        return update(sql,nickname,email);
+    public int SetNickname(String email, String name) {
+        String sql = "update `instructor` set `name` = ? where (`email` = ?)";
+        return update(sql,name,email);
     }
 }

@@ -1,12 +1,12 @@
 package service.Impl;
 
-import dao.InstructorDao;
-import dao.StudentDao;
+import dao.inter.InstructorDao;
+import dao.inter.StudentDao;
 import dao.impl.InstructorDaoImpl;
 import dao.impl.StudentDaoImpl;
 import pojo.Takes;
 import pojo.Teaches;
-import service.AdministrationService;
+import service.inter.AdministrationService;
 
 import java.util.List;
 

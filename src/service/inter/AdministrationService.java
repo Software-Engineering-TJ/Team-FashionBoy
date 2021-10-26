@@ -1,4 +1,4 @@
-package service;
+package service.inter;
 
 import pojo.Takes;
 import pojo.Teaches;

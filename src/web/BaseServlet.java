@@ -22,7 +22,11 @@ public abstract class BaseServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //解决乱码问题
+        //一定要在请求的参数调用之间用才有效
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
+
         try {
             //根据request希望调用的业务来执行对应的action
             Method method = this.getClass().getMethod(action,req.getClass(),resp.getClass());
