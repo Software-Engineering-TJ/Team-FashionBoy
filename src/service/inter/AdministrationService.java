@@ -4,12 +4,15 @@ import pojo.Takes;
 import pojo.Teaches;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdministrationService {
-    //添加学生
+    //添加学生(有用)
     String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex);
     //删除学生
     boolean DeleteStudent(String email);
+    //根据studentNumber返回学生姓名及所有课程信息
+    Map<String,Object> getTakesByStudentNumber(String studentNumber);
     //添加老师
     boolean AddInstructor(String email,String password);
     //删除老师

@@ -38,16 +38,16 @@ public class UserServlet extends BaseServlet{
         User user = userService.ifActivated(userNumber);
 
         String email,password;
-        Integer status;
+        String status;
 
         if(user != null) {
             email = user.getEmail();
             password = user.getPassword();
-            status = user.getStatus();
+            status = (user.getStatus()==1)?"男":"女";
         }else{
             //如果没有该用户，则返回如下内容
             email = password = null;  // 表示账号信息不存在（那么也肯定未激活）
-            status = 0;
+            status = null;
         }
         //需要返回的信息
         Map<String,Object> userInformation = new HashMap<>();
@@ -75,6 +75,7 @@ public class UserServlet extends BaseServlet{
             resp.sendRedirect("/pages/administrator/aIndex.html");
         }else{
             //留在登录界面
+
         }
     }
 

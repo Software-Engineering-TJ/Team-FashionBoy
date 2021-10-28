@@ -1,15 +1,18 @@
 package service.Impl;
 
+import dao.impl.TakesDaoImpl;
 import dao.inter.InstructorDao;
 import dao.inter.StudentDao;
 import dao.impl.InstructorDaoImpl;
 import dao.impl.StudentDaoImpl;
+import dao.inter.TakesDao;
 import pojo.Student;
 import pojo.Takes;
 import pojo.Teaches;
 import service.inter.AdministrationService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * AdministrationServiceImpl类的描述：
@@ -22,6 +25,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private StudentDao studentDao = new StudentDaoImpl();
     private InstructorDao instructorDao = new InstructorDaoImpl();
+    private TakesDao takesDao = new TakesDaoImpl();
     //后续肯定还需要takes、teaches
 
 
@@ -41,6 +45,17 @@ public class AdministrationServiceImpl implements AdministrationService {
         }
         msg = "success";
         return msg;  //如果没有任何意外，msg为"success"
+    }
+
+    @Override
+    public Map<String, Object> getTakesByStudentNumber(String studentNumber) {
+        //获取学生信息
+        Student student = studentDao.QueryStudentByStudentNumber(studentNumber);
+        String name = student.getName();
+        //接着查询takes表中和该学号相关的表
+        List<Takes> takesList = takesDao.QueryTakesByStudentNumber(studentNumber);
+//        for()
+        return null;
     }
 
     @Override
