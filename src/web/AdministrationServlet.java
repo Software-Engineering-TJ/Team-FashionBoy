@@ -22,6 +22,13 @@ public class AdministrationServlet extends BaseServlet{
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
 
+    /**
+     * 创建新的学生账号
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void createStudent(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
 
@@ -42,6 +49,21 @@ public class AdministrationServlet extends BaseServlet{
         map.put("msg",msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
+    }
+
+
+    /**
+     * 根据学生的学号获得他参与的课程信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected  void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String studentNumber = req.getParameter("studentNumber");
+
+
     }
 
     protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException

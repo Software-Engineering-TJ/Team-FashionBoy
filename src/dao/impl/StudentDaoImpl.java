@@ -13,6 +13,7 @@ import java.util.List;
  */
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
+
     @Override
     public Student QueryStudentByStudentNumberAndPassword(String studentNumber, String password) {
         String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ? and password = ?";
@@ -66,4 +67,5 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
         String sql = "update `student` set `name` = ? where (`email` = ?)";
         return update(sql,name,email);
     }
+
 }
