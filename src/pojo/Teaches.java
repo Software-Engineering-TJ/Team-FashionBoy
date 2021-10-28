@@ -14,11 +14,11 @@ public class Teaches {
 
     public Teaches(){}
 
-    public String getEmail() {
+    public String getInstructorNumber() {
         return instructorNumber;
     }
 
-    public void setEmail(String instructorNumber) {
+    public void setInstructorNumber(String instructorNumber) {
         this.instructorNumber = instructorNumber;
     }
 

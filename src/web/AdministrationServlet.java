@@ -62,8 +62,11 @@ public class AdministrationServlet extends BaseServlet{
     protected  void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String studentNumber = req.getParameter("studentNumber");
-
-
+        //获取查询结果
+        Map<String,Object> map = administrationService.getTakesInfoByStudentNumber(studentNumber);
+        //返回响应
+        String mapJson = gson.toJson(map);
+        resp.getWriter().write(mapJson);
     }
 
     protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException

@@ -3,6 +3,8 @@ package dao.impl;
 import dao.inter.TeachesDao;
 import pojo.Teaches;
 
+import java.util.List;
+
 /**
  * TechesDaoImpl类的描述：
  *
@@ -12,7 +14,8 @@ import pojo.Teaches;
 
 public class TeachesDaoImpl extends BaseDao implements TeachesDao{
     @Override
-    public Teaches QueryOneTeachesByCourseIDAndClassID(String courseID, String classID) {
-        return null;
+    public List<Teaches> QueryTeachesByCourseIDAndClassID(String courseID, String classID) {
+        String sql = "select `instructorNumber`,`courseID`,`classID` from section where courseID = ? and classID = ?";
+        return queryForList(Teaches.class,sql,courseID,classID);
     }
 }
