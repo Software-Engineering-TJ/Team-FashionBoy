@@ -13,8 +13,8 @@ import pojo.Section;
 
 public class SectionDaoImpl extends BaseDao implements SectionDao {
     @Override
-    public Section QuerySectionBySectionID(String courseID,String classID) {
-        String sql = "select `courseID`,`classID` from section where courseID = ?";
+    public Section QuerySectionByCourseIDAndClassID(String courseID,String classID) {
+        String sql = "select `courseID`,`classID`,`day`,`time`,`number`,`currentNumber` from section where courseID = ? and classID = ?";
         return queryForOne(Section.class,sql,courseID,classID);
     }
 }
