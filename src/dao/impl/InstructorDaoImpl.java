@@ -38,9 +38,9 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     }
 
     @Override
-    public int InsertInstructor(String email, String password) {
-        String sql = "insert into instructor(`email`,`password`) values(?,?)";
-        return update(sql,email,password);
+    public int InsertInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
+        String sql = "insert into instructor(`instructorNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        return update(sql,instructorNumber,email,name,phoneNumber,sex);
     }
 
     @Override

@@ -12,9 +12,9 @@ public interface AdministrationService {
     //删除学生
     boolean DeleteStudent(String email);
     //根据studentNumber返回学生姓名及所有课程信息
-    Map<String,Object> getTakesByStudentNumber(String studentNumber);
+    Map<String,Object> getTakesInfoByStudentNumber(String studentNumber);
     //添加老师
-    boolean AddInstructor(String email,String password);
+    String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex);
     //删除老师
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程
