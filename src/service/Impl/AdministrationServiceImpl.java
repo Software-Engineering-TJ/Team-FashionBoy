@@ -119,6 +119,12 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
+    public Instructor SearchInstructorByInstructorNUmber(String instructorNumber) {
+        Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
+        return instructor;
+    }
+
+    @Override
     public boolean DeleteInstructor(String email) {
         return false;
     }

@@ -1,5 +1,6 @@
 package service.inter;
 
+import pojo.Instructor;
 import pojo.Takes;
 import pojo.Teaches;
 
@@ -15,6 +16,8 @@ public interface AdministrationService {
     Map<String,Object> getTakesInfoByStudentNumber(String studentNumber);
     //添加老师
     String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex);
+    //搜索老师
+    Instructor SearchInstructorByInstructorNUmber(String instructorNumber);
     //删除老师
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程

@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.Gson;
+import pojo.Instructor;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 
@@ -86,11 +87,36 @@ public class AdministrationServlet extends BaseServlet{
      * @throws ServletException
      * @throws IOException
      */
-    protected  void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    protected void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String studentNumber = req.getParameter("studentNumber");
         //获取查询结果
         Map<String,Object> map = administrationService.getTakesInfoByStudentNumber(studentNumber);
+        //返回响应
+        String mapJson = gson.toJson(map);
+        resp.getWriter().write(mapJson);
+    }
+
+    /**
+     * 根据老师的工号获得老师信息，用于搜索对应的老师
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String instructorNumber = req.getParameter("instructorNumber");
+        Instructor instructor = administrationService.SearchInstructorByInstructorNUmber(instructorNumber);
+        //将信息填入map
+        Map<String,Object> map = new HashMap<>();
+        if(instructor != null){
+            map.put("instructorNumber",instructor.getInstructorNumber());
+            map.put("name",instructor.getName());
+            map.put("sex",instructor.getSex());
+            map.put("phoneNumber",instructor.getPhoneNumber());
+            map.put("email",instructor.getEmail());
+        }
         //返回响应
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
