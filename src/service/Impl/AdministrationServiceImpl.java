@@ -89,8 +89,8 @@ public class AdministrationServiceImpl implements AdministrationService {
             }
             informationList.add(information);
         }
-        //informationList以对象数组的形式加入到map，方便后续转换成json
-        map.put("sectionInformation",informationList.toArray());
+        //informationList可以不用转换成数组而加入到map，因为底层实现本就是数组
+        map.put("sectionInformation",informationList);
         return map;
     }
 
@@ -100,8 +100,22 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
-    public boolean AddInstructor(String email, String password) {
-        return false;
+    public String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
+        String msg = null;  //用于记录添加结果是否成功的信息
+        //1.先检查Email是否重复
+        Instructor instructor = instructorDao.QueryInstructorByEmail(email);
+        if(instructor != null){
+            msg = "Email already exists!";
+            return msg;
+        }
+        //2.email没问题再插入学生信息
+        int insertResult = instructorDao.InsertInstructor(instructorNumber,email,name,phoneNumber,sex);
+        if(insertResult == 1){
+            msg = "StudentNumber already exists!";
+            return msg;
+        }
+        msg = "success";
+        return msg;  //如果没有任何意外，msg为"success"
     }
 
     @Override

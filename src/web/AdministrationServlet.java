@@ -51,6 +51,33 @@ public class AdministrationServlet extends BaseServlet{
         resp.getWriter().write(msgJson);
     }
 
+    /**
+     * 创建教师账号
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected  void createTeacher(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String name = req.getParameter("name");
+        String sexString = req.getParameter("sex");
+        int sex = 0;
+        if(sexString.equals("男")){
+            sex = 1;
+        }
+        String instructorNumber = req.getParameter("instructorNumber");
+        String email = req.getParameter("email");
+        String phoneNumber = req.getParameter("phoneNumber");
+
+        String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
+        msg = administrationService.AddInstructor(instructorNumber,email,name,phoneNumber,sex);
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("msg",msg);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
 
     /**
      * 根据学生的学号获得他参与的课程信息
@@ -68,6 +95,7 @@ public class AdministrationServlet extends BaseServlet{
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
     }
+
 
     protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
