@@ -17,8 +17,9 @@ public interface AdministrationService {
     //添加老师
     String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex);
     //搜索老师
-    Instructor SearchInstructorByInstructorNUmber(String instructorNumber);
-    //删除老师
+    Map<String,Object> SearchInstructorByInstructorNUmber(String instructorNumber);
+    //根据教师工号获取教授的课程信息
+    Map<String, Object> getTeachesInfoByInstructorNumber(String instructorNumber);
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程
     List<Takes> SearchTakesOfStudent(String email);

@@ -107,17 +107,26 @@ public class AdministrationServlet extends BaseServlet{
     protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String instructorNumber = req.getParameter("instructorNumber");
-        Instructor instructor = administrationService.SearchInstructorByInstructorNUmber(instructorNumber);
         //将信息填入map
-        Map<String,Object> map = new HashMap<>();
-        if(instructor != null){
-            map.put("instructorNumber",instructor.getInstructorNumber());
-            map.put("name",instructor.getName());
-            map.put("sex",instructor.getSex());
-            map.put("phoneNumber",instructor.getPhoneNumber());
-            map.put("email",instructor.getEmail());
-        }
+        Map<String,Object> map = administrationService.SearchInstructorByInstructorNUmber(instructorNumber);
         //返回响应
+        String mapJson = gson.toJson(map);
+        resp.getWriter().write(mapJson);
+    }
+
+    /**
+     * 根据教师工号获得教授的课程信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTeachesByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String instructorNumber = req.getParameter("instructor");
+        //获取任课信息
+        Map<String,Object> map = administrationService.getTeachesInfoByInstructorNumber(instructorNumber);
+        //JSON化后传给前端
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
     }
