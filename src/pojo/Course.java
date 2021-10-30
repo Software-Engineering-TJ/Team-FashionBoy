@@ -30,11 +30,11 @@ public class Course {
         this.title = title;
     }
 
-    public String getInstructor() {
+    public String getInstructorNumber() {
         return instructorNumber;
     }
 
-    public void setInstructor(String instructorNumber) {
+    public void setInstructorNumber(String instructorNumber) {
         this.instructorNumber = instructorNumber;
     }
 

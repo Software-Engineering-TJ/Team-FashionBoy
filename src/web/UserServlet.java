@@ -37,21 +37,20 @@ public class UserServlet extends BaseServlet{
         String userNumber = req.getParameter("userNumber");
         User user = userService.ifActivated(userNumber);
 
-        String email,password;
+        String password;
         String status;
 
         if(user != null) {
-            email = user.getEmail();
             password = user.getPassword();
             status = (user.getStatus()==1)?"男":"女";
         }else{
             //如果没有该用户，则返回如下内容
-            email = password = null;  // 表示账号信息不存在（那么也肯定未激活）
+            userNumber = password = null;  // 表示账号信息不存在（那么也肯定未激活）
             status = null;
         }
         //需要返回的信息
         Map<String,Object> userInformation = new HashMap<>();
-        userInformation.put("email",email);
+        userInformation.put("userNumber",userNumber);
         userInformation.put("password",password);
         userInformation.put("status",status);
         //转Json-String格式
