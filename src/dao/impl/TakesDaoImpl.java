@@ -18,4 +18,11 @@ public class TakesDaoImpl extends BaseDao implements TakesDao {
         String sql = "select `studentNumber`,`courseID`,`classID`,`status` from takes where studentNumber = ?";
         return queryForList(Takes.class,sql,studentNumber);
     }
+
+    @Override
+    public int SetDuty(String studentNumber,String courseID,String classID,String duty) {
+        int newDuty = (duty=="学生")?0:1; //映射到数据库的身份表示形式
+        String sql = "update `takes` set `duty` = ? where (`studentNumber` = ?) and (`courseID` = ?) and (`classID` = ?)";
+        return update(sql,duty,studentNumber,courseID,classID);
+    }
 }

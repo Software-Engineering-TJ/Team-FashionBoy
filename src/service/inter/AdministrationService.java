@@ -13,13 +13,18 @@ public interface AdministrationService {
     //删除学生
     boolean DeleteStudent(String email);
     //根据studentNumber返回学生姓名及所有课程信息
-    Map<String,Object> getTakesInfoByStudentNumber(String studentNumber);
+    Map<String,Object> GetTakesInfoByStudentNumber(String studentNumber);
     //添加老师
     String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex);
-    //搜索老师
-    Map<String,Object> SearchInstructorByInstructorNUmber(String instructorNumber);
+    //搜索老师相关信息
+    Map<String,Object> SearchInstructorByInstructorNumber(String instructorNumber);
     //根据教师工号获取教授的课程信息
-    Map<String, Object> getTeachesInfoByInstructorNumber(String instructorNumber);
+    Map<String, Object> GetTeachesInfoByInstructorNumber(String instructorNumber);
+    //根据学号、课程号、班号来修改duty
+    String ChangeStudentDuty(String studentNumber,String courseID,String classID,String duty);
+    //获取某个课程的责任教师
+    Map<String,Object> CheckTeacherDuty(String courseID);
+    //删除教师
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程
     List<Takes> SearchTakesOfStudent(String email);

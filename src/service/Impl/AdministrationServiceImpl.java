@@ -47,7 +47,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 
 
     @Override
-    public Map<String, Object> getTakesInfoByStudentNumber(String studentNumber) {
+    public Map<String, Object> GetTakesInfoByStudentNumber(String studentNumber) {
 
         Map<String,Object> map = new HashMap<>();
         //存储课程有关信息的集合
@@ -96,7 +96,7 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
-    public Map<String, Object> getTeachesInfoByInstructorNumber(String instructorNumber) {
+    public Map<String, Object> GetTeachesInfoByInstructorNumber(String instructorNumber) {
 
         Map<String,Object> map = new HashMap<>();
         List<SectionInformation> informationList = new ArrayList<>();
@@ -137,6 +137,18 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
+    public String ChangeStudentDuty(String studentNumber, String courseID, String classID,String duty) {
+        String msg = "changing duty failed!";  //用于记录修改结果是否成功的信息
+
+        if(takesDao.SetDuty(studentNumber,courseID,classID,duty)==1){
+            //修改成功
+            msg = "success";
+        }
+
+        return msg;
+    }
+
+    @Override
     public boolean DeleteStudent(String email) {
         return false;
     }
@@ -161,7 +173,7 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
-    public Map<String,Object> SearchInstructorByInstructorNUmber(String instructorNumber) {
+    public Map<String,Object> SearchInstructorByInstructorNumber(String instructorNumber) {
         Map<String,Object> map = new HashMap<>();
 
         Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
@@ -173,6 +185,21 @@ public class AdministrationServiceImpl implements AdministrationService {
             map.put("email",instructor.getEmail());
         }
 
+        return map;
+    }
+
+    @Override
+    public Map<String,Object> CheckTeacherDuty(String courseID) {
+        Course course = courseDao.QueryCourseByCourseID(courseID);
+        //课程的责任教师工号
+        String instructorNumber = course.getInstructorNumber();
+        //获取教师名
+        Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
+        String name = instructor.getName();
+        //加入到map
+        Map<String,Object> map = new HashMap<>();
+        map.put("instructorNumber",instructorNumber);
+        map.put("name",name);
         return map;
     }
 
