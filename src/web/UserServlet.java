@@ -1,10 +1,12 @@
 package web;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import pojo.Student;
 import pojo.User;
 import service.Impl.UserServiceImpl;
 import service.inter.UserService;
+import utils.RequestJsonUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -61,9 +63,13 @@ public class UserServlet extends BaseServlet{
 
     protected void login(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String,String> reqObject = gson.fromJson(reqJson,new TypeToken<Map<String,String>>(){}.getType());
+
         //userService查找了三个表：student、instructor、administrator
-        String userNumber = req.getParameter("userNumber");
-        String password = req.getParameter("password");
+        String userNumber = reqObject.get("userNumber");
+        String password = reqObject.get("password");
+
         User user = userService.Login(userNumber,password);
 
         if(user != null){

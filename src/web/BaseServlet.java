@@ -30,6 +30,7 @@ public abstract class BaseServlet extends HttpServlet {
         //解决乱码问题
         //一定要在请求的参数调用之间用才有效
         req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
         String action = req.getParameter("action");
 
         try {
