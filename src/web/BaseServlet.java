@@ -35,7 +35,9 @@ public abstract class BaseServlet extends HttpServlet {
 
         try {
             //根据request希望调用的业务来执行对应的action
-            Method method = this.getClass().getMethod(action,req.getClass(),resp.getClass());
+            Method method = this.getClass().getMethod(action,HttpServletRequest.class,HttpServletResponse.class);
+            System.out.println(HttpServletRequest.class);
+            System.out.println(req.getClass());
             method.invoke(this,req,resp);
         } catch (Exception e) {
             e.printStackTrace();
