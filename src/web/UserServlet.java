@@ -36,7 +36,11 @@ public class UserServlet extends BaseServlet{
      */
     protected void getUserStatus(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        String userNumber = req.getParameter("userNumber");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String,String> reqObject = gson.fromJson(reqJson,new TypeToken<Map<String,String>>(){}.getType());
+
+//        String userNumber = req.getParameter("userNumber");
+        String userNumber = reqObject.get("userName");
         User user = userService.ifActivated(userNumber);
 
         String password;
