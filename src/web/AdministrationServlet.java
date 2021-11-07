@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.Gson;
+import pojo.Instructor;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 
@@ -74,7 +75,7 @@ public class AdministrationServlet extends BaseServlet{
         msg = administrationService.AddInstructor(instructorNumber,email,name,phoneNumber,sex);
         //返回响应
         Map<String,Object> map = new HashMap<>();
-        map.put("msg",msg);
+        map.put("result",msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
@@ -86,16 +87,87 @@ public class AdministrationServlet extends BaseServlet{
      * @throws ServletException
      * @throws IOException
      */
-    protected  void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    protected void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         String studentNumber = req.getParameter("studentNumber");
         //获取查询结果
-        Map<String,Object> map = administrationService.getTakesInfoByStudentNumber(studentNumber);
+        Map<String,Object> map = administrationService.GetTakesInfoByStudentNumber(studentNumber);
         //返回响应
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
     }
 
+    /**
+     * 根据老师的工号获得老师信息，用于搜索对应的老师
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String instructorNumber = req.getParameter("instructorNumber");
+        //将信息填入map
+        Map<String,Object> map = administrationService.SearchInstructorByInstructorNumber(instructorNumber);
+        //返回响应
+        String mapJson = gson.toJson(map);
+        resp.getWriter().write(mapJson);
+    }
+
+    /**
+     * 根据教师工号获得教授的课程信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTeachesByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String instructorNumber = req.getParameter("instructorNumber");
+        //获取任课信息
+        Map<String,Object> map = administrationService.GetTeachesInfoByInstructorNumber(instructorNumber);
+        //JSON化后传给前端
+        String mapJson = gson.toJson(map);
+        resp.getWriter().write(mapJson);
+    }
+
+    /**
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void changeStudentDuty(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+
+        String studentNumber = req.getParameter("studentNumber");
+        String courseID = req.getParameter("courseID");
+        String classID = req.getParameter("classID");
+        String duty = req.getParameter("duty");
+        //获取修改结果
+        String msg =  administrationService.ChangeStudentDuty(studentNumber,courseID,classID,duty);
+        Map<String,Object> map = new HashMap<>();
+        map.put("result",msg);
+        //JSON化
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 查看某门课程下的责任教师
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void checkTeacherDuty(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        String courseID = req.getParameter("courseID");
+        //获取责任教师的工号和姓名
+        Map<String,Object> map = administrationService.CheckTeacherDuty(courseID);
+        //JSON化
+        resp.getWriter().write(gson.toJson(map));
+    }
 
     protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
