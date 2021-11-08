@@ -30,14 +30,12 @@ public abstract class BaseServlet extends HttpServlet {
         //解决乱码问题
         //一定要在请求的参数调用之间用才有效
         req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
 
         try {
             //根据request希望调用的业务来执行对应的action
             Method method = this.getClass().getDeclaredMethod(action,HttpServletRequest.class,HttpServletResponse.class);
-            System.out.println(HttpServletRequest.class);
-            System.out.println(req.getClass());
             method.invoke(this,req,resp);
         } catch (Exception e) {
             e.printStackTrace();

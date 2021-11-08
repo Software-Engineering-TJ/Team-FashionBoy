@@ -1,9 +1,11 @@
 package web;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import pojo.Instructor;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
+import utils.RequestJsonUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +26,7 @@ public class AdministrationServlet extends BaseServlet{
     private AdministrationService administrationService = new AdministrationServiceImpl();
 
     /**
-     * 创建新的学生账号
+     * 创建新的学生账号 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -32,16 +34,19 @@ public class AdministrationServlet extends BaseServlet{
      */
     protected void createStudent(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-
-        String name = req.getParameter("name");
-        String sexString = req.getParameter("sex");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String name = reqObject.get("name");
+        String sexString = reqObject.get("sex");
         int sex = 0;
         if(sexString.equals("男")){
             sex = 1;
         }
-        String studentNumber = req.getParameter("studentNumber");
-        String email = req.getParameter("email");
-        String phoneNumber = req.getParameter("phoneNumber");
+        String studentNumber = reqObject.get("studentNumber");
+        String email = reqObject.get("email");
+        String phoneNumber = reqObject.get("phoneNumber");
 
         String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
         msg = administrationService.AddStudent(studentNumber,email,name,phoneNumber,sex);
@@ -53,7 +58,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 创建教师账号
+     * 创建教师账号 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -61,15 +66,19 @@ public class AdministrationServlet extends BaseServlet{
      */
     protected  void createTeacher(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        String name = req.getParameter("name");
-        String sexString = req.getParameter("sex");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String name = reqObject.get("name");
+        String sexString = reqObject.get("sex");
         int sex = 0;
         if(sexString.equals("男")){
             sex = 1;
         }
-        String instructorNumber = req.getParameter("instructorNumber");
-        String email = req.getParameter("email");
-        String phoneNumber = req.getParameter("phoneNumber");
+        String instructorNumber = reqObject.get("instructorNumber");
+        String email = reqObject.get("email");
+        String phoneNumber = reqObject.get("phoneNumber");
 
         String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
         msg = administrationService.AddInstructor(instructorNumber,email,name,phoneNumber,sex);
@@ -81,7 +90,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 根据学生的学号获得他参与的课程信息
+     * 根据学生的学号获得他参与的课程信息 ×，存在问题
      * @param req
      * @param resp
      * @throws ServletException
@@ -89,7 +98,11 @@ public class AdministrationServlet extends BaseServlet{
      */
     protected void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        String studentNumber = req.getParameter("studentNumber");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String studentNumber = reqObject.get("studentNumber");
         //获取查询结果
         Map<String,Object> map = administrationService.GetTakesInfoByStudentNumber(studentNumber);
         //返回响应
@@ -98,7 +111,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 根据老师的工号获得老师信息，用于搜索对应的老师
+     * 根据老师的工号获得老师信息，用于搜索对应的老师 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -106,7 +119,11 @@ public class AdministrationServlet extends BaseServlet{
      */
     protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        String instructorNumber = req.getParameter("instructorNumber");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String instructorNumber = reqObject.get("instructorNumber");
         //将信息填入map
         Map<String,Object> map = administrationService.SearchInstructorByInstructorNumber(instructorNumber);
         //返回响应
@@ -115,7 +132,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 根据教师工号获得教授的课程信息
+     * 根据教师工号获得教授的课程信息 ×，存在问题
      * @param req
      * @param resp
      * @throws ServletException
@@ -123,7 +140,11 @@ public class AdministrationServlet extends BaseServlet{
      */
     protected void getTeachesByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
-        String instructorNumber = req.getParameter("instructorNumber");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String instructorNumber = reqObject.get("instructorNumber");
         //获取任课信息
         Map<String,Object> map = administrationService.GetTeachesInfoByInstructorNumber(instructorNumber);
         //JSON化后传给前端

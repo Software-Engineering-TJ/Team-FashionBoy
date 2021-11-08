@@ -19,7 +19,6 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private StudentDao studentDao = new StudentDaoImpl();
     private InstructorDao instructorDao = new InstructorDaoImpl();
-    private AdministratorDao administratorDao = new AdministratorDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private CourseDao courseDao = new CourseDaoImpl();
@@ -29,36 +28,26 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     @Override
     public boolean EmailExists(String email) {
-        Student student = studentDao.QueryStudentByEmail(email);
-        if(student != null){
-            return true;
-        }else{
-            Instructor instructor = instructorDao.QueryInstructorByEmail(email);
-            if(instructor != null){
-                return true;
-            }else{
-                Administrator administrator = administratorDao.QueryAdministratorByEmail(email);
-                if(administrator != null){
-                    return true;
-                }
-            }
-        }
         return false;
     }
 
     @Override
     public String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+        String msg = null;  //用于记录添加结果是否成功的信息
         //1.先检查Email是否重复
-        if(EmailExists(email)){
-            return "The Email has been existed!";
+        Student student = studentDao.QueryStudentByEmail(email);
+        if(student != null){
+            msg = "Email already exists!";
+            return msg;
         }
         //2.email没问题再插入学生信息
         int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
-        if(insertResult != 1){ //这里为了保险检查一下数据库update的结果
-            return "Database is busy.";
+        if(insertResult != 1){
+            msg = "Sorry,database is busy!";
+            return msg;
         }
-
-        return "success";  //如果没有任何意外，msg为"success"
+        msg = "success";
+        return msg;  //如果没有任何意外，msg为"success"
     }
 
 
@@ -96,7 +85,7 @@ public class AdministrationServiceImpl implements AdministrationService {
             information.setTime("第"+section.getDay()+"节课");
             //确定教师名（可能有多个任课老师，就像一些选修课，当然概率很低，但考虑到实际情况，逻辑上尽量完善吧）
             String allTeachers;  //所有老师名字，用","隔开
-            List<Teaches> teachesList = teachesDao.QueryTeachesByCourseIDAndClassID(takes.getCourseID(),takes.getCourseID());
+            List<Teaches> teachesList = teachesDao.QueryTeachesByCourseIDAndClassID(takes.getCourseID(),takes.getClassID());
             Iterator<Teaches> iterator1 = teachesList.iterator();
             Instructor firstInstructor = instructorDao.QueryInstructorByInstructorNumber(iterator1.next().getInstructorNumber());
             allTeachers = firstInstructor.getName();
@@ -173,16 +162,19 @@ public class AdministrationServiceImpl implements AdministrationService {
     public String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
         String msg = null;  //用于记录添加结果是否成功的信息
         //1.先检查Email是否重复
-        if(EmailExists(email)){
-            return "The Email has been existed!";
+        Instructor instructor = instructorDao.QueryInstructorByEmail(email);
+        if(instructor != null){
+            msg = "Email already exists!";
+            return msg;
         }
-        //2.email没问题再插入教师信息
+        //2.email没问题再插入学生信息
         int insertResult = instructorDao.InsertInstructor(instructorNumber,email,name,phoneNumber,sex);
         if(insertResult != 1){
-            return "Sorry,database is busy!";
+            msg = "教师工号已存在!";
+            return msg;
         }
-
-        return "success";  //如果没有任何意外，msg为"success"
+        msg = "success";
+        return msg;  //如果没有任何意外，msg为"success"
     }
 
     @Override
@@ -240,5 +232,4 @@ public class AdministrationServiceImpl implements AdministrationService {
     public boolean SetInstructorStatus(String email, String courseID, String classID, int status) {
         return false;
     }
-
 }

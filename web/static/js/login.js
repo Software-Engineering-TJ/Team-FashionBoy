@@ -1,9 +1,10 @@
+const router = new VueRouter({})
 var vm = new Vue({
     el: "#box",
     data() {
         var validateAccount = (rule, value, callback) => {
             if (value === '') {
-                callback(new Error('邮箱不能为空！'));
+                callback(new Error('账号不能为空！'));
             }
             callback();
         };
@@ -21,13 +22,13 @@ var vm = new Vue({
         };
         return {
             ruleForm: {
-                email: '',
+                account: '',
                 password: '',
                 identify: '',
                 judge: false,
             },
             rules: {
-                email: [{
+                account: [{
                     validator: validateAccount,
                     trigger: 'blur'
                 }],
@@ -45,10 +46,28 @@ var vm = new Vue({
     },
     methods: {
         submitForm(formName) {
-
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(this.$refs[formName].model);
+                    axios({
+                        url: '/SoftwareEngineering/userServlet?action=getUserStatus',
+                        method: "Post",
+                        data: {
+                            userNumber: this.ruleForm.account
+                        },
+                    }).then(resp => {
+                        if (resp.data.userNumber === undefined) {
+                            alert("该账号不存在！请重新输入！")
+                            this.ruleForm.account = "";
+                            this.ruleForm.password = "";
+                        } else if (resp.data.status === "0") {
+                            alert("您的账号还未激活！请先激活账号！")
+                        } else if (resp.data.password === this.ruleForm.password) {
+                            window.location.href = "/SoftwareEngineering/pages/administrator/aIndex.html"
+                        } else {
+                            alert("您输入的密码错误！请重新输入！")
+                            this.ruleForm.password = "";
+                        }
+                    });
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -64,7 +83,7 @@ var vm = new Vue({
         },
         changeStatus() {
             if (this.ruleForm.email === '') {
-                alert('您的邮箱不能为空');
+                alert('您的账号不能为空');
                 return false;
             }
             this.ruleForm.judge = true;
@@ -72,3 +91,4 @@ var vm = new Vue({
         }
     }
 })
+

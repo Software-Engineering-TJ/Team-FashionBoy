@@ -3,26 +3,72 @@ var AuthorityTabs = Vue.extend({
     props: ['studentDataAu', 'teacherDataAu'],
     methods: {
         loadDataAu() {
-            this.$emit('load-user-data-au');
+            this.$emit('load-user-data-au')
         },
         searchStudentAu() {
-            console.log("seacherStudentAu被调用了");
+            this.$emit('search-student-au', this.student)
         },
         searchTeacherAu() {
-            console.log("seacherTeacherAu被调用了");
+            this.$emit('search-teacher-au', this.teacher)
+        },
+        changeStudentDuty(row, studentNumber) {
+            console.log(studentNumber);
+            this.$confirm('你是否想要更改当前课程下该学生的身份?', '确认', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if (row.duty === "普通学生") {
+                    row.duty = "助教";
+                } else {
+                    row.duty = "普通学生";
+                }
+                this.$message({
+                    type: 'success',
+                    message: '您已成功将该学生的身份改为' + '<' + row.duty + '>'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消修改'
+                });
+            });
+        },
+        changeTeacherDuty(row, teacherNumber) {
+            console.log(teacherNumber);
+            this.$confirm('你是否想要更改当前课程下该老师的职务?', '确认', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if (row.duty === '教师') {
+                    row.duty = '责任教师';
+                } else {
+                    row.duty = '教师';
+                }
+                this.$message({
+                    type: 'success',
+                    message: '您已成功将该老师的职务修改为' + '<' + row.duty + '>'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消修改'
+                });
+            });
         }
     },
     data() {
         return {
-            student: { id: null },
-            teacher: { id: null }
+            student: {id: null},
+            teacher: {id: null}
         };
     },
     template: `
     <el-tabs type="border-card">
     <el-tab-pane label="学生管理">  
        <el-row>
-            <el-col :span="24">
+            <el-col :span="8" :offset="16">
                 <el-form :inline="true" :model="student" class="demo-form-inline">
                     <el-form-item label="学生学号:">
                         <el-input v-model="student.id"></el-input>
@@ -38,8 +84,13 @@ var AuthorityTabs = Vue.extend({
             <ul class="infinite-list" v-infinite-scroll="loadDataAu" style="overflow:auto;height: 550px;" infinite-scroll-distance=10>
             <li v-for="item in studentDataAu" class="infinite-list-item">
                 <el-collapse>
-                    <el-collapse-item title="学生1" name="1">
-                    <el-table :data=item border style="width: 100%">
+                    <el-collapse-item :title="'学号：'+item.studentNumber+' 姓名：'+item.name" :name="item.studentNumber">
+                    <el-table :data=item.info border style="width: 100%">
+                    <el-table-column
+                      prop="courseId"
+                      label="课程编号"
+                      width="150">
+                    </el-table-column>
                     <el-table-column
                       prop="title"
                       label="课程名"
@@ -79,7 +130,7 @@ var AuthorityTabs = Vue.extend({
                       label="操作"
                       width="100">
                       <template slot-scope="scope">
-                        <el-button type="text" size="small">编辑</el-button>
+                        <el-button @click="changeStudentDuty(scope.row,item.studentNumber)" type="text" size="small">更改权限</el-button>
                       </template>
               </el-table-column>
               </el-table>
@@ -92,7 +143,7 @@ var AuthorityTabs = Vue.extend({
     </el-tab-pane>
         <el-tab-pane label="教师管理">
         <el-row>
-            <el-col :span="24">
+            <el-col :span="8" :offset="16">
                 <el-form :inline="true" :model="teacher" class="demo-form-inline">
                     <el-form-item label="教师工号:">
                         <el-input v-model="teacher.id"></el-input>
@@ -108,8 +159,13 @@ var AuthorityTabs = Vue.extend({
             <ul class="infinite-list" v-infinite-scroll="loadDataAu" style="overflow:auto;;height: 550px;" infinite-scroll-distance=10>
                 <li v-for="item in teacherDataAu" class="infinite-list-item">
                     <el-collapse>
-                        <el-collapse-item title="教师1" name="1">
-                        <el-table :data=item border style="width: 100%">
+                        <el-collapse-item :title="'工号：'+item.teacherNumber+' 姓名：'+item.name" :name="item.teacherNumber">
+                        <el-table :data=item.info border style="width: 100%">
+                        <el-table-column
+                          prop="courseId"
+                          label="课程编号"
+                          width="150">
+                        </el-table-column>
                         <el-table-column
                           prop="title"
                           label="课程名"
@@ -139,7 +195,7 @@ var AuthorityTabs = Vue.extend({
                           label="操作"
                           width="100">
                           <template slot-scope="scope">
-                            <el-button type="text" size="small">编辑</el-button>
+                            <el-button @click="changeTeacherDuty(scope.row,item.teacherNumber)" type="text" size="small">更改权限</el-button>
                           </template>
                   </el-table-column>
                   </el-table>
@@ -184,15 +240,15 @@ var AccountInfoTabs = Vue.extend({
     },
     data() {
         return {
-            student: { id: null },
-            teacher: { id: null }
+            student: {id: null},
+            teacher: {id: null}
         };
     },
     template: `
     <el-tabs type="border-card">
     <el-tab-pane label="学生信息">  
        <el-row>
-            <el-col :span="24">
+            <el-col :span="8" :offset="16">
                 <el-form :inline="true" :model="student" class="demo-form-inline">
                     <el-form-item label="学生学号:">
                         <el-input v-model="student.id"></el-input>
@@ -208,7 +264,7 @@ var AccountInfoTabs = Vue.extend({
             <ul class="infinite-list" v-infinite-scroll="loadDataAc" style="overflow:auto;height: 550px;" infinite-scroll-distance=10>
             <li v-for="item in studentDataAc" class="infinite-list-item">
                 <el-collapse>
-                    <el-collapse-item :title="'学号：'+item[0].studentNumber+'姓名：'+item[0].name" :name="item[0].id">
+                    <el-collapse-item :title="'学号：'+item[0].studentNumber+' 姓名：'+item[0].name" :name="item[0].studentNumber">
                     <el-table :data=item border style="width: 100%">
                     <el-table-column
                       prop="studentNumber"
@@ -240,6 +296,7 @@ var AccountInfoTabs = Vue.extend({
                       width="100">
                       <template slot-scope="scope">
                         <el-button type="text" size="small">修改</el-button>
+                        <el-button type="text" size="small">注销</el-button>
                       </template>
               </el-table-column>
               </el-table>
@@ -252,7 +309,7 @@ var AccountInfoTabs = Vue.extend({
     </el-tab-pane>
         <el-tab-pane label="教师信息">
         <el-row>
-            <el-col :span="24">
+            <el-col :span="8" :offset="16">
                 <el-form :inline="true" :model="teacher" class="demo-form-inline">
                     <el-form-item label="教师工号:">
                         <el-input v-model="teacher.id"></el-input>
@@ -265,10 +322,10 @@ var AccountInfoTabs = Vue.extend({
        </el-row>
         <el-row>
             <el-col :span="24">
-            <ul class="infinite-list" v-infinite-scroll="loadDataAc" style="overflow:auto;;height: 550px;" infinite-scroll-distance=10>
+            <ul class="infinite-list" v-infinite-scroll="loadDataAc" style="overflow:auto;;height: 550px;" infinite-scroll-distance=20>
                 <li v-for="item in teacherDataAc" class="infinite-list-item">
                     <el-collapse>
-                        <el-collapse-item title="教师1" name="1">
+                        <el-collapse-item :title="'工号：'+item[0].teacherNumber+' 姓名：'+item[0].name" :name="item[0].teacherNumber" name="1">
                         <el-table :data=item border style="width: 100%">
                         <el-table-column
                       prop="teacherNumber"
@@ -300,6 +357,7 @@ var AccountInfoTabs = Vue.extend({
                       width="100">
                       <template slot-scope="scope">
                         <el-button type="text" size="small">修改</el-button>
+                        <el-button type="text" size="small">注销</el-button>
                       </template>
               </el-table-column>
                   </el-table>
@@ -336,6 +394,7 @@ var vm = new Vue({
             administrator: {
                 id: '',
                 name: '陈荣',
+                teacherNumber: '239784',
                 phoneNumber: '18886806666',
                 email: 'chengrong@163.com',
             },
@@ -343,7 +402,6 @@ var vm = new Vue({
             administratorChange: {},
             // 添加学生账号的表单属性
             studentForm: {
-                id: '',
                 name: '',
                 sex: '',
                 studentNumber: '',
@@ -352,7 +410,6 @@ var vm = new Vue({
             },
             // 添加教师账号的表单属性
             teacherForm: {
-                id: '',
                 name: '',
                 sex: '',
                 teacherNumber: '',
@@ -365,10 +422,14 @@ var vm = new Vue({
             studentListAc: [],
             // 教师账号列表
             teacherListAc: [],
+            // 保存数据用教师账号列表
+            teacherTempListAc: [],
             // 学生权限列表
             studentListAu: [],
             // 教师权限列表
-            teacherListAu: []
+            teacherListAu: [],
+            // 页头logo
+            logo: '../../static/img/logo2.png'
         };
     },
     methods: {
@@ -387,7 +448,8 @@ var vm = new Vue({
                 .then(_ => {
                     done();
                 })
-                .catch(_ => {});
+                .catch(_ => {
+                });
         },
         // 选择对应的导航栏项触发
         selectMenuItem(key, keyPath) {
@@ -413,31 +475,29 @@ var vm = new Vue({
         },
         // 改变管理员信息
         changeAdminInfo() {
-            this.$data.administrator = JSON.parse(JSON.stringify(this.$data.administratorChange));
+            this.administrator = JSON.parse(JSON.stringify(this.$data.administratorChange));
             // axios.psot('http://canvas.tongji.edu.cn', this.$data.administratorChange);
-            this.$data.dialogFormVisible = false;
+            this.dialogFormVisible = false;
         },
         //切换管理员信息改变页面的状态
         switchAdminDialogStatus() {
-            if (this.$data.dialogFormVisible === false) {
-                this.$data.administratorChange = JSON.parse(JSON.stringify(this.$data.administrator));
-                this.$data.dialogFormVisible = true;
+            if (this.dialogFormVisible === false) {
+                this.administratorChange = JSON.parse(JSON.stringify(this.administrator));
+                this.dialogFormVisible = true;
             } else {
-                this.$data.dialogFormVisible = false;
+                this.dialogFormVisible = false;
             }
         },
         // 加载学生和老师账号的信息，滚动滚动条触发
         loadDataAc() {
             this.studentListAc.push([{
-                    id: 1,
-                    name: '王文炯',
-                    sex: '男',
-                    studentNumber: '1953281',
-                    phoneNumber: '18586722001',
-                    email: '982567656@qq.com'
-                }]),
+                name: '王文炯',
+                sex: '男',
+                studentNumber: '1953281',
+                phoneNumber: '18586722001',
+                email: '982567656@qq.com'
+            }]),
                 this.teacherListAc.push([{
-                    id: 1,
                     name: '黄杰',
                     sex: '男',
                     teacherNumber: '2300256',
@@ -447,7 +507,11 @@ var vm = new Vue({
         },
         // 加载学生和老师权限的信息，滚动滚动条触发
         loadDataAu() {
-            this.studentListAu.push([{
+            this.studentListAu.push({
+                studentNumber: '1953281',
+                name: '王文炯',
+                info: [{
+                    courseId: '144567',
                     title: '计算机网络实验',
                     classId: '1',
                     day: '周一',
@@ -456,6 +520,7 @@ var vm = new Vue({
                     teacher: '金伟祖',
                     duty: '普通学生'
                 }, {
+                    courseId: '144579',
                     title: '计算机组成原理实验',
                     classId: '2',
                     day: '周二',
@@ -463,62 +528,185 @@ var vm = new Vue({
                     chargingTeacher: '张晶',
                     teacher: '张晶',
                     duty: '助教'
-                }]),
-                this.teacherListAu.push([{
-                    title: '计算机组成原理实验',
-                    day: '周二',
-                    time: '3',
-                    classId: '2',
-                    duty: '普通教师'
-                }, {
-                    title: '软件工程实验',
-                    day: '周二',
-                    time: '3',
-                    classId: '2',
-                    duty: '责任教师'
-                }])
+                }]
+            }),
+                this.teacherListAu.push({
+                    teacherNumber: '2021313',
+                    name: '黄杰',
+                    info: [{
+                        courseId: '144579',
+                        title: '计算机组成原理实验',
+                        day: '周二',
+                        time: '3',
+                        classId: '2',
+                        duty: '普通教师'
+                    }, {
+                        courseId: '143479',
+                        title: '软件工程实验',
+                        day: '周二',
+                        time: '3',
+                        classId: '2',
+                        duty: '责任教师'
+                    }]
+                })
         },
         // 搜索学生账号
         searchStudentAc(student) {
             // 清空学生列表
             this.studentListAc.length = 0;
             // 查找学生
-            console.log(student.id);
-            // 重新添加学生
-            this.studentListAc.push([{
-                id: 1,
-                name: '王文炯',
-                sex: '男',
-                studentNumber: '1953281',
-                email: '982567656@qq.com',
-                phoneNumber: '18586722001'
-            }])
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=getTeacherByTeacherNumber',
+                method: "Post",
+                data: {
+                    instructorNumber: teacher.id,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                // 重新添加教师
+                this.teacherListAc.push([{
+                    name: resp.data.name,
+                    sex: resp.data.sex,
+                    teacherNumber: resp.data.instructorNumber,
+                    email: resp.data.email,
+                    phoneNumber: resp.data.phoneNumber
+                }])
+            })
         },
         // 搜索教师账号
         searchTeacherAc(teacher) {
-            // 清空学生列表
+            // 清空教师列表
+            this.teacherTempListAc = JSON.parse(JSON.stringify(this.teacherTempListAc));
             this.teacherListAc.length = 0;
+            // 查找教师
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=getTeacherByTeacherNumber',
+                method: "Post",
+                data: {
+                    instructorNumber: teacher.id,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                // 重新添加教师
+                this.teacherListAc.push([{
+                    name: resp.data.name,
+                    sex: resp.data.sex,
+                    teacherNumber: resp.data.instructorNumber,
+                    email: resp.data.email,
+                    phoneNumber: resp.data.phoneNumber
+                }])
+            })
+        },
+        searchStudentAu(student) {
+            // 清空学生列表
+            this.studentListAc.length = 0;
             // 查找学生
-            console.log(teacher.id);
-            // 重新添加学生
-            this.teacherListAc.push([{
-                id: 1,
-                name: '黄杰',
-                sex: '男',
-                teacherNumber: '2300256',
-                email: 'huangjie@163.com',
-                phoneNumber: '18586722001'
-            }])
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=getTakesByStudentNumber',
+                method: "Post",
+                data: {
+                    studentNumber: student.id,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                // 重新添加学生
+                this.studentListAc.push([{
+                    name: '王文炯',
+                    sex: '男',
+                    studentNumber: '1953281',
+                    email: '982567656@qq.com',
+                    phoneNumber: '18586722001'
+                }])
+            })
+        },
+        // 搜索教师账号
+        searchTeacherAu(teacher) {
+            // 清空学生列表
+            this.teacherListAu.length = 0;
+            // 查找学生
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=getTeachesByTeacherNumber',
+                method: "Post",
+                data: {
+                    instructorNumber: teacher.id,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                // 重新添加教师
+                this.teacherListAu.push([{
+                    id: 1,
+                    name: '黄杰',
+                    sex: '男',
+                    teacherNumber: '2300256',
+                    email: 'huangjie@163.com',
+                    phoneNumber: '18586722001'
+                }])
+            })
         },
         // 添加新学生
         addNewStudent() {
-            console.log("addNewStudent被调用了");
-            this.$data.studentDialogFormVisible = false
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=createStudent',
+                method: "Post",
+                data: {
+                    studentNumber: this.studentForm.studentNumber,
+                    name: this.studentForm.name,
+                    sex: this.studentForm.sex,
+                    phoneNumber: this.studentForm.phoneNumber,
+                    email: this.studentForm.email
+                },
+            }).then(resp => {
+                if (resp.data.msg === 'success') {
+                    this.$message({
+                        showClose: true,
+                        message: '添加学生成功！',
+                        type: 'success'
+                    });
+                    for (let key in this.studentForm) {
+                        this.studentForm[key] = ''
+                    }
+                    this.studentDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该学号已存在！',
+                        type: 'error'
+                    })
+                }
+            });
+
         },
         // 添加新教师
         addNewTeacher() {
-            console.log("addNewTeacher被调用了");
-            this.$data.teacherDialogFormVisible = false
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=createTeacher',
+                method: "Post",
+                data: {
+                    instructorNumber: this.teacherForm.teacherNumber,
+                    name: this.teacherForm.name,
+                    sex: this.teacherForm.sex,
+                    phoneNumber: this.teacherForm.phoneNumber,
+                    email: this.teacherForm.email
+                },
+            }).then(resp => {
+                if (resp.data.msg === 'success') {
+                    this.$message({
+                        showClose: true,
+                        message: '添加新教师账号成功！',
+                        type: 'success'
+                    });
+                    for (let key in this.teacherForm) {
+                        this.teacherForm[key] = ''
+                    }
+                    this.teacherDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该工号已存在！',
+                        type: 'error'
+                    })
+                }
+            });
         }
     },
     components: {
@@ -531,12 +719,10 @@ var vm = new Vue({
     }
 })
 
-
-
 // 获取头像框
 var avatarBlock = document.getElementById("avatarBlock");
 
 // 点击头像弹出个人信息
-avatarBlock.onclick = function() {
+avatarBlock.onclick = function () {
     vm.$data.drawerVisible = true;
 }
