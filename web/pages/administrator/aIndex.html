@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="icon" type="image/x-icon" href="../../static/img/icon.ico" />
+    <!-- 引入Element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入本公共样式 -->
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <!-- 引入本页面样式 -->
+    <link rel="stylesheet" href="../../static/css/administrator/aIndex.css">
+    <!-- 引入Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- 引入Element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <title>管理员导航页</title>
+</head>
+
+<body>
+
+    <div id="box" v-cloak>
+        <!-- 修改管理员信息的弹窗开始 -->
+        <el-dialog title="修改个人信息" :visible.sync="dialogFormVisible">
+            <el-container>
+                <el-form :model="administrator">
+                    <el-form-item label="姓名：" :label-width="formLabelWidth">
+                        <el-input v-model="administratorChange.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话号码：" :label-width="formLabelWidth">
+                        <el-input v-model="administratorChange.phoneNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱：" :label-width="formLabelWidth">
+                        <el-input v-model="administratorChange.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-container>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="switchAdminDialogStatus">取 消</el-button>
+                <el-button type="primary" @click="changeAdminInfo">提 交</el-button>
+            </div>
+        </el-dialog>
+        <!-- 修改管理员信息的弹窗结束 -->
+        <!-- 添加学生账号信息的弹窗开始 -->
+        <el-dialog title="添加新学生" :visible.sync="studentDialogFormVisible">
+            <el-container>
+                <el-form :model="studentForm" :inline="true">
+                    <el-form-item label="学号:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.studentNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="姓名:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.sex" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.phoneNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-container>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="studentDialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addNewStudent">确 定</el-button>
+            </div>
+        </el-dialog>
+        <!-- 添加学生账号信息的弹窗结束 -->
+        <!-- 修改学生账号信息的弹窗开始 -->
+        <!-- <el-dialog title="添加新学生" :visible.sync="changeStudentDialogFormVisible">
+            <el-container>
+                <el-form :model="studentForm" :inline="true">
+                    <el-form-item label="学号:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.studentNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="姓名:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.sex" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.phoneNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱:" :label-width="formLabelWidth">
+                        <el-input v-model="studentForm.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-container>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="changeStudentDialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addNewStudent">确 定</el-button>
+            </div>
+        </el-dialog> -->
+        <!-- 修改学生账号信息的弹窗结束 -->
+        <!-- 添加教师账号信息的弹窗开始 -->
+        <el-dialog title="添加新教师" :visible.sync="teacherDialogFormVisible">
+            <el-container>
+                <el-form :model="teacherForm" :inline="true">
+                    <el-form-item label="工号:" :label-width="formLabelWidth">
+                        <el-input v-model="teacherForm.teacherNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="姓名:" :label-width="formLabelWidth">
+                        <el-input v-model="teacherForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别:" :label-width="formLabelWidth">
+                        <el-input v-model="teacherForm.sex" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话:" :label-width="formLabelWidth">
+                        <el-input v-model="teacherForm.phoneNumber" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱:" :label-width="formLabelWidth">
+                        <el-input v-model="teacherForm.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+            </el-container>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="teacherDialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addNewTeacher">确 定</el-button>
+            </div>
+        </el-dialog>
+        <!-- 添加教师账号信息的弹窗结束 -->
+        <div id="mainbox">
+            <div id="header">
+                <img id="logoimg" src="../../static/img/logo2.png">
+                <h3 id="logotitle">济实-实验教学管理系统</h3>
+                <div id="welcomeBox">
+                    <h4 id="welcomeTitle">你好！</h4>
+                    <el-button type="text" @click="drawerVisible=true">{{administrator.name}} ({{administrator.teacherNumber}})</el-button>
+                </div>
+            </div>
+            <div id="containerbox">
+                <el-container>
+                    <el-aside width="200px">
+                        <!-- 用户信息界面的抽屉开始 -->
+                        <div id="drawerBox">
+                            <el-drawer style="float: left ;" title="个人信息" :visible.sync="drawerVisible" :direction="drawerDirection" :before-close="handleCloseDrawer" size="35%">
+                                <div id="descriptionBox">
+                                    <el-descriptions class="margin-top" title="管理员" :column="2" border>
+                                        <template slot="extra">
+                                          <el-button type="primary" size="small" @click="switchAdminDialogStatus">修改个人信息</el-button>
+                                        </template>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                            <i class="el-icon-user"></i>
+                                            姓名
+                                          </template> {{administrator.name}}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                            <i class="el-icon-mobile-phone"></i>
+                                            电话
+                                          </template> {{administrator.phoneNumber}}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                            <i class="el-icon-location-outline"></i>
+                                            邮箱
+                                          </template> {{administrator.email}}
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                            <i class="el-icon-tickets"></i>
+                                            备注
+                                          </template>
+                                            <el-tag size="small">学校</el-tag>
+                                        </el-descriptions-item>
+                                        <el-descriptions-item>
+                                            <template slot="label">
+                                            <i class="el-icon-office-building"></i>
+                                            联系地址
+                                          </template> 江苏省苏州市吴中区吴中大道 1188 号
+                                        </el-descriptions-item>
+                                    </el-descriptions>
+                                </div>
+                            </el-drawer>
+                        </div>
+                        <!-- 用户信息界面的抽屉结束 -->
+                        <!-- 侧边导航栏开始 -->
+                        <div id="asideBox">
+                            <el-row class="tac">
+                                <el-col :span="24">
+                                    <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpenNavMenu" @close="handleCloseNavMenu" @select="selectMenuItem" ref="navMenu">
+                                        <!-- 用户头像开始 -->
+                                        <div id="avatarBlock">
+                                            <el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar>
+                                        </div>
+                                        <!-- 用户头像结束 -->
+                                        <!-- 导航1开始 -->
+                                        <el-menu-item index="1">
+                                            <i class="el-icon-date"></i>
+                                            <span slot="title" id="calenderManage">日程表</span>
+                                        </el-menu-item>
+                                        <el-submenu index="2">
+                                            <template slot="title">
+                                        <i class="el-icon-user"></i>
+                                        <span>账户管理</span>
+                                      </template>
+                                            <el-submenu index="2-1">
+                                                <template slot="title">创建新账号</template>
+                                                <el-menu-item index="2-1-1">添加学生</el-menu-item>
+                                                <el-menu-item index="2-1-2">添加教师</el-menu-item>
+                                            </el-submenu>
+                                            <el-menu-item index="2-2">
+                                                <span slot="title" id="infoManage">修改账号信息</span>
+                                            </el-menu-item>
+                                        </el-submenu>
+                                        <!-- 导航1结束 -->
+                                        <el-menu-item index="3">
+                                            <i class="el-icon-edit"></i>
+                                            <span slot="title" id="authorityManage">权限管理</span>
+                                        </el-menu-item>
+                                        <el-menu-item index="4">
+                                            <i class="el-icon-chat-dot-round"></i>
+                                            <span slot="title">消息</span>
+                                        </el-menu-item>
+                                    </el-menu>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <!-- 侧边导航栏结束 -->
+                    </el-aside>
+                    <!-- 主显示区开始 -->
+                    <el-main>
+                        <div id="reject">
+                            <keep-alive>
+                                <component :is="changeComponents" @load-user-data-ac="loadDataAc" @search-student-ac="searchStudentAc" @search-teacher-ac="searchTeacherAc" :student-data-ac="studentListAc" :teacher-data-ac="teacherListAc" @load-user-data-au="loadDataAu" :student-data-au="studentListAu"
+                                    :teacher-data-au="teacherListAu" @search-student-au="searchStudentAu" @search-teacher-au="searchTeacherAu"></component>
+                            </keep-alive>
+                        </div>
+                    </el-main>
+                    <!-- 主显示区结束 -->
+                </el-container>
+            </div>
+        </div>
+    </div>
+    <!-- 引入axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../../static/js/administrator/aIndex.js"></script>
+</body>
+
+</html>
