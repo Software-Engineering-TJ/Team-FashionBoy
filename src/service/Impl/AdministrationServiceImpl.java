@@ -19,6 +19,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private StudentDao studentDao = new StudentDaoImpl();
     private InstructorDao instructorDao = new InstructorDaoImpl();
+    private AdministratorDao administratorDao = new AdministratorDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private CourseDao courseDao = new CourseDaoImpl();
@@ -34,10 +35,22 @@ public class AdministrationServiceImpl implements AdministrationService {
         if(student != null){
             msg = "Email already exists!";
             return msg;
+        }else{
+            Instructor instructor = instructorDao.QueryInstructorByEmail(email);
+            if(instructor != null){
+                msg = "Email already exists!";
+                return msg;
+            }else{
+                Administrator administrator = administratorDao.QueryAdministratorByEmail(email);
+                if(administrator != null){
+                    msg = "Email already exists!";
+                    return msg;
+                }
+            }
         }
         //2.email没问题再插入学生信息
         int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
-        if(insertResult == 1){
+        if(insertResult != 1){
             msg = "StudentNumber already exists!";
             return msg;
         }
