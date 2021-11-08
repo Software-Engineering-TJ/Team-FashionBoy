@@ -1,5 +1,6 @@
 package dao.impl;
 
+import com.google.gson.JsonObject;
 import dao.inter.AdministratorDao;
 import pojo.Administrator;
 
@@ -11,6 +12,7 @@ import pojo.Administrator;
  */
 
 public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
+
     @Override
     public Administrator QueryAdministratorByAdminNumberAndPassword(String adminNumber, String password) {
         String sql = "select `email`,`password`,`name` from administrator where adminNumber = ? and password = ?";
@@ -23,27 +25,20 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
         return queryForOne(Administrator.class,sql,email);
     }
 
-    @Override
-    public int InsertAdministrator(String email, String password) {
-        String sql = "insert into administrator(`email`,`password`) values(?,?)";
-        return update(sql,email,password);
+    public Administrator QueryAdministratorByNumber(String number) {
+        String sql = "select `email`,`password`,`name` from administrator where adminNumber = ?";
+        return queryForOne(Administrator.class,sql,number);
     }
 
-    @Override
-    public int InsertAdministrator(String email) {
-        String sql = "insert into administrator(`email`) values(?)";
-        return update(sql,email);
+    public int updateAdministrator(String adminNumber, String email, String password, String name) {
+        String sql = "update administrator set `email` = ?, `password` = ?, `name` = ? where adminNumber = ?";
+        return update(sql, email, password, name, adminNumber);
     }
 
-    @Override
-    public int DeleteAdministrator(String email) {
-        String sql = "delete from `administrator` where (`email` = ?);";
-        return update(sql,email);
+    //测试用
+    public int insertAdministrator(String adminNumber, String email, String password, String name) {
+        String sql = "insert ignore into administrator(`adminNumber`, `email`, `password`, `name`) values(?, ?, ?, ?)";
+        return update(sql, adminNumber, email, password, name);
     }
 
-    @Override
-    public int SetNickname(String email, String name) {
-        String sql = "update `administrator` set `name` = ? where (`email` = ?)";
-        return update(sql,name,email);
-    }
 }

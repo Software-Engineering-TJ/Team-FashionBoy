@@ -9,8 +9,7 @@ public interface StudentDao {
     Student QueryStudentByEmail(String email);
     Student QueryStudentByStudentNumber(String studentNumber);
     List<Student> QueryAllStudents();
-    int InsertStudent(String studentNumber,String email,String name,String phoneNumber,int sex);
-    int InsertStudent(String email);
+    int InsertStudent(String studentNumber, String email, String password, String name,  int sex, String phoneNumber, String status);
     int DeleteStudent(String email);
     int SetStatus(String email,int status);
     int SetNickname(String email,String name);

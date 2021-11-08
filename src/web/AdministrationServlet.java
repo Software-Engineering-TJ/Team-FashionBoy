@@ -1,6 +1,8 @@
 package web;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,4 +115,19 @@ public class AdministrationServlet extends BaseServlet{
         }
 
     }
+
+    protected JsonObject getAdministrationInfo(HttpServletRequest req, HttpServletResponse resp) {
+        String adminNumber = req.getParameter("adminNumber");
+        List<JsonElement> adminInfo = administrationService.getInfoByAdminNumber(adminNumber);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("administratorNumber", adminInfo.get(0));
+        jsonObject.add("name", adminInfo.get(1));
+        jsonObject.add("sex", adminInfo.get(2));
+        jsonObject.add("email", adminInfo.get(3));
+        jsonObject.add("phoneNumber", adminInfo.get(4));
+
+        return jsonObject;
+    }
+
+
 }

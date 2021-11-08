@@ -19,7 +19,7 @@ public class JdbcUtils {
             InputStream inputStream = JdbcUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
             // 从流中加载数据
             properties.load(inputStream);
-            // 创建 数据库连接 池
+            // 创建数据库连接池
             dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
 
         } catch (Exception e) {

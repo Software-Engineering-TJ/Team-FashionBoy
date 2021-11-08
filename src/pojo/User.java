@@ -12,7 +12,6 @@ public abstract class User {
     protected String password;
     protected String name;
 
-
     public String getName() {
         return name;
     }

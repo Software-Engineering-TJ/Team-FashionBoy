@@ -1,16 +1,23 @@
 package service.Impl;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import dao.impl.AdministratorDaoImpl;
 import dao.impl.TakesDaoImpl;
+import dao.inter.AdministratorDao;
 import dao.inter.InstructorDao;
 import dao.inter.StudentDao;
 import dao.impl.InstructorDaoImpl;
 import dao.impl.StudentDaoImpl;
 import dao.inter.TakesDao;
+import pojo.Administrator;
 import pojo.Student;
 import pojo.Takes;
 import pojo.Teaches;
 import service.inter.AdministrationService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,12 +32,13 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private StudentDao studentDao = new StudentDaoImpl();
     private InstructorDao instructorDao = new InstructorDaoImpl();
+    private AdministratorDao administratorDao = new AdministratorDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
     //后续肯定还需要takes、teaches
 
 
     @Override
-    public String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+    public String AddStudent(String studentNumber,String email,String password, String name,int sex, String phoneNumber, String status) {
         String msg = null;  //用于记录添加结果是否成功的信息
         //1.先检查Email是否重复
         Student student = studentDao.QueryStudentByEmail(email);
@@ -39,7 +47,7 @@ public class AdministrationServiceImpl implements AdministrationService {
             return msg;
         }
         //2.email没问题再插入学生信息
-        int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
+        int insertResult = studentDao.InsertStudent(studentNumber,email,password,name,sex,phoneNumber,status);
         if(insertResult == 1){
             msg = "StudentNumber already exists!";
         }
@@ -57,6 +65,26 @@ public class AdministrationServiceImpl implements AdministrationService {
 //        for()
         return null;
     }
+
+    public List<JsonElement> getInfoByAdminNumber(String adminNumber) {
+        Administrator admin = administratorDao.QueryAdministratorByNumber(adminNumber);
+        List<JsonElement> info = new ArrayList<>();
+        JsonParser jsonParser = new JsonParser();
+        info.add(jsonParser.parse(admin.getAdminNumber()));
+        info.add(jsonParser.parse(admin.getName()));
+        info.add(jsonParser.parse(admin.getEmail()));
+        return info;
+    }
+
+    public boolean changeAdministrationInfo(JsonObject jsonObject) {
+        String email = jsonObject.get("email").toString();
+        String name = jsonObject.get("name").toString();
+        String adminNumber = jsonObject.get("adminNumber").toString();
+        String password = jsonObject.get("password").toString();
+
+        return administratorDao.updateAdministrator(adminNumber, email, password, name) != -1;
+    }
+
 
     @Override
     public boolean DeleteStudent(String email) {
