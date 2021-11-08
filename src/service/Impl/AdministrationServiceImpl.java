@@ -50,8 +50,8 @@ public class AdministrationServiceImpl implements AdministrationService {
         }
         //2.email没问题再插入学生信息
         int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
-        if(insertResult != 1){
-            msg = "StudentNumber already exists!";
+        if(insertResult != 1){ //这里为了保险检查一下数据库update的结果
+            msg = "Database is busy.";
             return msg;
         }
         msg = "success";
