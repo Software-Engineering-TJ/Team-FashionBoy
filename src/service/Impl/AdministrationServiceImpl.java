@@ -28,34 +28,37 @@ public class AdministrationServiceImpl implements AdministrationService {
 
 
     @Override
-    public String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
-        String msg = null;  //用于记录添加结果是否成功的信息
-        //1.先检查Email是否重复
+    public boolean EmailExists(String email) {
         Student student = studentDao.QueryStudentByEmail(email);
         if(student != null){
-            msg = "Email already exists!";
-            return msg;
+            return true;
         }else{
             Instructor instructor = instructorDao.QueryInstructorByEmail(email);
             if(instructor != null){
-                msg = "Email already exists!";
-                return msg;
+                return true;
             }else{
                 Administrator administrator = administratorDao.QueryAdministratorByEmail(email);
                 if(administrator != null){
-                    msg = "Email already exists!";
-                    return msg;
+                    return true;
                 }
             }
+        }
+        return false;
+    }
+
+    @Override
+    public String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
+        //1.先检查Email是否重复
+        if(EmailExists(email)){
+            return "The Email has been existed!";
         }
         //2.email没问题再插入学生信息
         int insertResult = studentDao.InsertStudent(studentNumber,email,name,phoneNumber,sex);
         if(insertResult != 1){ //这里为了保险检查一下数据库update的结果
-            msg = "Database is busy.";
-            return msg;
+            return "Database is busy.";
         }
-        msg = "success";
-        return msg;  //如果没有任何意外，msg为"success"
+
+        return "success";  //如果没有任何意外，msg为"success"
     }
 
 
@@ -170,19 +173,16 @@ public class AdministrationServiceImpl implements AdministrationService {
     public String AddInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
         String msg = null;  //用于记录添加结果是否成功的信息
         //1.先检查Email是否重复
-        Instructor instructor = instructorDao.QueryInstructorByEmail(email);
-        if(instructor != null){
-            msg = "Email already exists!";
-            return msg;
+        if(EmailExists(email)){
+            return "The Email has been existed!";
         }
-        //2.email没问题再插入学生信息
+        //2.email没问题再插入教师信息
         int insertResult = instructorDao.InsertInstructor(instructorNumber,email,name,phoneNumber,sex);
-        if(insertResult == 1){
-            msg = "StudentNumber already exists!";
-            return msg;
+        if(insertResult != 1){
+            return "Sorry,database is busy!";
         }
-        msg = "success";
-        return msg;  //如果没有任何意外，msg为"success"
+
+        return "success";  //如果没有任何意外，msg为"success"
     }
 
     @Override
@@ -240,4 +240,5 @@ public class AdministrationServiceImpl implements AdministrationService {
     public boolean SetInstructorStatus(String email, String courseID, String classID, int status) {
         return false;
     }
+
 }

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdministrationService {
+    //辅助函数，检查注册邮箱是否已被使用
+    boolean EmailExists(String email);
     //添加学生(有用)
     String AddStudent(String studentNumber,String email,String name,String phoneNumber,int sex);
     //删除学生
