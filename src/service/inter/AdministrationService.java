@@ -1,13 +1,15 @@
 package service.inter;
 
-import pojo.Instructor;
-import pojo.Takes;
-import pojo.Teaches;
+import pojo.*;
 
 import java.util.List;
 import java.util.Map;
 
 public interface AdministrationService {
+    //查找学生
+    Student getStudentByStudentNumber(String studentNumber);
+    //获取管理员身份信息
+    Administrator getAdministrationInfo(String adminNumber);
     //辅助函数，检查注册邮箱是否已被使用
     boolean EmailExists(String email);
     //添加学生(有用)

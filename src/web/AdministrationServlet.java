@@ -2,7 +2,10 @@ package web;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import dao.inter.AdministratorDao;
+import pojo.Administrator;
 import pojo.Instructor;
+import pojo.Student;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
 import utils.RequestJsonUtils;
@@ -235,5 +238,35 @@ public class AdministrationServlet extends BaseServlet{
             //修改成功
         }
 
+    }
+
+    protected void getAdministrationInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String adminNumber = reqObject.get("adminNumber");
+        Administrator administrator = administrationService.getAdministrationInfo(adminNumber);
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("admin",administrator);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
+
+    protected void getStudentByStudentNumber(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String studentNumber = reqObject.get("studentNumber");
+        Student student = administrationService.getStudentByStudentNumber(studentNumber);
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("student",student);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
     }
 }

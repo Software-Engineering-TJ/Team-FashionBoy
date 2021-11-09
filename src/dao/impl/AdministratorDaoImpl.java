@@ -24,6 +24,12 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     }
 
     @Override
+    public Administrator QueryAdministratorByNumber(String adminNumber) {
+        String sql = "select * from administrator where adminNumber = ?";
+        return queryForOne(Administrator.class,sql,adminNumber);
+    }
+
+    @Override
     public int InsertAdministrator(String email, String password) {
         String sql = "insert into administrator(`email`,`password`) values(?,?)";
         return update(sql,email,password);

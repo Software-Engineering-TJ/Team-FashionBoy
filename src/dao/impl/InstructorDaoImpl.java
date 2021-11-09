@@ -39,7 +39,7 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
 
     @Override
     public int InsertInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
-        String sql = "insert into instructor(`instructorNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        String sql = "insert ignore into instructor(`instructorNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
         return update(sql,instructorNumber,email,name,phoneNumber,sex);
     }
 
@@ -65,5 +65,11 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     public int SetNickname(String email, String name) {
         String sql = "update `instructor` set `name` = ? where (`email` = ?)";
         return update(sql,name,email);
+    }
+
+    @Override
+    public int updateInstructor(String instructorNumber, String email, String password, Integer sex, String phoneNumber) {
+        String sql = "update `instructor` set `email` = ?, `password` = ?, `sex` = ?, `phoneNumber` = ? where (`instructorNumber` = ?)";
+        return update(sql, email, password, sex, phoneNumber, instructorNumber);
     }
 }

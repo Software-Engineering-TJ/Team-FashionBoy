@@ -14,6 +14,11 @@ import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
 
+    public int updateStudent(String studentNumber, String email, String password, Integer sex, String phoneNumber) {
+        String sql = "update `student` set `email` = ?, `password` = ?, `sex` = ?, `phoneNumber` = ? where `studentNumber` = ?";
+        return update(sql, email, password, sex, phoneNumber, studentNumber);
+    }
+
     @Override
     public Student QueryStudentByStudentNumberAndPassword(String studentNumber, String password) {
         String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ? and password = ?";
@@ -40,7 +45,7 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
     @Override
     public int InsertStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
-        String sql = "insert into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        String sql = "insert ignore into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
         return update(sql,studentNumber,email,name,phoneNumber,sex);
     }
 

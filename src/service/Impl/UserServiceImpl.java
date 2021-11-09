@@ -89,4 +89,11 @@ public class UserServiceImpl implements UserService{
     public User Register(String email) {
         return null;
     }
+
+    public int alterStudentInformation(String studentNumber, String email, String password, Integer sex, String phoneNumber) {
+        return studentDao.updateStudent(studentNumber, email, password, sex, phoneNumber);
+    }
+    public int alterInstructorInformation(String instructorNumber, String email, String password, Integer sex, String phoneNumber) {
+        return instructorDao.updateInstructor(instructorNumber, email, password, sex, phoneNumber);
+    }
 }
