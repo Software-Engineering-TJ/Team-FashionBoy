@@ -83,7 +83,8 @@ public class AdministrationServiceImpl implements AdministrationService {
             SectionInformation information = new SectionInformation();
             //确定学生职责
             information.setDuty((takes.getStatus()==0)?"学生":"助教");
-            //确定班级号
+            //确定班级号和课程号
+            information.setCourseID(takes.getCourseID());
             information.setClassID(takes.getClassID());
             //确定课程名字和责任教师名
             Course course = courseDao.QueryCourseByCourseID(takes.getCourseID());
@@ -104,6 +105,7 @@ public class AdministrationServiceImpl implements AdministrationService {
                 Instructor nextInstructor = instructorDao.QueryInstructorByInstructorNumber(iterator1.next().getInstructorNumber());
                 allTeachers = allTeachers + ","+nextInstructor.getName();
             }
+            information.setTeacher(allTeachers);
             informationList.add(information);
         }
         //informationList可以不用转换成数组而加入到map，因为底层实现本就是数组
@@ -128,7 +130,8 @@ public class AdministrationServiceImpl implements AdministrationService {
         while(iterator.hasNext()){
             Teaches teaches = iterator.next();
             SectionInformation sectionInformation = new SectionInformation();
-            //获取班级号
+            //获取班级号和课程号
+            sectionInformation.setCourseID(teaches.getCourseID());
             sectionInformation.setClassID(teaches.getClassID());
             //获取班级名称
             Course course = courseDao.QueryCourseByCourseID(teaches.getCourseID());

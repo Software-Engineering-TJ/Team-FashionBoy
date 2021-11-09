@@ -18,15 +18,13 @@ var AuthorityTabs = Vue.extend({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                if (row.duty === "普通学生") {
+                console.log(row)
+                this.$emit('change-student-duty', studentNumber, row.courseID, row.classID, row.duty)
+                if (row.duty === "学生") {
                     row.duty = "助教";
                 } else {
-                    row.duty = "普通学生";
+                    row.duty = "学生";
                 }
-                this.$message({
-                    type: 'success',
-                    message: '您已成功将该学生的身份改为' + '<' + row.duty + '>'
-                });
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -87,7 +85,7 @@ var AuthorityTabs = Vue.extend({
                     <el-collapse-item :title="'学号：'+item.studentNumber+' 姓名：'+item.name" :name="item.studentNumber">
                     <el-table :data=item.info border style="width: 100%">
                     <el-table-column
-                      prop="courseId"
+                      prop="courseID"
                       label="课程编号"
                       width="150">
                     </el-table-column>
@@ -97,7 +95,7 @@ var AuthorityTabs = Vue.extend({
                       width="150">
                     </el-table-column>
                     <el-table-column
-                      prop="classId"
+                      prop="classID"
                       label="班级号"
                       width="120">
                     </el-table-column>
@@ -162,7 +160,7 @@ var AuthorityTabs = Vue.extend({
                         <el-collapse-item :title="'工号：'+item.teacherNumber+' 姓名：'+item.name" :name="item.teacherNumber">
                         <el-table :data=item.info border style="width: 100%">
                         <el-table-column
-                          prop="courseId"
+                          prop="courseID"
                           label="课程编号"
                           width="150">
                         </el-table-column>
@@ -172,7 +170,7 @@ var AuthorityTabs = Vue.extend({
                           width="150">
                         </el-table-column>
                         <el-table-column
-                          prop="classId"
+                          prop="classID"
                           label="班级号"
                           width="120">
                         </el-table-column>
@@ -518,7 +516,7 @@ var vm = new Vue({
                     time: '1',
                     chargingTeacher: '金伟祖',
                     teacher: '金伟祖',
-                    duty: '普通学生'
+                    duty: '学生'
                 }, {
                     courseId: '144579',
                     title: '计算机组成原理实验',
@@ -564,13 +562,21 @@ var vm = new Vue({
             }).then(resp => {
                 console.log(resp.data)
                 // 重新添加教师
-                this.teacherListAc.push([{
-                    name: resp.data.name,
-                    sex: resp.data.sex,
-                    teacherNumber: resp.data.instructorNumber,
-                    email: resp.data.email,
-                    phoneNumber: resp.data.phoneNumber
-                }])
+                if (resp.data.name !== undefined) {
+                    this.teacherListAc.push([{
+                        name: resp.data.name,
+                        sex: resp.data.sex,
+                        teacherNumber: resp.data.instructorNumber,
+                        email: resp.data.email,
+                        phoneNumber: resp.data.phoneNumber
+                    }])
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该学号不存在！',
+                        type: 'error'
+                    })
+                }
             })
         },
         // 搜索教师账号
@@ -586,20 +592,28 @@ var vm = new Vue({
                     instructorNumber: teacher.id,
                 },
             }).then(resp => {
-                console.log(resp.data)
+                console.log(resp.data.name)
                 // 重新添加教师
-                this.teacherListAc.push([{
-                    name: resp.data.name,
-                    sex: resp.data.sex,
-                    teacherNumber: resp.data.instructorNumber,
-                    email: resp.data.email,
-                    phoneNumber: resp.data.phoneNumber
-                }])
+                if (resp.data.name !== undefined) {
+                    this.teacherListAc.push([{
+                        name: resp.data.name,
+                        sex: resp.data.sex,
+                        teacherNumber: resp.data.instructorNumber,
+                        email: resp.data.email,
+                        phoneNumber: resp.data.phoneNumber
+                    }])
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该工号不存在！',
+                        type: 'error'
+                    })
+                }
             })
         },
         searchStudentAu(student) {
             // 清空学生列表
-            this.studentListAc.length = 0;
+            this.studentListAu.length = 0;
             // 查找学生
             axios({
                 url: '/SoftwareEngineering/administrationServlet?action=getTakesByStudentNumber',
@@ -608,15 +622,22 @@ var vm = new Vue({
                     studentNumber: student.id,
                 },
             }).then(resp => {
-                console.log(resp.data)
+                console.log(resp.data.sectionInformation)
                 // 重新添加学生
-                this.studentListAc.push([{
-                    name: '王文炯',
-                    sex: '男',
-                    studentNumber: '1953281',
-                    email: '982567656@qq.com',
-                    phoneNumber: '18586722001'
-                }])
+                if (resp.data.name !== undefined) {
+                    let info = resp.data.sectionInformation
+                    this.studentListAu.push({
+                        studentNumber: resp.data.studentNumber,
+                        name: resp.data.name,
+                        info: info
+                    })
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该学号不存在！',
+                        type: 'error'
+                    })
+                }
             })
         },
         // 搜索教师账号
@@ -631,16 +652,22 @@ var vm = new Vue({
                     instructorNumber: teacher.id,
                 },
             }).then(resp => {
-                console.log(resp.data)
-                // 重新添加教师
-                this.teacherListAu.push([{
-                    id: 1,
-                    name: '黄杰',
-                    sex: '男',
-                    teacherNumber: '2300256',
-                    email: 'huangjie@163.com',
-                    phoneNumber: '18586722001'
-                }])
+                console.log(resp.data.sectionInformation)
+                // 重新添加学生
+                if (resp.data.name !== undefined) {
+                    let info = resp.data.sectionInformation
+                    this.teacherListAu.push({
+                        teacherNumber: resp.data.instructorNumber,
+                        name: resp.data.name,
+                        info: info
+                    })
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '该工号号不存在！',
+                        type: 'error'
+                    })
+                }
             })
         },
         // 添加新学生
@@ -703,6 +730,34 @@ var vm = new Vue({
                     this.$message({
                         showClose: true,
                         message: '该工号已存在！',
+                        type: 'error'
+                    })
+                }
+            });
+        },
+        // 更改学生职务
+        changeStudentDuty(studentNumber, courseID, classId, duty) {
+            console.log(studentNumber, courseID, classId, duty)
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=changeStudentDuty',
+                method: "Post",
+                data: {
+                    studentNumber: studentNumber,
+                    courseID: courseID,
+                    classID: classId,
+                    duty: duty
+                },
+            }).then(resp => {
+                if (resp.data.result === 'success') {
+                    this.$message({
+                        type: 'success',
+                        message: '您已成功将该学生的身份改为' + '<' + resp.data.duty + '>'
+                    });
+                    this.teacherDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
                         type: 'error'
                     })
                 }

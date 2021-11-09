@@ -90,7 +90,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 根据学生的学号获得他参与的课程信息 ×，存在问题
+     * 根据学生的学号获得他参与的课程信息 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -132,7 +132,7 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
-     * 根据教师工号获得教授的课程信息 ×，存在问题
+     * 根据教师工号获得教授的课程信息 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -162,14 +162,24 @@ public class AdministrationServlet extends BaseServlet{
     protected void changeStudentDuty(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
 
-        String studentNumber = req.getParameter("studentNumber");
-        String courseID = req.getParameter("courseID");
-        String classID = req.getParameter("classID");
-        String duty = req.getParameter("duty");
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String studentNumber = reqObject.get("studentNumber");
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String duty = reqObject.get("duty");
         //获取修改结果
         String msg =  administrationService.ChangeStudentDuty(studentNumber,courseID,classID,duty);
         Map<String,Object> map = new HashMap<>();
         map.put("result",msg);
+        if ("学生".equals(duty)){
+            map.put("duty","助教");
+        }else {
+            map.put("duty","学生");
+        }
         //JSON化
         resp.getWriter().write(gson.toJson(map));
     }

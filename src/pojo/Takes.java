@@ -15,11 +15,11 @@ public class Takes {
 
     public Takes(){}
 
-    public String getEmail() {
+    public String getStudentNumber() {
         return studentNumber;
     }
 
-    public void setEmail(String studentNumber) {
+    public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
 
