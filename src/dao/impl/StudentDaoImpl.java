@@ -14,9 +14,16 @@ import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
 
+    //自行修改
     public int updateStudent(String studentNumber, String email, String password, Integer sex, String phoneNumber) {
         String sql = "update `student` set `email` = ?, `password` = ?, `sex` = ?, `phoneNumber` = ? where `studentNumber` = ?";
         return update(sql, email, password, sex, phoneNumber, studentNumber);
+    }
+
+    //管理员修改
+    public int updateStudent(String studentNumber, String name, String phoneNumber, String email, Integer sex) {
+        String sql = "update `student` set `studentNumber` = ?, `name` = ?, `phoneNumber` = ?, `email` = ?, `sex` = ? where `studentNumber` = ?";
+        return update(sql, studentNumber, name, phoneNumber, email, sex);
     }
 
     @Override

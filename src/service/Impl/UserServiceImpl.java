@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService{
     private StudentDao studentDao = new StudentDaoImpl();
 
     @Override
+    public Student getStudentByStudentNumber(String studentNumber) {
+        return studentDao.QueryStudentByStudentNumber(studentNumber);
+    }
+
+    @Override
     public User Login(String userNumber, String password) {
         //先找学生
         Student student = studentDao.QueryStudentByStudentNumberAndPassword(userNumber,password);

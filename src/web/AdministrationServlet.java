@@ -269,4 +269,32 @@ public class AdministrationServlet extends BaseServlet{
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
+
+    //管理员修改学生信息，可修改学生的姓名，学号，电话，邮箱。
+    protected void alterStudentInformation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String studentNumber = "1"; //主码
+        String name = req.getParameter("studentName");
+        String email = req.getParameter("email");
+        String phoneNumber = req.getParameter("phoneNumber");
+        Integer sex = req.getParameter("sex");
+        int msg = administrationService.alterStudentInformationByAdmin(studentNumber, name, phoneNumber, email, sex);
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("stu_info_msg",msg);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
+
+    //批量导入学生
+    protected void batchImportStudents(HttpServletRequest req, HttpServletResponse resp) {
+        //从网页读取excel文件
+
+    }
 }

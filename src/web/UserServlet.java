@@ -34,7 +34,16 @@ public class UserServlet extends BaseServlet {
     private UserService userService = new UserServiceImpl();
 
     //发送邮件
-    public void sendEmail(String desEmail) {
+    public void sendEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String studentNumber = reqObject.get("studentNumber");
+
+        Student student = userService.getStudentByStudentNumber(studentNumber);
+        String desEmail = student.getEmail();
         // 创建Properties 类用于记录邮箱的一些属性
         Properties props = new Properties();
         // 表示SMTP发送邮件，必须进行身份验证
@@ -52,10 +61,10 @@ public class UserServlet extends BaseServlet {
         Authenticator authenticator = new Authenticator() {
 
             protected PasswordAuthentication getPasswordAuthentication() {
-                // 用户名、密码
-                String userName = props.getProperty("mail.user");
-                String password = props.getProperty("mail.password");
-                return new PasswordAuthentication(userName, password);
+            // 用户名、密码
+            String userName = props.getProperty("mail.user");
+            String password = props.getProperty("mail.password");
+            return new PasswordAuthentication(userName, password);
             }
         };
         // 使用环境属性和授权信息，创建邮件会话
@@ -77,13 +86,19 @@ public class UserServlet extends BaseServlet {
             message.setRecipient(MimeMessage.RecipientType.TO, to);
 
             // 设置邮件标题
-            message.setSubject("标题");
-
+            message.setSubject("请验证您的身份");
+            //生成四位随机数
+            int verificationCode = (int)(Math.random() * (9999 - 1000 + 1)) + 1000;
             // 设置邮件的内容体
-            message.setContent("内容", "text/html;charset=UTF-8");
+            message.setContent("亲爱的" + student.getName() + "，你好！您的验证码是：" + verificationCode, "text/html;charset=UTF-8");
 
             // 发送邮件
             Transport.send(message);
+
+            //将发送给目标邮箱的验证码，返回给前端
+            HttpSession session = req.getSession();
+            session.setAttribute("verificationCode", verificationCode);
+
         } catch (MessagingException e) {
             e.printStackTrace();
         }

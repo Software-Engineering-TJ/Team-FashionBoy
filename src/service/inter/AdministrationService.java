@@ -38,4 +38,6 @@ public interface AdministrationService {
     boolean SetStudentStatus(String email,String courseID,String classID,int status);
     //修改某老师在具体课程中的身份
     boolean SetInstructorStatus(String email,String courseID,String classID,int status);
+    //管理员修改学生的信息：学号，姓名，电话，邮箱
+    int alterStudentInformationByAdmin(String studentNumber, String name, String phoneNumber, String email, Integer sex);
 }

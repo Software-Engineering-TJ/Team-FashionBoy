@@ -243,4 +243,9 @@ public class AdministrationServiceImpl implements AdministrationService {
     public boolean SetInstructorStatus(String email, String courseID, String classID, int status) {
         return false;
     }
+
+    @Override
+    public int alterStudentInformationByAdmin(String studentNumber, String name, String phoneNumber, String email, Integer sex) {
+        return studentDao.updateStudent(studentNumber, name, phoneNumber, email, sex);
+    }
 }
