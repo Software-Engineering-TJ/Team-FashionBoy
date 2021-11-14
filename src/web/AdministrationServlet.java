@@ -2,9 +2,13 @@ package web;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import pojo.Administrator;
 import pojo.Instructor;
+import pojo.Student;
+import service.Impl.UserServiceImpl;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
+import service.inter.UserService;
 import utils.RequestJsonUtils;
 
 import javax.servlet.ServletException;
@@ -24,6 +28,81 @@ import java.util.Map;
 public class AdministrationServlet extends BaseServlet{
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
+    protected UserService userService = new UserServiceImpl();
+
+    /**
+     * @author Strange
+     * @date: 2021/11/8 20:53
+     * @description: 接受网页的参数，保存进数据库中。不可变参数：status, studentNumber, name
+     * @param: req
+     * @param: resp
+     * @return: 无
+     */
+    protected void alterUserInformation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String userNumber = reqObject.get("userNumber");; //主码
+        String email = reqObject.get("email");
+        String name = reqObject.get("name");
+        int sex = (reqObject.get("sex").equals("男"))?1:0;
+        String phoneNumber = reqObject.get("phoneNumber");
+        String identify = reqObject.get("identify");
+        int msg = 0;
+        if ("student".equals(identify)){
+            msg = userService.alterStudentInformation(userNumber, email, name, sex, phoneNumber);
+        }
+        else if ("teacher".equals(identify)){
+            msg = userService.alterInstructorInformation(userNumber, email, name, sex, phoneNumber);
+        }
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("msg",msg);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
+
+
+    protected void getAdministrationInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String adminNumber = reqObject.get("adminNumber");
+        Administrator administrator = administrationService.getAdministrationInfo(adminNumber);
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("admin",administrator);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
+
+    /**
+     *
+     * @param req √
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getStudentByStudentNumber(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String studentNumber = reqObject.get("studentNumber");
+        Student student = administrationService.getStudentByStudentNumber(studentNumber);
+
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("student",student);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
+    }
 
     /**
      * 创建新的学生账号 √
@@ -185,6 +264,31 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
+     * 修改某个课程下该教师的职务。（将普通老师改为责任教师）
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void changeDutyInstructor(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        //获取 哪个老师 想设置为 哪个课程 的责任教师
+        String instructorNumber = reqObject.get("instructorNumber");
+        String courseID = reqObject.get("courseID");
+        //获取修改结果
+        String msg = administrationService.ChangeDutyInstructor(instructorNumber,courseID);
+        Map<String,Object> map = new HashMap<>();
+        map.put("result",msg);
+        //JSON化
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
      * 查看某门课程下的责任教师
      * @param req
      * @param resp
@@ -222,28 +326,4 @@ public class AdministrationServlet extends BaseServlet{
 
     }
 
-    protected void SetUserSectionStatus(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
-
-        String email = req.getParameter("email");
-        String courseID = req.getParameter("courseID");
-        String classID = req.getParameter("classID");
-        String status = req.getParameter("status");  //修改后的身份
-        //获取目标账号身份（学生or老师）
-        String identity = req.getParameter("identity");
-
-        boolean result;
-        if(identity.equals("student")){
-            result = administrationService.SetStudentStatus(email,courseID,classID,Integer.parseInt(status));
-        }else{
-            result = administrationService.SetInstructorStatus(email,courseID,classID,Integer.parseInt(status));
-        }
-
-        if(!result){
-            //修改失败
-        }else{
-            //修改成功
-        }
-
-    }
 }

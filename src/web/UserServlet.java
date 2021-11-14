@@ -2,12 +2,17 @@ package web;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import pojo.Instructor;
 import pojo.Student;
 import pojo.User;
 import service.Impl.UserServiceImpl;
 import service.inter.UserService;
 import utils.RequestJsonUtils;
 
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * UserServlet类的描述：
@@ -27,6 +33,94 @@ import java.util.Map;
 public class UserServlet extends BaseServlet {
 
     private UserService userService = new UserServiceImpl();
+
+    //发送邮件
+    public void sendEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        int msg;
+        String userNumber = reqObject.get("userNumber");
+        User user = userService.ifActivated(userNumber);
+        int status;
+        if (user == null) {
+            msg = 0;//账号不存在
+        } else {
+            status = user.getStatus();
+            if(status == 1){
+                msg = 1;//已激活
+            }else {
+                //未激活
+                if (user instanceof Student) {
+                    user = (Student)user;
+                } else if (user instanceof Instructor) {
+                    user = (Instructor)user;
+                }
+                String desEmail = user.getEmail();
+                // 创建Properties 类用于记录邮箱的一些属性
+                Properties props = new Properties();
+                // 表示SMTP发送邮件，必须进行身份验证
+                props.put("mail.smtp.auth", "true");
+                //此处填写SMTP服务器
+                props.put("mail.smtp.host", "smtp.qq.com");
+                //端口号，QQ邮箱端口587
+                props.put("mail.smtp.port", "587");
+                // 此处填写，写信人的账号
+                props.put("mail.user", "939543598@qq.com");
+                // 此处填写16位STMP口令
+                props.put("mail.password", "dhexqmyoafxibbia");
+
+                // 构建授权信息，用于进行SMTP进行身份验证
+                Authenticator authenticator = new Authenticator() {
+
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        // 用户名、密码
+                        String userName = props.getProperty("mail.user");
+                        String password = props.getProperty("mail.password");
+                        return new PasswordAuthentication(userName, password);
+                    }
+                };
+                // 使用环境属性和授权信息，创建邮件会话
+                Session mailSession = Session.getInstance(props, authenticator);
+                // 创建邮件消息
+                MimeMessage message = new MimeMessage(mailSession);
+                // 设置发件人
+                InternetAddress form = null;
+                try {
+                    form = new InternetAddress(props.getProperty("mail.user"));
+
+                } catch (AddressException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    message.setFrom(form);
+                    // 设置收件人的邮箱
+                    InternetAddress to = new InternetAddress(desEmail);
+                    message.setRecipient(MimeMessage.RecipientType.TO, to);
+
+                    // 设置邮件标题
+                    message.setSubject("请验证您的身份");
+                    //生成四位随机数
+                    int verificationCode = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
+                    // 设置邮件的内容体
+                    message.setContent("亲爱的" + user.getName() + "，你好！您的验证码是：" + verificationCode, "text/html;charset=UTF-8");
+
+                    // 发送邮件
+                    Transport.send(message);
+
+                    //将发送给目标邮箱的验证码，返回给前端
+                    HttpSession session = req.getSession();
+                    session.setAttribute("verificationCode", verificationCode);
+
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     /**
      * 获取email对应的账号的密码和激活状态

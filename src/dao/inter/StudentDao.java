@@ -14,4 +14,9 @@ public interface StudentDao {
     int DeleteStudent(String email);
     int SetStatus(String email,int status);
     int SetNickname(String email,String name);
+
+    int updateStudent(String studentNumber, String email, String name, Integer sex, String phoneNumber);
+
+    int updateStudent(String studentNumber, String email, String phoneNumber);
+
 }

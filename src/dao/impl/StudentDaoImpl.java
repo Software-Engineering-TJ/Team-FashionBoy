@@ -14,11 +14,22 @@ import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
 
+    public int updateStudent(String studentNumber, String email, String name, Integer sex, String phoneNumber) {
+        String sql = "update `student` set `email` = ?, `name` = ?, `sex` = ?, `phoneNumber` = ? where `studentNumber` = ?";
+        return update(sql, email, name, sex, phoneNumber, studentNumber);
+    }
+
+    public int updateStudent(String studentNumber, String email, String phoneNumber) {
+        String sql = "update `student` set `email` = ?, `phoneNumber` = ? where `studentNumber` = ?";
+        return update(sql, email, phoneNumber, studentNumber);
+    }
+
     @Override
     public Student QueryStudentByStudentNumberAndPassword(String studentNumber, String password) {
         String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ? and password = ?";
         return queryForOne(Student.class,sql,studentNumber,password);
     }
+
 
     @Override
     public Student QueryStudentByEmail(String email) {

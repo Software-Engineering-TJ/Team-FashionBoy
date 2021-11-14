@@ -13,4 +13,9 @@ public interface InstructorDao {
     int DeleteInstructor(String email);
     int SetStatus(String email,int status);
     int SetNickname(String email,String name);
+
+    int updateInstructor(String instructorNumber, String email, String phoneNumber);
+
+    int updateInstructor(String instructorNumber, String email, String name, Integer sex, String phoneNumber);
+
 }

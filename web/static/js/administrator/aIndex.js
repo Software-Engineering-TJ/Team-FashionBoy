@@ -229,11 +229,19 @@ var AccountInfoTabs = Vue.extend({
         },
         searchStudentAc() {
             this.$emit('search-student-ac', this.student);
-            console.log("seacherStudent被调用了");
         },
         searchTeacherAc() {
             this.$emit('search-teacher-ac', this.teacher);
-            console.log("seacherTeacher被调用了");
+        },
+        changeStudentInfo(row){
+            console.log(row)
+            console.log("changeStudentInfo被调用了")
+            this.$emit('change-student-info',row)
+        },
+        changeTeacherInfo(row){
+            console.log(row)
+            console.log("changeTeacherInfo被调用了")
+            this.$emit('change-teacher-info',row)
         }
     },
     data() {
@@ -293,7 +301,7 @@ var AccountInfoTabs = Vue.extend({
                       label="操作"
                       width="100">
                       <template slot-scope="scope">
-                        <el-button type="text" size="small">修改</el-button>
+                        <el-button type="text" size="small" @click="changeStudentInfo(scope.row)">修改</el-button>
                         <el-button type="text" size="small">注销</el-button>
                       </template>
               </el-table-column>
@@ -354,7 +362,7 @@ var AccountInfoTabs = Vue.extend({
                       label="操作"
                       width="100">
                       <template slot-scope="scope">
-                        <el-button type="text" size="small">修改</el-button>
+                        <el-button type="text" size="small" @click="changeTeacherInfo(scope.row)">修改</el-button>
                         <el-button type="text" size="small">注销</el-button>
                       </template>
               </el-table-column>
@@ -388,6 +396,10 @@ var vm = new Vue({
             studentDialogFormVisible: false,
             // 教师信息对话框是否可见
             teacherDialogFormVisible: false,
+            // 更改学生账号信息对话框是否可见
+            changeStudentDialogFormVisible: false,
+            // 更改教师账号信息对话框是否可见
+            changeTeacherDialogFormVisible: false,
             // 管理员实体
             administrator: {
                 id: '',
@@ -408,6 +420,21 @@ var vm = new Vue({
             },
             // 添加教师账号的表单属性
             teacherForm: {
+                name: '',
+                sex: '',
+                teacherNumber: '',
+                phoneNumber: '',
+                email: ''
+            },
+            studentAccountForm: {
+                name: '',
+                sex: '',
+                studentNumber: '',
+                phoneNumber: '',
+                email: ''
+            },
+            // 添加教师账号的表单属性
+            teacherAccountForm: {
                 name: '',
                 sex: '',
                 teacherNumber: '',
@@ -554,21 +581,21 @@ var vm = new Vue({
             this.studentListAc.length = 0;
             // 查找学生
             axios({
-                url: '/SoftwareEngineering/administrationServlet?action=getTeacherByTeacherNumber',
+                url: '/SoftwareEngineering/administrationServlet?action=getStudentByStudentNumber',
                 method: "Post",
                 data: {
-                    instructorNumber: teacher.id,
+                    studentNumber: student.id,
                 },
             }).then(resp => {
                 console.log(resp.data)
-                // 重新添加教师
-                if (resp.data.name !== undefined) {
-                    this.teacherListAc.push([{
-                        name: resp.data.name,
-                        sex: resp.data.sex,
-                        teacherNumber: resp.data.instructorNumber,
-                        email: resp.data.email,
-                        phoneNumber: resp.data.phoneNumber
+                // 重新添加老师
+                if (resp.data.student !== undefined) {
+                    this.studentListAc.push([{
+                        name: resp.data.student.name,
+                        sex: resp.data.student.sex,
+                        studentNumber: resp.data.student.studentNumber,
+                        email: resp.data.student.email,
+                        phoneNumber: resp.data.student.phoneNumber
                     }])
                 } else {
                     this.$message({
@@ -737,7 +764,6 @@ var vm = new Vue({
         },
         // 更改学生职务
         changeStudentDuty(studentNumber, courseID, classId, duty) {
-            console.log(studentNumber, courseID, classId, duty)
             axios({
                 url: '/SoftwareEngineering/administrationServlet?action=changeStudentDuty',
                 method: "Post",
@@ -752,6 +778,82 @@ var vm = new Vue({
                     this.$message({
                         type: 'success',
                         message: '您已成功将该学生的身份改为' + '<' + resp.data.duty + '>'
+                    });
+                    this.teacherDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
+                        type: 'error'
+                    })
+                }
+            });
+        },
+        // 更改学生信息
+        changeStudentInfo(row) {
+            this.studentAccountForm.studentNumber = row.studentNumber
+            this.studentAccountForm.name = row.name
+            this.studentAccountForm.email = row.email
+            this.studentAccountForm.sex = row.sex
+            this.studentAccountForm.phoneNumber = row.phoneNumber
+            this.changeStudentDialogFormVisible = true
+        },
+        changeStudentInfoIdentify(){
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=alterUserInformation',
+                method: "Post",
+                data: {
+                    userNumber: this.studentAccountForm.studentNumber,
+                    name: this.studentAccountForm.name,
+                    email: this.studentAccountForm.email,
+                    sex: this.studentAccountForm.sex,
+                    phoneNumber:this.studentAccountForm.phoneNumber,
+                    identify:'student'
+                },
+            }).then(resp => {
+                if (resp.data.msg === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '该学生信息修改成功'
+                    });
+                    this.teacherDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
+                        type: 'error'
+                    })
+                }
+            });
+        },
+        // 更改老师信息
+        changeTeacherInfo(row){
+            console.log("changeTeacherInfo")
+            console.log(row)
+            this.teacherAccountForm.teacherNumber = row.teacherNumber
+            this.teacherAccountForm.name = row.name
+            this.teacherAccountForm.email = row.email
+            this.teacherAccountForm.sex = row.sex
+            this.teacherAccountForm.phoneNumber = row.phoneNumber
+            this.changeTeacherDialogFormVisible=true
+        },
+        changeTeacherInfoIdentify(){
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=alterUserInformation',
+                method: "Post",
+                data: {
+                    userNumber: this.teacherAccountForm.teacherNumber,
+                    name: this.teacherAccountForm.name,
+                    email: this.teacherAccountForm.email,
+                    sex: this.teacherAccountForm.sex,
+                    phoneNumber:this.teacherAccountForm.phoneNumber,
+                    identify:'teacher'
+                },
+            }).then(resp => {
+                if (resp.data.msg === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '该教师信息修改成功'
                     });
                     this.teacherDialogFormVisible = false
                 } else {

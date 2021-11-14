@@ -1,8 +1,6 @@
 package service.inter;
 
-import pojo.Instructor;
-import pojo.Takes;
-import pojo.Teaches;
+import pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +24,8 @@ public interface AdministrationService {
     String ChangeStudentDuty(String studentNumber,String courseID,String classID,String duty);
     //获取某个课程的责任教师
     Map<String,Object> CheckTeacherDuty(String courseID);
+    //设置新的课程责任教师
+    String ChangeDutyInstructor(String instructorNumber,String courseID);
     //删除教师
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程
@@ -36,4 +36,8 @@ public interface AdministrationService {
     boolean SetStudentStatus(String email,String courseID,String classID,int status);
     //修改某老师在具体课程中的身份
     boolean SetInstructorStatus(String email,String courseID,String classID,int status);
+
+    public Student getStudentByStudentNumber(String studentNumber);
+
+    public Administrator getAdministrationInfo(String adminNumber);
 }

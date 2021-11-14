@@ -12,6 +12,12 @@ import pojo.Administrator;
 
 public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     @Override
+    public Administrator QueryAdministratorByNumber(String adminNumber) {
+        String sql = "select * from administrator where adminNumber = ?";
+        return queryForOne(Administrator.class,sql,adminNumber);
+    }
+
+    @Override
     public Administrator QueryAdministratorByAdminNumberAndPassword(String adminNumber, String password) {
         String sql = "select `email`,`password`,`name` from administrator where adminNumber = ? and password = ?";
         return queryForOne(Administrator.class,sql,adminNumber,password);

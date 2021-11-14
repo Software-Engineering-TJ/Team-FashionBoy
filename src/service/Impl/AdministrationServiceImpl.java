@@ -26,6 +26,16 @@ public class AdministrationServiceImpl implements AdministrationService {
     private SectionDao sectionDao = new SectionDaoImpl();
     //后续肯定还需要takes、teaches
 
+    @Override
+    public Student getStudentByStudentNumber(String studentNumber) {
+        return studentDao.QueryStudentByStudentNumber(studentNumber);
+    }
+
+    @Override
+    public Administrator getAdministrationInfo(String adminNumber) {
+        return administratorDao.QueryAdministratorByNumber(adminNumber);
+    }
+
 
     @Override
     public boolean EmailExists(String email) {
@@ -217,6 +227,17 @@ public class AdministrationServiceImpl implements AdministrationService {
         map.put("instructorNumber",instructorNumber);
         map.put("name",name);
         return map;
+    }
+
+    @Override
+    public String ChangeDutyInstructor(String instructorNumber, String courseID) {
+        String msg = "success";  //修改结果
+        //修改责任教师
+        if(courseDao.SetDutyInstructor(courseID,instructorNumber)!=1){
+            msg = "error";
+        }
+
+        return msg;
     }
 
     @Override

@@ -86,6 +86,26 @@ var vm = new Vue({
                 alert('您的账号不能为空');
                 return false;
             }
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=sendEmail',
+                method: "Post",
+                data: {
+                    userNumber: this.ruleForm.account
+                },
+            }).then(resp => {
+                if (resp.data.userNumber === undefined) {
+                    alert("该账号不存在！请重新输入！")
+                    this.ruleForm.account = "";
+                    this.ruleForm.password = "";
+                } else if (resp.data.status === "0") {
+                    alert("您的账号还未激活！请先激活账号！")
+                } else if (resp.data.password === this.ruleForm.password) {
+                    window.location.href = "/SoftwareEngineering/pages/administrator/aIndex.html"
+                } else {
+                    alert("您输入的密码错误！请重新输入！")
+                    this.ruleForm.password = "";
+                }
+            });
             this.ruleForm.judge = true;
             this.btnStatus = true;
         }

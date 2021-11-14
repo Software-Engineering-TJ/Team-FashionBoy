@@ -15,3 +15,4 @@
 # Directories
 .idea/
 out/
+/web/WEB-INF/lib/

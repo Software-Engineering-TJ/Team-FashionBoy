@@ -87,6 +87,7 @@ public class SectionInformation {
         public String toString() {
                 return "SectionInformation{" +
                         "title='" + title + '\'' +
+                        ", courseID='" + courseID + '\'' +
                         ", classID='" + classID + '\'' +
                         ", day='" + day + '\'' +
                         ", time='" + time + '\'' +
