@@ -49,6 +49,11 @@ public class Instructor extends User{
     }
 
     @Override
+    public String getUserNumber() {
+        return instructorNumber;
+    }
+
+    @Override
     public String getStudentNumber() {
         return null;
     }

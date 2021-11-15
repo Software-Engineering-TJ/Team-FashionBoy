@@ -173,6 +173,13 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(userInformationJson);
     }
 
+    /**
+     * getUserStatus确认已激活后才会调用此方法来执行登陆成功的页面跳转
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String reqJson = RequestJsonUtils.getJson(req);
@@ -181,9 +188,9 @@ public class UserServlet extends BaseServlet {
         String userNumber = reqObject.get("userNumber");
         //获取需要登录的用户对象，用于判断身份
         User user = userService.ifActivated(userNumber);
-//        将必要信息加入到session
-//        HttpSession session = req.getSession();
-//        session.setAttribute("userNumber", userNumber);
+        //将userNumber信息加入到session,方便后续直接获取用户信息
+        HttpSession session = req.getSession();
+        session.setAttribute("userNumber", userNumber);
         //转到登录成功后的界面
         resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
         if(user instanceof Student) {
@@ -201,7 +208,30 @@ public class UserServlet extends BaseServlet {
         }
     }
 
-    protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * 根据login中存储的uerNumber信息来获取详细信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        //先获取userNumber信息
+        String userNumber = (String)req.getSession().getAttribute("userNumber");
+        //从数据库获取用户信息
+        User user = userService.ifActivated(userNumber);
+        Map<String,String> map = new HashMap<>();
+        map.put("userNumber",user.getUserNumber());
+        map.put("name",user.getName());
+        map.put("sex",(user.getSex()==1)?"男":"女");
+        map.put("email",user.getEmail());
+        map.put("phoneNumber",user.getPhoneNumber());
+        //转Json-String格式
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+        protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1.清除网页记录的所有用户信息
         //2.转到登录界面
     }

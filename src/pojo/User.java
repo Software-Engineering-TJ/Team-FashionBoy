@@ -60,4 +60,6 @@ public abstract class User {
     public abstract String getAdminNumber();
 
     public abstract void setAdminNumber(String adminNumber) ;
+    //服务于UserServlet中的getUserInfo()
+    public abstract String getUserNumber();
 }

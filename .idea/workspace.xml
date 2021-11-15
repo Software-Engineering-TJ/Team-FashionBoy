@@ -11,11 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="最新版代码">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Administrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Instructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Instructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/login.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +45,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="20gU1rHyLRXTm9lBmTuV6MxnQd5" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -219,14 +219,6 @@
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>57</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>169</line>
-          <properties class="web.UserServlet" method="login">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
