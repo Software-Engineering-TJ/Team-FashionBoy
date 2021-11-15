@@ -33,21 +33,32 @@ var AuthorityTabs = Vue.extend({
             });
         },
         changeTeacherDuty(row, teacherNumber) {
-            console.log(teacherNumber);
             this.$confirm('你是否想要更改当前课程下该老师的职务?', '确认', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
                 if (row.duty === '教师') {
+                    console.log(row)
+                    console.log(row.duty)
+                    this.$emit('change-teacher-duty', teacherNumber, row.courseID ,row.duty)
                     row.duty = '责任教师';
                 } else {
-                    row.duty = '教师';
+                    this.$prompt('请输入该课程新责任教师工号', '更换责任教师', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        inputPattern: /^[0-9]*$/,
+                        inputErrorMessage: '工号格式不正确'
+                    }).then(({value}) => {
+                        this.$emit('change-teacher-duty', value, row.courseID ,row.duty)
+                        row.duty = '教师';
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消更新'
+                        });
+                    });
                 }
-                this.$message({
-                    type: 'success',
-                    message: '您已成功将该老师的职务修改为' + '<' + row.duty + '>'
-                });
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -778,6 +789,33 @@ var vm = new Vue({
                     this.$message({
                         type: 'success',
                         message: '您已成功将该学生的身份改为' + '<' + resp.data.duty + '>'
+                    });
+                    this.teacherDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
+                        type: 'error'
+                    })
+                }
+            });
+        },
+        changeTeacherDuty(teacherNumber, courseID ,duty) {
+            console.log(duty)
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=changeDutyInstructor',
+                method: "Post",
+                data: {
+                    instructorNumber: teacherNumber,
+                    courseID: courseID,
+                    duty:duty
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                if (resp.data.result === 'success') {
+                    this.$message({
+                        type: 'success',
+                        message: '您已成功将本课程下该教师的身份改为' + '<' + resp.data.duty + '>'
                     });
                     this.teacherDialogFormVisible = false
                 } else {

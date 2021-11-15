@@ -280,10 +280,16 @@ public class AdministrationServlet extends BaseServlet{
         //获取 哪个老师 想设置为 哪个课程 的责任教师
         String instructorNumber = reqObject.get("instructorNumber");
         String courseID = reqObject.get("courseID");
+        String duty = reqObject.get("duty");
         //获取修改结果
         String msg = administrationService.ChangeDutyInstructor(instructorNumber,courseID);
         Map<String,Object> map = new HashMap<>();
         map.put("result",msg);
+        if ("教师".equals(duty)){
+            map.put("duty","责任教师");
+        }else {
+            map.put("duty","教师");
+        }
         //JSON化
         resp.getWriter().write(gson.toJson(map));
     }

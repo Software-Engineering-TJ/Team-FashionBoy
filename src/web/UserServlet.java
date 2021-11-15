@@ -42,7 +42,7 @@ public class UserServlet extends BaseServlet {
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
 
-        int msg;
+        int msg = 0;
         String userNumber = reqObject.get("userNumber");
         User user = userService.ifActivated(userNumber);
         int status;
@@ -50,14 +50,14 @@ public class UserServlet extends BaseServlet {
             msg = 0;//账号不存在
         } else {
             status = user.getStatus();
-            if(status == 1){
+            if (status == 1) {
                 msg = 1;//已激活
-            }else {
+            } else {
                 //未激活
                 if (user instanceof Student) {
-                    user = (Student)user;
+                    user = (Student) user;
                 } else if (user instanceof Instructor) {
-                    user = (Instructor)user;
+                    user = (Instructor) user;
                 }
                 String desEmail = user.getEmail();
                 // 创建Properties 类用于记录邮箱的一些属性
@@ -114,12 +114,19 @@ public class UserServlet extends BaseServlet {
                     //将发送给目标邮箱的验证码，返回给前端
                     HttpSession session = req.getSession();
                     session.setAttribute("verificationCode", verificationCode);
+                    // 发送成功
+                    msg = 2;
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
             }
         }
+        //返回响应
+        Map<String,Object> map = new HashMap<>();
+        map.put("msg",msg);
+        String msgJson = gson.toJson(map);
+        resp.getWriter().write(msgJson);
     }
 
     /**
