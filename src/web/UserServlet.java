@@ -139,10 +139,15 @@ public class UserServlet extends BaseServlet {
         User user = userService.ifActivated(userNumber);
         String password;
         String status;
+        int identify = 0;  //激活码
 
         if (user != null) {
             password = user.getPassword();
             status = Integer.toString(user.getStatus());
+            //若未激活，返回激活码
+            if(status.equals("0")){
+                identify = (int) req.getSession().getAttribute("verificationCode");
+            }
         } else {
             //如果没有该用户，则返回如下内容
             userNumber = null;
@@ -154,6 +159,7 @@ public class UserServlet extends BaseServlet {
         userInformation.put("userNumber", userNumber);
         userInformation.put("password", password);
         userInformation.put("status", status);
+        userInformation.put("identify",identify);
         //转Json-String格式
         String userInformationJson = gson.toJson(userInformation);
         //返回响应
