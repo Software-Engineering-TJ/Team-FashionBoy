@@ -10,32 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/AdministratorDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/AdministratorDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/InstructorDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/InstructorDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/StudentDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/StudentDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/AdministratorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/AdministratorDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/InstructorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/InstructorDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/StudentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/StudentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/logicEntity/SectionInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/logicEntity/SectionInformation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/AdministrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/AdministrationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/PersonalServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/PersonalServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/login.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +43,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="20gU1rHyLRXTm9lBmTuV6MxnQd5" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -228,17 +206,9 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>162</line>
-          <properties class="web.UserServlet" method="login">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>91</line>
-          <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="23" />
@@ -246,7 +216,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>40</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />

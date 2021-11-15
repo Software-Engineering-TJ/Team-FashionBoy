@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService{
         if(student == null){
             Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(userNumber);
             if(instructor == null){
-                return null;
+                return administratorDao.QueryAdministratorByNumber(userNumber);
             }else {
                 return instructor;
             }

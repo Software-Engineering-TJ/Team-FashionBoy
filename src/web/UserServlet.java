@@ -161,27 +161,31 @@ public class UserServlet extends BaseServlet {
     }
 
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //userService查找了三个表：student、instructor、administrator
-//        String userNumber = req.getParameter("userNumber");
-//        String password = req.getParameter("password");
-//        User user = userService.Login(userNumber, password);
-//
-//        if (user != null) {
-        //将必要信息添加到session
+
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
         String userNumber = reqObject.get("userNumber");
-        HttpSession session = req.getSession();
-        session.setAttribute("userNumber", userNumber);
+        //获取需要登录的用户对象，用于判断身份
+        User user = userService.ifActivated(userNumber);
+//        将必要信息加入到session
+//        HttpSession session = req.getSession();
+//        session.setAttribute("userNumber", userNumber);
         //转到登录成功后的界面
         resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
-        resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
-        resp.sendRedirect("/SoftwareEngineering/pages/administrator/aIndex.html");
-//        } else {
-//            //留在登录界面
-//
-//        }
+        if(user instanceof Student) {
+            //学生页面
+            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/aIndex.html");//重定向地址
+            resp.sendRedirect("/SoftwareEngineering/pages/administrator/aIndex.html");
+        }else if(user instanceof Instructor){
+            //教师页面
+            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/aIndex.html");//重定向地址
+            resp.sendRedirect("/SoftwareEngineering/pages/instructor/aIndex.html");
+        }else{
+            //管理员页面
+            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
+            resp.sendRedirect("/SoftwareEngineering/pages/administrator/aIndex.html");
+        }
     }
 
     protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
