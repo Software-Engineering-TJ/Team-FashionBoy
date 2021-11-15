@@ -56,15 +56,19 @@ var vm = new Vue({
                         },
                     }).then(resp => {
                         if (resp.data.userNumber === undefined) {
-                            alert("该账号不存在！请重新输入！")
+                            this.$message.error('此账号不存在！请重新输入！');
                             this.ruleForm.account = "";
                             this.ruleForm.password = "";
                         } else if (resp.data.status === "0") {
-                            alert("您的账号还未激活！请先激活账号！")
+                            this.$message.error('您的账号还未激活，请先激活该账号！');
                         } else if (resp.data.password === this.ruleForm.password) {
+                            this.$message({
+                                message: '登录成功！',
+                                type: 'success'
+                            });
                             window.location.href = "/SoftwareEngineering/pages/administrator/aIndex.html"
                         } else {
-                            alert("您输入的密码错误！请重新输入！")
+                            this.$message.error('您输入的密码错误！请重新输入！');
                             this.ruleForm.password = "";
                         }
                     });
@@ -93,21 +97,23 @@ var vm = new Vue({
                     userNumber: this.ruleForm.account
                 },
             }).then(resp => {
-                if (resp.data.userNumber === undefined) {
-                    alert("该账号不存在！请重新输入！")
-                    this.ruleForm.account = "";
-                    this.ruleForm.password = "";
-                } else if (resp.data.status === "0") {
-                    alert("您的账号还未激活！请先激活账号！")
-                } else if (resp.data.password === this.ruleForm.password) {
-                    window.location.href = "/SoftwareEngineering/pages/administrator/aIndex.html"
-                } else {
-                    alert("您输入的密码错误！请重新输入！")
-                    this.ruleForm.password = "";
+                if (resp.data.msg === 0) {
+                    this.$message.error('此账号不存在！请重新输入！');
+                } else if (resp.data.msg === 1) {
+                    this.$message({
+                        message: '您的账号已激活，无需再次激活！',
+                        type: 'warning'
+                    });
+                } else if (resp.data.msg === 2) {
+                    this.$message({
+                        message: '激活码发送成功！',
+                        type: 'success'
+                    });
+                    this.ruleForm.judge = true;
+                    this.btnStatus = true;
                 }
             });
-            this.ruleForm.judge = true;
-            this.btnStatus = true;
+
         }
     }
 })
