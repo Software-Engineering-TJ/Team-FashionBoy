@@ -9,13 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="最新版代码">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="FileServlet">
+      <change afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/Instructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Instructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +65,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\javaProjects\Team-FashionBoy\src\web" />
     </key>
   </component>
   <component name="RunManager">
@@ -223,7 +222,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>91</line>
-          <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="23" />
@@ -231,7 +230,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>40</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />
@@ -239,7 +238,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>272</line>
-          <properties class="web.AdministrationServlet" method="changeDutyInstructor">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="28" />
