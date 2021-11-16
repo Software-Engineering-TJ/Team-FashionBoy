@@ -62,11 +62,22 @@ var vm = new Vue({
                         } else if (resp.data.status === "0") {
                             this.$message.error('您的账号还未激活，请先激活该账号！');
                         } else if (resp.data.password === this.ruleForm.password) {
-                            this.$message({
-                                message: '登录成功！',
-                                type: 'success'
-                            });
-                            window.location.href = "/SoftwareEngineering/pages/administrator/aIndex.html"
+                            axios({
+                                url: '/SoftwareEngineering/userServlet?action=login',
+                                method: "Post",
+                                data: {
+                                    userNumber: this.ruleForm.account
+                                },
+                            }).then(resp=> {
+                                console.log(resp.headers)
+                                if (resp.headers.redirect !== undefined){
+                                    this.$message({
+                                        message: '登录成功！',
+                                        type: 'success'
+                                    });
+                                    window.location.href = resp.headers.contextpath
+                                }
+                            })
                         } else {
                             this.$message.error('您输入的密码错误！请重新输入！');
                             this.ruleForm.password = "";

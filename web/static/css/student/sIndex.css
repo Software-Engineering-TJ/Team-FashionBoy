@@ -1,0 +1,19 @@
+.my-bg{
+    color: black;
+    min-height: 50px;
+    line-height: 50px;
+    background-color: #C0C4CC;
+    border-radius: 0;
+}
+
+.report{
+    background: #d3dce6;
+    border-radius: 4px;
+    min-height: 36px;
+}
+
+.new-report{
+    background: #d3dce6;
+    border-radius: 4px;
+    min-height: 36px;
+}

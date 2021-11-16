@@ -41,7 +41,7 @@
     line-height: 160px;
 }
 
-body>.el-container {
+body > .el-container {
     margin-top: 50px;
     margin-bottom: 40px;
 }
@@ -66,6 +66,10 @@ body>.el-container {
 }
 
 #drawerBox {
+    line-height: initial;
+}
+
+#drawerBoxCourse {
     line-height: initial;
 }
 
@@ -110,4 +114,28 @@ body>.el-container {
 
 #welcomeTitle {
     display: inline-block;
+}
+
+.el-row {
+    margin-bottom: 20px;
+}
+.el-col {
+    border-radius: 4px;
+}
+.bg-purple-dark {
+    background: #99a9bf;
+}
+.bg-purple {
+    background: #d3dce6;
+}
+.bg-purple-light {
+    background: #e5e9f2;
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 50px;
+}
+.row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
 }
