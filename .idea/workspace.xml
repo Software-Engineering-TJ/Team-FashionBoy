@@ -9,11 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="文件的上传和下载功能——位于FileServlet">
-      <change afterPath="$PROJECT_DIR$/src/filter/LoginFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="添加了一个登录检测过滤器——用于访问其他页面时检测是否登录了">
+      <change beforePath="$PROJECT_DIR$/src/filter/LoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/filter/LoginFilter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +175,7 @@
       <workItem from="1636627771386" duration="109000" />
       <workItem from="1636889405488" duration="9239000" />
       <workItem from="1636943271686" duration="6331000" />
-      <workItem from="1637045988961" duration="2546000" />
+      <workItem from="1637045988961" duration="2938000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -194,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636981053768</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="添加了一个登录检测过滤器——用于访问其他页面时检测是否登录了">
+      <created>1637048713239</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637048713239</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +219,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="最新版代码" />
     <MESSAGE value="文件的上传和下载功能——位于FileServlet" />
-    <option name="LAST_COMMIT_MESSAGE" value="文件的上传和下载功能——位于FileServlet" />
+    <MESSAGE value="添加了一个登录检测过滤器——用于访问其他页面时检测是否登录了" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加了一个登录检测过滤器——用于访问其他页面时检测是否登录了" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
