@@ -193,12 +193,16 @@ public class UserServlet extends BaseServlet {
         //转到登录成功后的界面
         resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
         if(user instanceof Student) {
+            //标明身份
+            session.setAttribute("identity","student");
             //学生页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/sIndex.html");//重定向地址
         }else if(user instanceof Instructor){
+            session.setAttribute("identity","instructor");
             //教师页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/aIndex.html");//重定向地址
         }else{
+            session.setAttribute("identity","administrator");
             //管理员页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
         }
@@ -229,21 +233,37 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(gson.toJson(map));
     }
 
+    /**
+     * 用户修改自己的信息：仅电话和邮箱
+     * 返回0/1表示成功或失败
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void changeUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String userNumber = reqObject.get("userNumber");
+        String phoneNumber = reqObject.get("phoneNumber");
+        String email = reqObject.get("email");
+
+        //获取用户身份
+        String identity = (String) req.getSession().getAttribute("identity");
+        //修改结果
+        int result = userService.alterUserInfo(identity,userNumber,phoneNumber,email);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
+
         protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1.清除网页记录的所有用户信息
         //2.转到登录界面
-    }
-
-    protected void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-
-        if (userService.ExistEmail(email) == null) {
-            //执行注册失败操作
-        } else {
-            User user = userService.Register(email, password);
-            //跳转到注册成功界面
-        }
     }
 
 }

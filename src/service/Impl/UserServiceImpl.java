@@ -25,41 +25,6 @@ public class UserServiceImpl implements UserService{
     private InstructorDao  instructorDao = new InstructorDaoImpl();
     private StudentDao studentDao = new StudentDaoImpl();
 
-
-    @Override
-    public Student getStudentByStudentNumber(String studentNumber) {
-        return studentDao.QueryStudentByStudentNumber(studentNumber);
-    }
-
-    @Override
-    public Instructor getInstructorByInstructorNumber(String instructorNumber) {
-        return instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
-    }
-
-
-    @Override
-    public User Login(String userNumber, String password) {
-        //先找学生
-        Student student = studentDao.QueryStudentByStudentNumberAndPassword(userNumber,password);
-        if(student==null) {
-            //找不到学生找老师
-            Instructor instructor = instructorDao.QueryInstructorByInstructorNumberAndPassword(userNumber,password);
-            if(instructor==null){
-                //最后找管理员
-                Administrator administrator = administratorDao.QueryAdministratorByAdminNumberAndPassword(userNumber,password);
-                if(administrator == null){
-                    return null;
-                }else {
-                    return administrator;
-                }
-            }else{
-                return instructor;
-            }
-        }else{
-            return student;
-        }
-    }
-
     @Override
     public User ExistEmail(String email) {
         Student student = studentDao.QueryStudentByEmail(email);
@@ -93,36 +58,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User Register(String email, String password) {
-        return null;
+    public int alterUserInfo(String identity, String userNumber, String phoneNumber, String email) {
+        int result = 0;
+
+        if(identity.equals("student")){
+            //修改者是“学生”
+            result = studentDao.updateStudent(userNumber,email,phoneNumber);
+        }else if(identity.equals("instructor")){
+            //修改者是“教师”
+            result = instructorDao.updateInstructor(userNumber,email,phoneNumber);
+        }else{
+            //修改者是“管理员”
+//            result = administratorDao.updateAdministrator(userNumber,email,phoneNumber);
+        }
+
+        return result;
     }
-
-    @Override
-    public User Register(String email) {
-        return null;
-    }
-
-
-    @Override
-    public int alterInstructorInformation(String instructorNumber, String email, String phoneNumber) {
-        return instructorDao.updateInstructor(instructorNumber, email, phoneNumber);
-    }
-
-    @Override
-    public int alterInstructorInformation(String instructorNumber, String email, String name, Integer sex, String phoneNumber) {
-        return instructorDao.updateInstructor(instructorNumber, email, name, sex, phoneNumber);
-    }
-
-    @Override
-    public int alterStudentInformation(String studentNumber, String email, String name, Integer sex, String phoneNumber) {
-        return studentDao.updateStudent(studentNumber, email, name, sex, phoneNumber);
-    }
-
-    @Override
-    public int alterStudentInformation(String studentNumber, String email, String phoneNumber) {
-        return studentDao.updateStudent(studentNumber, email, phoneNumber);
-    }
-
-
-
 }
