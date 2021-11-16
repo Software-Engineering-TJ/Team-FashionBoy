@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../../static/img/icon.ico" />
+    <link rel="icon" type="image/x-icon" href="/SoftwareEngineering/static/img/icon.ico"/>
     <!-- 引入Element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入公共样式 -->
-    <link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" href="/SoftwareEngineering/static/css/common.css">
     <!-- 引入本页面样式 -->
-    <link rel="stylesheet" href="../../static/css/student/sIndex.css">
+    <link rel="stylesheet" href="/SoftwareEngineering/static/css/student/sIndex.css">
     <!-- 引入Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
@@ -20,149 +20,215 @@
 </head>
 
 <body>
-    <div id="box" v-cloak>
-        <!-- 修改用户信息的弹窗开始 -->
-        <el-dialog title="修改个人信息" :visible.sync="userDialogFormVisible">
-            <el-container>
-                <el-form :model="userChange" inline>
-                    <el-form-item label="姓名：" :label-width="formLabelWidth">
-                        <el-input v-model="userChange.name" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="性别：" :label-width="formLabelWidth">
-                        <el-input v-model="userChange.sex" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="学号：" :label-width="formLabelWidth">
-                        <el-input v-model="userChange.studentNumber" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮箱：" :label-width="formLabelWidth">
-                        <el-input v-model="userChange.email" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="电话号码：" :label-width="formLabelWidth">
-                        <el-input v-model="userChange.phoneNumber" autocomplete="off"></el-input>
-                    </el-form-item>
-                </el-form>
-            </el-container>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="switchUserDialogStatus">取 消</el-button>
-                <el-button type="primary" @click="changeUserInfo">提 交</el-button>
-            </div>
-        </el-dialog>
-        <!-- 修改用户信息的弹窗结束 -->
-        <div id="mainbox">
-            <div id="header">
-                <img id="logoimg" src="../../static/img/logo2.png">
-                <h3 id="logotitle">济实-实验教学管理系统</h3>
-                <div id="welcomeBox">
-                    <h4 id="welcomeTitle">你好！</h4>
-                    <el-button type="text" @click="drawerVisible=true">{{user.name}} ({{user.studentNumber}})</el-button>
-                </div>
-            </div>
-            <div id="containerbox">
-                <el-container>
-                    <el-aside width="200px">
-                        <!-- 用户信息界面的抽屉开始 -->
-                        <div id="drawerBox">
-                            <el-drawer style="float: left ;" title="个人信息" :visible.sync="drawerVisible" :direction="drawerDirection" :before-close="handleCloseDrawer" size="35%">
-                                <div id="descriptionBox">
-                                    <el-descriptions class="margin-top" title="学生" :column="2" border>
-                                        <template slot="extra">
-                                          <el-button type="primary" size="small" @click="switchUserDialogStatus">修改个人信息</el-button>
-                                        </template>
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                            <i class="el-icon-user"></i>
-                                            姓名
-                                          </template> {{user.name}}
-                                        </el-descriptions-item>
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                            <i class="el-icon-guide"></i>
-                                            性别
-                                          </template> {{user.sex}}
-                                        </el-descriptions-item>
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                            <i class="el-icon-collection-tag"></i>
-                                            学号
-                                          </template> {{user.studentNumber}}
-                                        </el-descriptions-item>
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                            <i class="el-icon-mobile-phone"></i>
-                                            电话号码
-                                          </template> {{user.phoneNumber}}
-                                        </el-descriptions-item>
-                                        <el-descriptions-item>
-                                            <template slot="label">
-                                            <i class="el-icon-message"></i>
-                                            邮箱
-                                          </template> {{user.email}}
-                                        </el-descriptions-item>
-                                    </el-descriptions>
-                                </div>
-                            </el-drawer>
-                        </div>
-                        <!-- 用户信息界面的抽屉结束 -->
-                        <!-- 侧边导航栏开始 -->
-                        <div id="asideBox">
-                            <el-row class="tac">
-                                <el-col :span="24">
-                                    <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpenNavMenu" @close="handleCloseNavMenu" @select="selectMenuItem" ref="navMenu">
-                                        <!-- 用户头像开始 -->
-                                        <div id="avatarBlock">
-                                            <el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar>
-                                        </div>
-                                        <!-- 用户头像结束 -->
-                                        <!-- 导航1开始 -->
-                                        <el-menu-item index="1">
-                                            <i class="el-icon-date"></i>
-                                            <span slot="title" id="calenderManage">日程表</span>
-                                        </el-menu-item>
-                                        <el-submenu index="2">
-                                            <template slot="title">
-                                        <i class="el-icon-user"></i>
-                                        <span>账户管理</span>
-                                      </template>
-                                            <el-submenu index="2-1">
-                                                <template slot="title">创建新账号</template>
-                                                <el-menu-item index="2-1-1">添加学生</el-menu-item>
-                                                <el-menu-item index="2-1-2">添加教师</el-menu-item>
-                                            </el-submenu>
-                                            <el-menu-item index="2-2">
-                                                <span slot="title" id="authorityManage">修改账号信息</span>
-                                            </el-menu-item>
-                                        </el-submenu>
-                                        <!-- 导航1结束 -->
-                                        <el-menu-item index="3">
-                                            <i class="el-icon-edit"></i>
-                                            <span slot="title" id="authorityManage">权限管理</span>
-                                        </el-menu-item>
-                                        <el-menu-item index="4">
-                                            <i class="el-icon-chat-dot-round"></i>
-                                            <span slot="title">消息</span>
-                                        </el-menu-item>
-                                    </el-menu>
-                                </el-col>
-                            </el-row>
-                        </div>
-                        <!-- 侧边导航栏结束 -->
-                    </el-aside>
-                    <!-- 主显示区开始 -->
-                    <el-main>
-                        <div id="reject">
-                            <keep-alive>
-                                <component :is="changeComponents"></component>
-                            </keep-alive>
-                        </div>
-                    </el-main>
-                    <!-- 主显示区结束 -->
-                </el-container>
+
+<div id="box" v-cloak>
+
+    <!-- 修改用户信息的弹窗开始 -->
+    <el-dialog title="修改个人信息" :visible.sync="userDialogFormVisible">
+        <el-container>
+            <el-form :model="userChange" inline>
+                <el-form-item label="姓名：" :label-width="formLabelWidth">
+                    <el-input disabled v-model="userChange.name" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="性别：" :label-width="formLabelWidth">
+                    <el-input disabled v-model="userChange.sex" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="学号：" :label-width="formLabelWidth">
+                    <el-input disabled v-model="userChange.studentNumber" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱：" :label-width="formLabelWidth">
+                    <el-input v-model="userChange.email" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="电话号码：" :label-width="formLabelWidth">
+                    <el-input v-model="userChange.phoneNumber" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-container>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="switchUserDialogStatus">取 消</el-button>
+            <el-button type="primary" @click="changeUserInfo">提 交</el-button>
+        </div>
+    </el-dialog>
+    <!-- 修改用户信息的弹窗结束 -->
+
+    <div id="mainbox">
+
+        <div id="header">
+            <img id="logoimg" src="../../static/img/logo2.png">
+            <h3 id="logotitle">济实-实验教学管理系统</h3>
+            <div id="welcomeBox">
+                <h4 id="welcomeTitle">你好！</h4>
+                <el-button type="text" @click="drawerVisible=true">{{user.name}} ({{user.studentNumber}})</el-button>
             </div>
         </div>
+
+        <div id="containerbox">
+            <el-container>
+                <el-aside width="200px">
+
+                    <!-- 用户信息界面的抽屉开始 -->
+                    <div id="drawerBox">
+                        <el-drawer style="float: left ;" title="个人信息" :visible.sync="drawerVisible"
+                                   :direction="drawerDirection" :before-close="handleCloseDrawer" size="35%">
+                            <div id="descriptionBox">
+                                <el-descriptions class="margin-top" title="学生" :column="2" border>
+                                    <template slot="extra">
+                                        <el-button type="primary" size="small" @click="switchUserDialogStatus">修改个人信息
+                                        </el-button>
+                                    </template>
+                                    <el-descriptions-item>
+                                        <template slot="label">
+                                            <i class="el-icon-user"></i>
+                                            姓名
+                                        </template>
+                                        {{user.name}}
+                                    </el-descriptions-item>
+                                    <el-descriptions-item>
+                                        <template slot="label">
+                                            <i class="el-icon-guide"></i>
+                                            性别
+                                        </template>
+                                        {{user.sex}}
+                                    </el-descriptions-item>
+                                    <el-descriptions-item>
+                                        <template slot="label">
+                                            <i class="el-icon-collection-tag"></i>
+                                            学号
+                                        </template>
+                                        {{user.studentNumber}}
+                                    </el-descriptions-item>
+                                    <el-descriptions-item>
+                                        <template slot="label">
+                                            <i class="el-icon-mobile-phone"></i>
+                                            电话号码
+                                        </template>
+                                        {{user.phoneNumber}}
+                                    </el-descriptions-item>
+                                    <el-descriptions-item>
+                                        <template slot="label">
+                                            <i class="el-icon-message"></i>
+                                            邮箱
+                                        </template>
+                                        {{user.email}}
+                                    </el-descriptions-item>
+                                </el-descriptions>
+                            </div>
+                        </el-drawer>
+                    </div>
+                    <!-- 用户信息界面的抽屉结束 -->
+
+                    <!-- 课程信息的抽屉开始 -->
+                    <div id="drawerBoxCourse">
+                        <el-drawer
+                                :visible.sync="drawerCourse"
+                                size="20%"
+                                :direction="drawerDirectionCourse">
+                            <template slot="title">
+                                <h1>我的课程</h1>
+                            </template>
+                            <template v-for="item in courseList">
+                                <el-row>
+                                    <el-col :span="6" :offset="3">
+                                        <div class="grid-content bg-purple" style="width: 230px;">
+                                            <el-button type="text"
+                                                       @click="loadCourseInformation(item.courseID,item.title,item.classID)">
+                                                <h3>
+                                                    {{item.title}}</h3></el-button>
+                                            <div style="position: relative;width: 200px;height: 25px">
+                                                <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
+                                                    课程编号：</h5>
+                                                <span style="float: left;position: absolute;left: 75px">{{item.courseID}}</span>
+                                            </div>
+                                            <div style="position: relative;width: 200px;height: 25px">
+                                                <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
+                                                    班级号：</h5>
+                                                <span style="float: left;position: absolute;left: 75px">{{item.classID}}</span>
+                                            </div>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </template>
+                        </el-drawer>
+                    </div>
+                    <!-- 课程信息的抽屉结束 -->
+
+                    <!-- 侧边导航栏开始 -->
+                    <div id="asideBox">
+                        <el-row class="tac">
+                            <el-col :span="24">
+                                <el-menu :default-active="defaultActive" class="el-menu-vertical-demo"
+                                         @open="handleOpenNavMenu"
+                                         @close="handleCloseNavMenu" @select="selectMenuItem" ref="navMenu"
+                                         background-color="#545c64"
+                                         text-color="#fff"
+                                         active-text-color="#ffd04b">
+
+                                    <!-- 用户头像开始 -->
+                                    <div id="avatarBlock">
+                                        <el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar>
+                                    </div>
+                                    <!-- 用户头像结束 -->
+
+                                    <!-- 导航1开始 -->
+                                    <el-menu-item index="1">
+                                        <i class="el-icon-date"></i>
+                                        <span slot="title" id="calenderManage">日程表</span>
+                                    </el-menu-item>
+                                    <!-- 导航1结束 -->
+
+                                    <!-- 导航2开始 -->
+                                    <el-menu-item index="2">
+                                        <i class="el-icon-reading"></i>
+                                        <span slot="title" id="courseManage">我的课程</span>
+                                    </el-menu-item>
+                                    <!-- 导航2结束 -->
+
+                                    <!-- 导航3开始 -->
+                                    <el-menu-item index="3">
+                                        <i class="el-icon-edit"></i>
+                                        <span slot="title" id="authorityManage">权限管理</span>
+                                    </el-menu-item>
+                                    <!-- 导航3结束 -->
+
+                                    <!-- 导航4开始 -->
+                                    <el-menu-item index="4">
+                                        <i class="el-icon-chat-dot-round"></i>
+                                        <span slot="title">消息</span>
+                                    </el-menu-item>
+                                    <!-- 导航4结束 -->
+
+                                </el-menu>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <!-- 侧边导航栏结束 -->
+                </el-aside>
+                <!-- 主显示区开始 -->
+                <el-main>
+                    <div id="reject">
+                        <!--                        <keep-alive>-->
+                        <component :is="changeComponents" :course-id="courseID" :course-name="title"
+                                   :student-number="user.studentNumber"
+                                   :notice-list="noticeList"
+                                   @go-back="goBack"></component>
+                        <!--                        </keep-alive>-->
+                    </div>
+                </el-main>
+                <!-- 主显示区结束 -->
+            </el-container>
+        </div>
     </div>
-    <!-- 引入axios -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="../../static/js/student/sIndex.js"></script>
+</div>
+<!-- 引入axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/epReportDetail.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/experimentalReport.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/fileDownLoad.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/noticeDetail.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/notice.js"></script>
+<script src="/SoftwareEngineering/static/js/student/course.js"></script>
+<script src="/SoftwareEngineering/static/js/student/calender.js"></script>
+<script src="../../static/js/student/sIndex.js"></script>
 </body>
 
 </html>

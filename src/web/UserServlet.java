@@ -1,6 +1,5 @@
 package web;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import pojo.Instructor;
 import pojo.Student;
@@ -195,17 +194,16 @@ public class UserServlet extends BaseServlet {
         resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
         if(user instanceof Student) {
             //学生页面
-            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/aIndex.html");//重定向地址
-            resp.sendRedirect("/SoftwareEngineering/pages/administrator/aIndex.html");
+            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/sIndex.html");//重定向地址
         }else if(user instanceof Instructor){
             //教师页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/aIndex.html");//重定向地址
-            resp.sendRedirect("/SoftwareEngineering/pages/instructor/aIndex.html");
         }else{
             //管理员页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
-            resp.sendRedirect("/SoftwareEngineering/pages/administrator/aIndex.html");
         }
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("access-control-expose-headers", "REDIRECT,CONTEXTPATH");
     }
 
     /**

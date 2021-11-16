@@ -391,6 +391,18 @@ var AccountInfoTabs = Vue.extend({
 // Vue实例
 var vm = new Vue({
     el: "#box",
+    mounted:function () {
+        axios({
+            url: '/SoftwareEngineering/userServlet?action=getUserInfo',
+            method: "Get",
+        }).then(resp => {
+            this.administrator.name = resp.data.name
+            this.administrator.sex = resp.data.sex
+            this.administrator.email = resp.data.email
+            this.administrator.phoneNumber=resp.data.phoneNumber
+            this.administrator.teacherNumber = resp.data.userNumber
+        })
+    },
     data() {
         return {
             // 动态组件切换
@@ -413,11 +425,11 @@ var vm = new Vue({
             changeTeacherDialogFormVisible: false,
             // 管理员实体
             administrator: {
-                id: '',
-                name: '陈荣',
-                teacherNumber: '239784',
-                phoneNumber: '18886806666',
-                email: 'chengrong@163.com',
+                name: '',
+                sex:'',
+                teacherNumber: '',
+                phoneNumber: '',
+                email: '',
             },
             // 管理员临时实体，作为表单修改对象
             administratorChange: {},

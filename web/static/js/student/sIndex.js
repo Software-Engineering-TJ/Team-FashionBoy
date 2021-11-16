@@ -1,46 +1,85 @@
-// 局部组件2：日历组件
-var Calender = Vue.extend({
-    template: `
-        <el-calendar>
-            <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
-            <template slot="dateCell" slot-scope="{date, data}">
-              <p :class="data.isSelected ? 'is-selected' : ''">
-                {{ data.day.split('-').slice(1).join('-') }} {{ data.isSelected ? '✔️' : ''}}
-              </p>
-            </template>
-        </el-calendar>`
-});
-
 // Vue实例
 var vm = new Vue({
     el: "#box",
+    mounted:function () {
+        axios({
+            url: '/SoftwareEngineering/userServlet?action=getUserInfo',
+            method: "Get",
+        }).then(resp => {
+            this.user.name = resp.data.name
+            this.user.sex = resp.data.sex
+            this.user.email = resp.data.email
+            this.user.phoneNumber=resp.data.phoneNumber
+            this.user.studentNumber = resp.data.userNumber
+        })
+    },
     data() {
         return {
             // 页头logo
             logo: '../../static/img/logo2.png',
+            // 课程编号
+            courseID: '',
+            // 课程名
+            title: '',
+            // 班级号
+            classID:'',
             // 头像路径
             squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
             // 动态组件切换
-            changeComponents: 'calender',
-            // 抽屉是否显示
+            changeComponents: 'Calender',
+            // 用户信息抽屉是否显示
             drawerVisible: false,
+            // 课程信息抽屉是否显示
+            drawerCourse: false,
             // 抽屉弹出方向
             drawerDirection: 'ltr',
-            // 管理员信息对话框是否可见
+            // 课程抽屉弹出方向
+            drawerDirectionCourse: 'rtl',
+            // 导航栏默认选中
+            defaultActive: '1',
+            // 用户信息对话框是否可见
             userDialogFormVisible: false,
-            // 管理员实体
+            // 用户实体
             user: {
-                name: '王文炯',
-                sex: '男',
-                studentNumber: '1953281',
-                phoneNumber: '18886806666',
-                email: 'chengrong@163.com',
+                name: '',
+                sex: '',
+                studentNumber: '',
+                phoneNumber: '',
+                email: '',
             },
             // 管理员临时实体，作为表单修改对象
             userChange: {},
             // 对话框中表单标签的宽度
             formLabelWidth: '120px',
-
+            // 学生课程表
+            courseList: [
+                {
+                    title: '计算机网络实验',
+                    courseID: '23654',
+                    classID:'1'
+                },
+                {
+                    title: '计算机组成原理实验',
+                    courseID: '23653',
+                    classID:'2'
+                },
+            ],
+            // 课程相关公告信息
+            noticeList: [
+                {
+                    title: '公告一',
+                    content: '请同学们完成实验一',
+                    date: '2021.11.11-2021.12.12'
+                }, {
+                    title: '公告二',
+                    content: '请同学们完成实验二',
+                    date: '2021.11.11-2021.12.12'
+                }, {
+                    title: '公告三',
+                    content: '请同学们完成实验三',
+                    date: '2021.11.11-2021.12.12'
+                }
+            ]
         };
     },
     methods: {
@@ -59,25 +98,19 @@ var vm = new Vue({
                 .then(_ => {
                     done();
                 })
-                .catch(_ => {});
+                .catch(_ => {
+                });
         },
         // 选择对应的导航栏项触发
         selectMenuItem(key, keyPath) {
             switch (key) {
                 case "1":
-                    this.$data.changeComponents = "Calender"
+                    this.changeComponents = "Calender"
+                    this.defaultActive = '1'
                     break;
-                case "3":
-                    this.$data.changeComponents = "AuthorityTabs"
-                    break;
-                case "2-2":
-                    this.$data.changeComponents = "AccountInfoTabs"
-                    break;
-                case "2-1-1":
-                    this.$data.studentDialogFormVisible = true;
-                    break;
-                case "2-1-2":
-                    this.$data.teacherDialogFormVisible = true;
+                case "2":
+                    this.drawerCourse = true
+                    this.defaultActive = '2'
                     break;
                 default:
                     break;
@@ -85,23 +118,42 @@ var vm = new Vue({
         },
         // 改变管理员信息
         changeUserInfo() {
-            this.$data.user = JSON.parse(JSON.stringify(this.$data.userChange));
+            this.user = JSON.parse(JSON.stringify(this.$data.userChange));
             // axios.psot('http://canvas.tongji.edu.cn', this.$data.administratorChange);
-            this.$data.userDialogFormVisible = false;
+            this.userDialogFormVisible = false;
         },
         //切换管理员信息改变页面的状态
         switchUserDialogStatus() {
-            if (this.$data.userDialogFormVisible === false) {
-                this.$data.userChange = JSON.parse(JSON.stringify(this.$data.user));
-                this.$data.userDialogFormVisible = true;
+            if (this.userDialogFormVisible === false) {
+                this.userChange = JSON.parse(JSON.stringify(this.$data.user));
+                this.userDialogFormVisible = true;
             } else {
-                this.$data.userDialogFormVisible = false;
+                this.userDialogFormVisible = false;
             }
+        },
+        // 加载该学生所有课程,用户点击“我的课程”时触发
+        loadCourse() {
+
+        },
+        // 加载课程相关信息
+        loadCourseInformation(courseID, title,classID) {
+            // 通过课程ID来加载课程信息
+            this.changeComponents = 'Course'
+            this.courseID = courseID
+            this.title = title
+            this.classID = classID
+            console.log(courseID)
+        },
+        goBack() {
+            this.defaultActive = '1'
+            this.changeComponents = Calender
         }
     },
     components: {
         // 日历组件
-        Calender
+        Calender,
+        // 课程组件
+        Course
     }
 })
 
@@ -109,6 +161,6 @@ var vm = new Vue({
 var avatarBlock = document.getElementById("avatarBlock");
 
 // 点击头像弹出个人信息
-avatarBlock.onclick = function() {
-    vm.$data.drawerVisible = true;
+avatarBlock.onclick = function () {
+    vm.drawerVisible = true;
 }
