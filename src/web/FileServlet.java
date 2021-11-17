@@ -35,8 +35,6 @@ import java.util.Map;
 
 public class FileServlet extends BaseServlet{
 
-//    private FileService fileService = new FileServiceImpl();
-
     /**
      * 根据courseID、classID、userNumber、filename获取用户提交的文件
      * @param req
@@ -118,9 +116,8 @@ public class FileServlet extends BaseServlet{
                             userNumber = fileItem.getString("UTF-8");
                         }
                         //普通表单项
-                        System.out.println("表单项的name属性值：" + fileItem.getFieldName());
-                        //参数UTF-8解决乱码问题
-                        System.out.println("表单项的value属性值：" + fileItem.getString("UTF-8"));
+//                        System.out.println("表单项的name属性值：" + fileItem.getFieldName());
+//                        System.out.println("表单项的value属性值：" + fileItem.getString("UTF-8"));
                     }else{
                         //文件表单项
                         filename = fileItem.getName();//上传的文件名
