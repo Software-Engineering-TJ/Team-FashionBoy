@@ -83,10 +83,10 @@ public class UserServiceImpl implements UserService{
 
         if(identity.equals("student")){
             //修改者是“学生”
-            result = studentDao.updateStudent(userNumber,email,phoneNumber);
+            result = alterStudentInformation(userNumber,email,phoneNumber);
         }else if(identity.equals("instructor")){
             //修改者是“教师”
-            result = instructorDao.updateInstructor(userNumber,email,phoneNumber);
+            result = alterInstructorInformation(userNumber,email,phoneNumber);
         }else{
             //修改者是“管理员”
 //            result = administratorDao.updateAdministrator(userNumber,email,phoneNumber);
