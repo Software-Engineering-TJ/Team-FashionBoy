@@ -58,6 +58,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public int alterInstructorInformation(String instructorNumber, String email, String phoneNumber) {
+        return instructorDao.updateInstructor(instructorNumber, email, phoneNumber);
+    }
+
+    @Override
+    public int alterInstructorInformation(String instructorNumber, String email, String name, Integer sex, String phoneNumber) {
+        return instructorDao.updateInstructor(instructorNumber, email, name, sex, phoneNumber);
+    }
+
+    @Override
+    public int alterStudentInformation(String studentNumber, String email, String name, Integer sex, String phoneNumber) {
+        return studentDao.updateStudent(studentNumber, email, name, sex, phoneNumber);
+    }
+
+    @Override
+    public int alterStudentInformation(String studentNumber, String email, String phoneNumber) {
+        return studentDao.updateStudent(studentNumber, email, phoneNumber);
+    }
+
+    @Override
     public int alterUserInfo(String identity, String userNumber, String phoneNumber, String email) {
         int result = 0;
 
