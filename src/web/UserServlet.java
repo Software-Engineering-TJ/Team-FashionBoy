@@ -203,7 +203,7 @@ public class UserServlet extends BaseServlet {
         } else if (user instanceof Instructor) {
             session.setAttribute("identity", "instructor");
             //教师页面
-            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/aIndex.html");//重定向地址
+            resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/iIndex.html");//重定向地址
         } else {
             session.setAttribute("identity", "administrator");
             //管理员页面
