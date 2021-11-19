@@ -78,4 +78,10 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
         String sql = "update `instructor` set `email` = ?, `name` = ?, `sex` = ?, `phoneNumber` = ? where (`instructorNumber` = ?)";
         return update(sql, email, name, sex, phoneNumber, instructorNumber);
     }
+
+    @Override
+    public int UpdatePasswordByInstructorNumber(String instructorNumber,String password) {
+        String sql = "update `instructor` set `password` = ? where (`instructorNumber` = ?)";
+        return update(sql,password,instructorNumber);
+    }
 }

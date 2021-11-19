@@ -94,4 +94,28 @@ public class UserServiceImpl implements UserService{
 
         return result;
     }
+
+    @Override
+    public String getPassword(String identity, String userNumber) {
+        User user = null;
+        if(identity.equals("student")){
+            user = studentDao.QueryStudentByStudentNumber(userNumber);
+        }else if(identity.equals("instructor")){
+            user = instructorDao.QueryInstructorByInstructorNumber(userNumber);
+        }else{
+            user = administratorDao.QueryAdministratorByNumber(userNumber);
+        }
+        return user.getPassword();
+    }
+
+    @Override
+    public int changePassword(String identity, String userNumber, String newPassword) {
+        if(identity.equals("student")){
+            return studentDao.UpdatePasswordByStudentNumber(userNumber,newPassword);
+        }else if(identity.equals("instructor")){
+            return instructorDao.UpdatePasswordByInstructorNumber(userNumber,newPassword);
+        }else{
+            return administratorDao.UpdatePasswordByAdminNumber(userNumber,newPassword);
+        }
+    }
 }

@@ -79,4 +79,9 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
         return update(sql,name,email);
     }
 
+    @Override
+    public int UpdatePasswordByStudentNumber(String studentNumber, String password) {
+        String sql = "update `student` set `password` = ? where (`studentNumber` = ?)";
+        return update(sql,password,studentNumber);
+    }
 }

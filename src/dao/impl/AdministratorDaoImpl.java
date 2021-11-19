@@ -52,4 +52,10 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
         String sql = "update `administrator` set `name` = ? where (`email` = ?)";
         return update(sql,name,email);
     }
+
+    @Override
+    public int UpdatePasswordByAdminNumber(String adminNumber, String password) {
+        String sql = "update `administrator` set `password` = ? where (`adminNumber` = ?)";
+        return update(sql,password,adminNumber);
+    }
 }

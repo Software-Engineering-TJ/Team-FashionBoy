@@ -18,4 +18,5 @@ public interface InstructorDao {
 
     int updateInstructor(String instructorNumber, String email, String name, Integer sex, String phoneNumber);
 
+    int UpdatePasswordByInstructorNumber(String instructorNumber,String password);
 }

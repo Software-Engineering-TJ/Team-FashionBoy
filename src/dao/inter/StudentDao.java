@@ -19,4 +19,6 @@ public interface StudentDao {
 
     int updateStudent(String studentNumber, String email, String phoneNumber);
 
+    int UpdatePasswordByStudentNumber(String studentNumber,String password);
+
 }

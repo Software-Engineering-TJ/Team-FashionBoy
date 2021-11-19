@@ -16,7 +16,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -122,8 +124,8 @@ public class UserServlet extends BaseServlet {
             }
         }
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("msg",msg);
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
@@ -151,7 +153,7 @@ public class UserServlet extends BaseServlet {
             password = user.getPassword();
             status = Integer.toString(user.getStatus());
             //若未激活，返回激活码
-            if(status.equals("0")){
+            if (status.equals("0")) {
                 identify = (int) req.getSession().getAttribute("verificationCode");
             }
         } else {
@@ -165,7 +167,7 @@ public class UserServlet extends BaseServlet {
         userInformation.put("userNumber", userNumber);
         userInformation.put("password", password);
         userInformation.put("status", status);
-        userInformation.put("identify",identify);
+        userInformation.put("identify", identify);
         //转Json-String格式
         String userInformationJson = gson.toJson(userInformation);
         //返回响应
@@ -174,6 +176,7 @@ public class UserServlet extends BaseServlet {
 
     /**
      * getUserStatus确认已激活后才会调用此方法来执行登陆成功的页面跳转
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -192,17 +195,17 @@ public class UserServlet extends BaseServlet {
         session.setAttribute("userNumber", userNumber);
         //转到登录成功后的界面
         resp.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
-        if(user instanceof Student) {
+        if (user instanceof Student) {
             //标明身份
-            session.setAttribute("identity","student");
+            session.setAttribute("identity", "student");
             //学生页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/student/sIndex.html");//重定向地址
-        }else if(user instanceof Instructor){
-            session.setAttribute("identity","instructor");
+        } else if (user instanceof Instructor) {
+            session.setAttribute("identity", "instructor");
             //教师页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/instructor/aIndex.html");//重定向地址
-        }else{
-            session.setAttribute("identity","administrator");
+        } else {
+            session.setAttribute("identity", "administrator");
             //管理员页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
         }
@@ -212,6 +215,7 @@ public class UserServlet extends BaseServlet {
 
     /**
      * 根据login中存储的uerNumber信息来获取详细信息
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -220,15 +224,15 @@ public class UserServlet extends BaseServlet {
     protected void getUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         //先获取userNumber信息
-        String userNumber = (String)req.getSession().getAttribute("userNumber");
+        String userNumber = (String) req.getSession().getAttribute("userNumber");
         //从数据库获取用户信息
         User user = userService.ifActivated(userNumber);
-        Map<String,String> map = new HashMap<>();
-        map.put("userNumber",user.getUserNumber());
-        map.put("name",user.getName());
-        map.put("sex",(user.getSex()==1)?"男":"女");
-        map.put("email",user.getEmail());
-        map.put("phoneNumber",user.getPhoneNumber());
+        Map<String, String> map = new HashMap<>();
+        map.put("userNumber", user.getUserNumber());
+        map.put("name", user.getName());
+        map.put("sex", (user.getSex() == 1) ? "男" : "女");
+        map.put("email", user.getEmail());
+        map.put("phoneNumber", user.getPhoneNumber());
         //转Json-String格式
         resp.getWriter().write(gson.toJson(map));
     }
@@ -236,6 +240,7 @@ public class UserServlet extends BaseServlet {
     /**
      * 用户修改自己的信息：仅电话和邮箱
      * 返回0/1表示成功或失败
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -254,16 +259,75 @@ public class UserServlet extends BaseServlet {
         //获取用户身份
         String identity = (String) req.getSession().getAttribute("identity");
         //修改结果
-        int result = userService.alterUserInfo(identity,userNumber,phoneNumber,email);
-        Map<String,Integer> map = new HashMap<>();
-        map.put("result",result);
+        int result = userService.alterUserInfo(identity, userNumber, phoneNumber, email);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("result", result);
 
         resp.getWriter().write(gson.toJson(map));
     }
 
-        protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1.清除网页记录的所有用户信息
         //2.转到登录界面
+    }
+
+    /**
+     * 获取前端发送的用户输入的验证码，用于用户验证
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void verify(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        //获取用户输入的验证码
+        String verificationCode = reqObject.get("verificationCode");
+        //获取session中存储的正确验证码
+        String correctCode = (String) req.getSession().getAttribute("verificationCode");
+        //结果
+        int result = 0;
+        if (verificationCode.equals(correctCode)) {
+            result = 1;
+        }
+        Map<String, Integer> map = new HashMap<>();
+        map.put("result", result);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 用户调用该方法修改密码
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String userNumber = reqObject.get("userNumber");
+        String oldPassword = reqObject.get("oldPassword");
+        String newPassword = reqObject.get("newPassword");
+        //获取用户身份
+        String identity = (String)req.getSession().getAttribute("identity");
+        //修改结果
+        int result = 0;
+        if(oldPassword.equals(userService.getPassword(identity,userNumber))){
+            //旧密码输入正确，设置新密码
+            result = userService.changePassword(identity,userNumber,newPassword);
+        }
+
+        Map<String,Integer> map = new HashMap<>();
+        map.put("result",result);
+        resp.getWriter().write(gson.toJson(map));
     }
 
 }

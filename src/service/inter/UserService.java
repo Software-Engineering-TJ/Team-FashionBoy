@@ -16,4 +16,8 @@ public interface UserService {
     int alterStudentInformation(String studentNumber, String email, String phoneNumber);
     //管理员修改
     int alterStudentInformation(String studentNumber, String email, String name, Integer sex, String phoneNumber);
+    //获取用户密码
+    String getPassword(String identity,String userNumber);
+    //修改用户密码:返回修改结果
+    int changePassword(String identity,String userNumber,String newPassword);
 }

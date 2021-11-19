@@ -10,4 +10,5 @@ public interface AdministratorDao {
     int InsertAdministrator(String email);
     int DeleteAdministrator(String email);
     int SetNickname(String email,String name);
+    int UpdatePasswordByAdminNumber(String adminNumber,String password);
 }
