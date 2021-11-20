@@ -45,6 +45,11 @@ public class Administrator extends User{
     }
 
     @Override
+    public String getUserNumber() {
+        return adminNumber;
+    }
+
+    @Override
     public int getSex() {
         return 1; //应该用不到，默认男
     }
@@ -97,7 +102,8 @@ public class Administrator extends User{
     @Override
     public String toString() {
         return "Administrator{" +
-                "email='" + email + '\'' +
+                "adminNumber='" + adminNumber + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 '}';

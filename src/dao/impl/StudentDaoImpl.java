@@ -14,16 +14,14 @@ import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
 
-    //自行修改
-    public int updateStudent(String studentNumber, String email, String password, Integer sex, String phoneNumber) {
-        String sql = "update `student` set `email` = ?, `password` = ?, `sex` = ?, `phoneNumber` = ? where `studentNumber` = ?";
-        return update(sql, email, password, sex, phoneNumber, studentNumber);
+    public int updateStudent(String studentNumber, String email, String name, Integer sex, String phoneNumber) {
+        String sql = "update `student` set `email` = ?, `name` = ?, `sex` = ?, `phoneNumber` = ? where `studentNumber` = ?";
+        return update(sql, email, name, sex, phoneNumber, studentNumber);
     }
 
-    //管理员修改
-    public int updateStudent(String studentNumber, String name, String phoneNumber, String email, Integer sex) {
-        String sql = "update `student` set `studentNumber` = ?, `name` = ?, `phoneNumber` = ?, `email` = ?, `sex` = ? where `studentNumber` = ?";
-        return update(sql, studentNumber, name, phoneNumber, email, sex);
+    public int updateStudent(String studentNumber, String email, String phoneNumber) {
+        String sql = "update `student` set `email` = ?, `phoneNumber` = ? where `studentNumber` = ?";
+        return update(sql, email, phoneNumber, studentNumber);
     }
 
     @Override
@@ -31,6 +29,7 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
         String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from student where studentNumber = ? and password = ?";
         return queryForOne(Student.class,sql,studentNumber,password);
     }
+
 
     @Override
     public Student QueryStudentByEmail(String email) {
@@ -52,7 +51,7 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
     @Override
     public int InsertStudent(String studentNumber,String email,String name,String phoneNumber,int sex) {
-        String sql = "insert ignore into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        String sql = "insert into student(`studentNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
         return update(sql,studentNumber,email,name,phoneNumber,sex);
     }
 

@@ -21,8 +21,8 @@ public class TakesDaoImpl extends BaseDao implements TakesDao {
 
     @Override
     public int SetDuty(String studentNumber,String courseID,String classID,String duty) {
-        int newDuty = (duty=="学生")?0:1; //映射到数据库的身份表示形式
-        String sql = "update `takes` set `duty` = ? where (`studentNumber` = ?) and (`courseID` = ?) and (`classID` = ?)";
-        return update(sql,duty,studentNumber,courseID,classID);
+        Integer newDuty = ("学生".equals(duty))?1:0; //映射到数据库的身份表示形式
+        String sql = "update `takes` set `status` = ? where (`studentNumber` = ?) and (`courseID` = ?) and (`classID` = ?)";
+        return update(sql,newDuty,studentNumber,courseID,classID);
     }
 }

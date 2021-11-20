@@ -25,10 +25,17 @@ public class UserServiceImpl implements UserService{
     private InstructorDao  instructorDao = new InstructorDaoImpl();
     private StudentDao studentDao = new StudentDaoImpl();
 
+
     @Override
     public Student getStudentByStudentNumber(String studentNumber) {
         return studentDao.QueryStudentByStudentNumber(studentNumber);
     }
+
+    @Override
+    public Instructor getInstructorByInstructorNumber(String instructorNumber) {
+        return instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
+    }
+
 
     @Override
     public User Login(String userNumber, String password) {
@@ -76,7 +83,7 @@ public class UserServiceImpl implements UserService{
         if(student == null){
             Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(userNumber);
             if(instructor == null){
-                return null;
+                return administratorDao.QueryAdministratorByNumber(userNumber);
             }else {
                 return instructor;
             }
@@ -95,10 +102,27 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    public int alterStudentInformation(String studentNumber, String email, String password, Integer sex, String phoneNumber) {
-        return studentDao.updateStudent(studentNumber, email, password, sex, phoneNumber);
+
+    @Override
+    public int alterInstructorInformation(String instructorNumber, String email, String phoneNumber) {
+        return instructorDao.updateInstructor(instructorNumber, email, phoneNumber);
     }
-    public int alterInstructorInformation(String instructorNumber, String email, String password, Integer sex, String phoneNumber) {
-        return instructorDao.updateInstructor(instructorNumber, email, password, sex, phoneNumber);
+
+    @Override
+    public int alterInstructorInformation(String instructorNumber, String email, String name, Integer sex, String phoneNumber) {
+        return instructorDao.updateInstructor(instructorNumber, email, name, sex, phoneNumber);
     }
+
+    @Override
+    public int alterStudentInformation(String studentNumber, String email, String name, Integer sex, String phoneNumber) {
+        return studentDao.updateStudent(studentNumber, email, name, sex, phoneNumber);
+    }
+
+    @Override
+    public int alterStudentInformation(String studentNumber, String email, String phoneNumber) {
+        return studentDao.updateStudent(studentNumber, email, phoneNumber);
+    }
+
+
+
 }

@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdministrationService {
-    //查找学生
-    Student getStudentByStudentNumber(String studentNumber);
-    //获取管理员身份信息
-    Administrator getAdministrationInfo(String adminNumber);
     //辅助函数，检查注册邮箱是否已被使用
     boolean EmailExists(String email);
     //添加学生(有用)
@@ -28,6 +24,8 @@ public interface AdministrationService {
     String ChangeStudentDuty(String studentNumber,String courseID,String classID,String duty);
     //获取某个课程的责任教师
     Map<String,Object> CheckTeacherDuty(String courseID);
+    //设置新的课程责任教师
+    String ChangeDutyInstructor(String instructorNumber,String courseID);
     //删除教师
     boolean DeleteInstructor(String email);
     //查找某学生的所有课程
@@ -38,6 +36,10 @@ public interface AdministrationService {
     boolean SetStudentStatus(String email,String courseID,String classID,int status);
     //修改某老师在具体课程中的身份
     boolean SetInstructorStatus(String email,String courseID,String classID,int status);
-    //管理员修改学生的信息：学号，姓名，电话，邮箱
-    int alterStudentInformationByAdmin(String studentNumber, String name, String phoneNumber, String email, Integer sex);
+
+    Student getStudentByStudentNumber(String studentNumber);
+
+    Administrator getAdministrationInfo(String adminNumber);
+
+    int alterAdministratorInfo(String adminNumber, String email, String password, String name);
 }

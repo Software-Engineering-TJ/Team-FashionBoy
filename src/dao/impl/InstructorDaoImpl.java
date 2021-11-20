@@ -39,7 +39,7 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
 
     @Override
     public int InsertInstructor(String instructorNumber,String email,String name,String phoneNumber,int sex) {
-        String sql = "insert ignore into instructor(`instructorNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
+        String sql = "insert into instructor(`instructorNumber`,`email`,`name`,`phoneNumber`,`sex`) values(?,?,?,?,?)";
         return update(sql,instructorNumber,email,name,phoneNumber,sex);
     }
 
@@ -68,8 +68,14 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
     }
 
     @Override
-    public int updateInstructor(String instructorNumber, String email, String password, Integer sex, String phoneNumber) {
-        String sql = "update `instructor` set `email` = ?, `password` = ?, `sex` = ?, `phoneNumber` = ? where (`instructorNumber` = ?)";
-        return update(sql, email, password, sex, phoneNumber, instructorNumber);
+    public int updateInstructor(String instructorNumber, String email, String phoneNumber) {
+        String sql = "update `instructor` set `email` = ?, `phoneNumber` = ? where (`instructorNumber` = ?)";
+        return update(sql, email, phoneNumber, instructorNumber);
+    }
+
+    @Override
+    public int updateInstructor(String instructorNumber, String email, String name, Integer sex, String phoneNumber) {
+        String sql = "update `instructor` set `email` = ?, `name` = ?, `sex` = ?, `phoneNumber` = ? where (`instructorNumber` = ?)";
+        return update(sql, email, name, sex, phoneNumber, instructorNumber);
     }
 }

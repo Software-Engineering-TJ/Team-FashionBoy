@@ -3,7 +3,7 @@ package dao.inter;
 import pojo.Instructor;
 import java.util.List;
 
-public interface InstructorDao<updateInstructor> {
+public interface InstructorDao {
     Instructor QueryInstructorByInstructorNumberAndPassword(String instructorNumber, String password);
     Instructor QueryInstructorByEmail(String email);
     Instructor QueryInstructorByInstructorNumber(String instructorNumber);
@@ -13,5 +13,9 @@ public interface InstructorDao<updateInstructor> {
     int DeleteInstructor(String email);
     int SetStatus(String email,int status);
     int SetNickname(String email,String name);
-    int updateInstructor(String instructorNumber, String email, String password, Integer sex, String phoneNumber);
+
+    int updateInstructor(String instructorNumber, String email, String phoneNumber);
+
+    int updateInstructor(String instructorNumber, String email, String name, Integer sex, String phoneNumber);
+
 }

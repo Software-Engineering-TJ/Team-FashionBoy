@@ -9,12 +9,21 @@ package pojo.logicEntity;
 
 public class SectionInformation {
         private String title;
+        private String courseID;
         private String classID;
         private String day;
         private String time;
         private String chargingTeacher;
         private String teacher;
         private String duty;
+
+        public String getCourseID() {
+                return courseID;
+        }
+
+        public void setCourseID(String courseID) {
+                this.courseID = courseID;
+        }
 
         public SectionInformation() {}
 
@@ -78,6 +87,7 @@ public class SectionInformation {
         public String toString() {
                 return "SectionInformation{" +
                         "title='" + title + '\'' +
+                        ", courseID='" + courseID + '\'' +
                         ", classID='" + classID + '\'' +
                         ", day='" + day + '\'' +
                         ", time='" + time + '\'' +

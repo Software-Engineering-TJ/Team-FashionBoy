@@ -40,10 +40,10 @@ public class PersonalServlet extends BaseServlet{
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
 
-        String studentNumber = "1"; //主码
-        String email = "11";
+        String studentNumber = req.getParameter("studentNumber");; //主码
+        String email = req.getParameter("email");
         String password = req.getParameter("password");
-        int sex = 0;
+        int sex = Integer.parseInt(req.getParameter("sex"));
         String phoneNumber = req.getParameter("phoneNumber");
         int msg = userService.alterStudentInformation(studentNumber, email, password, sex, phoneNumber);
 
