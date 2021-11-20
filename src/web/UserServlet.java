@@ -131,7 +131,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 获取email对应的账号的密码和激活状态
+     * 获取userNumber对应的账号的密码和激活状态
      *
      * @param req
      * @param resp
@@ -187,6 +187,7 @@ public class UserServlet extends BaseServlet {
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
+
         String userNumber = reqObject.get("userNumber");
         //获取需要登录的用户对象，用于判断身份
         User user = userService.ifActivated(userNumber);
@@ -208,6 +209,11 @@ public class UserServlet extends BaseServlet {
             session.setAttribute("identity", "administrator");
             //管理员页面
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
+        }
+        //激活账户
+        if(reqObject.get("identify")!=null||reqObject.get("identify").equals("")){
+            //如果首次激活，则将数据库用户激活状态设置为“1”
+            userService.activateAccount((String)session.getAttribute("identity"),user.getEmail());
         }
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("access-control-expose-headers", "REDIRECT,CONTEXTPATH");

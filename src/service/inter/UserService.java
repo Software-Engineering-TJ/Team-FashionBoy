@@ -20,4 +20,6 @@ public interface UserService {
     String getPassword(String identity,String userNumber);
     //修改用户密码:返回修改结果
     int changePassword(String identity,String userNumber,String newPassword);
+    //激活用户
+    void activateAccount(String identity,String email);
 }

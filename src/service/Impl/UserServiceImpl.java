@@ -118,4 +118,13 @@ public class UserServiceImpl implements UserService{
             return administratorDao.UpdatePasswordByAdminNumber(userNumber,newPassword);
         }
     }
+
+    @Override
+    public void activateAccount(String identity, String email) {
+        if(identity.equals("student")){
+            studentDao.SetStatus(email,1);
+        }else if(identity.equals("instructor")){
+            instructorDao.SetStatus(email,1);
+        }
+    }
 }
