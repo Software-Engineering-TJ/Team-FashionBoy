@@ -1,0 +1,35 @@
+package dao.impl;
+
+import dao.inter.ExperimentDao;
+import pojo.Experiment;
+
+import java.util.List;
+
+/**
+ * ExperimentDaoImpl类的描述：
+ *
+ * @author 黄金坤（HJK）
+ * @since 2021/11/23  22:24
+ */
+
+public class ExperimentDaoImpl extends BaseDao implements ExperimentDao {
+    @Override
+    public int InsertExperiment(String courseID, String expname, String classID, int year, int month,
+                                int day, int hour, int minute, String expInfo) {
+        String sql = "insert into experiment(`courseID`,`expname`,`classID`,`year`,`month`,`day`,`hour`," +
+                "`minute`,`expInfo`) values(?,?,?,?,?,?,?,?,?)" ;
+        return update(sql,courseID,expname,classID,year,month,day,hour,minute,expInfo);
+    }
+
+    @Override
+    public Experiment QueryExperiment(String courseID, String classID, String expname) {
+        String sql = "select * from experiment where courseID = ? and classID = ? and expname = ?";
+        return queryForOne(Experiment.class,sql,courseID,classID,expname);
+    }
+
+    @Override
+    public List<Experiment> QueryExperimentsByCourseIDAndClassID(String courseID, String classID) {
+        String sql= "select * from experiment where courseID = ? and classID = ?";
+        return queryForList(Experiment.class,sql, courseID,classID);
+    }
+}
