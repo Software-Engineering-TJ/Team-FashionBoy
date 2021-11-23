@@ -16,8 +16,8 @@ public class ExpReportDaoImpl extends BaseDao implements ExpReportDao {
     @Override
     public int InsertExpReport(String courseID, String expname, String classID, int year, int month, int day,
                                int hour, int minute, String reportInfo, String fileType) {
-        String sql = "insert into expreport(courseID,expname,classID,year,month,day,hour,minute,reportInfo,fileType) " +
-                "values(?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into expreport(`courseID`,`expname`,`classID`,`year`,`month`,`day`,`hour`,`minute`," +
+                "`reportInfo`,`fileType`) values(?,?,?,?,?,?,?,?,?)";
         return update(sql,courseID,expname,classID,year,month,day,minute,reportInfo,fileType);
     }
 
