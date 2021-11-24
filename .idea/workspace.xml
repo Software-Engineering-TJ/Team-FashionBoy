@@ -9,11 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="StudentServlet的getTakes实现">
+    <list default="true" id="73e25c7d-403f-48f0-9f19-9dad05ab609a" name="更改" comment="“实验成绩”（助教批改的那部分）的Dao功能">
+      <change afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/NoticeDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/NoticeDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/NoticeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/NoticeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Notice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Notice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -30,7 +35,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="lza" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,7 +60,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../项目/软件工程/项目代码/前端代码" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pojo" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -67,6 +72,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\javaProjects\Team-FashionBoy\src\pojo" />
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
     </key>
   </component>
@@ -164,7 +170,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="" />
+      <changelist id="73e25c7d-403f-48f0-9f19-9dad05ab609a" name="更改" comment="“实验成绩”（助教批改的那部分）的Dao功能" />
       <created>1636465516960</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -178,6 +184,7 @@
       <workItem from="1636943271686" duration="6331000" />
       <workItem from="1637025264897" duration="1754000" />
       <workItem from="1637039600917" duration="5609000" />
+      <workItem from="1637751807240" duration="3978000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -193,7 +200,49 @@
       <option name="project" value="LOCAL" />
       <updated>1637050339426</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="数据库新增table对应的类">
+      <created>1637659418866</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637659418866</updated>
+    </task>
+    <task id="LOCAL-00004" summary="“通知”部分的Dao功能：插入和查找">
+      <created>1637675599009</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1637675599009</updated>
+    </task>
+    <task id="LOCAL-00005" summary="“实验报告”部分的Dao功能：插入和查找">
+      <created>1637676435422</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1637676435422</updated>
+    </task>
+    <task id="LOCAL-00006" summary="“课程实验安排”（责任教师管理的那部分）部分的Dao功能：插入和查找">
+      <created>1637677013449</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1637677013449</updated>
+    </task>
+    <task id="LOCAL-00007" summary="“实验”（教师发布的那部分）的Dao功能：插入和查找">
+      <created>1637677883294</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1637677883294</updated>
+    </task>
+    <task id="LOCAL-00008" summary="“实验成绩”（助教批改的那部分）的Dao功能">
+      <created>1637679133349</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1637679133349</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +263,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="最新版代码" />
     <MESSAGE value="StudentServlet的getTakes实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="StudentServlet的getTakes实现" />
+    <MESSAGE value="数据库新增table对应的类" />
+    <MESSAGE value="“通知”部分的Dao功能：插入和查找" />
+    <MESSAGE value="“实验报告”部分的Dao功能：插入和查找" />
+    <MESSAGE value="“课程实验安排”（责任教师管理的那部分）部分的Dao功能：插入和查找" />
+    <MESSAGE value="“实验”（教师发布的那部分）的Dao功能：插入和查找" />
+    <MESSAGE value="“实验成绩”（助教批改的那部分）的Dao功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="“实验成绩”（助教批改的那部分）的Dao功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -232,7 +287,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>91</line>
-          <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="23" />
@@ -240,7 +295,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>40</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />
@@ -248,7 +303,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>272</line>
-          <properties class="web.AdministrationServlet" method="changeDutyInstructor">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="28" />

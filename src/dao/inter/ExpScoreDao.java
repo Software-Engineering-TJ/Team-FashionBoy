@@ -5,6 +5,7 @@ import pojo.ExpScore;
 import java.util.List;
 
 public interface ExpScoreDao {
+    //交完报告就会插入一条记录
     int InsertExpScore(String studentNumber,String courseID,String expname,String classID);
     ExpScore QueryExpScoreByStudentNumber(String studentNumber);
     //便于统计某班某次实验的成绩
