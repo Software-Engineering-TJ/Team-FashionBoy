@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/SoftwareEngineering/static/img/icon.ico"/>
+
+    <link rel="icon" type="image/x-icon" href="../../static/img/icon.ico"/>
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <!-- 引入本页面样式 -->
+    <link rel="stylesheet" href="../../static/css/teacher/tIndex.css">
+
+    <!--    <link rel="icon" type="image/x-icon" href="/SoftwareEngineering/static/img/icon.ico"/>-->
     <!-- 引入Element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入公共样式 -->
-    <link rel="stylesheet" href="/SoftwareEngineering/static/css/common.css">
-    <!-- 引入本页面样式 -->
-    <link rel="stylesheet" href="/SoftwareEngineering/static/css/student/sIndex.css">
+    <!--    <link rel="stylesheet" href="/SoftwareEngineering/static/css/common.css">-->
+    <!--    &lt;!&ndash; 引入本页面样式 &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="/SoftwareEngineering/static/css/student/tIndex.css">-->
     <!-- 引入Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <title>学生导航页</title>
+    <title>教师导航页</title>
 </head>
-
 <body>
-
 <div id="box" v-cloak>
 
     <!-- 修改用户信息的弹窗开始 -->
@@ -33,8 +37,8 @@
                 <el-form-item label="性别：" :label-width="formLabelWidth">
                     <el-input disabled v-model="userChange.sex" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="学号：" :label-width="formLabelWidth">
-                    <el-input disabled v-model="userChange.studentNumber" autocomplete="off"></el-input>
+                <el-form-item label="工号：" :label-width="formLabelWidth">
+                    <el-input disabled v-model="userChange.instructorNumber" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="邮箱：" :label-width="formLabelWidth">
                     <el-input v-model="userChange.email" autocomplete="off"></el-input>
@@ -50,6 +54,25 @@
         </div>
     </el-dialog>
     <!-- 修改用户信息的弹窗结束 -->
+
+    <!-- 发布新公告的弹窗开始 -->
+    <el-dialog title="公告发布" :visible.sync="annoDialogFormVisible">
+        <div style="width: 500px">
+            <el-form :model="annoForm">
+                <el-form-item label="标题" :label-width="formLabelWidth">
+                    <el-input v-model="annoForm.title" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="内容" :label-width="formLabelWidth">
+                    <el-input type="textarea" v-model="annoForm.content" placeholder="请填写此公告内容"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="annoDialogFormVisible = false">取消发布</el-button>
+            <el-button type="primary" @click="annoDialogFormVisible = false">发 布</el-button>
+        </div>
+    </el-dialog>
+    <!-- 发布新公告的弹窗结束 -->
 
     <div id="mainbox">
 
@@ -93,9 +116,9 @@
                                     <el-descriptions-item>
                                         <template slot="label">
                                             <i class="el-icon-collection-tag"></i>
-                                            学号
+                                            工号
                                         </template>
-                                        {{user.studentNumber}}
+                                        {{user.instructorNumber}}
                                     </el-descriptions-item>
                                     <el-descriptions-item>
                                         <template slot="label">
@@ -134,15 +157,20 @@
                                                        @click="loadCourseInformation(item.courseID,item.title,item.classID)">
                                                 <h3>
                                                     {{item.title}}</h3></el-button>
-                                            <div style="position: relative;width: 200px;height: 25px">
+                                            <div class="courseDiv">
                                                 <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
                                                     课程编号：</h5>
-                                                <span style="float: left;position: absolute;left: 75px">{{item.courseID}}</span>
+                                                <span class="courseSpan">{{item.courseID}}</span>
                                             </div>
-                                            <div style="position: relative;width: 200px;height: 25px">
+                                            <div class="courseDiv">
                                                 <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
-                                                    班级号：</h5>
-                                                <span style="float: left;position: absolute;left: 75px">{{item.classID}}</span>
+                                                    职务：</h5>
+                                                <span class="courseSpan">{{item.duty}}</span>
+                                            </div>
+                                            <div class="courseDiv">
+                                                <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
+                                                    执教班级：</h5>
+                                                <span class="courseSpan">{{item.classID}}</span>
                                             </div>
                                         </div>
                                     </el-col>
@@ -179,15 +207,20 @@
                                     <!-- 导航2开始 -->
                                     <el-menu-item index="2">
                                         <i class="el-icon-reading"></i>
-                                        <span slot="title" id="courseManage">我的课程</span>
+                                        <span slot="title" id="courseManage">课程教学</span>
                                     </el-menu-item>
                                     <!-- 导航2结束 -->
 
                                     <!-- 导航3开始 -->
-                                    <el-menu-item index="3">
-                                        <i class="el-icon-edit"></i>
-                                        <span slot="title" id="authorityManage">权限管理</span>
-                                    </el-menu-item>
+                                    <el-submenu index="3">
+                                        <template slot="title">
+                                            <i class="el-icon-s-management"></i>
+                                            <span>课程管理</span>
+                                        </template>
+                                        <el-menu-item index="3-1">设立课程</el-menu-item>
+                                        <!-- 课程概况中包含目前该老师负责的所有课程信息，包括：课程名、课程ID、课程下所有班级的ID、每个班的任课教师名和工号，责任教师还可以在这里关闭一门课程 -->
+                                        <el-menu-item index="3-2">课程概况</el-menu-item>
+                                    </el-submenu>
                                     <!-- 导航3结束 -->
 
                                     <!-- 导航4开始 -->
@@ -203,6 +236,7 @@
                     </div>
                     <!-- 侧边导航栏结束 -->
                 </el-aside>
+
                 <!-- 主显示区开始 -->
                 <el-main>
                     <div id="reject">
@@ -210,6 +244,7 @@
                         <component :is="changeComponents" :course-id="courseID" :course-name="title"
                                    :student-number="user.studentNumber"
                                    :notice-list="noticeList"
+                                   @publish-announcement="publishAnnouncement"
                                    @go-back="goBack"></component>
                         <!--                        </keep-alive>-->
                     </div>
@@ -219,16 +254,15 @@
         </div>
     </div>
 </div>
-<!-- 引入axios -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/SoftwareEngineering/static/js/student/subComponents/epReportDetail.js"></script>
-<script src="/SoftwareEngineering/static/js/student/subComponents/experimentalReport.js"></script>
-<script src="/SoftwareEngineering/static/js/student/subComponents/fileDownLoad.js"></script>
-<script src="/SoftwareEngineering/static/js/student/subComponents/noticeDetail.js"></script>
-<script src="/SoftwareEngineering/static/js/student/subComponents/notice.js"></script>
-<script src="/SoftwareEngineering/static/js/student/course.js"></script>
-<script src="/SoftwareEngineering/static/js/calender.js"></script>
-<script src="../../static/js/student/sIndex.js"></script>
+<script src="../../static/js/calender.js"></script>
+<script src="../../static/js/teacher/subComponents/experiment.js"></script>
+<script src="../../static/js/teacher/subComponents/experimentalReport.js"></script>
+<script src="../../static/js/teacher/subComponents/epReportDetail.js"></script>
+<script src="../../static/js/teacher/subComponents/fileDownLoad.js"></script>
+<script src="../../static/js/teacher/subComponents/noticeDetail.js"></script>
+<script src="../../static/js/teacher/subComponents/notice.js"></script>
+<script src="../../static/js/teacher/subComponents/course.js"></script>
+<!--    <script src="/SoftwareEngineering/static/js/calender.js"></script>-->
+<script src="../../static/js/teacher/tIndex.js"></script>
 </body>
-
 </html>

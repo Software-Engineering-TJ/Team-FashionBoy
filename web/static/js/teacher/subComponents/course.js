@@ -2,7 +2,7 @@ var Course = Vue.extend({
     props: ['studentNumber', 'courseName', 'courseID', 'classID', 'noticeList'],
     data() {
         return {
-            changeComponents: 'notice',
+            changeComponents: 'Notice',
             noticeInfo: {},
             reportInfo: {},
             fileList: [
@@ -56,6 +56,46 @@ var Course = Vue.extend({
                     score: '暂未发布',
                     weight: '25%'
                 }
+            ],
+            materialList: [
+                {
+                    name: 'food.jpeg',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                },
+                {
+                    name: 'food.jpeg',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                },
+                {
+                    name: 'food.jpeg',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                }
+            ],
+            experimentList: [
+                {
+                    title: '组播路由实验',
+                    difficulty: 3,
+                    priority: '3',
+                    date: '2021.12.11',
+                    status: '已发布',
+                    weight: '25%'
+                },
+                {
+                    title: '帧中继实验',
+                    difficulty: 4,
+                    priority: '2',
+                    date: '',
+                    status: '未发布',
+                    weight: '25%'
+                },
+                {
+                    title: '静态路由实验',
+                    difficulty: 4.5,
+                    priority: '1',
+                    date: '2021.12.11',
+                    status: '已发布',
+                    weight: '25%'
+                },
             ]
         }
     },
@@ -66,7 +106,7 @@ var Course = Vue.extend({
         goBackNotice() {
             this.changeComponents = 'Notice'
         },
-        goBackReport(){
+        goBackReport() {
             this.changeComponents = 'ExperimentalReport'
         },
         // 选择对应的导航栏项触发
@@ -74,6 +114,9 @@ var Course = Vue.extend({
             switch (key) {
                 case "1":
                     this.changeComponents = "Notice"
+                    break;
+                case "2":
+                    this.changeComponents = "Experiment"
                     break;
                 case "3":
                     this.changeComponents = "FileDownLoad"
@@ -95,6 +138,9 @@ var Course = Vue.extend({
             console.log(index)
             this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
             this.changeComponents = 'EpReportDetail'
+        },
+        publishAnnouncement() {
+            this.$emit('publish-announcement')
         }
     },
     components: {
@@ -107,7 +153,9 @@ var Course = Vue.extend({
         // 实验报告组件
         ExperimentalReport,
         // 实验报告详情组件
-        EpReportDetail
+        EpReportDetail,
+        // 实验组件
+        Experiment
     },
     template: `
     <el-row class="tac">
@@ -156,6 +204,9 @@ var Course = Vue.extend({
                         <el-menu-item index="7">
                             <span slot="title">班级信息</span>
                         </el-menu-item>
+                        <el-menu-item index="8">
+                            <span slot="title">成绩导入</span>
+                        </el-menu-item>
                     </el-menu>
                 </div>
             </el-col>
@@ -165,8 +216,19 @@ var Course = Vue.extend({
             <el-col :span="21">
                 <div id="subMainBox" style="background-color: white;height: 650px">
                     <keep-alive>
-                        <component :is="changeComponents" @click-notice="clickNotice" @go-back-notice="goBackNotice" @go-back-report="goBackReport" :noticeList="noticeList" 
-                        :noticeInfo="noticeInfo" :file-list="fileList" :report-list="reportList" :report-info="reportInfo" @click-report="clickReport"></component>
+                        <component :is="changeComponents" 
+                        @click-notice="clickNotice" 
+                        @go-back-notice="goBackNotice" 
+                        @go-back-report="goBackReport" 
+                        :noticeList="noticeList" 
+                        :noticeInfo="noticeInfo" 
+                        :file-list="fileList" 
+                        :report-list="reportList" 
+                        :report-info="reportInfo" 
+                        :material-list="materialList"
+                        :experiment-list="experimentList"
+                        @click-report="clickReport" 
+                        @publish-announcement="publishAnnouncement"></component>
                     </keep-alive>
                 </div>
             </el-col>

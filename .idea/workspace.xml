@@ -9,11 +9,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="StudentServlet的getTakes实现">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="登陆时根据用户身份跳转到对应页面以及获取用户信息对接完成，并补充了学生页面的前端代码">
+      <change afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/calender.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experiment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/calender.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/noticeDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/noticeDetail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +40,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -52,22 +71,28 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../项目/软件工程/项目代码/前端代码" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/static/js/teacher/subComponents" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="模块" />
+    <property name="project.structure.last.edited" value="项目" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projectAll\Team-FashionBoy\web\static\js\teacher\subComponents" />
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projectAll\Team-FashionBoy\web\static\js" />
     </key>
   </component>
   <component name="RunManager">
@@ -178,6 +203,10 @@
       <workItem from="1636943271686" duration="6331000" />
       <workItem from="1637025264897" duration="1754000" />
       <workItem from="1637039600917" duration="5609000" />
+      <workItem from="1637652037212" duration="963000" />
+      <workItem from="1637753044048" duration="2101000" />
+      <workItem from="1637837136555" duration="9813000" />
+      <workItem from="1637884152669" duration="4967000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -204,7 +233,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -226,12 +267,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>57</line>
+          <line>58</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>91</line>
+          <line>92</line>
           <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
             <option name="EMULATED" value="true" />
           </properties>
@@ -239,7 +280,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>40</line>
+          <line>41</line>
           <properties class="web.AdministrationServlet" method="alterUserInformation">
             <option name="EMULATED" value="true" />
           </properties>
@@ -247,7 +288,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>272</line>
+          <line>273</line>
           <properties class="web.AdministrationServlet" method="changeDutyInstructor">
             <option name="EMULATED" value="true" />
           </properties>

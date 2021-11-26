@@ -40,7 +40,7 @@ var NoticeDetail = Vue.extend({
             </el-col>
         </el-row>
         <el-row :gutter="20">
-            <el-col :span="2" :offset="21">
+            <el-col :span="2" :offset="22">
                 <el-button type="info" plain @click="goBack">返回</el-button>
             </el-col>
         </el-row>
