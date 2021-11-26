@@ -59,18 +59,28 @@ var vm = new Vue({
                             this.$message.error('此账号不存在！请重新输入！');
                             this.ruleForm.account = "";
                             this.ruleForm.password = "";
+                            return;
                         } else if (resp.data.status === "0") {
-                            this.$message.error('您的账号还未激活，请先激活该账号！');
-                        } else if (resp.data.password === this.ruleForm.password) {
+                            if (resp.data.identify !== undefined) {
+                                if (resp.data.identify !== this.ruleForm.identify) {
+                                    this.$message.error('您输入的验证码错误！请重新获取！');
+                                }
+                            } else {
+                                this.$message.error('您的账号还未激活，请先激活该账号！');
+                                return;
+                            }
+                        }
+                        if (resp.data.password === this.ruleForm.password) {
                             axios({
                                 url: '/SoftwareEngineering/userServlet?action=login',
                                 method: "Post",
                                 data: {
-                                    userNumber: this.ruleForm.account
+                                    userNumber: this.ruleForm.account,
+                                    identify:this.ruleForm.identify
                                 },
-                            }).then(resp=> {
+                            }).then(resp => {
                                 console.log(resp.headers)
-                                if (resp.headers.redirect !== undefined){
+                                if (resp.headers.redirect !== undefined) {
                                     this.$message({
                                         message: '登录成功！',
                                         type: 'success'
