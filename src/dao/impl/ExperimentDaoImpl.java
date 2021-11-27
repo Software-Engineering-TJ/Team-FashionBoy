@@ -32,4 +32,10 @@ public class ExperimentDaoImpl extends BaseDao implements ExperimentDao {
         String sql= "select * from experiment where courseID = ? and classID = ?";
         return queryForList(Experiment.class,sql, courseID,classID);
     }
+
+    @Override
+    public int UpdateExperiment(String courseID, String classID, String expname, String endDate, String expInfo) {
+        String sql = "update experiment set `endDate` = ? , `expInfo` = ? where(`courseID` = ? and `classID` = ? and `expname` = ?)";
+        return update(sql,endDate,expInfo,courseID,classID,expname);
+    }
 }

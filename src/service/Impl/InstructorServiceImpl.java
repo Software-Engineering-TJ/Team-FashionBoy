@@ -82,13 +82,13 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public int releaseExperiment(String courseID, String expname, String classID,
+    public int ReleaseExperiment(String courseID, String expname, String classID,
                                      String startDate, String endDate, String expInfo) {
         return experimentDao.InsertExperiment(courseID, expname, classID, startDate, endDate, expInfo);
     }
 
     @Override
-    public Map<String, String> examineExperimentInfo(String courseID, String classID, String expname) {
+    public Map<String, String> ExamineExperimentInfo(String courseID, String classID, String expname) {
         Map<String,String> experimentInfo = new HashMap<>();
         //根据主码锁定实验
         Experiment experiment = experimentDao.QueryExperiment(courseID, classID, expname);
@@ -97,5 +97,10 @@ public class InstructorServiceImpl implements InstructorService {
         experimentInfo.put("expInfo",experiment.getExpInfo());
 
         return experimentInfo;
+    }
+
+    @Override
+    public int ModifyExperiment(String courseID, String classID, String expname, String endDate, String expInfo) {
+        return experimentDao.UpdateExperiment(courseID, classID, expname, endDate, expInfo);
     }
 }

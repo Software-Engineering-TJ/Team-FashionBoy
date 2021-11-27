@@ -85,7 +85,7 @@ public class InstructorServlet extends BaseServlet{
 
         Map<String,Integer> map = new HashMap<>();
         int result = 0;
-        if(instructorService.releaseExperiment(courseID,classID,expname,startDate,endDate,expInfo)==1){
+        if(instructorService.ReleaseExperiment(courseID,classID,expname,startDate,endDate,expInfo)==1){
             //发布实验成功
             result = 1;
         }
@@ -104,7 +104,37 @@ public class InstructorServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String expname = reqObject.get("expName");
 
-        Map<String,String> map = instructorService.examineExperimentInfo(courseID,classID,expname);
+        Map<String,String> map = instructorService.ExamineExperimentInfo(courseID,classID,expname);
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 教师修改自己发布的实验的相关信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void modifyExperimentInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String expname = reqObject.get("expName");
+        String newEndDate = reqObject.get("newEndDate");
+        String newExpInfo = reqObject.get("newExpInfo");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.ModifyExperiment(courseID,classID,expname,newEndDate,newExpInfo)==1){
+            //修改已发布实验的内容成功
+            result = 1;
+        }
+        map.put("result",result);
+
         resp.getWriter().write(gson.toJson(map));
     }
 }

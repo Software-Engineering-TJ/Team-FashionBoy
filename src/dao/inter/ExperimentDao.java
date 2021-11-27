@@ -10,4 +10,5 @@ public interface ExperimentDao {
                          String startDate,String endDate,String expInfo);
     Experiment QueryExperiment(String courseID, String classID,String expname);
     List<Experiment> QueryExperimentsByCourseIDAndClassID(String courseID,String classID);
+    int UpdateExperiment(String courseID, String classID, String expname, String endDate, String expInfo);
 }
