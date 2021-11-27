@@ -14,9 +14,9 @@ import java.util.List;
 
 public class CourseExpDaoImpl extends BaseDao implements CourseExpDao {
     @Override
-    public int InsertCourseExp(String courseID, String expname, int percent) {
-        String sql = "insert into courseexp(`courseID`,`expname`,`percent`) values(?,?,?)";
-        return update(sql,courseID,expname,percent);
+    public int InsertCourseExp(String courseID, String expname, int percent,int priority,int difficulty) {
+        String sql = "insert into courseexp(`courseID`,`expname`,`percent`,`priority`,`difficulty`) values(?,?,?,?,?)";
+        return update(sql,courseID,expname,percent,priority,difficulty);
     }
 
     @Override

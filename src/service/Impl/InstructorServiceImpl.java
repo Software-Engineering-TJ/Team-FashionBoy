@@ -2,10 +2,13 @@ package service.Impl;
 
 import com.google.gson.reflect.TypeToken;
 import dao.impl.CourseDaoImpl;
+import dao.impl.CourseExpDaoImpl;
 import dao.impl.TeachesDaoImpl;
 import dao.inter.CourseDao;
+import dao.inter.CourseExpDao;
 import dao.inter.TeachesDao;
 import pojo.Course;
+import pojo.CourseExp;
 import pojo.Teaches;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
@@ -26,6 +29,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private CourseDao courseDao = new CourseDaoImpl();
+    private CourseExpDao courseExpDao = new CourseExpDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -52,5 +56,24 @@ public class InstructorServiceImpl implements InstructorService {
         }
 
         return sectionInfoList;
+    }
+
+    @Override
+    public List<Map<String, String>> GetCourseExpInfo(String courseID) {
+        List<Map<String,String>> courseExpInfoList = new ArrayList<>();
+
+        List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
+        //开始整理信息
+        for(CourseExp c : courseExpList){
+            Map<String,String> courseExpInfo = new HashMap<>();
+            courseExpInfo.put("expName",c.getExpname());
+            courseExpInfo.put("priority",Integer.toString(c.getPriority()));
+            courseExpInfo.put("difficulty",Integer.toString(c.getDifficulty()));
+            courseExpInfo.put("weight",c.getPercent()+"%");
+            //加入到信息列表
+            courseExpInfoList.add(courseExpInfo);
+        }
+
+        return courseExpInfoList;
     }
 }

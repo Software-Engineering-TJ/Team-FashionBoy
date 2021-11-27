@@ -11,6 +11,8 @@ public class CourseExp {
     private String courseID;
     private String expname;
     private int percent;
+    private int priority;
+    private int difficulty;
 
     public CourseExp() {
     }
@@ -39,12 +41,30 @@ public class CourseExp {
         this.percent = percent;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
     @Override
     public String toString() {
         return "CourseExp{" +
                 "courseID='" + courseID + '\'' +
                 ", expname='" + expname + '\'' +
                 ", percent=" + percent +
+                ", priority=" + priority +
+                ", difficulty=" + difficulty +
                 '}';
     }
 }

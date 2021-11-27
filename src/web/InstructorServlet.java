@@ -6,7 +6,6 @@ import service.inter.InstructorService;
 import utils.RequestJsonUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,6 +39,25 @@ public class InstructorServlet extends BaseServlet{
 
         String instructorNumber = reqObject.get("instructorNumber");
         List<Map<String,String>> map = instructorService.GetSections(instructorNumber);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 获取某门课程下，责任教师发布的实验信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getExperimentInfo(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        List<Map<String,String>> map = instructorService.GetCourseExpInfo(courseID);
 
         resp.getWriter().write(gson.toJson(map));
     }
