@@ -24,4 +24,6 @@ public interface InstructorService {
     //教师发布实验报告说明
     int ReleaseReportDesc(String courseID,String classID,String expname,String reportName,String reportInfo,
                           String startDate,String endDate,String fileType);
+    //教师删除实验报告说明
+    int DeleteReportDesc(String courseID,String classID,String expname,String reportName);
 }

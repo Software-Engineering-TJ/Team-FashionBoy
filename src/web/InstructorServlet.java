@@ -233,4 +233,33 @@ public class InstructorServlet extends BaseServlet{
 
         resp.getWriter().write(gson.toJson(map));
     }
+
+    /**
+     * 教师撤回实验报告提交说明
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void withdrawReportDesc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String expname = reqObject.get("expName");
+        String reportName = reqObject.get("reportName");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.DeleteReportDesc(courseID,classID,expname,reportName)==1){
+            //撤回实验报告描述成功
+            result = 1;
+        }
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
 }
