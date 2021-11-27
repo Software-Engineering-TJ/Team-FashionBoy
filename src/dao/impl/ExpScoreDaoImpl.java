@@ -20,9 +20,9 @@ public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
     }
 
     @Override
-    public ExpScore QueryExpScoreByStudentNumber(String studentNumber) {
-        String sql = "select * from expscore where studentNumber = ?";
-        return queryForOne(ExpScore.class,sql,studentNumber);
+    public ExpScore QueryExpScoreByCourseIDAndClassIDAndExpnameAndStudentNumber(String courseID, String classID, String expname, String studentNumber) {
+        String sql = "select * from expscore where courseID = ? and classID = ? and expname = ? and studentNumber = ?";
+        return queryForOne(ExpScore.class,sql,courseID,classID ,expname,studentNumber);
     }
 
     @Override
