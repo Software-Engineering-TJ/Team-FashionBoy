@@ -26,6 +26,7 @@ public class InstructorServiceImpl implements InstructorService {
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExperimentDao experimentDao = new ExperimentDaoImpl();
     private NoticeDao noticeDao = new NoticeDaoImpl();
+    private ExpReportDao expReportDao = new ExpReportDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -104,5 +105,10 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public int DeleteNotice(String courseID, String classID, String instructorNumber, String date) {
         return noticeDao.DeleteNotice(courseID, classID, instructorNumber, date);
+    }
+
+    @Override
+    public int ReleaseReportDesc(String courseID, String classID, String expname, String reportName, String reportInfo, String startDate, String endDate, String fileType) {
+        return expReportDao.InsertExpReport(courseID,expname,classID,reportName,endDate,reportInfo,fileType,startDate);
     }
 }

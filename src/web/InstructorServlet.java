@@ -198,6 +198,39 @@ public class InstructorServlet extends BaseServlet{
         map.put("result",result);
 
         resp.getWriter().write(gson.toJson(map));
+    }
 
+    /**
+     * 教师发布实验报告提交说明
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void releaseReportDesc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, Object>>() {
+        }.getType());
+
+        String courseID = (String) reqObject.get("courseID");
+        String classID = (String) reqObject.get("classID");
+        String expname = (String) reqObject.get("expName");
+        Map<String,String> reportInfo = (Map<String, String>) reqObject.get("reportInfo");
+        String reportName = reportInfo.get("reportName");
+        String reportDescription = reportInfo.get("reportDescription");
+        String startDate = reportInfo.get("startDate");
+        String endDate = reportInfo.get("endDate");
+        String fileType = reportInfo.get("reportType");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.ReleaseReportDesc(courseID,classID,expname,reportName,reportDescription,startDate,endDate,fileType)==1){
+            //发布实验报告描述成功
+            result = 1;
+        }
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
     }
 }

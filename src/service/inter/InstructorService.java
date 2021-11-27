@@ -21,4 +21,7 @@ public interface InstructorService {
     int ReleaseNotice(String courseID,String classID,String instructorNumber,String content,String date,String title);
     //教师删除公告
     int DeleteNotice(String courseID,String classID,String instructorNumber,String date);
+    //教师发布实验报告说明
+    int ReleaseReportDesc(String courseID,String classID,String expname,String reportName,String reportInfo,
+                          String startDate,String endDate,String fileType);
 }
