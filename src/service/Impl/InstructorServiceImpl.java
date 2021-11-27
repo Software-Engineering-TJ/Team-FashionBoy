@@ -3,12 +3,15 @@ package service.Impl;
 import com.google.gson.reflect.TypeToken;
 import dao.impl.CourseDaoImpl;
 import dao.impl.CourseExpDaoImpl;
+import dao.impl.ExperimentDaoImpl;
 import dao.impl.TeachesDaoImpl;
 import dao.inter.CourseDao;
 import dao.inter.CourseExpDao;
+import dao.inter.ExperimentDao;
 import dao.inter.TeachesDao;
 import pojo.Course;
 import pojo.CourseExp;
+import pojo.Experiment;
 import pojo.Teaches;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
@@ -30,6 +33,7 @@ public class InstructorServiceImpl implements InstructorService {
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private CourseDao courseDao = new CourseDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
+    private ExperimentDao experimentDao = new ExperimentDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -75,5 +79,23 @@ public class InstructorServiceImpl implements InstructorService {
         }
 
         return courseExpInfoList;
+    }
+
+    @Override
+    public int releaseExperiment(String courseID, String expname, String classID,
+                                     String startDate, String endDate, String expInfo) {
+        return experimentDao.InsertExperiment(courseID, expname, classID, startDate, endDate, expInfo);
+    }
+
+    @Override
+    public Map<String, String> examineExperimentInfo(String courseID, String classID, String expname) {
+        Map<String,String> experimentInfo = new HashMap<>();
+        //根据主码锁定实验
+        Experiment experiment = experimentDao.QueryExperiment(courseID, classID, expname);
+        experimentInfo.put("startDate",experiment.getStartDate());
+        experimentInfo.put("endDate",experiment.getEndDate());
+        experimentInfo.put("expInfo",experiment.getExpInfo());
+
+        return experimentInfo;
     }
 }

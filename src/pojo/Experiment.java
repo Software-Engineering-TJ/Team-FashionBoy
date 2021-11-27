@@ -13,11 +13,8 @@ public class Experiment {
     private String courseID;
     private String expname;
     private String classID;
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
+    private String startDate;
+    private String endDate;
     private String expInfo;
 
     public Experiment(){}
@@ -46,44 +43,20 @@ public class Experiment {
         this.classID = classID;
     }
 
-    public int getYear() {
-        return year;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public int getMonth() {
-        return month;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getExpInfo() {
@@ -100,11 +73,8 @@ public class Experiment {
                 "courseID='" + courseID + '\'' +
                 ", expname='" + expname + '\'' +
                 ", classID='" + classID + '\'' +
-                ", year=" + year +
-                ", month=" + month +
-                ", day=" + day +
-                ", hour=" + hour +
-                ", minute=" + minute +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
                 ", expInfo='" + expInfo + '\'' +
                 '}';
     }
