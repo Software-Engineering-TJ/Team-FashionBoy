@@ -3,6 +3,7 @@ package web;
 import com.google.gson.reflect.TypeToken;
 import dao.impl.InstructorDaoImpl;
 import dao.inter.InstructorDao;
+import pojo.ExpScore;
 import pojo.Notice;
 import service.Impl.AdministrationServiceImpl;
 import service.Impl.StudentServiceImpl;
@@ -68,5 +69,32 @@ public class StudentServlet extends BaseServlet {
         }
 
         resp.getWriter().write(gson.toJson(noticesInfo));
+    }
+
+    /**
+     * 获取某个实验报告的成绩
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getGrade(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String expname = reqObject.get("expName");
+        String studentNumber = reqObject.get("studentNumber");
+        //获取成绩，score可能是”助教尚未批改“or”报告尚未提交“or正常成绩
+        String score = studentService.getExpScore(courseID,classID,expname,studentNumber);
+
+        Map<String,String> map = new HashMap<>();
+        map.put("grade",score);
+
+        resp.getWriter().write(gson.toJson(map));
     }
 }
