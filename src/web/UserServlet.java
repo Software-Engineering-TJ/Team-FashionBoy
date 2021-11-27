@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.reflect.TypeToken;
+import pojo.ExpReport;
 import pojo.Instructor;
 import pojo.Student;
 import pojo.User;
@@ -20,6 +21,7 @@ import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -211,9 +213,9 @@ public class UserServlet extends BaseServlet {
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
         }
         //激活账户
-        if(reqObject.get("identify")!=null||reqObject.get("identify").equals("")){
+        if (reqObject.get("identify") != null || reqObject.get("identify").equals("")) {
             //如果首次激活，则将数据库用户激活状态设置为“1”
-            userService.activateAccount((String)session.getAttribute("identity"),user.getEmail());
+            userService.activateAccount((String) session.getAttribute("identity"), user.getEmail());
         }
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("access-control-expose-headers", "REDIRECT,CONTEXTPATH");
@@ -308,6 +310,7 @@ public class UserServlet extends BaseServlet {
 
     /**
      * 用户调用该方法修改密码
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -323,17 +326,37 @@ public class UserServlet extends BaseServlet {
         String oldPassword = reqObject.get("oldPassword");
         String newPassword = reqObject.get("newPassword");
         //获取用户身份
-        String identity = (String)req.getSession().getAttribute("identity");
+        String identity = (String) req.getSession().getAttribute("identity");
         //修改结果
         int result = 0;
-        if(oldPassword.equals(userService.getPassword(identity,userNumber))){
+        if (oldPassword.equals(userService.getPassword(identity, userNumber))) {
             //旧密码输入正确，设置新密码
-            result = userService.changePassword(identity,userNumber,newPassword);
+            result = userService.changePassword(identity, userNumber, newPassword);
         }
 
-        Map<String,Integer> map = new HashMap<>();
-        map.put("result",result);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("result", result);
         resp.getWriter().write(gson.toJson(map));
     }
 
+    /**
+     * 教师or学生获取某个课程班级下的所有实验报告信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getReportDesc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        //获取该课程班级的所有实验描述列表
+        List<Map<String,String>> expReportInfoList = userService.getExpReports(courseID,classID);
+
+        resp.getWriter().write(gson.toJson(expReportInfoList));
+    }
 }
