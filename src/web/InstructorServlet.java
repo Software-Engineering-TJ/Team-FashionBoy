@@ -137,4 +137,67 @@ public class InstructorServlet extends BaseServlet{
 
         resp.getWriter().write(gson.toJson(map));
     }
+
+    /**
+     * 教师发布公告
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void releaseNotice(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, Object>>() {
+        }.getType());
+
+        String courseID = (String) reqObject.get("courseID");
+        String classID = (String) reqObject.get("classID");
+        Map<String,String> noticeInfo = (Map<String, String>) reqObject.get("noticeInfo");
+        String title = noticeInfo.get("title");
+        String content = noticeInfo.get("content");
+        String instructorNumber = noticeInfo.get("issuer");
+        String date = noticeInfo.get("date");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.ReleaseNotice(courseID,classID,instructorNumber,content,date,title)==1){
+            //发布公告成功
+            result = 1;
+        }
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
+
+    }
+
+    /**
+     * 教师撤回(删除)公告
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void withdrawNotice(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String instructorNumber = reqObject.get("instructorNumber");
+        String date = reqObject.get("date");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.DeleteNotice(courseID,classID,instructorNumber,date)==1){
+            //删除公告成功
+            result = 1;
+        }
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
+
+    }
 }

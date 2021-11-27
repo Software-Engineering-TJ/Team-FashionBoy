@@ -17,4 +17,8 @@ public interface InstructorService {
     Map<String,String> ExamineExperimentInfo(String courseID,String classID,String expname);
     //修改已经发布的实验的信息
     int ModifyExperiment(String courseID,String classID,String expname,String endDate,String expInfo);
+    //教师发布公告
+    int ReleaseNotice(String courseID,String classID,String instructorNumber,String content,String date,String title);
+    //教师删除公告
+    int DeleteNotice(String courseID,String classID,String instructorNumber,String date);
 }

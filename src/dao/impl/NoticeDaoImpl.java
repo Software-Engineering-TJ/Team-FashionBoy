@@ -24,4 +24,11 @@ public class NoticeDaoImpl extends BaseDao implements NoticeDao {
         String sql = "select * from notice where courseID = ? and classID = ? or classID = '0'";
         return queryForList(Notice.class,sql,courseID,classID);
     }
+
+    @Override
+    public int DeleteNotice(String courseID, String classID, String instructorNumber, String date) {
+        String sql = "delete from notice where(`courseID` = ? and `classID` = ? and " +
+                                                "`instructorNumber` = ? and `date` = ?)";
+        return update(sql,courseID,classID,instructorNumber,date);
+    }
 }

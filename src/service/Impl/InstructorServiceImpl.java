@@ -1,18 +1,9 @@
 package service.Impl;
 
 import com.google.gson.reflect.TypeToken;
-import dao.impl.CourseDaoImpl;
-import dao.impl.CourseExpDaoImpl;
-import dao.impl.ExperimentDaoImpl;
-import dao.impl.TeachesDaoImpl;
-import dao.inter.CourseDao;
-import dao.inter.CourseExpDao;
-import dao.inter.ExperimentDao;
-import dao.inter.TeachesDao;
-import pojo.Course;
-import pojo.CourseExp;
-import pojo.Experiment;
-import pojo.Teaches;
+import dao.impl.*;
+import dao.inter.*;
+import pojo.*;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
 
@@ -34,6 +25,7 @@ public class InstructorServiceImpl implements InstructorService {
     private CourseDao courseDao = new CourseDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExperimentDao experimentDao = new ExperimentDaoImpl();
+    private NoticeDao noticeDao = new NoticeDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -102,5 +94,15 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public int ModifyExperiment(String courseID, String classID, String expname, String endDate, String expInfo) {
         return experimentDao.UpdateExperiment(courseID, classID, expname, endDate, expInfo);
+    }
+
+    @Override
+    public int ReleaseNotice(String courseID, String classID, String instructorNumber, String content, String date, String title) {
+        return noticeDao.InsertNotice(courseID, classID, date, content, instructorNumber, title);
+    }
+
+    @Override
+    public int DeleteNotice(String courseID, String classID, String instructorNumber, String date) {
+        return noticeDao.DeleteNotice(courseID, classID, instructorNumber, date);
     }
 }

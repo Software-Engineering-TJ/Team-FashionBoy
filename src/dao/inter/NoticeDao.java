@@ -7,4 +7,5 @@ import java.util.List;
 public interface NoticeDao {
     int InsertNotice(String courseID,String classID,String date,String content,String instructorNumber,String title);
     List<Notice> QueryNoticesByCourseIDAndClassID(String courseID,String classID);
+    int DeleteNotice(String courseID,String classID,String instructorNumber,String date);
 }
