@@ -15,10 +15,10 @@ import java.util.List;
 public class ExpReportDaoImpl extends BaseDao implements ExpReportDao {
     @Override
     public int InsertExpReport(String courseID, String expname, String classID, int year, int month, int day,
-                               int hour, int minute, String reportInfo, String fileType) {
+                               int hour, int minute, String reportInfo, String fileType,String startDate) {
         String sql = "insert into expreport(`courseID`,`expname`,`classID`,`year`,`month`,`day`,`hour`,`minute`," +
-                "`reportInfo`,`fileType`) values(?,?,?,?,?,?,?,?,?)";
-        return update(sql,courseID,expname,classID,year,month,day,minute,reportInfo,fileType);
+                "`reportInfo`,`fileType`,`startDate`) values(?,?,?,?,?,?,?,?,?,?)";
+        return update(sql,courseID,expname,classID,year,month,day,minute,reportInfo,fileType,startDate);
     }
 
     @Override

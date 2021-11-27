@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface ExpReportDao {
     int InsertExpReport(String courseID,String expname,String classID,int year,int month,
-                        int day,int hour,int minute,String reportInfo,String fileType);
+                        int day,int hour,int minute,String reportInfo,String fileType,String startDate);
     List<ExpReport> QueryExpReportsByCourseIDAndClassID(String courseID,String classID);
 }

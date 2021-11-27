@@ -18,6 +18,7 @@ public class ExpReport {
     private int minute;
     private String reportInfo;
     private String fileType;
+    private String startDate;
 
     public ExpReport() {
     }
@@ -102,6 +103,14 @@ public class ExpReport {
         this.fileType = fileType;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
     @Override
     public String toString() {
         return "ExpReport{" +
@@ -115,6 +124,7 @@ public class ExpReport {
                 ", minute=" + minute +
                 ", reportInfo='" + reportInfo + '\'' +
                 ", fileType='" + fileType + '\'' +
+                ", startDate='" + startDate + '\'' +
                 '}';
     }
 }
