@@ -9,12 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="InstructorServlet的modifyReportDesc的功能实现">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="InstructorServlet的getClassInfo的功能实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/SectionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/SectionDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Course.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +203,8 @@
       <workItem from="1637884152669" duration="4967000" />
       <workItem from="1637999525551" duration="9710000" />
       <workItem from="1638025678004" duration="6327000" />
-      <workItem from="1638075903989" duration="3906000" />
+      <workItem from="1638075903989" duration="3983000" />
+      <workItem from="1638081452604" duration="1432000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -299,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638077549481</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="InstructorServlet的getClassInfo的功能实现">
+      <created>1638080103420</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1638080103420</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +396,8 @@
     <MESSAGE value="instructorServlet的功能releaseReportDesc实现" />
     <MESSAGE value="InstructorServlet的withdrawReportDesc的功能实现" />
     <MESSAGE value="InstructorServlet的modifyReportDesc的功能实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="InstructorServlet的modifyReportDesc的功能实现" />
+    <MESSAGE value="InstructorServlet的getClassInfo的功能实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="InstructorServlet的getClassInfo的功能实现" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

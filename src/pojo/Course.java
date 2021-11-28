@@ -11,6 +11,7 @@ public class Course {
     private String courseID;
     private String title;
     private String instructorNumber;
+    private int flag;//标志位：是否通过了管理员审核（0、1）
 
     public Course(){}
 
@@ -38,12 +39,21 @@ public class Course {
         this.instructorNumber = instructorNumber;
     }
 
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "courseID='" + courseID + '\'' +
                 ", title='" + title + '\'' +
                 ", instructorNumber='" + instructorNumber + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 }
