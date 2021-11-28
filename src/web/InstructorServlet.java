@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.reflect.TypeToken;
+import com.mysql.cj.util.DnsSrv;
 import service.Impl.InstructorServiceImpl;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
@@ -293,6 +294,24 @@ public class InstructorServlet extends BaseServlet{
         map.put("result",result);
 
         resp.getWriter().write(gson.toJson(map));
+    }
 
+    /**
+     * 某门课的责任教师查看该课程下的所有班级信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getClassInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        List<Map<String,String>> map = instructorService.GetSectionInfoOfCourse(courseID);
+
+        resp.getWriter().write(gson.toJson(map));
     }
 }

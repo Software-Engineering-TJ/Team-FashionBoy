@@ -29,4 +29,6 @@ public interface InstructorService {
     //教师修改实验报告说明
     int ModifyReportDesc(String courseID,String classID,String expname,String reportName,String reportInfo,
                          String endDate,String fileType);
+    //获取该课程下的所有班级信息
+    List<Map<String,String>> GetSectionInfoOfCourse(String courseID);
 }
