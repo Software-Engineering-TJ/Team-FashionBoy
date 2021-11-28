@@ -11,6 +11,9 @@ var Experiment = Vue.extend({
                 return 'success-row';
             }
             return '';
+        },
+        releaseExperiment(row){
+            this.$emit('release-experiment',row)
         }
     },
     template: `
@@ -68,7 +71,7 @@ var Experiment = Vue.extend({
                                 width="150">
                             <template slot-scope="scope">
                                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
-                                <el-button type="text" size="small">发布</el-button>
+                                <el-button type="text" size="small" @click="releaseExperiment(scope.row)">发布</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

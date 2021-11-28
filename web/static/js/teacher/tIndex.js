@@ -39,13 +39,59 @@ var vm = new Vue({
             defaultActive: '1',
             // 用户信息对话框是否可见
             userDialogFormVisible: false,
-            //
+            // 发布通知的对话框
             annoDialogFormVisible: false,
+            // 发布实验的对话框
+            experimentDialogFormVisible: false,
+            // 班级信息的弹窗是否可见
+            sectionDialogFormVisible:false,
             // 公告表单
-            annoForm:{
-                title:'',
-                content:'',
-                date:'',
+            annoForm: {
+                title: '',
+                content: '',
+                date: '',
+            },
+            // 实验表单
+            experimentForm: {
+                title: '',
+                desc: '',
+                date1: '',
+                date2: '',
+                region: '',
+                fileList: []
+            },
+            // 课程表单
+            courseForm: {
+                title: '',
+                courseID: '',
+                startDate: '',
+                endDate: '',
+                experimentForm: [
+                    {
+                        title: '',
+                        difficulty: 0,
+                        priority: 0,
+                        weight: 0
+                    }
+                ],
+                experimentWeight: 0,
+                attendanceWeight: 0,
+                practiceWeight: 0
+            },
+            //实验表单验证规则
+            rules: {
+                desc: [
+                    {required: true, message: '请填写本实验项目相关描述信息', trigger: 'change'}
+                ],
+                date1: [
+                    {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+                ],
+                date2: [
+                    {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+                ],
+                region: [
+                    {required: true, message: '请选择发布范围', trigger: 'change'}
+                ]
             },
             // 用户实体
             user: {
@@ -92,6 +138,50 @@ var vm = new Vue({
                     issuer: '金伟祖',
                     date: '2021.12.12'
                 }
+            ],
+            // 责任教师管理课程信息
+            courseInfoList:[
+                {
+                    title:'计算机网络实验',
+                    courseID:'12345',
+                    date:'2021.9.1-2022.1.14',
+
+                },
+                {
+                    title:'计算机网络实验',
+                    courseID:'12345',
+                    date:'2021.9.1-2022.1.14',
+
+                },
+                {
+                    title:'计算机网络实验',
+                    courseID:'12345',
+                    date:'2021.9.1-2022.1.14',
+
+                }
+            ],
+            sectionInfoList:[
+                {
+                    classID:'1',
+                    sectionDate:'周三',
+                    sectionTime:'第二节课',
+                    instructorID:'23034',
+                    instructorName:'金伟祖',
+                },
+                {
+                    classID:'2',
+                    sectionDate:'周三',
+                    sectionTime:'第五节课',
+                    instructorID:'23035',
+                    instructorName:'夏波涌'
+                },
+                {
+                    classID:'3',
+                    sectionDate:'周四',
+                    sectionTime:'第四节课',
+                    instructorID:'23034',
+                    instructorName:'金伟祖'
+                }
             ]
         };
     },
@@ -118,12 +208,20 @@ var vm = new Vue({
         selectMenuItem(key, keyPath) {
             switch (key) {
                 case "1":
-                    this.changeComponents = "Calender"
+                    this.changeComponents = 'Calender'
                     this.defaultActive = '1'
                     break;
                 case "2":
                     this.drawerCourse = true
                     this.defaultActive = '2'
+                    break;
+                case "3-1":
+                    this.changeComponents = 'OpenCourse'
+                    this.defaultActive = '3-1'
+                    break;
+                case "3-2":
+                    this.changeComponents ='CourseOverview'
+                    this.defaultActive = '3-2'
                     break;
                 default:
                     break;
@@ -164,13 +262,51 @@ var vm = new Vue({
         publishAnnouncement() {
             console.log("tIndex-publishAnnouncement被调用了")
             this.annoDialogFormVisible = true
+        },
+        submitExperimentForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        releaseExperiment(row) {
+            this.experimentDialogFormVisible = true
+        },
+        addExperiment() {
+            console.log('addExperiment被调用了')
+            this.courseForm.experimentForm.push(
+                {
+                    title: '',
+                    difficulty: 0,
+                    priority: 0,
+                    weight: 0
+                }
+            )
+        },
+        removeDomain(index) {
+            console.log(index)
+            if (index !== -1) {
+                this.courseForm.experimentForm.splice(index, 1)
+            }
+        },
+        getSectionInfo(courseID){
+            console.log(courseID)
+            this.sectionDialogFormVisible=true
         }
     },
     components: {
         // 日历组件
         Calender,
         // 课程组件
-        Course
+        Course,
+        // 开设课程组件
+        OpenCourse,
+        // 课程概况组件
+        CourseOverview
     }
 })
 

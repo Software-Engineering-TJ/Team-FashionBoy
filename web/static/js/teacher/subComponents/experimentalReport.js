@@ -8,6 +8,9 @@ var ExperimentalReport = Vue.extend({
     methods: {
         clickReport(index){
             this.$emit('click-report',index)
+        },
+        checkSubmission(){
+            console.log('checkSubmission被调用了')
         }
     },
     template: `
@@ -69,7 +72,7 @@ var ExperimentalReport = Vue.extend({
                             <div class="my-bg">{{item.weight}}</div>
                         </el-col>
                         <el-col :span="4">
-                            <div class="my-bg" style="border-radius: 0 4px 4px 0"><el-button type="text">查看提交情况</el-button></div>
+                            <div class="my-bg" style="border-radius: 0 4px 4px 0"><el-button @click.stop="checkSubmission" type="text">查看提交情况</el-button></div>
                         </el-col>
                     </el-row>
                 </div>

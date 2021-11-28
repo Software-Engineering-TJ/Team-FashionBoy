@@ -74,6 +74,100 @@
     </el-dialog>
     <!-- 发布新公告的弹窗结束 -->
 
+    <!-- 发布实验的弹窗开始 -->
+    <el-dialog title="实验发布" :visible.sync="experimentDialogFormVisible">
+        <div style="width: 90%">
+            <el-form :model="experimentForm" :rules="rules" ref="experimentForm">
+                <el-form-item label="实验项目" prop="title" :label-width="formLabelWidth">
+                    <el-input v-model="experimentForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="项目描述" required prop="desc" :label-width="formLabelWidth">
+                    <el-input type="textarea" v-model="experimentForm.desc"></el-input>
+                </el-form-item>
+                <el-form-item label="截止日期" required :label-width="formLabelWidth">
+                    <el-col :span="11">
+                        <el-form-item prop="date1">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="experimentForm.date1"
+                                            style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col class="line" :span="2">
+                        <div style="text-align: center">-</div>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-form-item prop="date2">
+                            <el-time-picker placeholder="选择时间" v-model="experimentForm.date2"
+                                            style="width: 100%;"></el-time-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="发布范围" required prop="region" :label-width="formLabelWidth">
+                    <el-select v-model="experimentForm.region" placeholder="请选择发布范围">
+                        <el-option label="仅限本班" value="shanghai"></el-option>
+                        <el-option label="所有班级" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="相关参考资料" prop="fileList" :label-width="formLabelWidth">
+                    <el-upload
+                            class="upload-demo"
+                            drag
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            multiple>
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                        <div class="el-upload__tip" slot="tip">只能上传pdf/txt/doc文件，且不超过100Mb</div>
+                    </el-upload>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="experimentDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="submitExperimentForm('experimentForm')">确 定</el-button>
+        </div>
+    </el-dialog>
+    <!-- 发布实验的弹窗结束 -->
+
+    <!-- 发布新公告的弹窗开始 -->
+    <el-dialog title="班级信息" :visible.sync="sectionDialogFormVisible" >
+        <div style="width: 90%;margin-left: 5%">
+            <el-table
+                    :data="sectionInfoList">
+                <el-table-column
+                        prop="classID"
+                        label="班级号">
+                </el-table-column>
+                <el-table-column
+                        prop="sectionDate"
+                        label="日期">
+                </el-table-column>
+                <el-table-column
+                        prop="sectionTime"
+                        label="时间">
+                </el-table-column>
+                <el-table-column
+                        prop="instructorID"
+                        label="教师工号">
+                </el-table-column>
+                <el-table-column
+                        prop="instructorName"
+                        label="教师姓名">
+                </el-table-column>
+                <el-table-column
+                        label="操作"
+                        width="120">
+                    <template slot-scope="scope">
+                        <el-button @click="handleClick(scope.row)" plain type="danger" size="small">删除该班级</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="sectionDialogFormVisible = false">关 闭</el-button>
+            <el-button type="primary" @click="sectionDialogFormVisible = false">新 增 班 级</el-button>
+        </div>
+    </el-dialog>
+    <!-- 发布新公告的弹窗结束 -->
+
     <div id="mainbox">
 
         <div id="header">
@@ -244,7 +338,14 @@
                         <component :is="changeComponents" :course-id="courseID" :course-name="title"
                                    :student-number="user.studentNumber"
                                    :notice-list="noticeList"
+                                   :course-form="courseForm"
+                                   :form-label-width="formLabelWidth"
+                                   :course-info-list="courseInfoList"
+                                   @get-section-info="getSectionInfo"
                                    @publish-announcement="publishAnnouncement"
+                                   @remove-domain="removeDomain"
+                                   @release-experiment="releaseExperiment"
+                                   @add-experiment="addExperiment"
                                    @go-back="goBack"></component>
                         <!--                        </keep-alive>-->
                     </div>
@@ -255,6 +356,8 @@
     </div>
 </div>
 <script src="../../static/js/calender.js"></script>
+<script src="../../static/js/teacher/subComponents/courseOverview.js"></script>
+<script src="../../static/js/teacher/subComponents/openCourse.js"></script>
 <script src="../../static/js/teacher/subComponents/experiment.js"></script>
 <script src="../../static/js/teacher/subComponents/experimentalReport.js"></script>
 <script src="../../static/js/teacher/subComponents/epReportDetail.js"></script>

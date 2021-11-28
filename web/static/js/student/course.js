@@ -95,7 +95,8 @@ var Course = Vue.extend({
             console.log(index)
             this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
             this.changeComponents = 'EpReportDetail'
-        }
+        },
+
     },
     components: {
         // 公告板组件
@@ -165,8 +166,17 @@ var Course = Vue.extend({
             <el-col :span="21">
                 <div id="subMainBox" style="background-color: white;height: 650px">
                     <keep-alive>
-                        <component :is="changeComponents" @click-notice="clickNotice" @go-back-notice="goBackNotice" @go-back-report="goBackReport" :noticeList="noticeList" 
-                        :noticeInfo="noticeInfo" :file-list="fileList" :report-list="reportList" :report-info="reportInfo" @click-report="clickReport"></component>
+                        <component :is="changeComponents" 
+                        @click-notice="clickNotice" 
+                        @go-back-notice="goBackNotice" 
+                        @go-back-report="goBackReport" 
+                        :noticeList="noticeList" 
+                        :noticeInfo="noticeInfo" 
+                        :file-list="fileList" 
+                        :report-list="reportList" 
+                        :report-info="reportInfo" 
+                        @click-report="clickReport"
+                        ></component>
                     </keep-alive>
                 </div>
             </el-col>

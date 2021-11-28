@@ -141,6 +141,9 @@ var Course = Vue.extend({
         },
         publishAnnouncement() {
             this.$emit('publish-announcement')
+        },
+        releaseExperiment(row){
+            this.$emit('release-experiment',row)
         }
     },
     components: {
@@ -228,6 +231,7 @@ var Course = Vue.extend({
                         :material-list="materialList"
                         :experiment-list="experimentList"
                         @click-report="clickReport" 
+                        @release-experiment="releaseExperiment"
                         @publish-announcement="publishAnnouncement"></component>
                     </keep-alive>
                 </div>
