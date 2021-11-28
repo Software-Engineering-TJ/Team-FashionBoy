@@ -333,4 +333,36 @@ public class AdministrationServlet extends BaseServlet{
 
     }
 
+    protected void createStudentFromExcel(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+
+        //前端将本地文件拖拽到上传区，程序将文件拷贝一份存在web-inf路径下（此处应当调用上传文件的接口）
+
+        File file = new File("获取相对路径的excel文件");
+        try {
+            // 创建输入流，读取Excel
+            InputStream is = new FileInputStream(file.getAbsolutePath());
+            // jxl提供的Workbook类
+            Workbook wb = Workbook.getWorkbook(is);
+            // Excel的页签数量
+            int sheet_size = wb.getNumberOfSheets();
+            for (int index = 0; index < sheet_size; index++) {
+                // 每个页签创建一个Sheet对象
+                Sheet sheet = wb.getSheet(index);
+                // sheet.getRows()返回该页的总行数
+                for (int i = 1; i < sheet.getRows(); i++) {
+                    // sheet.getColumns()返回该页的总列数
+                    String studentNumber = sheet.getCell(0, i).getContents();
+                    String email = sheet.getCell(1, i).getContents();
+                    String name = sheet.getCell(2, i).getContents();
+                    int sex = Integer.parseInt(sheet.getCell(3, i).getContents());
+                    String phoneNumber = sheet.getCell(4, i).getContents();
+                    administrationService.AddStudent(studentNumber, email, name, phoneNumber, sex);
+
+                }
+            }
+        } catch (BiffException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
