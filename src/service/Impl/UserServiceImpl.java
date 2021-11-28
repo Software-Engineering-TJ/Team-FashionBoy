@@ -1,16 +1,15 @@
 package service.Impl;
 
-import dao.inter.AdministratorDao;
-import dao.inter.InstructorDao;
-import dao.inter.StudentDao;
-import dao.impl.AdministratorDaoImpl;
-import dao.impl.InstructorDaoImpl;
-import dao.impl.StudentDaoImpl;
-import pojo.Administrator;
-import pojo.Instructor;
-import pojo.Student;
-import pojo.User;
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
+import dao.impl.*;
+import dao.inter.*;
+import pojo.*;
 import service.inter.UserService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * UserServiceImpl类的描述：
@@ -24,6 +23,8 @@ public class UserServiceImpl implements UserService{
     private AdministratorDao administratorDao = new AdministratorDaoImpl();
     private InstructorDao  instructorDao = new InstructorDaoImpl();
     private StudentDao studentDao = new StudentDaoImpl();
+    private ExpReportDao expReportDao = new ExpReportDaoImpl();
+    private CourseExpDao courseExpDao = new CourseExpDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -126,5 +127,26 @@ public class UserServiceImpl implements UserService{
         }else if(identity.equals("instructor")){
             instructorDao.SetStatus(email,1);
         }
+    }
+
+    @Override
+    public List<Map<String, String>> getExpReports(String courseID, String classID) {
+        List<Map<String,String>> expReportInfoList =  new ArrayList<>();
+        //获取原生信息
+        List<ExpReport> expReportList = expReportDao.QueryExpReportsByCourseIDAndClassID(courseID, classID);
+        //进行字段加工处理
+        for(ExpReport expReport : expReportList){
+            Map<String,String> map = new HashMap<>();
+            map.put("reportName",expReport.getReportName());
+            map.put("reportDescription",expReport.getReportInfo());
+            map.put("startDate",expReport.getStartDate());
+            map.put("endDate",expReport.getStartDate());
+            map.put("reportType",expReport.getFileType());
+            //获取实验的成绩占比
+            CourseExp courseExp = courseExpDao.QueryCourseExpByCourseIDAndExpname(expReport.getCourseID(),expReport.getExpname());
+            map.put("weight",courseExp.getPercent()+"%");
+            expReportInfoList.add(map);
+        }
+        return expReportInfoList;
     }
 }

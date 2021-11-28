@@ -1,8 +1,12 @@
 package service.inter;
 
+import pojo.ExpReport;
 import pojo.Instructor;
 import pojo.Student;
 import pojo.User;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     User ExistEmail(String email);  //检测email是否已被注册
@@ -22,4 +26,6 @@ public interface UserService {
     int changePassword(String identity,String userNumber,String newPassword);
     //激活用户
     void activateAccount(String identity,String email);
+    //获取某个课程班级下的所欲实验报告描述信息
+    List<Map<String,String>> getExpReports(String courseID, String classID);
 }

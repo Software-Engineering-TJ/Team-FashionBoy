@@ -143,7 +143,7 @@ public class AdministrationServiceImpl implements AdministrationService {
             //获取班级号和课程号
             sectionInformation.setCourseID(teaches.getCourseID());
             sectionInformation.setClassID(teaches.getClassID());
-            //获取班级名称
+            //获取课程名称
             Course course = courseDao.QueryCourseByCourseID(teaches.getCourseID());
             sectionInformation.setTitle(course.getTitle());
             //获取任课身份

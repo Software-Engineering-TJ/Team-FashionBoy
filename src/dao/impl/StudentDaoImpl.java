@@ -45,7 +45,7 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
     @Override
     public List<Student> QueryAllStudents() {
-        String sql = "select select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from from student";
+        String sql = "select `studentNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from from student";
         return queryForList(Student.class,sql);
     }
 

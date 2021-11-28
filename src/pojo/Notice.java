@@ -12,6 +12,8 @@ public class Notice {
     private String classID;
     private String date;  //通知时间——精确到秒
     private String content;  //通知内容
+    private String instructorNumber;
+    private String title;
 
     public Notice() {
     }
@@ -49,6 +51,22 @@ public class Notice {
         this.content = content;
     }
 
+    public String getInstructorNumber() {
+        return instructorNumber;
+    }
+
+    public void setInstructorNumber(String instructorNumber) {
+        this.instructorNumber = instructorNumber;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "Notice{" +
@@ -56,6 +74,8 @@ public class Notice {
                 ", classID='" + classID + '\'' +
                 ", date='" + date + '\'' +
                 ", content='" + content + '\'' +
+                ", instructorNumber='" + instructorNumber + '\'' +
+                ", title=" + title +
                 '}';
     }
 }
