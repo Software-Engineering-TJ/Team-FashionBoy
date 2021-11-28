@@ -116,4 +116,9 @@ public class InstructorServiceImpl implements InstructorService {
     public int DeleteReportDesc(String courseID, String classID, String expname, String reportName) {
         return expReportDao.DeleteExpReport(courseID, classID, expname, reportName);
     }
+
+    @Override
+    public int ModifyReportDesc(String courseID, String classID, String expname, String reportName, String reportInfo, String endDate, String fileType) {
+        return expReportDao.UpdateReportDesc(courseID, classID, expname, reportName, reportInfo, endDate, fileType);
+    }
 }

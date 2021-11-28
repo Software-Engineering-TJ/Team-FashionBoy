@@ -9,27 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="登陆时根据用户身份跳转到对应页面以及获取用户信息对接完成，并补充了学生页面的前端代码">
-      <change afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/calender.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experiment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="InstructorServlet的withdrawReportDesc的功能实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/calender.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/noticeDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/noticeDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExpReportDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExpReportDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,10 +25,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="CSS File" />
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,6 +40,17 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/dao/impl/BaseDao.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -81,7 +79,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="项目" />
+    <property name="project.structure.last.edited" value="Facet" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -207,6 +205,9 @@
       <workItem from="1637753044048" duration="2101000" />
       <workItem from="1637837136555" duration="9813000" />
       <workItem from="1637884152669" duration="4967000" />
+      <workItem from="1637999525551" duration="9710000" />
+      <workItem from="1638025678004" duration="6327000" />
+      <workItem from="1638075903989" duration="1576000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -222,7 +223,77 @@
       <option name="project" value="LOCAL" />
       <updated>1637050339426</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="完善ExpReport的属性：增加startDate">
+      <created>1637999924531</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637999924531</updated>
+    </task>
+    <task id="LOCAL-00004" summary="userServlet的功能getReportDesc实现">
+      <created>1638003976632</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1638003976632</updated>
+    </task>
+    <task id="LOCAL-00005" summary="studentServlet的功能getGrade实现">
+      <created>1638017710052</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1638017710052</updated>
+    </task>
+    <task id="LOCAL-00006" summary="instructorServlet的功能getSections实现">
+      <created>1638025129247</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1638025129247</updated>
+    </task>
+    <task id="LOCAL-00007" summary="instructorServlet的功能getExperimentInfo实现">
+      <created>1638027013740</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638027013740</updated>
+    </task>
+    <task id="LOCAL-00008" summary="instructorServlet的功能releaseExperiment、examineExperimentInfo实现">
+      <created>1638028444511</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1638028444511</updated>
+    </task>
+    <task id="LOCAL-00009" summary="instructorServlet的功能modifyExperimentInfo实现">
+      <created>1638029200194</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1638029200194</updated>
+    </task>
+    <task id="LOCAL-00010" summary="instructorServlet的功能releaseNotice、withdrawNotice实现">
+      <created>1638030615888</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1638030615888</updated>
+    </task>
+    <task id="LOCAL-00011" summary="instructorServlet的功能releaseReportDesc实现">
+      <created>1638031539121</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1638031539121</updated>
+    </task>
+    <task id="LOCAL-00012" summary="InstructorServlet的withdrawReportDesc的功能实现">
+      <created>1638032023944</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1638032023944</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,21 +302,69 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="MAIN">
+        <entry key="8eeb51b8-e988-4c2d-93e3-9283c279cd41">
           <value>
             <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
                       </list>
                     </value>
                   </entry>
                 </map>
               </option>
             </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="8eeb51b8-e988-4c2d-93e3-9283c279cd41" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/hjk" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -255,7 +374,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="最新版代码" />
     <MESSAGE value="StudentServlet的getTakes实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="StudentServlet的getTakes实现" />
+    <MESSAGE value="完善ExpReport的属性：增加startDate" />
+    <MESSAGE value="userServlet的功能getReportDesc实现" />
+    <MESSAGE value="studentServlet的功能getGrade实现" />
+    <MESSAGE value="instructorServlet的功能getSections实现" />
+    <MESSAGE value="instructorServlet的功能getExperimentInfo实现" />
+    <MESSAGE value="instructorServlet的功能releaseExperiment、examineExperimentInfo实现" />
+    <MESSAGE value="instructorServlet的功能modifyExperimentInfo实现" />
+    <MESSAGE value="instructorServlet的功能releaseNotice、withdrawNotice实现" />
+    <MESSAGE value="instructorServlet的功能releaseReportDesc实现" />
+    <MESSAGE value="InstructorServlet的withdrawReportDesc的功能实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="InstructorServlet的withdrawReportDesc的功能实现" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -267,29 +396,29 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>58</line>
+          <line>59</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>92</line>
-          <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
+          <line>93</line>
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>41</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <line>42</line>
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>273</line>
-          <properties class="web.AdministrationServlet" method="changeDutyInstructor">
+          <line>274</line>
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="28" />

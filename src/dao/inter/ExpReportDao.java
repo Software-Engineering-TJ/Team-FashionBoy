@@ -8,4 +8,6 @@ public interface ExpReportDao {
                         String endDate,String reportInfo,String fileType,String startDate);
     List<ExpReport> QueryExpReportsByCourseIDAndClassID(String courseID,String classID);
     int DeleteExpReport(String courseID, String classID, String expname, String reportName);
+    int UpdateReportDesc(String courseID, String classID, String expname, String reportName,
+                         String reportInfo, String endDate, String fileType);
 }

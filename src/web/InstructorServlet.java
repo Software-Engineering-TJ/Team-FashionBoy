@@ -262,4 +262,37 @@ public class InstructorServlet extends BaseServlet{
 
         resp.getWriter().write(gson.toJson(map));
     }
+
+    /**
+     * 教师修改自己发布的实验报告提交说明的相关信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void modifyReportDesc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String expname = reqObject.get("expName");
+        String newReportName = reqObject.get("newReportName");
+        String newEndDate = reqObject.get("newEndDate");
+        String newReportDescription = reqObject.get("newReportDescription");
+        String newFileType = reqObject.get("newReportType");
+
+        Map<String,Integer> map = new HashMap<>();
+        int result = 0;
+        if(instructorService.ModifyReportDesc(courseID,classID,expname,newReportName,newReportDescription,newEndDate,newFileType)==1){
+            //修改实验报告描述成功
+            result = 1;
+        }
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
+
+    }
 }

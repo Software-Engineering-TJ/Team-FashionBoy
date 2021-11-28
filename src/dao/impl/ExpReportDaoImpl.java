@@ -32,4 +32,11 @@ public class ExpReportDaoImpl extends BaseDao implements ExpReportDao {
         String sql = "delete from expreport where(`courseID` = ? , `classID` = ? ,`expname` = ? ,`reportName` = ? ,)";
         return update(sql,courseID,classID,expname,reportName);
     }
+
+    @Override
+    public int UpdateReportDesc(String courseID, String classID, String expname, String reportName, String reportInfo, String endDate, String fileType) {
+        String sql = "update `expreport` set `reportName` = ? , `reportInfo` = ? , `endDate` = ? , `fileType` = ? " +
+                "where(`courseID` = ? and `classID` = ? and `expname` = ?)";
+        return update(sql,reportName,reportInfo,endDate,fileType,courseID,classID,expname);
+    }
 }
