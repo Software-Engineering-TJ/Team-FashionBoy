@@ -4,6 +4,8 @@ import dao.inter.SectionDao;
 import pojo.Course;
 import pojo.Section;
 
+import java.util.List;
+
 /**
  * SectionDaoImpl类的描述：
  *
@@ -16,5 +18,11 @@ public class SectionDaoImpl extends BaseDao implements SectionDao {
     public Section QuerySectionByCourseIDAndClassID(String courseID,String classID) {
         String sql = "select `courseID`,`classID`,`day`,`time`,`number`,`currentNumber` from section where courseID = ? and classID = ?";
         return queryForOne(Section.class,sql,courseID,classID);
+    }
+
+    @Override
+    public List<Section> QuerySectionByCourseID(String courseID) {
+        String sql = "select `courseID`,`classID`,`day`,`time`,`number`,`currentNumber` from section where courseID = ?";
+        return queryForList(Section.class,sql,courseID);
     }
 }
