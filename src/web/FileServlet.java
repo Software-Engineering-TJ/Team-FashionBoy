@@ -101,6 +101,7 @@ public class FileServlet extends BaseServlet{
             try {
                 List<FileItem> list = servletFileUpload.parseRequest(req);
                 String courseID = null,classID = null,expname = null,userNumber = null,filename = null;  //文件想要存储的位置
+                FileItem fileItemToBeStore = null;
                 //5.判断每个表单项是否是文件
                 for(FileItem fileItem:list){
                     if(fileItem.isFormField()){
@@ -122,27 +123,27 @@ public class FileServlet extends BaseServlet{
                         //文件表单项
                         filename = fileItem.getName();//上传的文件名
                         System.out.println("文件："+filename);
-                        //6.将文件写入磁盘
-                        try {
-                            //使用Path类方便获取不同电脑下的当前文件所在的路径，随环境而变
-                            Path path = Paths.get(req.getServletContext().getRealPath(""));
-                            //定位到“整个项目”所在的路径
-                            path = path.getParent().getParent().getParent();
-                            //定位到文件应存放的路径
-                            Path fileDirectory = Paths.get(path.toString(),"web/WEB-INF/files/"+courseID+"/"+classID+"/"+expname+"/"+userNumber);
+                        fileItemToBeStore = fileItem; //先放着，等待文件路径确定后再写到磁盘
+                    }
+                }
+                //6.将文件写入磁盘
+                try {
+                    //使用Path类方便获取不同电脑下的当前文件所在的路径，随环境而变
+                    Path path = Paths.get(req.getServletContext().getRealPath(""));
+                    //定位到“整个项目”所在的路径
+                    path = path.getParent().getParent().getParent();
+                    //定位到文件应存放的路径
+                    Path fileDirectory = Paths.get(path.toString(),"web/WEB-INF/files/"+courseID+"/"+classID+"/"+expname+"/"+userNumber);
 //                            String filePath = "F:\\javaProjects\\WedProjectTest\\web\\WEB-INF\\UserFiles\\"+userNumber;
 //                            System.out.println(req.getRequestURL());
-                            File file = new File(fileDirectory.toString());
-                            if(!file.isDirectory()){
-                                file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
-                            }
-                            Path filePath = Paths.get(fileDirectory.toString(),filename);
-                            fileItem.write(new File(filePath.toString()));
-//                            fileService.UploadFile(courseID,classID,userNumber,filename);//将“用户-文件”写入数据库
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    File file = new File(fileDirectory.toString());
+                    if(!file.isDirectory()){
+                        file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
                     }
+                    Path filePath = Paths.get(fileDirectory.toString(),filename);
+                    fileItemToBeStore.write(new File(filePath.toString()));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } catch (FileUploadException e) {
                 e.printStackTrace();
