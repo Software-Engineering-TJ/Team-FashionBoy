@@ -1,5 +1,5 @@
 var Course = Vue.extend({
-    props: ['studentNumber', 'courseName', 'courseID', 'classID', 'noticeList'],
+    props: ['instructorNumber', 'courseName', 'courseId', 'classId', 'noticeList'],
     data() {
         return {
             changeComponents: 'Notice',
@@ -28,35 +28,7 @@ var Course = Vue.extend({
                     upLoadUser: '金伟祖'
                 },
             ],
-            reportList: [
-                {
-                    reportName: '实验一实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                },
-                {
-                    reportName: '实验二实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                },
-                {
-                    reportName: '实验三实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                }
-            ],
+            reportList: [],
             materialList: [
                 {
                     name: 'food.jpeg',
@@ -71,32 +43,7 @@ var Course = Vue.extend({
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ],
-            experimentList: [
-                {
-                    title: '组播路由实验',
-                    difficulty: 3,
-                    priority: '3',
-                    date: '2021.12.11',
-                    status: '已发布',
-                    weight: '25%'
-                },
-                {
-                    title: '帧中继实验',
-                    difficulty: 4,
-                    priority: '2',
-                    date: '',
-                    status: '未发布',
-                    weight: '25%'
-                },
-                {
-                    title: '静态路由实验',
-                    difficulty: 4.5,
-                    priority: '1',
-                    date: '2021.12.11',
-                    status: '已发布',
-                    weight: '25%'
-                },
-            ]
+            experimentList: []
         }
     },
     methods: {
@@ -116,6 +63,7 @@ var Course = Vue.extend({
                     this.changeComponents = "Notice"
                     break;
                 case "2":
+                    this.getExperimentInfo()
                     this.changeComponents = "Experiment"
                     break;
                 case "3":
@@ -123,8 +71,8 @@ var Course = Vue.extend({
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "4":
+                    this.getReportDesc()
                     this.changeComponents = "ExperimentalReport"
-                    // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 default:
                     break;
@@ -144,6 +92,58 @@ var Course = Vue.extend({
         },
         releaseExperiment(row){
             this.$emit('release-experiment',row)
+        },
+        releaseReportDesc(){
+            let course =this
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=getExperimentInfo',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId
+                },
+            }).then(resp => {
+                course.experimentList = JSON.parse(JSON.stringify(resp.data));
+                for(let i=0;i<course.experimentList.length;i++){
+                    course.experimentList[i].difficulty=Number(course.experimentList[i].difficulty)
+                }
+                this.$emit('release-report-desc',this.experimentList)
+            })
+        },
+        getExperimentInfo(){
+            let course =this
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=getExperimentInfo',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId
+                },
+            }).then(resp => {
+                course.experimentList = JSON.parse(JSON.stringify(resp.data));
+                for(let i=0;i<course.experimentList.length;i++){
+                    course.experimentList[i].difficulty=Number(course.experimentList[i].difficulty)
+                }
+            })
+        },
+        withdrawNotice(date){
+            this.$emit('withdraw-notice',date)
+        },
+        getReportDesc(){
+            let course = this
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getReportDesc',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                console.log(resp.data)
+                course.reportList = JSON.parse(JSON.stringify(resp.data));
+            })
+        },
+        withdrawReportDesc(expName,reportName){
+            console.log(expName,reportName)
+            this.$emit('withdraw-report-desc',expName,reportName)
         }
     },
     components: {
@@ -232,7 +232,11 @@ var Course = Vue.extend({
                         :experiment-list="experimentList"
                         @click-report="clickReport" 
                         @release-experiment="releaseExperiment"
-                        @publish-announcement="publishAnnouncement"></component>
+                        @publish-announcement="publishAnnouncement"
+                        @release-report-desc = "releaseReportDesc"
+                        @withdraw-report-desc="withdrawReportDesc"
+                        @withdraw-notice="withdrawNotice"
+                        ></component>
                     </keep-alive>
                 </div>
             </el-col>

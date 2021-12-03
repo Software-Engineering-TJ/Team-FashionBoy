@@ -14,7 +14,7 @@ var Notice = Vue.extend({
         }
     },
     template: `
-        <div style="line-height: initial;overflow: hidden;cursor: pointer;padding-top: 13px;" >
+        <div style="line-height: initial;overflow: hidden;cursor: pointer;padding-top: 13px;background-color: white" >
             <div style="height:35px;position: relative;margin-bottom: 5px">
                 <h2 style="display: inline-block;position: absolute;left: 14px;padding-left: 10px">已发布公告:</h2>
             </div>
@@ -27,13 +27,13 @@ var Notice = Vue.extend({
                     <div style="margin: 8px 0 8px 0" @click="clickNotice(index)">
                         
                             <el-row style="border-radius: 4px;background-color: #909399;margin-bottom: 6px;width: 96%;margin-left: 2%">
-                                <el-col :span="2">
+                                <el-col :span="24">
                                     <div style="padding-top: 5px">
                                         <h3 style="display: inline-block">{{item.title}}</h3>
                                     </div>
                                 </el-col>
                                 <el-col :span="24"><span style="padding-left: 12px">{{item.content}}</span></el-col>
-                                <el-col :span="7" :offset="17">
+                                <el-col :span="10" :offset="14">
                                     <div style="padding-bottom: 5px">
                                         <span style="margin-left:30px">
                                             <h5 style="display: inline-block">发布时间：</h5>

@@ -10,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ public class InstructorServlet extends BaseServlet{
     InstructorService instructorService = new InstructorServiceImpl();
 
     /**
-     * 教师获取教授的所有课程
+     * 教师获取教授的所有课程 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -46,7 +48,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 获取某门课程下，责任教师发布的实验信息
+     * 获取某门课程下，责任教师发布的实验信息 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -65,7 +67,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师发布实验
+     * 教师发布实验 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -80,13 +82,16 @@ public class InstructorServlet extends BaseServlet{
         String courseID = reqObject.get("courseID");
         String classID = reqObject.get("classID");
         String expname = reqObject.get("expName");
-        String startDate = reqObject.get("startDate");
-        String endDate = reqObject.get("endDate");
+        String year = reqObject.get("year");
+        String month = reqObject.get("month");
+        String day = reqObject.get("day");
+        String hour = reqObject.get("hour");
+        String minute = reqObject.get("minute");
         String expInfo = reqObject.get("expInfo");
 
         Map<String,Integer> map = new HashMap<>();
         int result = 0;
-        if(instructorService.ReleaseExperiment(courseID,classID,expname,startDate,endDate,expInfo)==1){
+        if(instructorService.ReleaseExperiment(courseID,expname,classID,Integer.parseInt(year),Integer.parseInt(month)+1,Integer.parseInt(day),Integer.parseInt(hour),Integer.parseInt(minute),expInfo)==1){
             //发布实验成功
             result = 1;
         }
@@ -95,6 +100,13 @@ public class InstructorServlet extends BaseServlet{
         resp.getWriter().write(gson.toJson(map));
     }
 
+    /**
+     * 教师查看自己发布的实验信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void examineExperimentInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -140,7 +152,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师发布公告
+     * 教师发布公告 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -154,11 +166,13 @@ public class InstructorServlet extends BaseServlet{
 
         String courseID = (String) reqObject.get("courseID");
         String classID = (String) reqObject.get("classID");
-        Map<String,String> noticeInfo = (Map<String, String>) reqObject.get("noticeInfo");
-        String title = noticeInfo.get("title");
-        String content = noticeInfo.get("content");
-        String instructorNumber = noticeInfo.get("issuer");
-        String date = noticeInfo.get("date");
+        String title = (String) reqObject.get("title");
+        String content = (String) reqObject.get("content");
+        String instructorNumber = (String) reqObject.get("issuer");
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startDate = new Date();
+        String date= simpleDateFormat.format(startDate);
 
         Map<String,Integer> map = new HashMap<>();
         int result = 0;
@@ -173,7 +187,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师撤回(删除)公告
+     * 教师撤回(删除)公告 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -297,7 +311,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 某门课的责任教师查看该课程下的所有班级信息
+     * 某门课的责任教师查看该课程下的所有班级信息 √
      * @param req
      * @param resp
      * @throws ServletException
