@@ -107,7 +107,7 @@ public class AdministrationServiceImpl implements AdministrationService {
             information.setTime("第"+section.getDay()+"节课");
             //确定教师名（可能有多个任课老师，就像一些选修课，当然概率很低，但考虑到实际情况，逻辑上尽量完善吧）
             String allTeachers;  //所有老师名字，用","隔开
-            List<Teaches> teachesList = teachesDao.QueryTeachesByCourseIDAndClassID(takes.getCourseID(),takes.getCourseID());
+            List<Teaches> teachesList = teachesDao.QueryTeachesByCourseIDAndClassID(takes.getCourseID(),takes.getClassID());
             Iterator<Teaches> iterator1 = teachesList.iterator();
             Instructor firstInstructor = instructorDao.QueryInstructorByInstructorNumber(iterator1.next().getInstructorNumber());
             allTeachers = firstInstructor.getName();

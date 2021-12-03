@@ -29,7 +29,7 @@ public class ExpReportDaoImpl extends BaseDao implements ExpReportDao {
 
     @Override
     public int DeleteExpReport(String courseID, String classID, String expname, String reportName) {
-        String sql = "delete from expreport where(`courseID` = ? , `classID` = ? ,`expname` = ? ,`reportName` = ? ,)";
+        String sql = "delete from expreport where(`courseID` = ? and `classID` = ? and `expname` = ? and `reportName` = ?)";
         return update(sql,courseID,classID,expname,reportName);
     }
 

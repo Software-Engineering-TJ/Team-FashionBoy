@@ -11,6 +11,9 @@ var ExperimentalReport = Vue.extend({
         },
         checkSubmission(){
             console.log('checkSubmission被调用了')
+        },
+        releaseReportDesc(){
+            this.$emit('release-report-desc')
         }
     },
     template: `
@@ -77,6 +80,9 @@ var ExperimentalReport = Vue.extend({
                     </el-row>
                 </div>
             </template>
+            <div style="display: inline-block;position: absolute;bottom: 30px;right: 30px">
+                <el-button type="primary" plain @click="releaseReportDesc">上传实验报告说明</el-button>
+            </div>
         </div>
         `
 });

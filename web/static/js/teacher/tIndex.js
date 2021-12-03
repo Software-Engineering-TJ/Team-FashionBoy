@@ -44,12 +44,13 @@ var vm = new Vue({
             // 发布实验的对话框
             experimentDialogFormVisible: false,
             // 班级信息的弹窗是否可见
-            sectionDialogFormVisible:false,
+            sectionDialogFormVisible: false,
+            // 实验报告说明的弹窗是否可见
+            reportDialogFormVisible: false,
             // 公告表单
             annoForm: {
                 title: '',
                 content: '',
-                date: '',
             },
             // 实验表单
             experimentForm: {
@@ -78,10 +79,18 @@ var vm = new Vue({
                 attendanceWeight: 0,
                 practiceWeight: 0
             },
+            // 实验报告表单
+            reportForm: {
+                expName: '',
+                reportName: '',
+                reportDescription: '',
+                endDate: '',
+                reportType: [],
+            },
             //实验表单验证规则
             rules: {
                 desc: [
-                    {required: true, message: '请填写本实验项目相关描述信息', trigger: 'change'}
+                    {required: true, message: '请填写本实验项目相关描述信息', trigger: 'blur'}
                 ],
                 date1: [
                     {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
@@ -91,6 +100,24 @@ var vm = new Vue({
                 ],
                 region: [
                     {required: true, message: '请选择发布范围', trigger: 'change'}
+                ]
+            },
+            //实验报告表单验证规则
+            reportRules: {
+                expName: [
+                    {required: true, message: '请选择关联的实验', trigger: 'change'}
+                ],
+                reportName: [
+                    {required: true, message: '请填写本实验报告标题', trigger: 'blur'}
+                ],
+                reportDescription: [
+                    {required: true, message: '请填写本实验报告相关描述信息', trigger: 'blur'}
+                ],
+                endDate: [
+                    {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+                ],
+                reportType: [
+                    {required: true, message: '请选择文件类型', trigger: 'change'}
                 ]
             },
             // 用户实体
@@ -106,83 +133,48 @@ var vm = new Vue({
             // 对话框中表单标签的宽度
             formLabelWidth: '120px',
             // 学生课程表
-            courseList: [
-                {
-                    title: '计算机网络实验',
-                    courseID: '23654',
-                    duty: '责任教师、教师',
-                    classID: '1'
-                },
-                {
-                    title: '计算机组成原理实验',
-                    courseID: '23653',
-                    duty: '教师',
-                    classID: '2'
-                },
-            ],
+            courseList: [],
             // 课程相关公告信息
-            noticeList: [
-                {
-                    title: '公告一',
-                    content: '请同学们完成实验一',
-                    issuer: '黄杰',
-                    date: '2021.11.1'
-                }, {
-                    title: '公告二',
-                    content: '请同学们完成实验二',
-                    issuer: '张晶',
-                    date: '2021.11.15'
-                }, {
-                    title: '公告三',
-                    content: '请同学们完成实验三',
-                    issuer: '金伟祖',
-                    date: '2021.12.12'
-                }
-            ],
+            noticeList: [],
             // 责任教师管理课程信息
-            courseInfoList:[
+            courseInfoList: [],
+            sectionInfoList: [
                 {
-                    title:'计算机网络实验',
-                    courseID:'12345',
-                    date:'2021.9.1-2022.1.14',
-
+                    classID: '1',
+                    sectionDate: '周三',
+                    sectionTime: '第二节课',
+                    instructorID: '23034',
+                    instructorName: '金伟祖',
                 },
                 {
-                    title:'计算机网络实验',
-                    courseID:'12345',
-                    date:'2021.9.1-2022.1.14',
-
+                    classID: '2',
+                    sectionDate: '周三',
+                    sectionTime: '第五节课',
+                    instructorID: '23035',
+                    instructorName: '夏波涌'
                 },
                 {
-                    title:'计算机网络实验',
-                    courseID:'12345',
-                    date:'2021.9.1-2022.1.14',
-
+                    classID: '3',
+                    sectionDate: '周四',
+                    sectionTime: '第四节课',
+                    instructorID: '23034',
+                    instructorName: '金伟祖'
                 }
             ],
-            sectionInfoList:[
-                {
-                    classID:'1',
-                    sectionDate:'周三',
-                    sectionTime:'第二节课',
-                    instructorID:'23034',
-                    instructorName:'金伟祖',
-                },
-                {
-                    classID:'2',
-                    sectionDate:'周三',
-                    sectionTime:'第五节课',
-                    instructorID:'23035',
-                    instructorName:'夏波涌'
-                },
-                {
-                    classID:'3',
-                    sectionDate:'周四',
-                    sectionTime:'第四节课',
-                    instructorID:'23034',
-                    instructorName:'金伟祖'
-                }
-            ]
+            options: [{
+                value: '.txt',
+                label: '.txt'
+            }, {
+                value: '.doc',
+                label: '.doc'
+            }, {
+                value: '.docx',
+                label: '.docx'
+            }, {
+                value: '.pdf',
+                label: '.pdf'
+            }],
+            experimentOptions: []
         };
     },
     methods: {
@@ -213,6 +205,7 @@ var vm = new Vue({
                     break;
                 case "2":
                     this.drawerCourse = true
+                    this.loadCourse()
                     this.defaultActive = '2'
                     break;
                 case "3-1":
@@ -220,17 +213,40 @@ var vm = new Vue({
                     this.defaultActive = '3-1'
                     break;
                 case "3-2":
-                    this.changeComponents ='CourseOverview'
+                    this.changeComponents = 'CourseOverview'
+                    this.loadDutyCourse()
                     this.defaultActive = '3-2'
                     break;
                 default:
                     break;
             }
         },
-        // 改变管理员信息
+        // 改变用户信息
         changeUserInfo() {
             this.user = JSON.parse(JSON.stringify(this.$data.userChange));
-            // axios.psot('http://canvas.tongji.edu.cn', this.$data.administratorChange);
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=changeUserInfo',
+                method: "Post",
+                data: {
+                    userNumber: this.user.instructorNumber,
+                    email: this.user.email,
+                    phoneNumber: this.user.phoneNumber
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '个人信息修改成功'
+                    });
+                    this.userDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
+                        type: 'error'
+                    })
+                }
+            });
             this.userDialogFormVisible = false;
         },
         //切换管理员信息改变页面的状态
@@ -242,9 +258,17 @@ var vm = new Vue({
                 this.userDialogFormVisible = false;
             }
         },
-        // 加载该学生所有课程,用户点击“我的课程”时触发
+        // 加载该教师执教的所有课程,用户点击“我的课程”时触发
         loadCourse() {
-
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=getSections',
+                method: "Post",
+                data: {
+                    instructorNumber: this.user.instructorNumber,
+                },
+            }).then(resp => {
+                vm.courseList = JSON.parse(JSON.stringify(resp.data));
+            });
         },
         // 加载课程相关信息
         loadCourseInformation(courseID, title, classID) {
@@ -253,31 +277,152 @@ var vm = new Vue({
             this.courseID = courseID
             this.title = title
             this.classID = classID
-            console.log(courseID)
+            this.loadNotice()
+        },
+        loadNotice() {
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getCourseNotice',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID: this.classID
+                },
+            }).then(resp => {
+                vm.noticeList = JSON.parse(JSON.stringify(resp.data));
+            })
         },
         goBack() {
             this.defaultActive = '1'
             this.changeComponents = Calender
         },
         publishAnnouncement() {
-            console.log("tIndex-publishAnnouncement被调用了")
             this.annoDialogFormVisible = true
         },
-        submitExperimentForm(formName) {
+        releaseNotice() {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=releaseNotice',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID: this.classID,
+                    content: this.annoForm.content,
+                    title: this.annoForm.title,
+                    issuer: this.user.instructorNumber,
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '公告发布成功！'
+                    });
+                    this.experimentForm = {}
+                    this.annoDialogFormVisible = false
+                    this.loadNotice()
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '发布失败！',
+                        type: 'error'
+                    })
+                }
+            })
+        },
+        submitExperimentForm(formName, loadName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    axios({
+                        url: '/SoftwareEngineering/instructorServlet?action=releaseExperiment',
+                        method: "Post",
+                        data: {
+                            expName: this.experimentForm.title,
+                            courseID: this.courseID,
+                            classID: this.classID,
+                            year: this.experimentForm.date1.getFullYear(),
+                            month: this.experimentForm.date1.getMonth(),
+                            day: this.experimentForm.date1.getDay(),
+                            hour: this.experimentForm.date2.getHours(),
+                            minute: this.experimentForm.date2.getMinutes(),
+                            expInfo: this.experimentForm.desc
+                        },
+                    }).then(resp => {
+                        if (resp.data.result === 1) {
+                            vm.$refs.child.getExperimentInfo()
+                            this.$message({
+                                type: 'success',
+                                message: '实验发布成功！'
+                            });
+                            this.experimentForm = {}
+                            this.experimentDialogFormVisible = false
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: '信息填写不正确，发布失败！',
+                                type: 'error'
+                            })
+                        }
+                    });
                 } else {
-                    console.log('error submit!!');
+                    alert('实验信息格式不合格！');
+                    return false;
+                }
+            });
+        },
+        submitReport(formName, loadName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    let reportType = ""
+                    let now = new Date()
+                    let startDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay() + ' ' + now.getHours() + ':' + now.getMinutes()
+                    let endDate = this.reportForm.endDate.getFullYear() + '-' + (this.reportForm.endDate.getMonth() + 1) + '-' + this.reportForm.endDate.getDay() + ' ' + this.reportForm.endDate.getHours() + ':' + this.reportForm.endDate.getMinutes()
+                    for (let i = 0; i < this.reportForm.reportType.length; i++) {
+                        reportType = reportType + this.reportForm.reportType[i]
+                        if (i !== this.reportForm.reportType.length - 1) {
+                            reportType = reportType + ","
+                        }
+                    }
+                    axios({
+                        url: '/SoftwareEngineering/instructorServlet?action=releaseReportDesc',
+                        method: "Post",
+                        data: {
+                            expName: this.reportForm.expName,
+                            courseID: this.courseID,
+                            classID: this.classID,
+                            reportInfo: {
+                                reportName: this.reportForm.reportName,
+                                reportDescription: this.reportForm.reportDescription,
+                                startDate: startDate,
+                                endDate: endDate,
+                                reportType: reportType
+                            }
+                        },
+                    }).then(resp => {
+                        if (resp.data.result === 1) {
+                            vm.$refs.child.getReportDesc()
+                            this.$message({
+                                type: 'success',
+                                message: '实验报告说明发布成功！'
+                            });
+                            this.reportForm = {}
+                            this.reportDialogFormVisible = false
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: '信息填写不正确，发布失败！',
+                                type: 'error'
+                            })
+                        }
+                    });
+                } else {
+                    alert('实验信息格式不合格！');
                     return false;
                 }
             });
         },
         releaseExperiment(row) {
+            this.experimentForm.title = row.title
             this.experimentDialogFormVisible = true
         },
         addExperiment() {
-            console.log('addExperiment被调用了')
             this.courseForm.experimentForm.push(
                 {
                     title: '',
@@ -288,15 +433,114 @@ var vm = new Vue({
             )
         },
         removeDomain(index) {
-            console.log(index)
             if (index !== -1) {
                 this.courseForm.experimentForm.splice(index, 1)
             }
         },
-        getSectionInfo(courseID){
-            console.log(courseID)
-            this.sectionDialogFormVisible=true
-        }
+        getSectionInfo(courseID) {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=getClassInfo',
+                method: "Post",
+                data: {
+                    courseID: courseID,
+                }
+            }).then(resp => {
+                this.sectionInfoList = resp.data
+            })
+            this.sectionDialogFormVisible = true
+        },
+        releaseReportDesc(experimentList) {
+            this.experimentOptions = []
+            for (let i = 0; i < experimentList.length; i++) {
+                this.experimentOptions.push({
+                    value: experimentList[i].title,
+                    label: experimentList[i].title
+                })
+            }
+            this.reportDialogFormVisible = true
+        },
+        getNoticeInfo() {
+            this.changeComponents = Notice
+        },
+        withdrawNotice(date) {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=withdrawNotice',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID: this.classID,
+                    instructorNumber:this.user.instructorNumber,
+                    date:date,
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    vm.$refs.child.changeComponents = 'Notice'
+                    this.loadNotice()
+                    this.$message({
+                        type: 'success',
+                        message: '撤回成功！'
+                    });
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '撤回失败！',
+                        type: 'error'
+                    })
+                }
+            })
+        },
+        withdrawReportDesc(expName,reportName) {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=withdrawReportDesc',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID: this.classID,
+                    expName:expName,
+                    reportName:reportName
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    vm.$refs.child.changeComponents = 'ExperimentalReport'
+                    vm.$refs.child.getReportDesc()
+                    this.$message({
+                        type: 'success',
+                        message: '撤回成功！'
+                    });
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '撤回失败！',
+                        type: 'error'
+                    })
+                }
+            })
+        },
+        loadDutyCourse() {
+            this.courseInfoList = []
+            axios({
+                url: '/SoftwareEngineering/administrationServlet?action=getTeachesByTeacherNumber',
+                method: "Post",
+                data: {
+                    instructorNumber: this.user.instructorNumber,
+                },
+            }).then(resp => {
+                let info = resp.data.sectionInformation
+                for (let i = 0; i < info.length; i++) {
+                    if (info[i].duty === "责任教师") {
+                        this.courseInfoList.push(info[i])
+                    }
+                }
+                console.log(this.courseInfoList)
+                if (this.courseInfoList.length === 0) {
+                    this.$message({
+                        showClose: true,
+                        message: '您目前不是任何一节课的责任教师！',
+                        type: 'warning'
+                    })
+                }
+            })
+        },
     },
     components: {
         // 日历组件
@@ -306,7 +550,9 @@ var vm = new Vue({
         // 开设课程组件
         OpenCourse,
         // 课程概况组件
-        CourseOverview
+        CourseOverview,
+        // 公告栏组件
+        Notice,
     }
 })
 

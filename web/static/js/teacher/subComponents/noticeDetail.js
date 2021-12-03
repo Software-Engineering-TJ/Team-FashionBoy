@@ -6,6 +6,9 @@ var NoticeDetail = Vue.extend({
     methods: {
         goBack(){
             this.$emit('go-back-notice')
+        },
+        withdrawNotice(date) {
+            this.$emit('withdraw-notice',date)
         }
     },
     template: `
@@ -42,7 +45,7 @@ var NoticeDetail = Vue.extend({
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="5" :offset="18">
-                    <el-button type="danger" plain @click="goBack">撤回此公告</el-button>
+                    <el-button type="danger" plain @click="withdrawNotice(noticeInfo.date)">撤回此公告</el-button>
                     <el-button type="info" plain @click="goBack">返回</el-button>
                 </el-col>
             </el-row>

@@ -9,7 +9,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="教师导航页面基本框架搭建完成" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="更新开设课程，课程概况，发布实验页面">
+      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExperimentDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExperimentDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExperimentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExperimentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/CourseExp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/CourseExp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/ExpReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/ExpReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/css/student/sIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/student/sIndex.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/sIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/sIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +87,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/static/js/teacher/subComponents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/WEB-INF/lib" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -70,8 +100,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\projectAll\Team-FashionBoy\web\static\js\teacher\subComponents" />
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
+      <recent name="D:\projectAll\Team-FashionBoy\web\static\js\teacher\subComponents" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projectAll\Team-FashionBoy\web\static\js" />
@@ -192,6 +222,14 @@
       <workItem from="1637906432543" duration="20162000" />
       <workItem from="1637964173500" duration="6805000" />
       <workItem from="1638008061946" duration="719000" />
+      <workItem from="1638080929896" duration="4506000" />
+      <workItem from="1638152080865" duration="83000" />
+      <workItem from="1638276872708" duration="4127000" />
+      <workItem from="1638318963031" duration="4515000" />
+      <workItem from="1638355532761" duration="11318000" />
+      <workItem from="1638396230406" duration="10512000" />
+      <workItem from="1638432205938" duration="13697000" />
+      <workItem from="1638482502055" duration="16417000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -214,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637890938793</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="更新开设课程，课程概况，发布实验页面">
+      <created>1638081042435</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1638081042435</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,11 +268,6 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="8eeb51b8-e988-4c2d-93e3-9283c279cd41">
-          <value>
-            <State />
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -253,24 +293,30 @@
     <MESSAGE value="最新版代码" />
     <MESSAGE value="StudentServlet的getTakes实现" />
     <MESSAGE value="教师导航页面基本框架搭建完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="教师导航页面基本框架搭建完成" />
+    <MESSAGE value="更新开设课程，课程概况，发布实验页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新开设课程，课程概况，发布实验页面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/BaseServlet.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
+          <line>266</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>241</line>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>92</line>
+          <line>98</line>
           <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
             <option name="EMULATED" value="true" />
           </properties>
@@ -278,7 +324,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>41</line>
+          <line>47</line>
           <properties class="web.AdministrationServlet" method="alterUserInformation">
             <option name="EMULATED" value="true" />
           </properties>
@@ -286,14 +332,68 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>273</line>
+          <line>279</line>
           <properties class="web.AdministrationServlet" method="changeDutyInstructor">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
+          <line>256</line>
+          <properties class="web.UserServlet" method="changeUserInfo">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
+          <line>77</line>
+          <properties class="service.Impl.InstructorServiceImpl" method="ReleaseExperiment">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>160</line>
+          <properties class="web.InstructorServlet" method="releaseNotice">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
+          <line>124</line>
+          <properties class="service.Impl.InstructorServiceImpl" method="GetSectionInfoOfCourse">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>258</line>
+          <properties class="web.InstructorServlet" method="withdrawReportDesc">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>195</line>
+          <properties class="web.InstructorServlet" method="withdrawNotice">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="courseExpInfoList.get(0)" />
+        <watch expression="((SQLException)e.next.cause).cause" custom="java.sql.SQLException" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Team_FashionBoy$Tomcat_9_0_53.ic" NAME="Tomcat 9.0.53 覆盖结果" MODIFIED="1636290007598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

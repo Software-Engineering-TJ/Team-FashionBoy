@@ -15,8 +15,17 @@ public class ExpReport {
     private String reportInfo;
     private String fileType;
     private String startDate;
+    private String endDate;
 
     public ExpReport() {
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getCourseID() {

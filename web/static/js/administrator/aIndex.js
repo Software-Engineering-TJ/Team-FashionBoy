@@ -702,7 +702,6 @@ var vm = new Vue({
                     instructorNumber: teacher.id,
                 },
             }).then(resp => {
-                console.log(resp.data.sectionInformation)
                 // 重新添加学生
                 if (resp.data.name !== undefined) {
                     let info = resp.data.sectionInformation

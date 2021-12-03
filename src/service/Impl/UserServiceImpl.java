@@ -140,8 +140,9 @@ public class UserServiceImpl implements UserService{
             map.put("reportName",expReport.getReportName());
             map.put("reportDescription",expReport.getReportInfo());
             map.put("startDate",expReport.getStartDate());
-            map.put("endDate",expReport.getStartDate());
+            map.put("endDate",expReport.getEndDate());
             map.put("reportType",expReport.getFileType());
+            map.put("expName",expReport.getExpname());
             //获取实验的成绩占比
             CourseExp courseExp = courseExpDao.QueryCourseExpByCourseIDAndExpname(expReport.getCourseID(),expReport.getExpname());
             map.put("weight",courseExp.getPercent()+"%");

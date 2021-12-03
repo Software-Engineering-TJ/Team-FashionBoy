@@ -6,6 +6,9 @@ var CourseOverview = Vue.extend({
     methods: {
         getSectionInfo(row){
             this.$emit('get-section-info',row.courseID)
+        },
+        getNoticeInfo(){
+            this.$emit('get-notice-info')
         }
     },
     template: `
@@ -20,7 +23,7 @@ var CourseOverview = Vue.extend({
                       prop="title"
                       label="课程名"
                       fixed
-                      width="500">
+                      width="600">
                       <template slot-scope="scope">
                          <h3 style="margin-left: 10px"><i>{{ scope.row.title }}</i></h3>
                       </template>
@@ -31,16 +34,12 @@ var CourseOverview = Vue.extend({
                       width="150">
                     </el-table-column>
                     <el-table-column
-                      prop="date"
-                      width="200"
-                      label="起止日期">
-                    </el-table-column>
-                    <el-table-column
                           fixed="right"
                           label="操作"
-                          width="300">
+                          width="400">
                           <template slot-scope="scope">
                             <el-button @click="getSectionInfo(scope.row)" plain type="primary" size="large">查看班级信息</el-button>
+                            <el-button @click="getNoticeInfo(scope.row)" plain type="primary" size="large">查看公告信息</el-button>
                             <el-button @click="handleClick(scope.row)" plain type="danger" size="large">删除课程</el-button>
                           </template>
                     </el-table-column>

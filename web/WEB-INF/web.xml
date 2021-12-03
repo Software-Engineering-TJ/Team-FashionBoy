@@ -59,6 +59,22 @@
         <servlet-name>FileServlet</servlet-name>
         <url-pattern>/fileServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>web.StudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentServlet</servlet-name>
+        <url-pattern>/studentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InstructorServlet</servlet-name>
+        <servlet-class>web.InstructorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InstructorServlet</servlet-name>
+        <url-pattern>/instructorServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
 
 

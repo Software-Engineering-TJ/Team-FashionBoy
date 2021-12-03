@@ -83,6 +83,9 @@ var Course = Vue.extend({
                     this.changeComponents = "ExperimentalReport"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
+                case "8":
+                    this.changeComponents = "Grade"
+                    break;
                 default:
                     break;
             }
@@ -108,7 +111,9 @@ var Course = Vue.extend({
         // 实验报告组件
         ExperimentalReport,
         // 实验报告详情组件
-        EpReportDetail
+        EpReportDetail,
+        // 我的成绩组件
+        Grade
     },
     template: `
     <el-row class="tac">
@@ -156,6 +161,9 @@ var Course = Vue.extend({
                         </el-menu-item>
                         <el-menu-item index="7">
                             <span slot="title">班级信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="8">
+                            <span slot="title">我的成绩</span>
                         </el-menu-item>
                     </el-menu>
                 </div>

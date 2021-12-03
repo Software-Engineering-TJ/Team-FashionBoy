@@ -134,15 +134,20 @@
                                                        @click="loadCourseInformation(item.courseID,item.title,item.classID)">
                                                 <h3>
                                                     {{item.title}}</h3></el-button>
-                                            <div style="position: relative;width: 200px;height: 25px">
+                                            <div style="position: relative;width: 200px;height: 25px;line-height: 25px">
                                                 <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
                                                     课程编号：</h5>
-                                                <span style="float: left;position: absolute;left: 75px">{{item.courseID}}</span>
+                                                <span style="float: left;position: absolute;left: 75px;font-size: small">{{item.courseID}}</span>
                                             </div>
-                                            <div style="position: relative;width: 200px;height: 25px">
+                                            <div style="position: relative;width: 200px;height: 25px;line-height: 25px">
                                                 <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
                                                     班级号：</h5>
-                                                <span style="float: left;position: absolute;left: 75px">{{item.classID}}</span>
+                                                <span style="float: left;position: absolute;left: 75px;font-size: small">{{item.classID}}</span>
+                                            </div>
+                                            <div style="position: relative;width: 200px;height: 25px;line-height: 25px">
+                                                <h5 style="display: inline-block;position: absolute;left: 0px;padding-left: 15px">
+                                                    上课时间：</h5>
+                                                <span style="float: left;position: absolute;left: 75px;font-size: small">{{item.day}}{{item.time}}</span>
                                             </div>
                                         </div>
                                     </el-col>
@@ -220,7 +225,17 @@
     </div>
 </div>
 <!-- 引入axios -->
+<script src="https://www.jq22.com/jquery/echarts-4.2.1.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--<script src="../../static/js/student/subComponents/grade.js"></script>-->
+<!--<script src="../../static/js/student/subComponents/epReportDetail.js"></script>-->
+<!--<script src="../../static/js/student/subComponents/experimentalReport.js"></script>-->
+<!--<script src="../../static/js/student/subComponents/fileDownLoad.js"></script>-->
+<!--<script src="../../static/js/student/subComponents/noticeDetail.js"></script>-->
+<!--<script src="../../static/js/student/subComponents/notice.js"></script>-->
+<!--<script src="../../static/js/student/course.js"></script>-->
+<!--<script src="../../static/js/calender.js"></script>-->
+<script src="/SoftwareEngineering/static/js/student/subComponents/grade.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/epReportDetail.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/experimentalReport.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/fileDownLoad.js"></script>

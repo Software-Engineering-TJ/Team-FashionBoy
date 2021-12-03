@@ -13,6 +13,7 @@ public class CourseExp {
     private int percent;
     private int priority;
     private int difficulty;
+    private int status;
 
     public CourseExp() {
     }
@@ -57,6 +58,14 @@ public class CourseExp {
         this.difficulty = difficulty;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "CourseExp{" +
@@ -65,6 +74,7 @@ public class CourseExp {
                 ", percent=" + percent +
                 ", priority=" + priority +
                 ", difficulty=" + difficulty +
+                ", status=" + status +
                 '}';
     }
 }

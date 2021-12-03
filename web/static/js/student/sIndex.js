@@ -1,7 +1,7 @@
 // Vue实例
 var vm = new Vue({
     el: "#box",
-    mounted:function () {
+    mounted: function () {
         axios({
             url: '/SoftwareEngineering/userServlet?action=getUserInfo',
             method: "Get",
@@ -9,7 +9,7 @@ var vm = new Vue({
             this.user.name = resp.data.name
             this.user.sex = resp.data.sex
             this.user.email = resp.data.email
-            this.user.phoneNumber=resp.data.phoneNumber
+            this.user.phoneNumber = resp.data.phoneNumber
             this.user.studentNumber = resp.data.userNumber
         })
     },
@@ -22,7 +22,7 @@ var vm = new Vue({
             // 课程名
             title: '',
             // 班级号
-            classID:'',
+            classID: '',
             // 头像路径
             squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
             // 动态组件切换
@@ -52,18 +52,7 @@ var vm = new Vue({
             // 对话框中表单标签的宽度
             formLabelWidth: '120px',
             // 学生课程表
-            courseList: [
-                {
-                    title: '计算机网络实验',
-                    courseID: '23654',
-                    classID:'1'
-                },
-                {
-                    title: '计算机组成原理实验',
-                    courseID: '23653',
-                    classID:'2'
-                },
-            ],
+            courseList: [],
             // 课程相关公告信息
             noticeList: [
                 {
@@ -110,6 +99,7 @@ var vm = new Vue({
                     break;
                 case "2":
                     this.drawerCourse = true
+                    this.loadCourse()
                     this.defaultActive = '2'
                     break;
                 default:
@@ -119,7 +109,29 @@ var vm = new Vue({
         // 改变管理员信息
         changeUserInfo() {
             this.user = JSON.parse(JSON.stringify(this.$data.userChange));
-            // axios.psot('http://canvas.tongji.edu.cn', this.$data.administratorChange);
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=changeUserInfo',
+                method: "Post",
+                data: {
+                    userNumber: this.user.studentNumber,
+                    email: this.user.email,
+                    phoneNumber:this.user.phoneNumber
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '个人信息修改成功'
+                    });
+                    this.userDialogFormVisible = false
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '修改失败！',
+                        type: 'error'
+                    })
+                }
+            });
             this.userDialogFormVisible = false;
         },
         //切换管理员信息改变页面的状态
@@ -133,16 +145,34 @@ var vm = new Vue({
         },
         // 加载该学生所有课程,用户点击“我的课程”时触发
         loadCourse() {
-
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getTakes',
+                method: "Post",
+                data: {
+                    studentNumber: this.user.studentNumber,
+                },
+            }).then(resp => {
+                vm.courseList = JSON.parse(JSON.stringify(resp.data.sections));
+                console.log(vm.courseList)
+            });
         },
         // 加载课程相关信息
-        loadCourseInformation(courseID, title,classID) {
+        loadCourseInformation(courseID, title, classID) {
             // 通过课程ID来加载课程信息
             this.changeComponents = 'Course'
             this.courseID = courseID
             this.title = title
             this.classID = classID
-            console.log(courseID)
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getCourseNotice',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID:this.classID
+                },
+            }).then(resp => {
+                vm.noticeList = JSON.parse(JSON.stringify(resp.data));
+            });
         },
         goBack() {
             this.defaultActive = '1'
