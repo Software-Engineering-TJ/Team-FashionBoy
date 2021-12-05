@@ -5,6 +5,11 @@ import com.google.gson.reflect.TypeToken;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import pojo.Administrator;
 import pojo.Instructor;
 import pojo.Student;
@@ -21,7 +26,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -340,13 +348,64 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     protected void createStudentFromExcel(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        System.out.println("先上传excel文件");
+        //后续需要读取的文件
+        File objectFile = null;
+        //1.先判断是否是多段数据,不是多段数据的话一定不是文件上传，后续操作无法展开
+        if(ServletFileUpload.isMultipartContent(req)){
+            //2.创建FileItemFactory实现类
+            FileItemFactory fileItemFactory = new DiskFileItemFactory();
+            //3.用于解析上传数据的工具类ServletFileUpload
+            ServletFileUpload servletFileUpload = new ServletFileUpload(fileItemFactory);
+            servletFileUpload.setHeaderEncoding("UTF-8"); //设置UTF-8编码
+            //4.解析数据，得到各个表单项FileItem
+            try {
+                List<FileItem> list = servletFileUpload.parseRequest(req);
+                String administratorNumber = null;
+                String filename = null;
+                FileItem fileItemToBeStore = null;
+                //5.判断每个表单项是否是文件
+                for(FileItem fileItem:list){
+                    if(fileItem.isFormField()){
+                        //获取存储位置信息
+                        String name = fileItem.getFieldName();   //普通表单项名字
+                        if(name.equals("administratorNumber")){
+                            administratorNumber = fileItem.getString("UTF-8"); //参数UTF-8解决乱码问题
+                        }
+                    }else{
+                        //文件表单项
+                        filename = fileItem.getName();//上传的文件名
+                        System.out.println("文件："+filename);
+                        fileItemToBeStore = fileItem; //先放着，等待文件路径确定后再写到磁盘
+                    }
+                }
+                //6.将文件写入磁盘
+                try {
+                    //使用Path类方便获取不同电脑下的当前文件所在的路径，随环境而变
+                    Path path = Paths.get(req.getServletContext().getRealPath(""));
+                    //定位到“整个项目”所在的路径
+                    path = path.getParent().getParent().getParent();
+                    //定位到文件应存放的路径
+                    Path fileDirectory = Paths.get(path.toString(),"web/WEB-INF/excels/"+administratorNumber);
+                    File file = new File(fileDirectory.toString());
+                    if(!file.isDirectory()){
+                        file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
+                    }
+                    Path filePath = Paths.get(fileDirectory.toString(),filename);
+                    objectFile = new File(filePath.toString());
+                    fileItemToBeStore.write(objectFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (FileUploadException e) {
+                e.printStackTrace();
+            }
+        }
 
         //前端将本地文件拖拽到上传区，程序将文件拷贝一份存在web-inf路径下（此处应当调用上传文件的接口）
-
-        File file = new File("获取相对路径的excel文件");
         try {
             // 创建输入流，读取Excel
-            InputStream is = new FileInputStream(file.getAbsolutePath());
+            InputStream is = new FileInputStream(objectFile.getAbsolutePath());
             // jxl提供的Workbook类
             Workbook wb = Workbook.getWorkbook(is);
             // Excel的页签数量
