@@ -55,20 +55,22 @@ public class FileServlet extends BaseServlet {
         }.getType());
 
         //文件结构：课程/班级/用户/文件
-        String courseID = reqObject.get("courseID");
-        String classID = reqObject.get("classID");
-        String userNumber = reqObject.get("userNumber");
+//        String courseID = reqObject.get("courseID");
+//        String classID = reqObject.get("classID");
+//        String userNumber = reqObject.get("userNumber");
+//        String filename = reqObject.get("filename");
+        String url = reqObject.get("url");
         String filename = reqObject.get("filename");
 
         //2.读取要下载的文件的内容（通过ServletContext对象）
         ServletContext servletContext = getServletContext();
 //        InputStream resourceAsStream = servletContext.getResourceAsStream("F:\\javaProjects\\UserFiles\\cloud\\"+filename); //将数据按流数据获取
 //        InputStream resourceAsStream = servletContext.getResourceAsStream("/static/pictures/"+filename); //将数据按流数据获取
-        InputStream resourceAsStream = servletContext.getResourceAsStream("/WEB-INF/UserFiles/" + courseID + "/" + classID + "/" + userNumber + "/" + filename); //将数据按流数据获取
+        InputStream resourceAsStream = servletContext.getResourceAsStream("/WEB-INF/files/" + url); //将数据按流数据获取
         //3.获取要下载的文件类型
 //        String filetype = servletContext.getMimeType("F:\\javaProjects\\UserFiles\\cloud\\"+filename);
 //        String filetype = servletContext.getMimeType("/static/pictures/"+filename);
-        String filetype = servletContext.getMimeType("/WEB-INF/UserFiles/" + courseID + "/" + classID + "/" + userNumber + "/" + filename);
+        String filetype = servletContext.getMimeType("/WEB-INF/files/" + url);
 //        System.out.println(filetype);
         //4.通过响应头告诉客户端返回的文件类型
         resp.setContentType(filetype);

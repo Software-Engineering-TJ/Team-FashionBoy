@@ -27,7 +27,7 @@ public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
 
     @Override
     public List<ExpScore> QueryExpScoresByExperiment(String courseID, String expname, String classID) {
-        String sql = "select * form expscore where courseID = ? and expname = ? and classID = ?";
+        String sql = "select * from expscore where courseID = ? and expname = ? and classID = ?";
         return queryForList(ExpScore.class,sql,courseID,expname,classID);
     }
 

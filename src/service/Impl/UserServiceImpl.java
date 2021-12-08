@@ -6,6 +6,10 @@ import dao.inter.*;
 import pojo.*;
 import service.inter.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService{
     private StudentDao studentDao = new StudentDaoImpl();
     private ExpReportDao expReportDao = new ExpReportDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
+    private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -149,5 +154,39 @@ public class UserServiceImpl implements UserService{
             expReportInfoList.add(map);
         }
         return expReportInfoList;
+    }
+
+    @Override
+    public List<Map<String, Object>> getFilesOfExpname(Path directory,String courseID, String classID, String expname) {
+
+        //找到提交作业的学生记录
+        List<ExpScore> expScoreList = expScoreDao.QueryExpScoresByExperiment(courseID,expname,classID);
+        List<Map<String,Object>> fileInfoList = new ArrayList<>();
+        for(ExpScore expScore : expScoreList){
+            //学号
+            String studentNumber = expScore.getStudentNumber();
+            //文件
+            File file = null;
+            //文件路径
+            String url = "";
+            Path fileDirectory = Paths.get(directory.toString(),studentNumber);
+            //获取文件夹下的所有文件（其实只有一个文件）
+            File fileList = new File(fileDirectory.toString());
+            File[] files = fileList.listFiles();
+            if(files.length!=0){
+                //学生的文件
+                file = files[0];
+                url = courseID+"/"+classID+"/"+expname+"/"+file.getName();
+            }
+
+            Map<String,Object> fileInfo = new HashMap<>();
+            fileInfo.put("studentNumber",studentNumber);
+            fileInfo.put("file",file);
+            fileInfo.put("url",url);
+
+            fileInfoList.add(fileInfo);
+        }
+
+        return fileInfoList;
     }
 }

@@ -9,12 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="老师上传文件功能实现">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="完善上传文件功能（可以记录学生提交信息，且重复提交的采取覆盖机制）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +214,8 @@
       <workItem from="1638886005151" duration="1089000" />
       <workItem from="1638932890057" duration="788000" />
       <workItem from="1638953972694" duration="165000" />
-      <workItem from="1638961301394" duration="7324000" />
+      <workItem from="1638961301394" duration="13403000" />
+      <workItem from="1638978640911" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -257,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638887065690</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="完善上传文件功能（可以记录学生提交信息，且重复提交的采取覆盖机制）">
+      <created>1638971988924</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638971988924</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +304,8 @@
     <MESSAGE value="同步" />
     <MESSAGE value="子昂的excel上传管理" />
     <MESSAGE value="老师上传文件功能实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="老师上传文件功能实现" />
+    <MESSAGE value="完善上传文件功能（可以记录学生提交信息，且重复提交的采取覆盖机制）" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善上传文件功能（可以记录学生提交信息，且重复提交的采取覆盖机制）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,9 +321,14 @@
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
-          <line>145</line>
-          <option name="timeStamp" value="58" />
+          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
+          <line>380</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
+          <line>395</line>
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
