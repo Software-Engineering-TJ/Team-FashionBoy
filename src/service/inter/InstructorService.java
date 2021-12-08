@@ -1,6 +1,8 @@
 package service.inter;
 
+import pojo.ExpScore;
 import pojo.Experiment;
+import pojo.Student;
 
 import java.util.List;
 import java.util.Map;
@@ -30,4 +32,8 @@ public interface InstructorService {
                          String endDate,String fileType);
     //获取该课程下的所有班级信息
     List<Map<String,String>> GetSectionInfoOfCourse(String courseID);
+    //获取报告提交信息
+    List<ExpScore> getSubmittedStudentList(String courseID, String classID, String expname);
+    //获得某个班级下的所有学生学号
+    List<String> getStudentNumbersByCourseIDAndClassID(String courseID,String classID);
 }

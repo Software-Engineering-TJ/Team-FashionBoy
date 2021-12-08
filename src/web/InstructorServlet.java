@@ -2,7 +2,11 @@ package web;
 
 import com.google.gson.reflect.TypeToken;
 import com.mysql.cj.util.DnsSrv;
+import pojo.ExpScore;
+import pojo.Student;
+import service.Impl.AdministrationServiceImpl;
 import service.Impl.InstructorServiceImpl;
+import service.inter.AdministrationService;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
 
@@ -11,10 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * InstructorServlet类的描述：
@@ -26,6 +27,8 @@ import java.util.Map;
 public class InstructorServlet extends BaseServlet{
 
     InstructorService instructorService = new InstructorServiceImpl();
+
+    AdministrationService administrationService = new AdministrationServiceImpl();
 
     /**
      * 教师获取教授的所有课程 √
@@ -325,6 +328,69 @@ public class InstructorServlet extends BaseServlet{
 
         String courseID = reqObject.get("courseID");
         List<Map<String,String>> map = instructorService.GetSectionInfoOfCourse(courseID);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    protected void viewSubmission(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String expname = reqObject.get("expname");
+
+        //提交记录
+        List<ExpScore> expScoreList = instructorService.getSubmittedStudentList(courseID,classID,expname);
+        //存学号
+        List<String> studentSubmitList = new ArrayList<>();
+        List<String> studentElse = new ArrayList<>();
+        //存学号和姓名
+        List<Map<String,Object>> submitted = new ArrayList<>();
+        List<Map<String,Object>> unSubmitted = new ArrayList<>();
+        //班级所有学生的学号
+        List<String> studentList = instructorService.getStudentNumbersByCourseIDAndClassID(courseID,classID);
+        if(expScoreList != null){
+            //有人交了
+            for(ExpScore expScore : expScoreList){
+                //已提交的学生
+                String studentNumber = expScore.getStudentNumber();
+                studentSubmitList.add(studentNumber);
+            }
+            for(String studentNumber : studentList){
+                if(!studentSubmitList.contains(studentNumber)){
+                    //未提交的学生
+                    studentElse.add(studentNumber);
+                }
+            }
+        }else{
+            //都没交
+            for(String studentNumber : studentList){
+                studentElse.add(studentNumber);
+            }
+        }
+
+        for(String studentNumber : studentSubmitList){
+            Student student = administrationService.getStudentByStudentNumber(studentNumber);
+            Map<String,Object> map = new HashMap<>();
+            map.put("studentNumber",studentNumber);
+            map.put("studentName",student.getName());
+            submitted.add(map);
+        }
+
+        for(String studentNumber :studentElse){
+            Student student = administrationService.getStudentByStudentNumber(studentNumber);
+            Map<String,Object> map = new HashMap<>();
+            map.put("studentNumber",studentNumber);
+            map.put("studentName",student.getName());
+            unSubmitted.add(map);
+        }
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("submitted",submitted);
+        map.put("unSubmitted",unSubmitted);
 
         resp.getWriter().write(gson.toJson(map));
     }

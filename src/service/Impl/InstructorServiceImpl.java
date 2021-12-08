@@ -26,6 +26,8 @@ public class InstructorServiceImpl implements InstructorService {
     private ExpReportDao expReportDao = new ExpReportDaoImpl();
     private SectionDao sectionDao = new SectionDaoImpl();
     private InstructorDao instructorDao = new InstructorDaoImpl();
+    private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
+    private TakesDao takesDao = new TakesDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -163,5 +165,20 @@ public class InstructorServiceImpl implements InstructorService {
         }
 
         return sectionInfoList;
+    }
+
+    @Override
+    public List<ExpScore> getSubmittedStudentList(String courseID, String classID, String expname) {
+        return expScoreDao.QueryExpScoresByExperiment(courseID,expname,classID);
+    }
+
+    @Override
+    public List<String> getStudentNumbersByCourseIDAndClassID(String courseID, String classID) {
+        List<Takes> takesList = takesDao.QueryTakesByCourseIDAndClassID(courseID,classID);
+        List<String> studentList = new ArrayList<>();
+        for(Takes takes : takesList){
+            studentList.add(takes.getStudentNumber());
+        }
+        return studentList;
     }
 }

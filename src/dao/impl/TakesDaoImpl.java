@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.inter.TakesDao;
+import pojo.Student;
 import pojo.Takes;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class TakesDaoImpl extends BaseDao implements TakesDao {
         Integer newDuty = ("学生".equals(duty))?1:0; //映射到数据库的身份表示形式
         String sql = "update `takes` set `status` = ? where (`studentNumber` = ?) and (`courseID` = ?) and (`classID` = ?)";
         return update(sql,newDuty,studentNumber,courseID,classID);
+    }
+
+    @Override
+    public List<Takes> QueryTakesByCourseIDAndClassID(String courseID, String classID) {
+        String sql = "select `studentNumber`,`courseID`,`classID`,`status` from takes where courseID = ? and classID = ?";
+        return queryForList(Takes.class,sql,courseID,classID);
     }
 }

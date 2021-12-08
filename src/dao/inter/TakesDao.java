@@ -1,5 +1,6 @@
 package dao.inter;
 
+import pojo.Student;
 import pojo.Takes;
 
 import java.util.List;
@@ -9,4 +10,6 @@ public interface TakesDao {
     List<Takes> QueryTakesByStudentNumber(String studentNumber);
     //设置学生在某个课程中的身份：学生or助教
     int SetDuty(String studentNumber,String courseID,String classID,String duty);
+    //根据课程查学生
+    List<Takes> QueryTakesByCourseIDAndClassID(String courseID,String classID);
 }
