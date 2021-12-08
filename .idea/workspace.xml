@@ -2,43 +2,19 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Team-FashionBoy:Web exploded" />
+      <artifact name="SoftwareEngineering:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="更新开设课程，课程概况，发布实验页面">
-      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="老师上传文件功能实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpReportDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExperimentDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExperimentDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExperimentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExperimentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/CourseExp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/CourseExp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/ExpReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/ExpReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/AdministrationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/AdministrationServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/student/sIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/student/sIndex.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/administrator/aIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/sIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/sIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/noticeDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +63,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/WEB-INF/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -111,9 +87,9 @@
     <configuration name="Tomcat 9.0.53" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.53" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080//SoftwareEngineering/pages/login.html" />
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
-      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="Team-FashionBoy:Web exploded">
+        <artifact name="SoftwareEngineering:war exploded">
           <settings>
             <option name="CONTEXT_PATH" value="/SoftwareEngineering" />
           </settings>
@@ -193,7 +169,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="Team-FashionBoy:Web exploded" />
+          <artifact name="SoftwareEngineering:war exploded" />
         </option>
       </method>
     </configuration>
@@ -230,6 +206,14 @@
       <workItem from="1638396230406" duration="10512000" />
       <workItem from="1638432205938" duration="13697000" />
       <workItem from="1638482502055" duration="16417000" />
+      <workItem from="1638520246917" duration="1520000" />
+      <workItem from="1638633604292" duration="1199000" />
+      <workItem from="1638671245537" duration="1897000" />
+      <workItem from="1638716342323" duration="20000" />
+      <workItem from="1638886005151" duration="1089000" />
+      <workItem from="1638932890057" duration="788000" />
+      <workItem from="1638953972694" duration="165000" />
+      <workItem from="1638961301394" duration="7324000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -259,7 +243,21 @@
       <option name="project" value="LOCAL" />
       <updated>1638081042435</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="子昂的excel上传管理">
+      <created>1638673802270</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1638673802270</updated>
+    </task>
+    <task id="LOCAL-00006" summary="老师上传文件功能实现">
+      <created>1638887065690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1638887065690</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,29 +292,32 @@
     <MESSAGE value="StudentServlet的getTakes实现" />
     <MESSAGE value="教师导航页面基本框架搭建完成" />
     <MESSAGE value="更新开设课程，课程概况，发布实验页面" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新开设课程，课程概况，发布实验页面" />
+    <MESSAGE value="同步" />
+    <MESSAGE value="子昂的excel上传管理" />
+    <MESSAGE value="老师上传文件功能实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="老师上传文件功能实现" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>64</line>
+          <line>72</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>266</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
           <line>241</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>98</line>
+          <line>106</line>
           <properties class="web.AdministrationServlet" method="getStudentByStudentNumber">
             <option name="EMULATED" value="true" />
           </properties>
@@ -324,7 +325,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>47</line>
+          <line>55</line>
           <properties class="web.AdministrationServlet" method="alterUserInformation">
             <option name="EMULATED" value="true" />
           </properties>
@@ -332,19 +333,11 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
-          <line>279</line>
+          <line>287</line>
           <properties class="web.AdministrationServlet" method="changeDutyInstructor">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>256</line>
-          <properties class="web.UserServlet" method="changeUserInfo">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
@@ -388,12 +381,6 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
-        <watch expression="courseExpInfoList.get(0)" />
-        <watch expression="((SQLException)e.next.cause).cause" custom="java.sql.SQLException" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Team_FashionBoy$Tomcat_9_0_53.ic" NAME="Tomcat 9.0.53 覆盖结果" MODIFIED="1636290007598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

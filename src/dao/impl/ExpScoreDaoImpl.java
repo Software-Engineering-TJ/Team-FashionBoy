@@ -15,7 +15,7 @@ import java.util.List;
 public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
     @Override
     public int InsertExpScore(String studentNumber, String courseID, String expname, String classID) {
-        String sql = "insert into expscore(`studentNumber`,`courseID`,`expname`,`classID`)";
+        String sql = "insert into expscore(`studentNumber`,`courseID`,`expname`,`classID`) values(?,?,?,?)";
         return update(sql,studentNumber,courseID,expname,classID);
     }
 

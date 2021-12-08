@@ -10,6 +10,8 @@ import org.apache.commons.io.IOUtils;
 import pojo.User;
 //import service.Impl.FileServiceImpl;
 //import service.inter.FileService;
+import service.Impl.StudentServiceImpl;
+import service.inter.StudentService;
 import utils.RequestJsonUtils;
 
 import javax.servlet.ServletContext;
@@ -23,6 +25,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,8 @@ import java.util.Map;
  */
 
 public class FileServlet extends BaseServlet {
+
+    private StudentService studentService = new StudentServiceImpl();
 
     /**
      * 根据courseID、classID、userNumber、filename获取用户提交的文件
@@ -141,8 +146,22 @@ public class FileServlet extends BaseServlet {
                     File file = new File(fileDirectory.toString());
                     if (!file.isDirectory()) {
                         file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
+                        //第一次交作业，提交作业记录到数据库
+                        if(filename != null){
+                            //确保学生确实提交了作业，而不是单纯地点击了提交按钮
+                            studentService.recordCommit(courseID,classID,expname,userNumber);
+                        }
                     }
                     Path filePath = Paths.get(fileDirectory.toString(), filename);
+                    //覆盖之前提交的作业(也就是删除原目录中的文件)
+                    File[] fs = file.listFiles();
+                    if(fs != null){
+                        //文件夹不为空，说明是重新提交的作业，需要删除原先的作业
+                        for(File f : fs){
+                            f.delete();
+                        }
+                    }
+                    //存储文件
                     fileItemToBeStore.write(new File(filePath.toString()));
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -49,4 +49,9 @@ public class StudentServiceImpl implements StudentService {
         }
         return score;
     }
+
+    @Override
+    public int recordCommit(String courseID, String classID, String expname, String studentNumber) {
+        return expScoreDao.InsertExpScore(studentNumber,courseID,expname,classID);
+    }
 }
