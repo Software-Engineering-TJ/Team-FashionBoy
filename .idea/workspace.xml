@@ -9,14 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="教师查看某个实验报告的提交情况 实现">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
-    </list>
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -221,7 +214,7 @@
       <workItem from="1639037584976" duration="3052000" />
       <workItem from="1639049700674" duration="907000" />
       <workItem from="1639070383564" duration="1190000" />
-      <workItem from="1639109187383" duration="8028000" />
+      <workItem from="1639109187383" duration="8436000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -286,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638982139573</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取">
+      <created>1639121500962</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1639121500962</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -327,7 +327,8 @@
     <MESSAGE value="完善上传文件功能（可以记录学生提交信息，且重复提交的采取覆盖机制）" />
     <MESSAGE value="老师或助教获取学生实验报告文件列表 实现" />
     <MESSAGE value="教师查看某个实验报告的提交情况 实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="教师查看某个实验报告的提交情况 实现" />
+    <MESSAGE value="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
