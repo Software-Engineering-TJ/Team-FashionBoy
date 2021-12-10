@@ -218,7 +218,7 @@ public class UserServlet extends BaseServlet {
             resp.addHeader("CONTEXTPATH", "/SoftwareEngineering/pages/administrator/aIndex.html");//重定向地址
         }
         //激活账户
-        if (reqObject.get("identify") != null || reqObject.get("identify").equals("")) {
+        if (reqObject.get("identify") != null && !reqObject.get("identify").equals("")) {
             //如果首次激活，则将数据库用户激活状态设置为“1”
             userService.activateAccount((String) session.getAttribute("identity"), user.getEmail());
         }
@@ -346,6 +346,7 @@ public class UserServlet extends BaseServlet {
 
     /**
      * 教师or学生获取某个课程班级下的所有实验报告信息 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -360,13 +361,14 @@ public class UserServlet extends BaseServlet {
         String courseID = reqObject.get("courseID");
         String classID = reqObject.get("classID");
         //获取该课程班级的所有实验描述列表
-        List<Map<String,String>> expReportInfoList = userService.getExpReports(courseID,classID);
+        List<Map<String, String>> expReportInfoList = userService.getExpReports(courseID, classID);
 
         resp.getWriter().write(gson.toJson(expReportInfoList));
     }
 
     /**
      * 老师或助教获取学生实验报告文件列表
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -389,49 +391,109 @@ public class UserServlet extends BaseServlet {
         //定位到学生文件存放的路径
         Path directory = Paths.get(path.toString(), "web/WEB-INF/files/" + courseID + "/" + classID + "/" + expname);
 
-        List<Map<String,Object>> studentFileList = userService.getFilesOfExpname(directory,courseID,classID,expname);
+        List<Map<String, Object>> studentFileList = userService.getFilesOfExpname(directory, courseID, classID, expname);
         //开始完善返回信息
-        List<Map<String,Object>> fileInfoList = new ArrayList<>();
-        if(studentFileList!=null) {
-            for (Map<String, Object> map : studentFileList) {
-                //上传文件的学生
-                String studentNumber = (String) map.get("studentNumber");
-                String studentName = administrationService.getStudentByStudentNumber(studentNumber).getName();
-                //文件
-                File file = (File) map.get("file");
-                //文件名
-                String filename = file.getName();
-                //文件提交的的时间
-                long fileDate = file.lastModified();
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String fileDateStr = format.format(new Date(fileDate));
-                //文件大小
-                DecimalFormat df = new DecimalFormat("0.00");
-                String fileSize = "";
-                if (file.length() < 1024) {
-                    fileSize = df.format((double) file.length()) + "B";
-                } else if (file.length() < 1048576) {
-                    fileSize = df.format((double) file.length() / 1024) + "K";
-                } else if (file.length() < 1073741824) {
-                    fileSize = df.format((double) file.length() / 1048576) + "M";
-                } else {
-                    fileSize = df.format((double) file.length() / 1073741824) + "G";
-                }
-                //文件路径
-                String url = (String) map.get("url");
-
-                Map<String, Object> fileInfo = new HashMap<>();
-                fileInfo.put("filename", filename);
-                fileInfo.put("studentNumber", studentNumber);
-                fileInfo.put("studentName", studentName);
-                fileInfo.put("fileSize", fileSize);
-                fileInfo.put("uploadTime", fileDateStr);
-                fileInfo.put("url", url);
-
-                fileInfoList.add(fileInfo);
+        List<Map<String, Object>> fileInfoList = new ArrayList<>();
+        for (Map<String, Object> map : studentFileList) {
+            //上传文件的学生
+            Student student = (Student) map.get("student");
+            //文件
+            File file = (File) map.get("file");
+            //文件名
+            String filename = file.getName();
+            //文件提交的的时间
+            long fileDate = file.lastModified();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fileDateStr = format.format(new Date(fileDate));
+            //文件大小
+            DecimalFormat df = new DecimalFormat("0.00");
+            String fileSize = "";
+            if (file.length() < 1024) {
+                fileSize = df.format((double) file.length()) + "B";
+            } else if (file.length() < 1048576) {
+                fileSize = df.format((double) file.length() / 1024) + "K";
+            } else if (file.length() < 1073741824) {
+                fileSize = df.format((double) file.length() / 1048576) + "M";
+            } else {
+                fileSize = df.format((double) file.length() / 1073741824) + "G";
             }
+            //文件路径
+            String url = (String) map.get("url");
+
+            Map<String, Object> fileInfo = new HashMap<>();
+            fileInfo.put("filename", filename);
+            fileInfo.put("studentNumber", student.getStudentNumber());
+            fileInfo.put("studentName", student.getName());
+            fileInfo.put("fileSize", fileSize);
+            fileInfo.put("uploadTime", fileDateStr);
+            fileInfo.put("url", url);
+
+            fileInfoList.add(fileInfo);
         }
 
         resp.getWriter().write(gson.toJson(fileInfoList));
+    }
+
+    /**
+     * 教师或学生获取某个课程的某个班级下，老师发布的所有参考资料信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void getReferenceMaterial(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        //使用Path类方便获取不同电脑下的当前文件所在的路径，随环境而变
+        Path path = Paths.get(req.getServletContext().getRealPath(""));
+        //定位到“整个项目”所在的路径
+        path = path.getParent().getParent().getParent();
+        //定位到参考资料存放的路径：courserID-classID-“references”
+        Path directory = Paths.get(path.toString(), "web/WEB-INF/files/" + courseID + "/" + classID + "/" + "references");
+
+        List<Map<String, Object>> referenceList = userService.getReferencesOfSection(directory, courseID, classID);
+        //开始完善返回信息
+        List<Map<String, Object>> referencesInfoList = new ArrayList<>();
+        for(Map<String,Object> reference : referenceList){
+            //文件上传者
+            Instructor instructor = (Instructor) reference.get("instructor");
+            //参考文件
+            File file = (File) reference.get("file");
+            //url
+            String url = (String) reference.get("url");
+            //文件提交的的时间
+            long fileDate = file.lastModified();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fileDateStr = format.format(new Date(fileDate));
+            //文件大小
+            DecimalFormat df = new DecimalFormat("0.00");
+            String fileSize = "";
+            if (file.length() < 1024) {
+                fileSize = df.format((double) file.length()) + "B";
+            } else if (file.length() < 1048576) {
+                fileSize = df.format((double) file.length() / 1024) + "K";
+            } else if (file.length() < 1073741824) {
+                fileSize = df.format((double) file.length() / 1048576) + "M";
+            } else {
+                fileSize = df.format((double) file.length() / 1073741824) + "G";
+            }
+
+            Map<String,Object> referenceInfo = new HashMap<>();
+            referenceInfo.put("fileName",file.getName());
+            referenceInfo.put("url",url);
+            referenceInfo.put("fileSize",fileSize);
+            referenceInfo.put("upLoadDate",fileDateStr);
+            referenceInfo.put("upLoadUser",instructor.getName());
+
+            referencesInfoList.add(referenceInfo);
+        }
+
+        resp.getWriter().write(gson.toJson(referencesInfoList));
     }
 }

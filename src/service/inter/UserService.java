@@ -32,4 +32,6 @@ public interface UserService {
     List<Map<String,String>> getExpReports(String courseID, String classID);
     //获取班级某个实验的所有提交的实验报告
     List<Map<String,Object>> getFilesOfExpname(Path path, String courseID, String classID, String expname);
+    //获取课程参考资料
+    List<Map<String,Object>> getReferencesOfSection(Path path, String courseID,String classID);
 }

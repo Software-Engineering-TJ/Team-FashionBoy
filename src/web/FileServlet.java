@@ -84,7 +84,6 @@ public class FileServlet extends BaseServlet {
 
     /**
      * 上传一个文件到路径：课程/班级/用户
-     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -221,7 +220,7 @@ public class FileServlet extends BaseServlet {
                     //定位到“整个项目”所在的路径
                     path = path.getParent().getParent().getParent();
                     //定位到文件应存放的路径
-                    Path fileDirectory = Paths.get(path.toString(), "web/WEB-INF/files/" + courseID + "/" + classID + "/" + userNumber);
+                    Path fileDirectory = Paths.get(path.toString(), "web/WEB-INF/files/" + courseID + "/" + classID +"/references" +"/" + userNumber);
                     File file = new File(fileDirectory.toString());
                     if (!file.isDirectory()) {
                         file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
