@@ -10,14 +10,8 @@
     <link rel="stylesheet" href="../../static/css/common.css">
     <!-- 引入本页面样式 -->
     <link rel="stylesheet" href="../../static/css/teacher/tIndex.css">
-
-    <!--    <link rel="icon" type="image/x-icon" href="/SoftwareEngineering/static/img/icon.ico"/>-->
     <!-- 引入Element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!-- 引入公共样式 -->
-    <!--    <link rel="stylesheet" href="/SoftwareEngineering/static/css/common.css">-->
-    <!--    &lt;!&ndash; 引入本页面样式 &ndash;&gt;-->
-    <!--    <link rel="stylesheet" href="/SoftwareEngineering/static/css/student/tIndex.css">-->
     <!-- 引入Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
@@ -111,9 +105,15 @@
                     <el-upload
                             class="upload-demo"
                             drag
-                            ref="load"
+                            ref="upload"
+                            :data="{
+                                courseID:courseID,
+                                classID:classID,
+                                userNumber:user.instructorNumber,
+                                expname:experimentForm.title
+                            }"
                             :auto-upload="false"
-                            action="https://jsonplaceholder.typicode.com/posts/"
+                            action="/SoftwareEngineering/fileServlet?action=uploadFile"
                             multiple>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -249,6 +249,8 @@
                             <div id="descriptionBox">
                                 <el-descriptions class="margin-top" title="学生" :column="2" border>
                                     <template slot="extra">
+                                        <el-button type="danger" size="small" @click="changePassword">重置密码
+                                        </el-button>
                                         <el-button type="primary" size="small" @click="switchUserDialogStatus">修改个人信息
                                         </el-button>
                                     </template>
@@ -434,6 +436,7 @@
 <!--    <script src="/SoftwareEngineering/static/js/calender.js"></script>-->
 <!--<script src="../../static/js/teacher/tIndex.js"></script>-->
 <script src="/SoftwareEngineering/static/js/calender.js"></script>
+<script src="/SoftwareEngineering/static/js/teacher/subComponents/attendance.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/courseOverview.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/openCourse.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/experiment.js"></script>

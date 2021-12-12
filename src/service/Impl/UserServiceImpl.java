@@ -220,7 +220,6 @@ public class UserServiceImpl implements UserService{
                         map.put("instructor",instructor);
                         map.put("file",reference);
                         map.put("url",courseID+"/"+classID+"/references"+"/"+instructorNumber+"/"+reference.getName());
-
                         referencesInfoList.add(map);
                     }
                 }

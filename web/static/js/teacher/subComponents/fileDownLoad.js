@@ -1,12 +1,16 @@
 var FileDownLoad = Vue.extend({
-    props:['fileList','materialList'],
+    props: ['fileList', 'materialList', 'courseId', 'classId', 'instructorNumber'],
     data() {
         return {
-
         };
     },
     methods: {
-
+        uploadSuccess() {
+            this.$message({
+                type: 'success',
+                message: '文件上传成功！'
+            });
+        },
     },
     template: `
          <div style="padding: 20px;position:relative;height: 600px;overflow: auto">
@@ -80,10 +84,16 @@ var FileDownLoad = Vue.extend({
             <div style="display: inline-block;position: absolute;bottom: 10px;right: 24px">
                 <el-upload
                         class="upload-demo"
-                        action="/前端代码//static/file"
-                        :before-remove="beforeRemove"
-                        :limit="1"
-                        :on-exceed="handleExceed"
+                        ref="upload"
+                        :auto-upload="true"
+                        action="/SoftwareEngineering/fileServlet?action=uploadFile"
+                        :data="{
+                                courseID:this.$props.courseId,
+                                classID:this.$props.classId,
+                                userNumber:this.$props.instructorNumber,
+                                expname:'other'
+                            }"
+                        :on-success="uploadSuccess"
                         :file-list="materialList">
                         <el-button type="primary">上传参考资料</el-button>
                 </el-upload>

@@ -42,7 +42,7 @@ public class UserServlet extends BaseServlet {
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
 
-    //发送邮件
+    //发送邮件 √
     public void sendEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
@@ -50,18 +50,20 @@ public class UserServlet extends BaseServlet {
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
 
-        int msg = 0;
+        int msg=-1;
+
         String userNumber = reqObject.get("userNumber");
+        String isResetPassword = reqObject.get("isResetPassword");
+
         User user = userService.ifActivated(userNumber);
         int status;
         if (user == null) {
             msg = 0;//账号不存在
         } else {
             status = user.getStatus();
-            if (status == 1) {
-                msg = 1;//已激活
-            } else {
-                //未激活
+
+            //用户未激活 或 重置密码
+            if (status == 0 || isResetPassword.equals("yes")) {
                 if (user instanceof Student) {
                     user = (Student) user;
                 } else if (user instanceof Instructor) {
@@ -121,14 +123,17 @@ public class UserServlet extends BaseServlet {
 
                     //将发送给目标邮箱的验证码，返回给前端
                     HttpSession session = req.getSession();
-                    session.setAttribute("verificationCode", verificationCode);
+                    session.setAttribute("verificationCode", Integer.toString(verificationCode));
                     // 发送成功
                     msg = 2;
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
+            }else if (status == 1){
+                msg=1;
             }
+
         }
         //返回响应
         Map<String, Object> map = new HashMap<>();
@@ -138,7 +143,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 获取userNumber对应的账号的密码和激活状态
+     * 获取userNumber对应的账号的密码和激活状态 √
      *
      * @param req
      * @param resp
@@ -182,7 +187,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * getUserStatus确认已激活后才会调用此方法来执行登陆成功的页面跳转
+     * getUserStatus确认已激活后才会调用此方法来执行登陆成功的页面跳转 √
      *
      * @param req
      * @param resp
@@ -227,7 +232,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 根据login中存储的uerNumber信息来获取详细信息
+     * 根据login中存储的uerNumber信息来获取详细信息 √
      *
      * @param req
      * @param resp
@@ -251,7 +256,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 用户修改自己的信息：仅电话和邮箱
+     * 用户修改自己的信息：仅电话和邮箱 √
      * 返回0/1表示成功或失败
      *
      * @param req
@@ -285,7 +290,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 获取前端发送的用户输入的验证码，用于用户验证
+     * 获取前端发送的用户输入的验证码，用于用户验证 √
      *
      * @param req
      * @param resp
@@ -299,9 +304,10 @@ public class UserServlet extends BaseServlet {
         }.getType());
 
         //获取用户输入的验证码
+        HttpSession session = req.getSession();
         String verificationCode = reqObject.get("verificationCode");
         //获取session中存储的正确验证码
-        String correctCode = (String) req.getSession().getAttribute("verificationCode");
+        String correctCode =(String) session.getAttribute("verificationCode");
         //结果
         int result = 0;
         if (verificationCode.equals(correctCode)) {
@@ -314,7 +320,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 用户调用该方法修改密码
+     * 用户调用该方法修改密码 √
      *
      * @param req
      * @param resp

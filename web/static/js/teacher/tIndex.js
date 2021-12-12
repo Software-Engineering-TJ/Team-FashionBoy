@@ -47,6 +47,17 @@ var vm = new Vue({
             sectionDialogFormVisible: false,
             // 实验报告说明的弹窗是否可见
             reportDialogFormVisible: false,
+            // 密码弹框是否可见
+            passwordFormVisible: false,
+            // 验证码弹窗是否可见
+            verifyFromVisible: false,
+            verificationCode: '',
+            password: {
+                // 新密码
+                newPassword: '',
+                // 旧密码
+                originPassword: '',
+            },
             // 公告表单
             annoForm: {
                 title: '',
@@ -330,6 +341,7 @@ var vm = new Vue({
         submitExperimentForm(formName, loadName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    this.$refs.upload.submit();
                     axios({
                         url: '/SoftwareEngineering/instructorServlet?action=releaseExperiment',
                         method: "Post",
@@ -541,6 +553,72 @@ var vm = new Vue({
                 }
             })
         },
+        changePassword() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=sendEmail',
+                method: "Post",
+                data: {
+                    userNumber: this.user.instructorNumber,
+                    isResetPassword: "yes"
+                },
+            }).then(resp => {
+                this.verifyFromVisible = true;
+                if (resp.data.msg === 2) {
+                    this.$message({
+                        message: '验证码已发送到您的邮箱，填写到下列输入框后方可修改！',
+                        type: 'success'
+                    });
+                }
+            });
+            this.$message({
+                message: '验证码正在来的路上！',
+            });
+        },
+        verify() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=verify',
+                method: "Post",
+                data: {
+                    verificationCode: this.verificationCode
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.verifyFromVisible = false;
+                    this.verificationCode = '',
+                        this.$message({
+                            message: '验证成功！',
+                            type: 'success'
+                        });
+                    this.password.newPassword = ''
+                    this.password.originPassword = ''
+                    this.passwordFormVisible = true;
+                }
+            });
+        },
+        resetPassword() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=changePassword',
+                method: "Post",
+                data: {
+                    userNumber: this.user.instructorNumber,
+                    newPassword: this.password.newPassword,
+                    oldPassword: this.password.originPassword
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.$message({
+                        message: '密码重置成功！',
+                        type: 'success'
+                    });
+                    this.passwordFormVisible = false;
+                } else {
+                    this.$message({
+                        message: '新旧密码相同，重置失败！',
+                        type: 'error'
+                    });
+                }
+            });
+        }
     },
     components: {
         // 日历组件

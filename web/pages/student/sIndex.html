@@ -16,6 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="icon" type="image/x-icon" href="../../static/img/icon.ico"/>
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="../../static/css/common.css">
+    <!-- 引入本页面样式 -->
+    <link rel="stylesheet" href="../../static/css/student/sIndex.css">
     <title>学生导航页</title>
 </head>
 
@@ -51,6 +56,41 @@
     </el-dialog>
     <!-- 修改用户信息的弹窗结束 -->
 
+    <!-- 验证码的弹窗开始 -->
+    <el-dialog title="重置密码" :visible.sync="verifyFromVisible" width="40%" :modal="false">
+        <el-container>
+            <el-form :model="verificationCode" inline>
+                <el-form-item label="请输入您收到的验证码：" label-width="180px">
+                    <el-input v-model="verificationCode" autocomplete="off" placeholder="请输入验证码"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-container>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="verifyFromVisible=false">取 消</el-button>
+            <el-button type="primary" @click="verify">确 认</el-button>
+        </div>
+    </el-dialog>
+    <!-- 验证码的弹窗结束 -->
+
+    <!-- 修改密码的弹窗开始 -->
+    <el-dialog title="重置密码" :visible.sync="passwordFormVisible" width="40%" :modal="false">
+        <el-container>
+            <el-form :model="password" inline>
+                <el-form-item label="旧密码：" :label-width="formLabelWidth">
+                    <el-input v-model="password.originPassword" autocomplete="off" placeholder="请输入旧密码"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码：" :label-width="formLabelWidth">
+                    <el-input  v-model="password.newPassword" autocomplete="off" placeholder="请输入新密码"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-container>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="passwordFormVisible=false">取 消</el-button>
+            <el-button type="primary" @click="resetPassword">提 交</el-button>
+        </div>
+    </el-dialog>
+    <!-- 修改密码的弹窗结束 -->
+
     <div id="mainbox">
 
         <div id="header">
@@ -73,6 +113,8 @@
                             <div id="descriptionBox">
                                 <el-descriptions class="margin-top" title="学生" :column="2" border>
                                     <template slot="extra">
+                                        <el-button type="danger" size="small" @click="changePassword">重置密码
+                                        </el-button>
                                         <el-button type="primary" size="small" @click="switchUserDialogStatus">修改个人信息
                                         </el-button>
                                     </template>
@@ -212,7 +254,10 @@
                 <el-main>
                     <div id="reject">
                         <!--                        <keep-alive>-->
-                        <component :is="changeComponents" :course-id="courseID" :course-name="title"
+                        <component :is="changeComponents"
+                                   :course-id="courseID"
+                                   :class-id="classID"
+                                   :course-name="title"
                                    :student-number="user.studentNumber"
                                    :notice-list="noticeList"
                                    @go-back="goBack"></component>
@@ -235,6 +280,7 @@
 <!--<script src="../../static/js/student/subComponents/notice.js"></script>-->
 <!--<script src="../../static/js/student/course.js"></script>-->
 <!--<script src="../../static/js/calender.js"></script>-->
+<script src="/SoftwareEngineering/static/js/student/subComponents/sAttendance.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/grade.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/epReportDetail.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/experimentalReport.js"></script>

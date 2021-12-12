@@ -7,7 +7,6 @@ var ExperimentalReport = Vue.extend({
     },
     methods: {
         clickReport(index){
-            console.log("clickReport被调用了")
             this.$emit('click-report',index)
         }
     },

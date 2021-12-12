@@ -1,5 +1,5 @@
 var Course = Vue.extend({
-    props: ['studentNumber', 'courseName', 'courseID', 'classID', 'noticeList'],
+    props: ['studentNumber', 'courseName', 'courseId', 'classId', 'noticeList'],
     data() {
         return {
             changeComponents: 'notice',
@@ -28,35 +28,7 @@ var Course = Vue.extend({
                     upLoadUser: '金伟祖'
                 },
             ],
-            reportList: [
-                {
-                    reportName: '实验一实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                },
-                {
-                    reportName: '实验二实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                },
-                {
-                    reportName: '实验三实验报告',
-                    reportDescription: '请同学们认真完成实验报告！',
-                    startDate: '2021.11.1',
-                    endDate: '2021.12.1. 23：59',
-                    reportType: 'doc.txt.pdf',
-                    score: '暂未发布',
-                    weight: '25%'
-                }
-            ]
+            reportList: [],
         }
     },
     methods: {
@@ -66,7 +38,7 @@ var Course = Vue.extend({
         goBackNotice() {
             this.changeComponents = 'Notice'
         },
-        goBackReport(){
+        goBackReport() {
             this.changeComponents = 'ExperimentalReport'
         },
         // 选择对应的导航栏项触发
@@ -80,8 +52,12 @@ var Course = Vue.extend({
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "4":
+                    this.getReportDesc()
                     this.changeComponents = "ExperimentalReport"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
+                    break;
+                case "6":
+                    this.changeComponents = "SAttendance"
                     break;
                 case "8":
                     this.changeComponents = "Grade"
@@ -99,7 +75,33 @@ var Course = Vue.extend({
             this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
             this.changeComponents = 'EpReportDetail'
         },
-
+        getReportDesc() {
+            console.log(this.$props.courseId, this.$props.classId)
+            let course = this
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getReportDesc',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                course.reportList = JSON.parse(JSON.stringify(resp.data));
+            })
+        },
+        getFileList() {
+            let course = this
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getReportDesc',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                course.reportList = JSON.parse(JSON.stringify(resp.data));
+            })
+        }
     },
     components: {
         // 公告板组件
@@ -113,7 +115,9 @@ var Course = Vue.extend({
         // 实验报告详情组件
         EpReportDetail,
         // 我的成绩组件
-        Grade
+        Grade,
+        // 考勤组件
+        SAttendance
     },
     template: `
     <el-row class="tac">

@@ -50,7 +50,7 @@ var EpReportDetail = Vue.extend({
                     </div>
                 </div>             
             </el-col>
-            <el-col :span="4">
+            <el-col :span="3">
                 <div>
                     <div>
                         <h4 style="display: inline-block">得分</h4>
@@ -58,7 +58,7 @@ var EpReportDetail = Vue.extend({
                     </div>
                 </div>             
             </el-col>
-            <el-col :span="4">
+            <el-col :span="5">
                 <div>
                     <div>
                         <h4 style="display: inline-block">发布时间</h4>

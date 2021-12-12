@@ -31,6 +31,17 @@ var vm = new Vue({
             drawerVisible: false,
             // 课程信息抽屉是否显示
             drawerCourse: false,
+            // 密码弹框是否可见
+            passwordFormVisible: false,
+            // 验证码弹窗是否可见
+            verifyFromVisible: false,
+            verificationCode: '',
+            password: {
+                // 新密码
+                newPassword: '',
+                // 旧密码
+                originPassword: '',
+            },
             // 抽屉弹出方向
             drawerDirection: 'ltr',
             // 课程抽屉弹出方向
@@ -54,21 +65,7 @@ var vm = new Vue({
             // 学生课程表
             courseList: [],
             // 课程相关公告信息
-            noticeList: [
-                {
-                    title: '公告一',
-                    content: '请同学们完成实验一',
-                    date: '2021.11.11-2021.12.12'
-                }, {
-                    title: '公告二',
-                    content: '请同学们完成实验二',
-                    date: '2021.11.11-2021.12.12'
-                }, {
-                    title: '公告三',
-                    content: '请同学们完成实验三',
-                    date: '2021.11.11-2021.12.12'
-                }
-            ]
+            noticeList: []
         };
     },
     methods: {
@@ -115,7 +112,7 @@ var vm = new Vue({
                 data: {
                     userNumber: this.user.studentNumber,
                     email: this.user.email,
-                    phoneNumber:this.user.phoneNumber
+                    phoneNumber: this.user.phoneNumber
                 },
             }).then(resp => {
                 if (resp.data.result === 1) {
@@ -168,7 +165,7 @@ var vm = new Vue({
                 method: "Post",
                 data: {
                     courseID: this.courseID,
-                    classID:this.classID
+                    classID: this.classID
                 },
             }).then(resp => {
                 vm.noticeList = JSON.parse(JSON.stringify(resp.data));
@@ -177,6 +174,72 @@ var vm = new Vue({
         goBack() {
             this.defaultActive = '1'
             this.changeComponents = Calender
+        },
+        changePassword() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=sendEmail',
+                method: "Post",
+                data: {
+                    userNumber: this.user.studentNumber,
+                    isResetPassword: "yes"
+                },
+            }).then(resp => {
+                this.verifyFromVisible = true;
+                if (resp.data.msg === 2) {
+                    this.$message({
+                        message: '验证码已发送到您的邮箱，填写到下列输入框后方可修改！',
+                        type: 'success'
+                    });
+                }
+            });
+            this.$message({
+                message: '验证码正在来的路上！',
+            });
+        },
+        verify() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=verify',
+                method: "Post",
+                data: {
+                    verificationCode: this.verificationCode
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.verifyFromVisible = false;
+                    this.verificationCode = '',
+                        this.$message({
+                            message: '验证成功！',
+                            type: 'success'
+                        });
+                    this.password.newPassword = ''
+                    this.password.originPassword = ''
+                    this.passwordFormVisible = true;
+                }
+            });
+        },
+        resetPassword() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=changePassword',
+                method: "Post",
+                data: {
+                    userNumber: this.user.studentNumber,
+                    newPassword: this.password.newPassword,
+                    oldPassword: this.password.originPassword
+                },
+            }).then(resp => {
+                if (resp.data.result === 1) {
+                    this.$message({
+                        message: '密码重置成功！',
+                        type: 'success'
+                    });
+                    this.passwordFormVisible = false;
+                } else {
+                    this.$message({
+                        message: '新旧密码相同，重置失败！',
+                        type: 'error'
+                    });
+                }
+            });
         }
     },
     components: {

@@ -67,12 +67,16 @@ var Course = Vue.extend({
                     this.changeComponents = "Experiment"
                     break;
                 case "3":
+                    this.getReferenceMaterial()
                     this.changeComponents = "FileDownLoad"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "4":
                     this.getReportDesc()
                     this.changeComponents = "ExperimentalReport"
+                    break;
+                case "6":
+                    this.changeComponents = "Attendance"
                     break;
                 default:
                     break;
@@ -90,11 +94,11 @@ var Course = Vue.extend({
         publishAnnouncement() {
             this.$emit('publish-announcement')
         },
-        releaseExperiment(row){
-            this.$emit('release-experiment',row)
+        releaseExperiment(row) {
+            this.$emit('release-experiment', row)
         },
-        releaseReportDesc(){
-            let course =this
+        releaseReportDesc() {
+            let course = this
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=getExperimentInfo',
                 method: "Post",
@@ -103,14 +107,14 @@ var Course = Vue.extend({
                 },
             }).then(resp => {
                 course.experimentList = JSON.parse(JSON.stringify(resp.data));
-                for(let i=0;i<course.experimentList.length;i++){
-                    course.experimentList[i].difficulty=Number(course.experimentList[i].difficulty)
+                for (let i = 0; i < course.experimentList.length; i++) {
+                    course.experimentList[i].difficulty = Number(course.experimentList[i].difficulty)
                 }
-                this.$emit('release-report-desc',this.experimentList)
+                this.$emit('release-report-desc', this.experimentList)
             })
         },
-        getExperimentInfo(){
-            let course =this
+        getExperimentInfo() {
+            let course = this
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=getExperimentInfo',
                 method: "Post",
@@ -119,15 +123,15 @@ var Course = Vue.extend({
                 },
             }).then(resp => {
                 course.experimentList = JSON.parse(JSON.stringify(resp.data));
-                for(let i=0;i<course.experimentList.length;i++){
-                    course.experimentList[i].difficulty=Number(course.experimentList[i].difficulty)
+                for (let i = 0; i < course.experimentList.length; i++) {
+                    course.experimentList[i].difficulty = Number(course.experimentList[i].difficulty)
                 }
             })
         },
-        withdrawNotice(date){
-            this.$emit('withdraw-notice',date)
+        withdrawNotice(date) {
+            this.$emit('withdraw-notice', date)
         },
-        getReportDesc(){
+        getReportDesc() {
             let course = this
             axios({
                 url: '/SoftwareEngineering/userServlet?action=getReportDesc',
@@ -137,13 +141,24 @@ var Course = Vue.extend({
                     classID: this.$props.classId,
                 }
             }).then(resp => {
-                console.log(resp.data)
                 course.reportList = JSON.parse(JSON.stringify(resp.data));
             })
         },
-        withdrawReportDesc(expName,reportName){
-            console.log(expName,reportName)
-            this.$emit('withdraw-report-desc',expName,reportName)
+        withdrawReportDesc(expName, reportName) {
+            console.log(expName, reportName)
+            this.$emit('withdraw-report-desc', expName, reportName)
+        },
+        getReferenceMaterial() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getReferenceMaterial',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                console.log(resp.data)
+            })
         }
     },
     components: {
@@ -158,7 +173,9 @@ var Course = Vue.extend({
         // 实验报告详情组件
         EpReportDetail,
         // 实验组件
-        Experiment
+        Experiment,
+        // 考勤组件
+        Attendance
     },
     template: `
     <el-row class="tac">
@@ -230,6 +247,9 @@ var Course = Vue.extend({
                         :report-info="reportInfo" 
                         :material-list="materialList"
                         :experiment-list="experimentList"
+                        :course-id="courseId"
+                        :class-id="classId"
+                        :instructor-number="instructorNumber"
                         @click-report="clickReport" 
                         @release-experiment="releaseExperiment"
                         @publish-announcement="publishAnnouncement"

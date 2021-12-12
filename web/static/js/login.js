@@ -115,7 +115,8 @@ var vm = new Vue({
                 url: '/SoftwareEngineering/userServlet?action=sendEmail',
                 method: "Post",
                 data: {
-                    userNumber: this.ruleForm.account
+                    userNumber: this.ruleForm.account,
+                    isResetPassword:"no",
                 },
             }).then(resp => {
                 if (resp.data.msg === 0) {
@@ -134,7 +135,6 @@ var vm = new Vue({
                     this.btnStatus = true;
                 }
             });
-
         }
     }
 })
