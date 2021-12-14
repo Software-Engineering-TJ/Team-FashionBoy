@@ -32,4 +32,10 @@ public class TakesDaoImpl extends BaseDao implements TakesDao {
         String sql = "select `studentNumber`,`courseID`,`classID`,`status` from takes where courseID = ? and classID = ?";
         return queryForList(Takes.class,sql,courseID,classID);
     }
+
+    @Override
+    public Takes QueryTakesByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber) {
+        String sql = "select `studentNumber`,`courseID`,`classID`,`status` from takes where courseID = ? and classID = ? and studentNumber = ?";
+        return queryForOne(Takes.class,sql,courseID,classID,studentNumber);
+    }
 }

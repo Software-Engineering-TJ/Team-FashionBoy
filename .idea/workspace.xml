@@ -9,13 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="教师获取试验大纲时增加“是否已发布”的信息。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/TakesDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/TakesDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/TakesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/TakesDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +82,7 @@
     <property name="project.structure.last.edited" value="项目" />
     <property name="project.structure.proportion" value="0.16210938" />
     <property name="project.structure.side.proportion" value="0.27537924" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -272,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638513076957</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="教师获取试验大纲时增加“是否已发布”的信息。">
+      <created>1639478196597</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1639478196597</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,7 +330,8 @@
     <MESSAGE value="教师导航页面基本框架搭建完成" />
     <MESSAGE value="更新开设课程，课程概况，发布实验页面" />
     <MESSAGE value="新增的API大部分接完了，但出现了一些问题，可以去API需求文档中查看" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增的API大部分接完了，但出现了一些问题，可以去API需求文档中查看" />
+    <MESSAGE value="教师获取试验大纲时增加“是否已发布”的信息。" />
+    <option name="LAST_COMMIT_MESSAGE" value="教师获取试验大纲时增加“是否已发布”的信息。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

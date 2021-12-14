@@ -2,10 +2,13 @@ package service.Impl;
 
 import dao.impl.ExpScoreDaoImpl;
 import dao.impl.NoticeDaoImpl;
+import dao.impl.TakesDaoImpl;
 import dao.inter.ExpScoreDao;
 import dao.inter.NoticeDao;
+import dao.inter.TakesDao;
 import pojo.ExpScore;
 import pojo.Notice;
+import pojo.Takes;
 import service.inter.StudentService;
 
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import java.util.Map;
 public class StudentServiceImpl implements StudentService {
     private NoticeDao noticeDao = new NoticeDaoImpl();
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
+    private TakesDao takesDao = new TakesDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -53,5 +57,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int recordCommit(String courseID, String classID, String expname, String studentNumber) {
         return expScoreDao.InsertExpScore(studentNumber,courseID,expname,classID);
+    }
+
+    @Override
+    public String getDuty(String courseID, String classID, String studentNumber) {
+        Takes takes = takesDao.QueryTakesByCourseIDAndClassIDAndStudentNumber(courseID,classID,studentNumber);
+        return (takes.getStatus()==0)?"学生":"助教";
     }
 }

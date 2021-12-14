@@ -97,4 +97,20 @@ public class StudentServlet extends BaseServlet {
 
         resp.getWriter().write(gson.toJson(map));
     }
+
+    protected void getDuty(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+
+        Map<String,String> map = new HashMap<>();
+        map.put("Duty",studentService.getDuty(courseID,classID,studentNumber));
+
+        resp.getWriter().write(gson.toJson(map));
+    }
 }

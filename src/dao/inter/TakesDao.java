@@ -12,4 +12,6 @@ public interface TakesDao {
     int SetDuty(String studentNumber,String courseID,String classID,String duty);
     //根据课程查学生
     List<Takes> QueryTakesByCourseIDAndClassID(String courseID,String classID);
+    //根据courseID、classID、studentNumber查
+    Takes QueryTakesByCourseIDAndClassIDAndStudentNumber(String courseID,String classID,String studentNumber);
 }

@@ -11,4 +11,6 @@ public interface StudentService {
     String getExpScore(String courseID,String classID,String expname,String studentNumber);
     //记录学生作业提交记录
     int recordCommit(String courseID,String classID,String expname,String studentNumber);
+    //获取学生在某个课程中的身份
+    String getDuty(String courseID,String classID,String studentNumber);
 }
