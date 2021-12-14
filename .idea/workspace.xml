@@ -9,28 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="新增的API大部分接完了，但出现了一些问题，可以去API需求文档中查看">
-      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修复一个获取用户信息的小bug、修复一个文件上传和获取的小bug、实现参考资料的获取">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pages/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/student/sIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/student/sIndex.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/sIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/sIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/experimentalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/notice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/notice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,9 +79,10 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="工件" />
+    <property name="project.structure.last.edited" value="项目" />
     <property name="project.structure.proportion" value="0.16210938" />
     <property name="project.structure.side.proportion" value="0.27537924" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -109,8 +95,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Tomcat 9.0.53" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.53" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8088/SoftwareEngineering/pages/login.html" />
+    <configuration name="Tomcat 9.0.55" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.55" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/SoftwareEngineering/pages/login.html" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <deployment>
         <artifact name="SoftwareEngineering:war exploded">
@@ -314,6 +300,21 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
@@ -339,7 +340,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>241</line>
+          <line>242</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
@@ -353,7 +354,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>47</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />
@@ -369,22 +370,14 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
           <line>261</line>
-          <properties class="web.UserServlet" method="changeUserInfo">
+          <properties class="web.UserServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
-          <line>77</line>
-          <properties class="service.Impl.InstructorServiceImpl">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>160</line>
+          <line>161</line>
           <properties class="web.InstructorServlet" method="releaseNotice">
             <option name="EMULATED" value="true" />
           </properties>
@@ -392,7 +385,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
-          <line>124</line>
+          <line>128</line>
           <properties class="service.Impl.InstructorServiceImpl">
             <option name="EMULATED" value="true" />
           </properties>
@@ -400,7 +393,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>258</line>
+          <line>259</line>
           <properties class="web.InstructorServlet" method="withdrawReportDesc">
             <option name="EMULATED" value="true" />
           </properties>
@@ -408,7 +401,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>195</line>
+          <line>196</line>
           <properties class="web.InstructorServlet" method="withdrawNotice">
             <option name="EMULATED" value="true" />
           </properties>
@@ -425,7 +418,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
           <line>449</line>
-          <properties class="web.UserServlet" method="getReferenceMaterial">
+          <properties class="web.UserServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="67" />

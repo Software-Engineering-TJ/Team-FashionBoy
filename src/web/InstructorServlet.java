@@ -64,7 +64,8 @@ public class InstructorServlet extends BaseServlet{
         }.getType());
 
         String courseID = reqObject.get("courseID");
-        List<Map<String,String>> map = instructorService.GetCourseExpInfo(courseID);
+        String classID = reqObject.get("classID");
+        List<Map<String,String>> map = instructorService.GetCourseExpInfo(courseID,classID);
 
         resp.getWriter().write(gson.toJson(map));
     }

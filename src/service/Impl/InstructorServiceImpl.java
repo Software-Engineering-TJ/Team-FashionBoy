@@ -57,7 +57,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public List<Map<String, String>> GetCourseExpInfo(String courseID) {
+    public List<Map<String, String>> GetCourseExpInfo(String courseID,String classID) {
         List<Map<String, String>> courseExpInfoList = new ArrayList<>();
 
         List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
@@ -68,7 +68,11 @@ public class InstructorServiceImpl implements InstructorService {
             courseExpInfo.put("priority", Integer.toString(c.getPriority()));
             courseExpInfo.put("difficulty", Integer.toString(c.getDifficulty()));
             courseExpInfo.put("weight", c.getPercent() + "%");
-            courseExpInfo.put("status", c.getStatus() == 1 ? "已发布" : "未发布");
+            String status = "未发布";
+            if(experimentDao.QueryExperiment(courseID,classID,c.getExpname())!=null){
+                status = "已发布";
+            }
+            courseExpInfo.put("status", status);
             //加入到信息列表
             courseExpInfoList.add(courseExpInfo);
         }

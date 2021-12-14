@@ -11,7 +11,7 @@ public interface InstructorService {
     //获取教师教授的课程
     List<Map<String,String>> GetSections(String instructorNumber);
     //查看责任教师发布的实验大纲（也就是所有的实验）
-    List<Map<String,String>> GetCourseExpInfo(String courseID);
+    List<Map<String,String>> GetCourseExpInfo(String courseID,String classID);
     //教师发布实验
     int ReleaseExperiment(String courseID,String expname,String classID,int year,int month,int day,int hour,int minute,String expInfo);
     //返回教师想查看的已发布的实验信息
