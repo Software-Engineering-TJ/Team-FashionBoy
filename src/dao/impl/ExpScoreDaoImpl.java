@@ -14,9 +14,9 @@ import java.util.List;
 
 public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
     @Override
-    public int InsertExpScore(String studentNumber, String courseID, String expname, String classID) {
-        String sql = "insert into expscore(`studentNumber`,`courseID`,`expname`,`classID`) values(?,?,?,?)";
-        return update(sql,studentNumber,courseID,expname,classID);
+    public int InsertExpScore(String studentNumber, String courseID, String expname, String classID,String fileUrl) {
+        String sql = "insert into expscore(`studentNumber`,`courseID`,`expname`,`classID`,`fileUrl`) values(?,?,?,?,?)";
+        return update(sql,studentNumber,courseID,expname,classID,fileUrl);
     }
 
     @Override
@@ -35,7 +35,14 @@ public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
     public int UpdateExpScore(String studentNumber, String courseID, String expname, String classID,
                               float score, String comment) {
         String sql = "update `expscore` set `score` = ?,`comment` = ? where (`studentNumber` = ? and " +
-                "`courseID` = ? and `classID` = ?)";
+                "`courseID` = ? and `expname` = ? and `classID` = ?)";
         return update(sql,score,comment,studentNumber,courseID,expname,classID);
+    }
+
+    @Override
+    public int UpdateFileUrl(String courseID, String classID, String expname, String studentNumber, String fileUrl) {
+        String sql = "update `expscore` set `fileUrl` = ? where (`courseID` = ? and " +
+                "`classID` = ? and `expname` = ? and `studentNumber` = ?)";
+        return update(sql,fileUrl,courseID,classID,expname,studentNumber);
     }
 }

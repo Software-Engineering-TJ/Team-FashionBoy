@@ -9,10 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="学生进入课程时返回Duty信息">
-      <change afterPath="$PROJECT_DIR$/src/utils/OSSUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/ossDownloadTest.html" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="升级文件上传和下载功能（支持图片和pdf在线查看），文件存储位置变更到OSS文件管理系统">
+      <change afterPath="$PROJECT_DIR$/src/pojo/Reference.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Reflection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Reflection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/OSSUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/OSSUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +30,8 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -255,7 +260,7 @@
       <workItem from="1639634098071" duration="921000" />
       <workItem from="1639635062225" duration="1188000" />
       <workItem from="1639743839688" duration="8497000" />
-      <workItem from="1639807133889" duration="9981000" />
+      <workItem from="1639807133889" duration="16297000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -306,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639484943395</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="升级文件上传和下载功能（支持图片和pdf在线查看），文件存储位置变更到OSS文件管理系统">
+      <created>1639817398216</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1639817398216</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,7 +371,8 @@
     <MESSAGE value="新增的API大部分接完了，但出现了一些问题，可以去API需求文档中查看" />
     <MESSAGE value="教师获取试验大纲时增加“是否已发布”的信息。" />
     <MESSAGE value="学生进入课程时返回Duty信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="学生进入课程时返回Duty信息" />
+    <MESSAGE value="升级文件上传和下载功能（支持图片和pdf在线查看），文件存储位置变更到OSS文件管理系统" />
+    <option name="LAST_COMMIT_MESSAGE" value="升级文件上传和下载功能（支持图片和pdf在线查看），文件存储位置变更到OSS文件管理系统" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -380,19 +393,9 @@
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
-          <line>288</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/BaseServlet.java</url>
           <line>33</line>
           <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
-          <line>325</line>
-          <option name="timeStamp" value="71" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>

@@ -49,23 +49,13 @@ public class OSSUtils {
         return "https://"+bucketName+"."+endpoint+"/"+filePath;
     }
 
-    public static InputStream downloadFile(String fileUrl){
-        //获取文件在OSS中的路径
-        String filePath = fileUrl.replace("https://"+bucketName+"."+endpoint+"/","");
-
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        //获取OSS文件对象
-        OSSObject ossObject = ossClient.getObject(bucketName,filePath);
-        ossClient.shutdown();
-        return ossObject.getObjectContent();
-    }
-
-
     /**
      * oss删除文件，这里默认是bucketName桶内的文件
-     * @param filePath
+     * @param fileUrl
      */
-    public static void deleteFile(String filePath){
+    public static void deleteFile(String fileUrl){
+        //获取文件在OSS中的路径
+        String filePath = fileUrl.replace("https://"+bucketName+"."+endpoint+"/","");
         //创建客户端实例
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         //删除文件
@@ -74,6 +64,11 @@ public class OSSUtils {
         ossClient.shutdown();
     }
 
+    /**
+     * 获取文件类型
+     * @param filename
+     * @return
+     */
     public static String getFileType(String filename){
         if(filename.endsWith(".jpg")){
             return "image/jpg";

@@ -55,8 +55,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int recordCommit(String courseID, String classID, String expname, String studentNumber) {
-        return expScoreDao.InsertExpScore(studentNumber,courseID,expname,classID);
+    public int recordCommit(String courseID, String classID, String expname, String studentNumber,String fileUrl) {
+        //首次提交，则“添加”提交记录
+        if(expScoreDao.QueryExpScoreByCourseIDAndClassIDAndExpnameAndStudentNumber(courseID, classID, expname, studentNumber)==null){
+            return expScoreDao.InsertExpScore(studentNumber,courseID,expname,classID,fileUrl);
+        }
+        //后续重交，则覆盖文件信息
+        return expScoreDao.UpdateFileUrl(courseID, classID, expname, studentNumber, fileUrl);
     }
 
     @Override
