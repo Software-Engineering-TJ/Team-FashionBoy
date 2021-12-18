@@ -9,19 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="添加参考资料记录表reference">
-      <change afterPath="$PROJECT_DIR$/src/dao/impl/ReferenceDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/inter/ReferenceDao.java" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="老师获取学生提交的实验报告（更新）；&#10;老师和学生获取老师提交的参考资料（更新）">
+      <change afterPath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dao/inter/AttendDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/StudentDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/StudentDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/ExpScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/ExpScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Attend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Attend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/OSSUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/OSSUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +96,7 @@
       <recent name="D:\projectAll\Team-FashionBoy\web\static\js" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.OSSUtils">
+  <component name="RunManager" selected="Tomcat 服务器.Tomcat 9.0.55">
     <configuration name="OSSUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="utils.OSSUtils" />
       <module name="SoftwareEngineering" />
@@ -264,7 +259,7 @@
       <workItem from="1639634098071" duration="921000" />
       <workItem from="1639635062225" duration="1188000" />
       <workItem from="1639743839688" duration="8497000" />
-      <workItem from="1639807133889" duration="23693000" />
+      <workItem from="1639807133889" duration="28624000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -329,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639824303838</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="老师获取学生提交的实验报告（更新）；&#10;老师和学生获取老师提交的参考资料（更新）">
+      <created>1639837023033</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1639837023033</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +386,8 @@
     <MESSAGE value="学生进入课程时返回Duty信息" />
     <MESSAGE value="升级文件上传和下载功能（支持图片和pdf在线查看），文件存储位置变更到OSS文件管理系统" />
     <MESSAGE value="添加参考资料记录表reference" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加参考资料记录表reference" />
+    <MESSAGE value="老师获取学生提交的实验报告（更新）；&#10;老师和学生获取老师提交的参考资料（更新）" />
+    <option name="LAST_COMMIT_MESSAGE" value="老师获取学生提交的实验报告（更新）；&#10;老师和学生获取老师提交的参考资料（更新）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -401,7 +404,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>242</line>
+          <line>243</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -443,7 +446,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>161</line>
+          <line>162</line>
           <properties class="web.InstructorServlet" method="releaseNotice">
             <option name="EMULATED" value="true" />
           </properties>
@@ -451,7 +454,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
-          <line>129</line>
+          <line>131</line>
           <properties class="service.Impl.InstructorServiceImpl">
             <option name="EMULATED" value="true" />
           </properties>
@@ -459,7 +462,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>259</line>
+          <line>260</line>
           <properties class="web.InstructorServlet" method="withdrawReportDesc">
             <option name="EMULATED" value="true" />
           </properties>
@@ -467,7 +470,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>196</line>
+          <line>197</line>
           <properties class="web.InstructorServlet" method="withdrawNotice">
             <option name="EMULATED" value="true" />
           </properties>

@@ -1,8 +1,6 @@
 package service.inter;
 
-import pojo.ExpScore;
-import pojo.Experiment;
-import pojo.Student;
+import pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -40,4 +38,10 @@ public interface InstructorService {
     boolean checkReference(String fileUrl);
     //添加上传参考资料的记录
     int recordCommit(String courseID,String classID,String instructorNumber,String fileUrl);
+    //查看某课程的考勤占比
+    int getCourseAttendPercent(String courseID);
+    //获取某班已经发布的考勤情况
+    List<Attend> getAttendsBefore(String courseID,String classID);
+    //添加考勤记录
+    int addAttend(String courseID,String classID,String attendName,int percent,String startTime,String endTime);
 }

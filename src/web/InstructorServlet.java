@@ -2,6 +2,7 @@ package web;
 
 import com.google.gson.reflect.TypeToken;
 import com.mysql.cj.util.DnsSrv;
+import pojo.Attend;
 import pojo.ExpScore;
 import pojo.Student;
 import service.Impl.AdministrationServiceImpl;
@@ -393,6 +394,56 @@ public class InstructorServlet extends BaseServlet{
         map.put("submitted",submitted);
         map.put("unSubmitted",unSubmitted);
 
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 教师发布签到
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void releaseSignIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String attendanceName = reqObject.get("attendanceName");
+        String endTime = reqObject.get("endTime");
+        int percent = Integer.parseInt(reqObject.get("percent"));
+        //签到发布时间
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String startTime = simpleDateFormat.format(new Date());
+        //判断该签到的percent是否合适（保证没有超出该课程规定的考勤百分比）
+        //课程考勤总百分比
+        int attendPercent = instructorService.getCourseAttendPercent(courseID);
+        //已发布的考勤的百分比
+        List<Attend> attendList = instructorService.getAttendsBefore(courseID,classID);
+        int percentUsed = 0;
+        for(Attend attend : attendList){
+            percentUsed += attend.getPercent();
+        }
+        //考勤百分比超除了预定额的话返回错误信息
+        Map<String,Object> map = new HashMap<>();
+        if(percent>attendPercent-percentUsed){
+            map.put("result",0);
+            map.put("msg","考勤占比总额超出课程安排预定值");
+            resp.getWriter().write(gson.toJson(map));
+            return;
+        }
+        //签到信息插入到数据库
+        if(instructorService.addAttend(courseID,classID,attendanceName,percent,
+                startTime,endTime)==1){
+            map.put("result",1);
+            map.put("msg","考勤发布成功");
+        }else{
+            map.put("result",0);
+            map.put("msg","考勤命名重复");
+        }
         resp.getWriter().write(gson.toJson(map));
     }
 }

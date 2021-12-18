@@ -7,6 +7,7 @@ import pojo.*;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
 
+import javax.naming.directory.Attributes;
 import java.util.*;
 
 /**
@@ -29,6 +30,7 @@ public class InstructorServiceImpl implements InstructorService {
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
+    private AttendDao attendDao = new AttendDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -199,5 +201,21 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public int recordCommit(String courseID, String classID, String instructorNumber, String fileUrl) {
         return referenceDao.InsertReference(courseID, classID, instructorNumber, fileUrl);
+    }
+
+    @Override
+    public int getCourseAttendPercent(String courseID) {
+        CourseExp courseExp = courseExpDao.QueryCourseExpByCourseIDAndExpname(courseID,"考勤");
+        return courseExp.getPercent();
+    }
+
+    @Override
+    public List<Attend> getAttendsBefore(String courseID, String classID) {
+        return attendDao.QueryAttendsByCourseIDAndClassID(courseID,classID);
+    }
+
+    @Override
+    public int addAttend(String courseID, String classID, String attendName, int percent, String startTime, String endTime) {
+        return attendDao.InsertAttend(courseID,classID,attendName,percent,startTime,endTime);
     }
 }
