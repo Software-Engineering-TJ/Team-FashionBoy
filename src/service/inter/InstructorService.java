@@ -36,4 +36,8 @@ public interface InstructorService {
     List<ExpScore> getSubmittedStudentList(String courseID, String classID, String expname);
     //获得某个班级下的所有学生学号
     List<String> getStudentNumbersByCourseIDAndClassID(String courseID,String classID);
+    //查询某个参考资料的是否已经提交
+    boolean checkReference(String fileUrl);
+    //添加上传参考资料的记录
+    int recordCommit(String courseID,String classID,String instructorNumber,String fileUrl);
 }

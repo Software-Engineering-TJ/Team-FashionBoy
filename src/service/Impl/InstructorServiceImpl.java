@@ -28,6 +28,7 @@ public class InstructorServiceImpl implements InstructorService {
     private InstructorDao instructorDao = new InstructorDaoImpl();
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
+    private ReferenceDao referenceDao = new ReferenceDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -184,5 +185,19 @@ public class InstructorServiceImpl implements InstructorService {
             studentList.add(takes.getStudentNumber());
         }
         return studentList;
+    }
+
+    @Override
+    public boolean checkReference(String fileUrl) {
+        if(referenceDao.QueryReferenceByfileUrl(fileUrl)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int recordCommit(String courseID, String classID, String instructorNumber, String fileUrl) {
+        return referenceDao.InsertReference(courseID, classID, instructorNumber, fileUrl);
     }
 }

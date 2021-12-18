@@ -14,6 +14,7 @@ public class ExpScore {
     private String classID;
     private float score;
     private String comment;
+    private String fileUrl;
 
     public ExpScore() {
     }
@@ -66,6 +67,14 @@ public class ExpScore {
         this.comment = comment;
     }
 
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
     @Override
     public String toString() {
         return "ExpScore{" +
@@ -75,6 +84,7 @@ public class ExpScore {
                 ", classID='" + classID + '\'' +
                 ", score=" + score +
                 ", comment='" + comment + '\'' +
+                ", fileUrl='" + fileUrl + '\'' +
                 '}';
     }
 }

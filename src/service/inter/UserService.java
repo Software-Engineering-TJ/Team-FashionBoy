@@ -1,9 +1,6 @@
 package service.inter;
 
-import pojo.ExpReport;
-import pojo.Instructor;
-import pojo.Student;
-import pojo.User;
+import pojo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
@@ -31,7 +28,7 @@ public interface UserService {
     //获取某个课程班级下的所欲实验报告描述信息
     List<Map<String,String>> getExpReports(String courseID, String classID);
     //获取班级某个实验的所有提交的实验报告
-    List<Map<String,Object>> getFilesOfExpname(Path path, String courseID, String classID, String expname);
+    List<ExpScore> getExpScoresOfExpname(String courseID, String classID, String expname);
     //获取课程参考资料
-    List<Map<String,Object>> getReferencesOfSection(Path path, String courseID,String classID);
+    List<Reference> getReferencesOfSection(String courseID, String classID);
 }

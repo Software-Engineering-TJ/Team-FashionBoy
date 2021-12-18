@@ -6,7 +6,6 @@ import dao.inter.*;
 import pojo.*;
 import service.inter.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +29,7 @@ public class UserServiceImpl implements UserService{
     private ExpReportDao expReportDao = new ExpReportDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
+    private ReferenceDao referenceDao = new ReferenceDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -157,75 +157,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Map<String, Object>> getFilesOfExpname(Path directory,String courseID, String classID, String expname) {
+    public List<ExpScore> getExpScoresOfExpname(String courseID, String classID, String expname) {
 
         //找到提交作业的学生记录
         List<ExpScore> expScoreList = expScoreDao.QueryExpScoresByExperiment(courseID,expname,classID);
-        List<Map<String,Object>> fileInfoList = new ArrayList<>();
-        if(expScoreList != null) {
-            for (ExpScore expScore : expScoreList) {
-                //学号
-                String studentNumber = expScore.getStudentNumber();
-                Student student = studentDao.QueryStudentByStudentNumber(studentNumber);
-                //文件
-                File file = null;
-                //文件路径
-                String url = "";
-                Path fileDirectory = Paths.get(directory.toString(), studentNumber);
-                //学生实验报告目录文件
-                File fileList = new File(fileDirectory.toString());
-                //获取目录文件夹下的所有文件（其实只有一个文件）
-                File[] files = fileList.listFiles();
-                if (files != null) {
-                    //学生的文件
-                    file = files[0];
-                    url = courseID + "/" + classID + "/" + expname + "/" + studentNumber + "/" + file.getName();
-                }
 
-                Map<String, Object> fileInfo = new HashMap<>();
-                fileInfo.put("student", student);
-                fileInfo.put("file", file);
-                fileInfo.put("url", url);
-
-                fileInfoList.add(fileInfo);
-            }
-        }
-
-        return fileInfoList;
+        return expScoreList;
     }
 
     @Override
-    public List<Map<String, Object>> getReferencesOfSection(Path path, String courseID, String classID) {
-
-        List<Map<String,Object>> referencesInfoList = new ArrayList<>();
-
-        //参考文件总目录，下面有子目录
-        File referencesDirectory = new File(path.toString());
-        //如果没有参考资料目录就创建一个
-        if(!referencesDirectory.isDirectory()){
-            referencesDirectory.mkdirs();
-        }
-        //所有的子目录
-        File[] subDirectories = referencesDirectory.listFiles();
-        if(subDirectories != null){
-            for(File subDirectory : subDirectories){
-                //获取文件夹名（也是参考资料提交者的number）
-                String instructorNumber = subDirectory.getName();
-                Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
-                //子目录下的所有文件
-                File[] references = subDirectory.listFiles();
-                if (references != null){
-                    for(File reference : references){
-                        Map<String,Object> map = new HashMap<>();
-                        map.put("instructor",instructor);
-                        map.put("file",reference);
-                        map.put("url",courseID+"/"+classID+"/references"+"/"+instructorNumber+"/"+reference.getName());
-                        referencesInfoList.add(map);
-                    }
-                }
-            }
-        }
-
-        return referencesInfoList;
+    public List<Reference> getReferencesOfSection(String courseID, String classID) {
+        //该课程下的所有参考资料
+        return referenceDao.QueryReferencesByCourseIDAndClassID(courseID,classID);
     }
 }
