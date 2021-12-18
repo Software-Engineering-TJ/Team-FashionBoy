@@ -1,28 +1,34 @@
 package web;
 
 import com.google.gson.reflect.TypeToken;
+import dao.impl.AttendDaoImpl;
 import dao.impl.InstructorDaoImpl;
+import dao.inter.AttendDao;
 import dao.inter.InstructorDao;
+import pojo.Attend;
 import pojo.ExpScore;
 import pojo.Notice;
 import service.Impl.AdministrationServiceImpl;
+import service.Impl.InstructorServiceImpl;
 import service.Impl.StudentServiceImpl;
 import service.inter.AdministrationService;
+import service.inter.InstructorService;
 import service.inter.StudentService;
 import utils.RequestJsonUtils;
 
+import javax.naming.directory.Attributes;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class StudentServlet extends BaseServlet {
     AdministrationService administrationService = new AdministrationServiceImpl();
     StudentService studentService = new StudentServiceImpl();
+    InstructorService instructorService = new InstructorServiceImpl();
 
     protected void getTakes(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -111,6 +117,50 @@ public class StudentServlet extends BaseServlet {
         Map<String,String> map = new HashMap<>();
         map.put("Duty",studentService.getDuty(courseID,classID,studentNumber));
 
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 签到
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void signIn(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String title = reqObject.get("attendanceName");
+        String studentNumber = reqObject.get("studentNumber");
+        //学生当前签到的时间
+        Date currentTime = new Date();
+        //考勤截止日期
+        Date endTime = null;
+        AttendDao attendDao = new AttendDaoImpl();
+        Attend attend = attendDao.QueryAttendByCourseIDAndClassIDAndTitle(courseID,classID,title);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            endTime = simpleDateFormat.parse(attend.getEndTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //比较两个时间
+        int onTime = 0;
+        if(currentTime.before(endTime)){
+            onTime = 1;
+        }
+        //添加考勤记录
+        Map<String,Object> map = new HashMap<>();
+        if(studentService.addAttendScore(courseID,classID,title,studentNumber,onTime)==1){
+            map.put("result",1);
+        }else{
+            map.put("result",0);
+        }
         resp.getWriter().write(gson.toJson(map));
     }
 }

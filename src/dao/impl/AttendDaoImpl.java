@@ -7,6 +7,12 @@ import java.util.List;
 
 public class AttendDaoImpl extends BaseDao implements AttendDao {
     @Override
+    public Attend QueryAttendByCourseIDAndClassIDAndTitle(String courseID, String classID, String title) {
+        String sql = "select * from attend where courseID =? and classID = ? and title = ?";
+        return queryForOne(Attend.class,sql,courseID,classID,title);
+    }
+
+    @Override
     public List<Attend> QueryAttendsByCourseIDAndClassID(String courseID, String classID) {
         String sql = "select * from attend where courseID = ? and classID = ?";
         return queryForList(Attend.class,sql,courseID,classID);

@@ -1,11 +1,14 @@
 package service.Impl;
 
+import dao.impl.AttendScoreDaoImpl;
 import dao.impl.ExpScoreDaoImpl;
 import dao.impl.NoticeDaoImpl;
 import dao.impl.TakesDaoImpl;
+import dao.inter.AttendScoreDao;
 import dao.inter.ExpScoreDao;
 import dao.inter.NoticeDao;
 import dao.inter.TakesDao;
+import pojo.AttendScore;
 import pojo.ExpScore;
 import pojo.Notice;
 import pojo.Takes;
@@ -27,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
     private NoticeDao noticeDao = new NoticeDaoImpl();
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
+    private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -68,5 +72,10 @@ public class StudentServiceImpl implements StudentService {
     public String getDuty(String courseID, String classID, String studentNumber) {
         Takes takes = takesDao.QueryTakesByCourseIDAndClassIDAndStudentNumber(courseID,classID,studentNumber);
         return (takes.getStatus()==0)?"学生":"助教";
+    }
+
+    @Override
+    public int addAttendScore(String courseID, String classID, String title, String studentNumber, int onTime) {
+        return attendScoreDao.InsertAttendScore(courseID, classID, title, studentNumber, onTime);
     }
 }

@@ -2,6 +2,7 @@ package service.inter;
 
 import pojo.Notice;
 
+import javax.naming.directory.Attributes;
 import java.util.List;
 
 public interface StudentService {
@@ -13,4 +14,6 @@ public interface StudentService {
     int recordCommit(String courseID,String classID,String expname,String studentNumber,String fileUrl);
     //获取学生在某个课程中的身份
     String getDuty(String courseID,String classID,String studentNumber);
+    //添加学生考勤记录
+    int addAttendScore(String courseID,String classID,String title,String studentNumber,int onTime);
 }
