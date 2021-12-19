@@ -14,10 +14,10 @@ import java.util.List;
 
 public class ExperimentDaoImpl extends BaseDao implements ExperimentDao {
     @Override
-    public int InsertExperiment(String courseID,String expname,String classID,int year,int month,int day,int hour,int minute,String expInfo) {
+    public int InsertExperiment(String courseID,String expname,String classID,String startDate,String endDate,String expInfo) {
         String sql = "insert into experiment(`courseID`,`expname`,`classID`," +
-                "`year`,`month`,`day`,`hour`,`minute`,`expInfo`) values(?,?,?,?,?,?,?,?,?)" ;
-        return update(sql,courseID,expname,classID,year,month,day,hour,minute,expInfo);
+                "`startDate`,`endDate`,`expInfo`) values(?,?,?,?,?,?)" ;
+        return update(sql,courseID,expname,classID,startDate,endDate,expInfo);
     }
 
     @Override

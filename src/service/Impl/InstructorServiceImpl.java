@@ -71,10 +71,14 @@ public class InstructorServiceImpl implements InstructorService {
             courseExpInfo.put("priority", Integer.toString(c.getPriority()));
             courseExpInfo.put("difficulty", Integer.toString(c.getDifficulty()));
             courseExpInfo.put("weight", c.getPercent() + "%");
+            String startDate = "";
             String status = "未发布";
-            if(experimentDao.QueryExperiment(courseID,classID,c.getExpname())!=null){
+            Experiment experiment = experimentDao.QueryExperiment(courseID,classID,c.getExpname());
+            if(experiment!=null){
+                startDate = experiment.getStartDate();
                 status = "已发布";
             }
+            courseExpInfo.put("startDate",startDate);
             courseExpInfo.put("status", status);
             //加入到信息列表
             courseExpInfoList.add(courseExpInfo);
@@ -84,8 +88,8 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public int ReleaseExperiment(String courseID, String expname, String classID, int year, int month, int day, int hour, int minute, String expInfo) {
-        return experimentDao.InsertExperiment(courseID, expname, classID, year, month, day, hour, minute, expInfo);
+    public int ReleaseExperiment(String courseID, String expname, String classID,String startDate,String endDate, String expInfo) {
+        return experimentDao.InsertExperiment(courseID, expname, classID, startDate,endDate, expInfo);
     }
 
     @Override

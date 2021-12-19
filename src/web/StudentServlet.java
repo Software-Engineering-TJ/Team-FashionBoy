@@ -2,8 +2,10 @@ package web;
 
 import com.google.gson.reflect.TypeToken;
 import dao.impl.AttendDaoImpl;
+import dao.impl.ExpScoreDaoImpl;
 import dao.impl.InstructorDaoImpl;
 import dao.inter.AttendDao;
+import dao.inter.ExpScoreDao;
 import dao.inter.InstructorDao;
 import pojo.Attend;
 import pojo.ExpScore;
@@ -163,4 +165,5 @@ public class StudentServlet extends BaseServlet {
         }
         resp.getWriter().write(gson.toJson(map));
     }
+
 }

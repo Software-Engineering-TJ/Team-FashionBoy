@@ -87,16 +87,15 @@ public class InstructorServlet extends BaseServlet{
         String courseID = reqObject.get("courseID");
         String classID = reqObject.get("classID");
         String expname = reqObject.get("expName");
-        String year = reqObject.get("year");
-        String month = reqObject.get("month");
-        String day = reqObject.get("day");
-        String hour = reqObject.get("hour");
-        String minute = reqObject.get("minute");
-        String expInfo = reqObject.get("expInfo");
+        String endDate = reqObject.get("endDate");
+        String expInfo = reqObject.get("exoInfo");
+        //实验发布时间
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        String startDate = simpleDateFormat.format(new Date());
 
         Map<String,Integer> map = new HashMap<>();
         int result = 0;
-        if(instructorService.ReleaseExperiment(courseID,expname,classID,Integer.parseInt(year),Integer.parseInt(month)+1,Integer.parseInt(day),Integer.parseInt(hour),Integer.parseInt(minute),expInfo)==1){
+        if(instructorService.ReleaseExperiment(courseID,expname,classID,startDate,endDate,expInfo)==1){
             //发布实验成功
             result = 1;
         }
