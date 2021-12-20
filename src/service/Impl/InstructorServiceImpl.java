@@ -219,7 +219,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public int addAttend(String courseID, String classID, String attendName, int percent, String startTime, String endTime) {
-        return attendDao.InsertAttend(courseID,classID,attendName,percent,startTime,endTime);
+    public int addAttend(String courseID, String classID, String attendName, String startTime, String endTime) {
+        return attendDao.InsertAttend(courseID,classID,attendName,startTime,endTime);
     }
 }

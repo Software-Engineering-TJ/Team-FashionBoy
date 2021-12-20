@@ -43,5 +43,5 @@ public interface InstructorService {
     //获取某班已经发布的考勤情况
     List<Attend> getAttendsBefore(String courseID,String classID);
     //添加考勤记录
-    int addAttend(String courseID,String classID,String attendName,int percent,String startTime,String endTime);
+    int addAttend(String courseID,String classID,String attendName,String startTime,String endTime);
 }

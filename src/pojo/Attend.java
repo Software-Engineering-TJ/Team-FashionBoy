@@ -11,7 +11,6 @@ public class Attend {
     private String courseID;
     private String classID;
     private String title;
-    private int percent;
     private String startTime;
     private String endTime;
 
@@ -42,14 +41,6 @@ public class Attend {
         this.title = title;
     }
 
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
-
     public String getStartTime() {
         return startTime;
     }
@@ -72,7 +63,6 @@ public class Attend {
                 "courseID='" + courseID + '\'' +
                 ", classID='" + classID + '\'' +
                 ", title='" + title + '\'' +
-                ", percent=" + percent +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 '}';

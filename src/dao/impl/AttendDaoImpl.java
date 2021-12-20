@@ -19,8 +19,8 @@ public class AttendDaoImpl extends BaseDao implements AttendDao {
     }
 
     @Override
-    public int InsertAttend(String courseID, String classID, String attendName, int percent, String startTime, String endTime) {
-        String sql = "insert into attend(`courseID`,`classID`,`title`,`percent`,`startTime`,`endTime`) values(?,?,?,?,?,?)";
-        return update(sql,courseID,classID,attendName,percent,startTime,endTime);
+    public int InsertAttend(String courseID, String classID, String attendName, String startTime, String endTime) {
+        String sql = "insert into attend(`courseID`,`classID`,`title`,`startTime`,`endTime`) values(?,?,?,?,?,?)";
+        return update(sql,courseID,classID,attendName,startTime,endTime);
     }
 }

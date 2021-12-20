@@ -88,7 +88,7 @@ public class InstructorServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String expname = reqObject.get("expName");
         String endDate = reqObject.get("endDate");
-        String expInfo = reqObject.get("exoInfo");
+        String expInfo = reqObject.get("expgetInfo");
         //实验发布时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
         String startDate = simpleDateFormat.format(new Date());
@@ -333,6 +333,13 @@ public class InstructorServlet extends BaseServlet{
         resp.getWriter().write(gson.toJson(map));
     }
 
+    /**
+     * 查看学生报告提交情况
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void viewSubmission(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -373,12 +380,16 @@ public class InstructorServlet extends BaseServlet{
             }
         }
 
-        for(String studentNumber : studentSubmitList){
-            Student student = administrationService.getStudentByStudentNumber(studentNumber);
-            Map<String,Object> map = new HashMap<>();
-            map.put("studentNumber",studentNumber);
-            map.put("studentName",student.getName());
-            submitted.add(map);
+        if(expScoreList != null) {
+            for (ExpScore expScore: expScoreList) {
+                String studentNumber = expScore.getStudentNumber();
+                Student student = administrationService.getStudentByStudentNumber(studentNumber);
+                Map<String, Object> map = new HashMap<>();
+                map.put("studentNumber", studentNumber);
+                map.put("studentName", student.getName());
+                map.put("score", expScore.getScore());
+                submitted.add(map);
+            }
         }
 
         for(String studentNumber :studentElse){
@@ -386,6 +397,7 @@ public class InstructorServlet extends BaseServlet{
             Map<String,Object> map = new HashMap<>();
             map.put("studentNumber",studentNumber);
             map.put("studentName",student.getName());
+            map.put("score",-1);
             unSubmitted.add(map);
         }
 
@@ -413,29 +425,13 @@ public class InstructorServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String attendanceName = reqObject.get("attendanceName");
         String endTime = reqObject.get("endTime");
-        int percent = Integer.parseInt(reqObject.get("percent"));
         //签到发布时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String startTime = simpleDateFormat.format(new Date());
-        //判断该签到的percent是否合适（保证没有超出该课程规定的考勤百分比）
-        //课程考勤总百分比
-        int attendPercent = instructorService.getCourseAttendPercent(courseID);
-        //已发布的考勤的百分比
-        List<Attend> attendList = instructorService.getAttendsBefore(courseID,classID);
-        int percentUsed = 0;
-        for(Attend attend : attendList){
-            percentUsed += attend.getPercent();
-        }
-        //考勤百分比超除了预定额的话返回错误信息
+
         Map<String,Object> map = new HashMap<>();
-        if(percent>attendPercent-percentUsed){
-            map.put("result",0);
-            map.put("msg","考勤占比总额超出课程安排预定值");
-            resp.getWriter().write(gson.toJson(map));
-            return;
-        }
         //签到信息插入到数据库
-        if(instructorService.addAttend(courseID,classID,attendanceName,percent,
+        if(instructorService.addAttend(courseID,classID,attendanceName,
                 startTime,endTime)==1){
             map.put("result",1);
             map.put("msg","考勤发布成功");
