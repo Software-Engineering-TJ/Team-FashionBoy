@@ -222,4 +222,9 @@ public class InstructorServiceImpl implements InstructorService {
     public int addAttend(String courseID, String classID, String attendName, String startTime, String endTime) {
         return attendDao.InsertAttend(courseID,classID,attendName,startTime,endTime);
     }
+
+    @Override
+    public int deleteReference(String fileUrl) {
+        return referenceDao.DeleteReferenceByFileUrl(fileUrl);
+    }
 }

@@ -45,4 +45,10 @@ public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
                 "`classID` = ? and `expname` = ? and `studentNumber` = ?)";
         return update(sql,fileUrl,courseID,classID,expname,studentNumber);
     }
+
+    @Override
+    public int DeleteByFileUrl(String fileUrl) {
+        String sql = "delete from expscore where fileUrl = ?";
+        return update(sql,fileUrl);
+    }
 }

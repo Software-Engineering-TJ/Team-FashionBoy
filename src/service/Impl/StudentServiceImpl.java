@@ -78,4 +78,9 @@ public class StudentServiceImpl implements StudentService {
     public int addAttendScore(String courseID, String classID, String title, String studentNumber, int onTime) {
         return attendScoreDao.InsertAttendScore(courseID, classID, title, studentNumber, onTime);
     }
+
+    @Override
+    public int deleteCommit(String fileUrl) {
+        return expScoreDao.DeleteByFileUrl(fileUrl);
+    }
 }

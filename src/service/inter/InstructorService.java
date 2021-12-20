@@ -44,4 +44,6 @@ public interface InstructorService {
     List<Attend> getAttendsBefore(String courseID,String classID);
     //添加考勤记录
     int addAttend(String courseID,String classID,String attendName,String startTime,String endTime);
+    //删除某个参考资料
+    int deleteReference(String fileUrl);
 }

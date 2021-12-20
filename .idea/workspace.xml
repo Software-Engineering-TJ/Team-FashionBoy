@@ -9,14 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="完善：教师查看实验发布情况（增加发布时间）">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修正：viewSubmission、取消签到的占比">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/AttendDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/AttendDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/Attend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Attend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +244,7 @@
       <workItem from="1639743839688" duration="8497000" />
       <workItem from="1639807133889" duration="31000000" />
       <workItem from="1639897042463" duration="6641000" />
-      <workItem from="1639958768977" duration="955000" />
+      <workItem from="1639958768977" duration="2001000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -336,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639902715806</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="修正：viewSubmission、取消签到的占比">
+      <created>1639959852481</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1639959852481</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +403,8 @@
     <MESSAGE value="教师发布考勤实现" />
     <MESSAGE value="学生签到实现" />
     <MESSAGE value="完善：教师查看实验发布情况（增加发布时间）" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善：教师查看实验发布情况（增加发布时间）" />
+    <MESSAGE value="修正：viewSubmission、取消签到的占比" />
+    <option name="LAST_COMMIT_MESSAGE" value="修正：viewSubmission、取消签到的占比" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

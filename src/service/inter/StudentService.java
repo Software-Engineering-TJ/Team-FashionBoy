@@ -16,4 +16,6 @@ public interface StudentService {
     String getDuty(String courseID,String classID,String studentNumber);
     //添加学生考勤记录
     int addAttendScore(String courseID,String classID,String title,String studentNumber,int onTime);
+    //删除提交的实验报告
+    int deleteCommit(String fileUrl);
 }

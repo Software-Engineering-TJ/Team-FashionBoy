@@ -4,6 +4,10 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
 import com.google.gson.reflect.TypeToken;
+import dao.impl.ExpScoreDaoImpl;
+import dao.impl.ReferenceDaoImpl;
+import dao.inter.ExpScoreDao;
+import dao.inter.ReferenceDao;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -28,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.Reference;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -178,7 +183,7 @@ public class FileServlet extends BaseServlet {
      * @throws ServletException
      * @throws IOException
      */
-    public void deleteFIle(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    public void deleteFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
@@ -186,7 +191,9 @@ public class FileServlet extends BaseServlet {
         String fileUrl = reqObject.get("fileUrl");
         //删除OSS中的文件
         OSSUtils.deleteFile(fileUrl);
-        //TODO:删除文件在数据库中的记录,为了方便可以直接在expscore和参考资料两张表都执行删除操作
+        //TODO:删除文件在数据库中的记录,为了方便可以直接在expscore和reference两张表都执行删除操作
+        instructorService.deleteReference(fileUrl);
+        studentService.deleteCommit(fileUrl);
     }
 }
 

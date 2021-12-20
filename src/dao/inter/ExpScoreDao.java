@@ -16,4 +16,6 @@ public interface ExpScoreDao {
     int UpdateExpScore(String studentNumber,String courseID,String expname,String classID,float score,String comment);
     //更新实验报告位置
     int UpdateFileUrl(String courseID,String classID,String expname,String studentNumber, String fileUrl);
+    //删除实验报告
+    int DeleteByFileUrl(String fileUrl);
 }
