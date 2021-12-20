@@ -191,7 +191,7 @@ public class FileServlet extends BaseServlet {
         String fileUrl = reqObject.get("fileUrl");
         //删除OSS中的文件
         OSSUtils.deleteFile(fileUrl);
-        //TODO:删除文件在数据库中的记录,为了方便可以直接在expscore和reference两张表都执行删除操作
+        //删除文件在数据库中的记录,为了方便可以直接在expscore和reference两张表都执行删除操作
         instructorService.deleteReference(fileUrl);
         studentService.deleteCommit(fileUrl);
     }
