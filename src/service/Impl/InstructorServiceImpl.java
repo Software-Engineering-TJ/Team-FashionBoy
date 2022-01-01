@@ -31,6 +31,7 @@ public class InstructorServiceImpl implements InstructorService {
     private TakesDao takesDao = new TakesDaoImpl();
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
+    private CounterDao counterDao = new CounterDaoImpl();
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -229,5 +230,14 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public int deleteReference(String fileUrl) {
         return referenceDao.DeleteReferenceByFileUrl(fileUrl);
+    }
+
+    @Override
+    public int createCourse(String title, String instructorNumber, String startDate, String endDate) {
+        Counter counter = counterDao.QueryCounterById(1);
+        int courseId = counter.getCourse();
+        int newCourseId = courseId + 1;
+
+        return 0;
     }
 }

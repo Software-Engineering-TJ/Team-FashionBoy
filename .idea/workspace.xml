@@ -9,11 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="删除文件功能实现">
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修复教师发布签到的bug">
+      <change afterPath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dao/inter/CounterDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pojo/Counter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +248,7 @@
       <workItem from="1640246967778" duration="129000" />
       <workItem from="1640396818186" duration="2023000" />
       <workItem from="1640863953895" duration="3610000" />
-      <workItem from="1641035656007" duration="3132000" />
+      <workItem from="1641035656007" duration="5536000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -360,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639960862631</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="修复教师发布签到的bug">
+      <created>1641041842523</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1641041842523</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -421,7 +430,8 @@
     <MESSAGE value="完善：教师查看实验发布情况（增加发布时间）" />
     <MESSAGE value="修正：viewSubmission、取消签到的占比" />
     <MESSAGE value="删除文件功能实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除文件功能实现" />
+    <MESSAGE value="修复教师发布签到的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复教师发布签到的bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -475,7 +485,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
-          <line>138</line>
+          <line>139</line>
           <properties class="service.Impl.InstructorServiceImpl">
             <option name="EMULATED" value="true" />
           </properties>
