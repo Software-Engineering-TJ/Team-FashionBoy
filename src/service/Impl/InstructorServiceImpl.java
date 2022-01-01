@@ -66,6 +66,9 @@ public class InstructorServiceImpl implements InstructorService {
         List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
         //开始整理信息
         for (CourseExp c : courseExpList) {
+            if("考勤".equals(c.getExpname()) || "对抗练习".equals(c.getExpname())){
+                continue;
+            }
             Map<String, String> courseExpInfo = new HashMap<>();
             courseExpInfo.put("title", c.getExpname());
             courseExpInfo.put("priority", Integer.toString(c.getPriority()));

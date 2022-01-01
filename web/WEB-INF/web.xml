@@ -35,6 +35,16 @@
         <filter-name>CorsFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!-- 必须登录   -->
+<!--    <filter>-->
+<!--        <filter-name>LoginFilter</filter-name>-->
+<!--        <filter-class>filter.LoginFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>LoginFilter</filter-name>-->
+<!--        <url-pattern>/pages/*</url-pattern>-->
+<!--    </filter-mapping>-->
+
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>web.UserServlet</servlet-class>
