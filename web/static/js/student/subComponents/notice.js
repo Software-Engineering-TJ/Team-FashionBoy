@@ -12,6 +12,10 @@ var Notice = Vue.extend({
     },
     template: `
         <div style="line-height: initial;overflow: hidden;cursor: pointer;padding-top: 13px" >
+            <div style="height:35px;position: relative;margin-bottom: 5px">
+                <h2 style="display: inline-block;position: absolute;left: 14px;padding-left: 10px">公告栏:</h2>
+            </div>
+             <hr style="color: #C0C4CC;width: 96%;margin-left: 2%;margin-bottom: 6px">
             <transition-group name="el-fade-in-linear">
                 <div v-for="(item,index) in noticeList" :key="item.date">
                     <div style="margin: 8px 0 8px 0" @click="clickNotice(index)">

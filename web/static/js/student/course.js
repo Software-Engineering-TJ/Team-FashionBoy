@@ -5,30 +5,10 @@ var Course = Vue.extend({
             changeComponents: 'notice',
             noticeInfo: {},
             reportInfo: {},
-            fileList: [
-                {
-                    fileName: 'grade.pdf',
-                    fileURL: '/static/file/1953281-王文炯-学习心得.pdf',
-                    fileSize: '23k',
-                    upLoadDate: '2021.9.27',
-                    upLoadUser: '黄杰'
-                },
-                {
-                    fileName: 'class.txt',
-                    fileURL: '/1953281-王文炯-学习心得.pdf',
-                    fileSize: '46k',
-                    upLoadDate: '2021.10.3',
-                    upLoadUser: '张晶'
-                },
-                {
-                    fileName: '实验一参考资料.doc',
-                    fileURL: '/1953281-王文炯-学习心得.pdf',
-                    fileSize: '78k',
-                    upLoadDate: '2021.11.2',
-                    upLoadUser: '金伟祖'
-                },
-            ],
+            fileList: [],
             reportList: [],
+            classInfoList:[],
+            gradeWeightList:[]
         }
     },
     methods: {
@@ -48,19 +28,24 @@ var Course = Vue.extend({
                     this.changeComponents = "Notice"
                     break;
                 case "3":
+                    this.getReferenceMaterial();
                     this.changeComponents = "FileDownLoad"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "4":
-                    this.getReportDesc()
+                    this.getReportDesc();
                     this.changeComponents = "ExperimentalReport"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "6":
                     this.changeComponents = "SAttendance"
                     break;
+                case "7":
+                    this.getClassInfo()
+                    this.changeComponents = "SClassInfo"
+                    break;
                 case "8":
-                    this.changeComponents = "Grade"
+                    this.getWeightOfGrade()
                     break;
                 default:
                     break;
@@ -101,6 +86,73 @@ var Course = Vue.extend({
             }).then(resp => {
                 course.reportList = JSON.parse(JSON.stringify(resp.data));
             })
+        },
+        getReferenceMaterial() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getReferenceMaterial',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                this.fileList = resp.data;
+            })
+        },
+        getClassInfo(){
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getClassInfo',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                let infoList =[];
+                for(let instructor in resp.data.instructors){
+                    infoList.push({
+                        userNumber:resp.data.instructors[instructor].instructorNumber,
+                        userName:resp.data.instructors[instructor].name,
+                        duty:'任课教师'
+                    })
+                }
+                for(let assistant in resp.data.assistants){
+
+                    infoList.push({
+                        userNumber:resp.data.assistants[assistant].studentNumber,
+                        userName:resp.data.assistants[assistant].name,
+                        duty:'助教'
+                    })
+                }
+                for(let student in resp.data.students){
+                    infoList.push({
+                        userNumber:resp.data.students[student].studentNumber,
+                        userName:resp.data.students[student].name,
+                        duty:'学生'
+                    })
+                }
+                this.classInfoList=infoList
+            })
+        },
+        getWeightOfGrade(){
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getWeightOfGrade',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                let list = [];
+                for (let index in resp.data){
+                    list.push({
+                        name:resp.data[index].expname,
+                        value:resp.data[index].percent
+                    })
+                }
+                this.gradeWeightList = list
+                this.changeComponents = "Grade"
+            })
         }
     },
     components: {
@@ -117,7 +169,9 @@ var Course = Vue.extend({
         // 我的成绩组件
         Grade,
         // 考勤组件
-        SAttendance
+        SAttendance,
+        // 班级信息组件
+        SClassInfo
     },
     template: `
     <el-row class="tac">
@@ -186,7 +240,13 @@ var Course = Vue.extend({
                         :noticeInfo="noticeInfo" 
                         :file-list="fileList" 
                         :report-list="reportList" 
-                        :report-info="reportInfo" 
+                        :report-info="reportInfo"
+                        :student-number="studentNumber" 
+                        :course-name="courseName"
+                        :course-id="courseId"
+                        :class-id="classId"
+                        :class-info-list="classInfoList"
+                        :grade-weight-list="gradeWeightList"
                         @click-report="clickReport"
                         ></component>
                     </keep-alive>

@@ -33,7 +33,7 @@ var Experiment = Vue.extend({
                                 width="200">
                         </el-table-column>
                         <el-table-column
-                                prop="date"
+                                prop="startDate"
                                 label="发布时间"
                                 width="150">
                         </el-table-column>
@@ -70,7 +70,7 @@ var Experiment = Vue.extend({
                                 label="操作"
                                 width="150">
                             <template slot-scope="scope">
-                                <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
+                                <el-button :disabled="scope.row.status=='未发布'?true:false" @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
                                 <el-button type="text" size="small" @click="releaseExperiment(scope.row)">发布</el-button>
                             </template>
                         </el-table-column>

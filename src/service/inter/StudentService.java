@@ -1,5 +1,7 @@
 package service.inter;
 
+import pojo.CourseExp;
+import pojo.ExpScore;
 import pojo.Notice;
 
 import javax.naming.directory.Attributes;
@@ -18,4 +20,6 @@ public interface StudentService {
     int addAttendScore(String courseID,String classID,String title,String studentNumber,int onTime);
     //删除提交的实验报告
     int deleteCommit(String fileUrl);
+    List<CourseExp> getCoursesByCourseID(String courseID);
+    List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber);
 }

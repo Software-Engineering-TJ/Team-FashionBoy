@@ -1,5 +1,6 @@
 package web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
 import dao.impl.AttendDaoImpl;
 import dao.impl.ExpScoreDaoImpl;
@@ -8,6 +9,7 @@ import dao.inter.AttendDao;
 import dao.inter.ExpScoreDao;
 import dao.inter.InstructorDao;
 import pojo.Attend;
+import pojo.CourseExp;
 import pojo.ExpScore;
 import pojo.Notice;
 import service.Impl.AdministrationServiceImpl;
@@ -166,4 +168,44 @@ public class StudentServlet extends BaseServlet {
         resp.getWriter().write(gson.toJson(map));
     }
 
+    /**
+     * 学生获取成绩占比 √
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getWeightOfGrade(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseId = reqObject.get("courseID");
+        List<CourseExp> courseExpList = studentService.getCoursesByCourseID(courseId);
+
+        resp.getWriter().write(JSONObject.toJSONString(courseExpList));
+    }
+
+    /**
+     * 学生获取自己的实验成绩
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getExpGrades(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+
+        List<ExpScore> expScoreList = studentService.getAllExpScore(courseID, classID, studentNumber);
+
+        resp.getWriter().write(JSONObject.toJSONString(expScoreList));
+    }
 }

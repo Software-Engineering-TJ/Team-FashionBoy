@@ -1,28 +1,28 @@
 var SAttendance = Vue.extend({
-    props: ['experimentList'],
+    props: ['experimentList', 'studentNumber', 'courseName', 'courseId', 'classId'],
     data() {
         return {
-            attendanceList:[
+            attendanceList: [
                 {
-                    attendanceName:"考勤一",
-                    startTime:"2021-11-24 13:00",
-                    endTime:"2021-11-24 13:05",
-                    score:5,
-                    status:"已完成"
+                    attendanceName: "考勤一",
+                    startTime: "2021-11-24 13:00",
+                    endTime: "2021-11-24 13:05",
+                    score: 5,
+                    status: "已完成"
                 },
                 {
-                    attendanceName:"考勤二",
-                    startTime:"2021-11-25 13:00",
-                    endTime:"2021-11-25 13:05",
-                    score:5,
-                    status:"已完成"
+                    attendanceName: "考勤二",
+                    startTime: "2021-11-25 13:00",
+                    endTime: "2021-11-25 13:05",
+                    score: 5,
+                    status: "已完成"
                 },
                 {
-                    attendanceName:"考勤三",
-                    startTime:"2021-11-26 13:00",
-                    endTime:"2021-11-26 13:05",
-                    score:5,
-                    status:"正在进行"
+                    attendanceName: "考勤三",
+                    startTime: "2021-11-26 13:00",
+                    endTime: "2021-11-26 13:05",
+                    score: 5,
+                    status: "正在进行"
                 }
             ]
         };
@@ -36,9 +36,30 @@ var SAttendance = Vue.extend({
             }
             return '';
         },
-        releaseExperiment(row){
-            this.$emit('release-experiment',row)
-        }
+        signIn(row) {
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=SignIn',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                    studentNumber: this.$props.studentNumber,
+                    AttendanceName: row.attendanceName
+                },
+            }).then(resp => {
+                if (resp.data.result === 0) {
+                    this.$message({
+                        type: 'error',
+                        message: '超出截止时间，签到失败！'
+                    });
+                } else if (resp.data.result === 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '签到成功！'
+                    });
+                }
+            })
+        },
     },
     template: `
      <div style="padding-top: 30px">
@@ -80,7 +101,7 @@ var SAttendance = Vue.extend({
                                 label="操作"
                                 >
                             <template slot-scope="scope">
-                                <el-button type="text" @click="releaseExperiment(scope.row)">签到</el-button>
+                                <el-button type="text" @click="signIn(scope.row)">签到</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
