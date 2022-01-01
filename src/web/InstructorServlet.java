@@ -354,8 +354,7 @@ public class InstructorServlet extends BaseServlet{
         List<ExpScore> expScoreList = instructorService.getSubmittedStudentList(courseID,classID,expname);
         //存学号
         List<String> studentSubmitList = new ArrayList<>();
-        List<String> studentElse = new ArrayList<>();
-        //存学号和姓名
+        //存学号、姓名、成绩（-1表示没评分）
         List<Map<String,Object>> submitted = new ArrayList<>();
         List<Map<String,Object>> unSubmitted = new ArrayList<>();
         //班级所有学生的学号
@@ -366,34 +365,36 @@ public class InstructorServlet extends BaseServlet{
                 //已提交的学生
                 String studentNumber = expScore.getStudentNumber();
                 studentSubmitList.add(studentNumber);
+                //存信息
+                Student student = administrationService.getStudentByStudentNumber(studentNumber);
+                Map<String,Object> map = new HashMap<>();
+                map.put("studentNumber",studentNumber);
+                map.put("studentName",student.getName());
+                map.put("score",expScore.getScore());
+                submitted.add(map);
             }
             for(String studentNumber : studentList){
                 if(!studentSubmitList.contains(studentNumber)){
-                    //未提交的学生
-                    studentElse.add(studentNumber);
+                    //存信息
+                    Student student = administrationService.getStudentByStudentNumber(studentNumber);
+                    Map<String,Object> map = new HashMap<>();
+                    map.put("studentNumber",studentNumber);
+                    map.put("studentName",student.getName());
+                    map.put("score",-1);
+                    unSubmitted.add(map);
                 }
             }
         }else{
             //都没交
             for(String studentNumber : studentList){
-                studentElse.add(studentNumber);
+                //存信息
+                Student student = administrationService.getStudentByStudentNumber(studentNumber);
+                Map<String,Object> map = new HashMap<>();
+                map.put("studentNumber",studentNumber);
+                map.put("studentName",student.getName());
+                map.put("score",-1);
+                unSubmitted.add(map);
             }
-        }
-
-        for(String studentNumber : studentSubmitList){
-            Student student = administrationService.getStudentByStudentNumber(studentNumber);
-            Map<String,Object> map = new HashMap<>();
-            map.put("studentNumber",studentNumber);
-            map.put("studentName",student.getName());
-            submitted.add(map);
-        }
-
-        for(String studentNumber :studentElse){
-            Student student = administrationService.getStudentByStudentNumber(studentNumber);
-            Map<String,Object> map = new HashMap<>();
-            map.put("studentNumber",studentNumber);
-            map.put("studentName",student.getName());
-            unSubmitted.add(map);
         }
 
         Map<String,Object> map = new HashMap<>();
@@ -494,5 +495,26 @@ public class InstructorServlet extends BaseServlet{
 
         map.put("result",result);
         resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 教师或助教用于批改学生成绩
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void registerGrade(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+        String expname = reqObject.get("expname");
+
+
     }
 }
