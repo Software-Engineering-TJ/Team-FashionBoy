@@ -1,144 +1,9 @@
 var ExperimentalReport = Vue.extend({
-    props: ['reportList'],
+    props: ['reportList','courseId', 'classId'],
     data() {
         return {
-            submitStudentList: [
-                {
-                    studentNumber: '1953281',
-                    studentName: '王文炯',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953282',
-                    studentName: '李四',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953281',
-                    studentName: '王文炯',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953282',
-                    studentName: '李四',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953283',
-                    studentName: '王五',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                }
-            ],
-            unSubmitStudentList: [
-                {
-                    studentNumber: '1951776',
-                    studentName: '张三',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953284',
-                    studentName: '刘八',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1951776',
-                    studentName: '张三',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953284',
-                    studentName: '刘八',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1951776',
-                    studentName: '张三',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953284',
-                    studentName: '刘八',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953284',
-                    studentName: '刘八',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1951776',
-                    studentName: '张三',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                },
-                {
-                    studentNumber: '1953284',
-                    studentName: '刘八',
-                    isFinished: 1,
-                    isCorrect:1,
-                    score:0
-                }
-            ],
+            submitStudentList: [],
+            unSubmitStudentList: [],
             form:{
               score:0
             },
@@ -156,7 +21,19 @@ var ExperimentalReport = Vue.extend({
         clickReport(index) {
             this.$emit('click-report', index)
         },
-        checkSubmission() {
+        checkSubmission(expName) {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=viewSubmission',
+                method: "Post",
+                data: {
+                    expName: expName,
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp =>{
+                this.submitStudentList = resp.data.submitted
+                this.unSubmitStudentList = resp.data.unSubmitted
+            })
             this.submitDialogTableVisible = true;
         },
         releaseReportDesc() {
@@ -167,7 +44,6 @@ var ExperimentalReport = Vue.extend({
         },
         registerMarks(row){
             this.innerVisible=true;
-            console.log(row)
         }
     },
     template: `
@@ -287,7 +163,7 @@ var ExperimentalReport = Vue.extend({
                         </el-col>
                         <el-col :span="4">
                             <div class="my-bg" style="border-radius: 0 4px 4px 0">
-                                <el-button @click.stop="checkSubmission" type="text">查看提交情况&成绩录入
+                                <el-button @click.stop="checkSubmission(item.expName)" type="text">查看提交情况&成绩录入
                                 </el-button>
                             </div>
                         </el-col>

@@ -1,5 +1,8 @@
 package web;
 
+//import com.aliyun.oss.OSS;
+//import com.aliyun.oss.OSSClientBuilder;
+//import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;

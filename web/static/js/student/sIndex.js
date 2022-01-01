@@ -58,6 +58,8 @@ var vm = new Vue({
                 phoneNumber: '',
                 email: '',
             },
+            //某门课程下的学生职责
+            duty:'',
             // 管理员临时实体，作为表单修改对象
             userChange: {},
             // 对话框中表单标签的宽度
@@ -170,6 +172,22 @@ var vm = new Vue({
             }).then(resp => {
                 vm.noticeList = JSON.parse(JSON.stringify(resp.data));
             });
+            this.getDuty()
+        },
+        // 获取某个课程下学生的职务
+        getDuty(){
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getDuty',
+                method: "Post",
+                data: {
+                    courseID: this.courseID,
+                    classID: this.classID,
+                    studentNumber:this.user.studentNumber
+                },
+            }).then(resp => {
+                console.log(resp.data.Duty)
+                this.duty = resp.data.Duty
+            });
         },
         goBack() {
             this.defaultActive = '1'
@@ -214,6 +232,11 @@ var vm = new Vue({
                     this.password.newPassword = ''
                     this.password.originPassword = ''
                     this.passwordFormVisible = true;
+                } else{
+                    this.$message({
+                        message: '验证码错误！',
+                        type: 'error'
+                    });
                 }
             });
         },

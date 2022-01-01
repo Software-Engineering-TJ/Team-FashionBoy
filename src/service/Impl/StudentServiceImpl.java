@@ -1,17 +1,8 @@
 package service.Impl;
 
-import dao.impl.AttendScoreDaoImpl;
-import dao.impl.ExpScoreDaoImpl;
-import dao.impl.NoticeDaoImpl;
-import dao.impl.TakesDaoImpl;
-import dao.inter.AttendScoreDao;
-import dao.inter.ExpScoreDao;
-import dao.inter.NoticeDao;
-import dao.inter.TakesDao;
-import pojo.AttendScore;
-import pojo.ExpScore;
-import pojo.Notice;
-import pojo.Takes;
+import dao.impl.*;
+import dao.inter.*;
+import pojo.*;
 import service.inter.StudentService;
 
 import java.util.ArrayList;
@@ -31,6 +22,7 @@ public class StudentServiceImpl implements StudentService {
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
     private TakesDao takesDao = new TakesDaoImpl();
     private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
+    private CourseExpDao courseExpDao = new CourseExpDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -83,4 +75,14 @@ public class StudentServiceImpl implements StudentService {
     public int deleteCommit(String fileUrl) {
         return expScoreDao.DeleteByFileUrl(fileUrl);
     }
+
+    @Override
+    public List<CourseExp> getCoursesByCourseID(String courseID) {
+        return courseExpDao.QueryCourseExpsByCourseID(courseID);
+    }
+    @Override
+    public List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber) {
+        return expScoreDao.QueryExpScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
+    }
+
 }

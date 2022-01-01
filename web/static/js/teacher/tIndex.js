@@ -349,11 +349,7 @@ var vm = new Vue({
                             expName: this.experimentForm.title,
                             courseID: this.courseID,
                             classID: this.classID,
-                            year: this.experimentForm.date1.getFullYear(),
-                            month: this.experimentForm.date1.getMonth(),
-                            day: this.experimentForm.date1.getDay(),
-                            hour: this.experimentForm.date2.getHours(),
-                            minute: this.experimentForm.date2.getMinutes(),
+                            endDate:this.experimentForm.date1.getFullYear()+"-"+this.experimentForm.date1.getMonth()+"-"+this.experimentForm.date1.getDate(),
                             expInfo: this.experimentForm.desc
                         },
                     }).then(resp => {

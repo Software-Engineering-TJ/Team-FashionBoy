@@ -16,11 +16,12 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!--  引入日历样式  -->
+    <link rel="stylesheet" href="../../static/util/fullcalendar/main.css">
     <title>教师导航页</title>
 </head>
 <body>
 <div id="box" v-cloak>
-
     <!-- 修改用户信息的弹窗开始 -->
     <el-dialog title="修改个人信息" :visible.sync="userDialogFormVisible">
         <el-container>
@@ -72,7 +73,7 @@
     <el-dialog title="实验发布" :visible.sync="experimentDialogFormVisible">
         <div style="width: 90%">
             <el-form :model="experimentForm" :rules="rules" ref="experimentForm">
-                <el-form-item label="实验项目"  prop="title" :label-width="formLabelWidth">
+                <el-form-item label="实验项目" prop="title" :label-width="formLabelWidth">
                     <el-input disabled v-model="experimentForm.title"></el-input>
                 </el-form-item>
                 <el-form-item label="项目描述" required prop="desc" :label-width="formLabelWidth">
@@ -110,7 +111,6 @@
                                 courseID:courseID,
                                 classID:classID,
                                 userNumber:user.instructorNumber,
-                                expname:experimentForm.title
                             }"
                             :auto-upload="false"
                             action="/SoftwareEngineering/fileServlet?action=uploadFile"
@@ -130,7 +130,7 @@
     <!-- 发布实验的弹窗结束 -->
 
     <!-- 查看班级信息的弹窗开始 -->
-    <el-dialog title="班级信息" :visible.sync="sectionDialogFormVisible" >
+    <el-dialog title="班级信息" :visible.sync="sectionDialogFormVisible">
         <div style="width: 90%;margin-left: 5%">
             <el-table
                     :data="sectionInfoList">
@@ -181,9 +181,9 @@
     <!-- 查看班级信息的弹窗结束 -->
 
     <!-- 发布实验报告说明的弹窗开始 -->
-    <el-dialog title="发布实验报告说明" :visible.sync="reportDialogFormVisible" >
+    <el-dialog title="发布实验报告说明" :visible.sync="reportDialogFormVisible">
         <div style="width: 90%">
-            <el-form :model="reportForm"  :rules="reportRules" ref="reportForm">
+            <el-form :model="reportForm" :rules="reportRules" ref="reportForm">
                 <el-form-item label="关联实验" required prop="expName" :label-width="formLabelWidth">
                     <el-select style="width: 55%" v-model="reportForm.expName" placeholder="请选择">
                         <el-option
@@ -411,8 +411,8 @@
                                    @remove-domain="removeDomain"
                                    @release-experiment="releaseExperiment"
                                    @add-experiment="addExperiment"
-                                   @release-report-desc = "releaseReportDesc"
-                                   @get-notice-info = "getNoticeInfo"
+                                   @release-report-desc="releaseReportDesc"
+                                   @get-notice-info="getNoticeInfo"
                                    @go-back="goBack"></component>
                         <!--                        </keep-alive>-->
                     </div>
@@ -423,19 +423,10 @@
     </div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!--<script src="../../static/js/calender.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/courseOverview.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/openCourse.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/experiment.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/experimentalReport.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/epReportDetail.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/fileDownLoad.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/noticeDetail.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/notice.js"></script>-->
-<!--<script src="../../static/js/teacher/subComponents/course.js"></script>-->
-<!--    <script src="/SoftwareEngineering/static/js/calender.js"></script>-->
-<!--<script src="../../static/js/teacher/tIndex.js"></script>-->
+<!--  引入日历JS  -->
+<script src="/SoftwareEngineering/static/util/fullcalendar/main.js"></script>
 <script src="/SoftwareEngineering/static/js/calender.js"></script>
+<script src="/SoftwareEngineering/static/js/teacher/subComponents/classInfo.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/attendance.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/courseOverview.js"></script>
 <script src="/SoftwareEngineering/static/js/teacher/subComponents/openCourse.js"></script>

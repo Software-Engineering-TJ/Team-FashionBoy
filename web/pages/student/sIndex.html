@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="../../static/css/common.css">
     <!-- 引入本页面样式 -->
     <link rel="stylesheet" href="../../static/css/student/sIndex.css">
+    <!--  引入Fullcalendar样式  -->
+    <link rel="stylesheet" href="../../static/util/fullcalendar/main.css">
     <title>学生导航页</title>
 </head>
 
@@ -80,7 +82,7 @@
                     <el-input v-model="password.originPassword" autocomplete="off" placeholder="请输入旧密码"></el-input>
                 </el-form-item>
                 <el-form-item label="新密码：" :label-width="formLabelWidth">
-                    <el-input  v-model="password.newPassword" autocomplete="off" placeholder="请输入新密码"></el-input>
+                    <el-input v-model="password.newPassword" autocomplete="off" placeholder="请输入新密码"></el-input>
                 </el-form-item>
             </el-form>
         </el-container>
@@ -232,13 +234,6 @@
 
                                     <!-- 导航3开始 -->
                                     <el-menu-item index="3">
-                                        <i class="el-icon-edit"></i>
-                                        <span slot="title" id="authorityManage">权限管理</span>
-                                    </el-menu-item>
-                                    <!-- 导航3结束 -->
-
-                                    <!-- 导航4开始 -->
-                                    <el-menu-item index="4">
                                         <i class="el-icon-chat-dot-round"></i>
                                         <span slot="title">消息</span>
                                     </el-menu-item>
@@ -272,15 +267,9 @@
 <!-- 引入axios -->
 <script src="https://www.jq22.com/jquery/echarts-4.2.1.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!--<script src="../../static/js/student/subComponents/grade.js"></script>-->
-<!--<script src="../../static/js/student/subComponents/epReportDetail.js"></script>-->
-<!--<script src="../../static/js/student/subComponents/experimentalReport.js"></script>-->
-<!--<script src="../../static/js/student/subComponents/fileDownLoad.js"></script>-->
-<!--<script src="../../static/js/student/subComponents/noticeDetail.js"></script>-->
-<!--<script src="../../static/js/student/subComponents/notice.js"></script>-->
-<!--<script src="../../static/js/student/course.js"></script>-->
-<!--<script src="../../static/js/calender.js"></script>-->
+<script src="/SoftwareEngineering/static/util/fullcalendar/main.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/sAttendance.js"></script>
+<script src="/SoftwareEngineering/static/js/student/subComponents/sClassInfo.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/grade.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/epReportDetail.js"></script>
 <script src="/SoftwareEngineering/static/js/student/subComponents/experimentalReport.js"></script>

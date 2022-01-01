@@ -1,6 +1,7 @@
 package service.inter;
 
 import pojo.*;
+import pojo.logicEntity.ClassInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Path;
@@ -31,4 +32,6 @@ public interface UserService {
     List<ExpScore> getExpScoresOfExpname(String courseID, String classID, String expname);
     //获取课程参考资料
     List<Reference> getReferencesOfSection(String courseID, String classID);
+    ClassInfo getClassInfo(String courseID, String classID);
+    List<Attend> getAttendanceInfo(String courseID, String classID);
 }
