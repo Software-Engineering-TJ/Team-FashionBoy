@@ -52,4 +52,6 @@ public interface InstructorService {
     String createCourse(String title,String instructorNumber, String startDate,String endDate);
     //添加新课程的实验大纲（实验，考勤，对抗练习）
     void addCourseExp(String courseID,  List<Map<String,Object>> courseExpInfoList,int attendanceWeight,int practiceWeight);
+    //批改成绩录入
+    int registerGrade(String courseID,String classID,String studentNumber,String expname,float score,String comment);
 }

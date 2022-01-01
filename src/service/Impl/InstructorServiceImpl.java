@@ -263,4 +263,9 @@ public class InstructorServiceImpl implements InstructorService {
         //添加对抗练习
         courseExpDao.InsertCourseExp(courseID,"对抗练习",attendanceWeight,1,1);
     }
+
+    @Override
+    public int registerGrade(String courseID, String classID, String studentNumber, String expname, float score, String comment) {
+        return expScoreDao.UpdateExpScore(studentNumber,courseID,expname,classID,score,comment);
+    }
 }

@@ -514,7 +514,10 @@ public class InstructorServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String studentNumber = reqObject.get("studentNumber");
         String expname = reqObject.get("expname");
+        float score = Float.parseFloat(reqObject.get("score"));
+        String comment  = reqObject.get("comment");
 
+        instructorService.registerGrade(courseID,classID,studentNumber,expname,score,comment);
 
     }
 }
