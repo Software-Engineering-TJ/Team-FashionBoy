@@ -227,4 +227,13 @@ public class InstructorServiceImpl implements InstructorService {
     public int deleteReference(String fileUrl) {
         return referenceDao.DeleteReferenceByFileUrl(fileUrl);
     }
+    @Override
+    public int addSection(String courseID, int day, int time) {
+        return sectionDao.insertSection(courseID, day, time);
+    }
+
+    @Override
+    public int deleteSection(String courseID, String classID) {
+        return sectionDao.deleteSection(courseID, classID);
+    }
 }

@@ -1,13 +1,15 @@
 package web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
 import pojo.*;
+
+import pojo.logicEntity.Attendance;
+import pojo.logicEntity.Attendanceq;
+import pojo.logicEntity.ClassInfo;
 import service.Impl.AdministrationServiceImpl;
-import service.Impl.StudentServiceImpl;
 import service.Impl.UserServiceImpl;
 import service.inter.AdministrationService;
-import service.inter.InstructorService;
-import service.inter.StudentService;
 import service.inter.UserService;
 import utils.OSSUtils;
 import utils.RequestJsonUtils;
@@ -20,13 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthRadioButtonMenuItemUI;
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -418,7 +414,7 @@ public class UserServlet extends BaseServlet {
     }
 
     /**
-     * 教师或学生获取某个课程的某个班级下，老师发布的所有参考资料信息
+     * 教师或学生获取某个课程的某个班级下，老师发布的所有参考资料信息 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -457,4 +453,66 @@ public class UserServlet extends BaseServlet {
         }
         resp.getWriter().write(gson.toJson(referenceInfoList));
     }
+
+    /**
+     * 教师或学生获取班级信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getClassInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        ClassInfo classInfo = userService.getClassInfo(courseID, classID);
+        String json = JSONObject.toJSONString(classInfo);
+
+        resp.getWriter().write(json);
+    }
+
+    protected void getAttendanceInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String currentTime = dateFormat.format(date);//获取当前时间
+
+        List<Attend> attendList = userService.getAttendanceInfo(courseID, classID);
+        List<Attendance> attendanceList = new ArrayList<Attendance>();
+        for (Attend attend : attendList) {
+            Attendance attendance = new Attendance();
+            attendance.setAttendanceID("没有");
+            attendance.setAttendanceName(attend.getTitle());
+            attendance.setStartTime(attend.getStartTime());
+            attendance.setEndTime(attend.getEndTime());
+            if (currentTime.compareTo(attend.getStartTime()) >= 0 && currentTime.compareTo(attend.getEndTime()) <= 0) {
+                attendance.setStatus("正在进行");
+            }
+            else if (currentTime.compareTo(attend.getStartTime()) < 0) {
+                attendance.setStatus("未开始");
+            }
+            else {
+                attendance.setStatus("已结束");
+            }
+            attendanceList.add(attendance);
+        }
+
+        String json = JSONObject.toJSONString(attendanceList);
+
+        resp.getWriter().write(json);
+    }
+
+
 }

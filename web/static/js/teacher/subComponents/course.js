@@ -5,29 +5,7 @@ var Course = Vue.extend({
             changeComponents: 'Notice',
             noticeInfo: {},
             reportInfo: {},
-            fileList: [
-                {
-                    fileName: 'grade.pdf',
-                    fileURL: '/static/file/1953281-王文炯-学习心得.pdf',
-                    fileSize: '23k',
-                    upLoadDate: '2021.9.27',
-                    upLoadUser: '黄杰'
-                },
-                {
-                    fileName: 'class.txt',
-                    fileURL: '/1953281-王文炯-学习心得.pdf',
-                    fileSize: '46k',
-                    upLoadDate: '2021.10.3',
-                    upLoadUser: '张晶'
-                },
-                {
-                    fileName: '实验一参考资料.doc',
-                    fileURL: '/1953281-王文炯-学习心得.pdf',
-                    fileSize: '78k',
-                    upLoadDate: '2021.11.2',
-                    upLoadUser: '金伟祖'
-                },
-            ],
+            fileList: [],
             reportList: [],
             materialList: [
                 {
@@ -43,7 +21,12 @@ var Course = Vue.extend({
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ],
-            experimentList: []
+            //实验信息
+            experimentList: [],
+            //班级信息
+            classInfoList:[],
+            //考勤信息
+            attendanceList:[]
         }
     },
     methods: {
@@ -76,7 +59,12 @@ var Course = Vue.extend({
                     this.changeComponents = "ExperimentalReport"
                     break;
                 case "6":
+                    this.getAttendanceInfo()
                     this.changeComponents = "Attendance"
+                    break;
+                case "7":
+                    this.getClassInfo()
+                    this.changeComponents = "ClassInfo"
                     break;
                 default:
                     break;
@@ -119,7 +107,8 @@ var Course = Vue.extend({
                 url: '/SoftwareEngineering/instructorServlet?action=getExperimentInfo',
                 method: "Post",
                 data: {
-                    courseID: this.$props.courseId
+                    courseID: this.$props.courseId,
+                    classID:this.$props.classId
                 },
             }).then(resp => {
                 course.experimentList = JSON.parse(JSON.stringify(resp.data));
@@ -157,7 +146,54 @@ var Course = Vue.extend({
                     classID: this.$props.classId,
                 }
             }).then(resp => {
-                console.log(resp.data)
+                this.fileList = resp.data;
+            })
+        },
+        getClassInfo(){
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getClassInfo',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                let infoList =[];
+                for(let instructor in resp.data.instructors){
+                    infoList.push({
+                        userNumber:resp.data.instructors[instructor].instructorNumber,
+                        userName:resp.data.instructors[instructor].name,
+                        duty:'任课教师'
+                    })
+                }
+                for(let assistant in resp.data.assistants){
+
+                    infoList.push({
+                        userNumber:resp.data.assistants[assistant].studentNumber,
+                        userName:resp.data.assistants[assistant].name,
+                        duty:'助教'
+                    })
+                }
+                for(let student in resp.data.students){
+                    infoList.push({
+                        userNumber:resp.data.students[student].studentNumber,
+                        userName:resp.data.students[student].name,
+                        duty:'学生'
+                    })
+                }
+                this.classInfoList=infoList
+            })
+        },
+        getAttendanceInfo() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getAttendanceInfo',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp => {
+                this.attendanceList = resp.data
             })
         }
     },
@@ -175,7 +211,9 @@ var Course = Vue.extend({
         // 实验组件
         Experiment,
         // 考勤组件
-        Attendance
+        Attendance,
+        // 班级信息组件
+        ClassInfo
     },
     template: `
     <el-row class="tac">
@@ -250,6 +288,8 @@ var Course = Vue.extend({
                         :course-id="courseId"
                         :class-id="classId"
                         :instructor-number="instructorNumber"
+                        :class-info-list="classInfoList"
+                        :attendance-list="attendanceList"
                         @click-report="clickReport" 
                         @release-experiment="releaseExperiment"
                         @publish-announcement="publishAnnouncement"

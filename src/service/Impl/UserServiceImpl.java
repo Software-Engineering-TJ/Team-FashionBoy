@@ -4,6 +4,7 @@ package service.Impl;
 import dao.impl.*;
 import dao.inter.*;
 import pojo.*;
+import pojo.logicEntity.ClassInfo;
 import service.inter.UserService;
 
 import java.io.File;
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService{
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExpScoreDao expScoreDao = new ExpScoreDaoImpl();
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
+    private TakesDao takesDao = new TakesDaoImpl();
+    private TeachesDao teachesDao = new TeachesDaoImpl();
+    private AttendDao attendDao = new AttendDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -170,4 +174,38 @@ public class UserServiceImpl implements UserService{
         //该课程下的所有参考资料
         return referenceDao.QueryReferencesByCourseIDAndClassID(courseID,classID);
     }
+
+    @Override
+    public ClassInfo getClassInfo(String courseID, String classID) {
+        ClassInfo classInfo = new ClassInfo();
+        List<Teaches> teachesList = teachesDao.QueryTeachesByCourseIDAndClassID(courseID, classID);
+        for (Teaches teaches : teachesList) {
+            String instrutorNumber = teaches.getInstructorNumber();
+            Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instrutorNumber);
+            classInfo.addInstructor(instructor);
+        }
+
+        List<Takes> takesList = takesDao.QueryTakesByCourseIDAndClassID(courseID, classID);
+        for (Takes takes : takesList) {
+            String studentNumber = takes.getStudentNumber();
+            int status = takes.getStatus();//0,1
+            Student person = studentDao.QueryStudentByStudentNumber(studentNumber);
+            if (status == 0) {
+                //学生
+                classInfo.addStudent(person);
+            }
+            else if (status == 1) {
+                //助教
+                classInfo.addAssistant(person);
+            }
+        }
+
+        return classInfo;
+    }
+
+    @Override
+    public List<Attend> getAttendanceInfo(String courseID, String classID) {
+        return attendDao.QueryAttendsByCourseIDAndClassID(courseID, classID);
+    }
+
 }

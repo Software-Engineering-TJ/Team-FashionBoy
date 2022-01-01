@@ -25,4 +25,15 @@ public class SectionDaoImpl extends BaseDao implements SectionDao {
         String sql = "select `courseID`,`classID`,`day`,`time`,`number`,`currentNumber` from section where courseID = ?";
         return queryForList(Section.class,sql,courseID);
     }
+    @Override
+    public int insertSection(String courseID, int day, int time) {
+        String sql = "insert into section(`courseID`,`day`,`time`) values (?,?,?)";
+        return update(sql, courseID, day, time);
+    }
+
+    @Override
+    public int deleteSection(String courseID, String classID) {
+        String sql = "delete from section where `courseID`=? and `classID`=?";
+        return update(sql, courseID, classID);
+    }
 }

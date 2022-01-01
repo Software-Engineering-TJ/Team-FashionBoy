@@ -88,7 +88,7 @@ public class InstructorServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String expname = reqObject.get("expName");
         String endDate = reqObject.get("endDate");
-        String expInfo = reqObject.get("expgetInfo");
+        String expInfo = reqObject.get("expInfo");
         //实验发布时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
         String startDate = simpleDateFormat.format(new Date());
@@ -220,7 +220,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师发布实验报告提交说明
+     * 教师发布实验报告提交说明 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -254,7 +254,7 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师撤回实验报告提交说明
+     * 教师撤回实验报告提交说明 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -334,8 +334,8 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 查看学生报告提交情况
-     * @param req
+     *
+     * @param req 教师查看实验报告提交情况 √
      * @param resp
      * @throws ServletException
      * @throws IOException
@@ -380,16 +380,12 @@ public class InstructorServlet extends BaseServlet{
             }
         }
 
-        if(expScoreList != null) {
-            for (ExpScore expScore: expScoreList) {
-                String studentNumber = expScore.getStudentNumber();
-                Student student = administrationService.getStudentByStudentNumber(studentNumber);
-                Map<String, Object> map = new HashMap<>();
-                map.put("studentNumber", studentNumber);
-                map.put("studentName", student.getName());
-                map.put("score", expScore.getScore());
-                submitted.add(map);
-            }
+        for(String studentNumber : studentSubmitList){
+            Student student = administrationService.getStudentByStudentNumber(studentNumber);
+            Map<String,Object> map = new HashMap<>();
+            map.put("studentNumber",studentNumber);
+            map.put("studentName",student.getName());
+            submitted.add(map);
         }
 
         for(String studentNumber :studentElse){
@@ -397,7 +393,6 @@ public class InstructorServlet extends BaseServlet{
             Map<String,Object> map = new HashMap<>();
             map.put("studentNumber",studentNumber);
             map.put("studentName",student.getName());
-            map.put("score",-1);
             unSubmitted.add(map);
         }
 
@@ -441,4 +436,46 @@ public class InstructorServlet extends BaseServlet{
         }
         resp.getWriter().write(gson.toJson(map));
     }
+
+    /**
+     * 教师添加班级
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void addSection(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        int day = Integer.parseInt(reqObject.get("day"));
+        int time = Integer.parseInt(reqObject.get("time"));
+        int ret = instructorService.addSection(courseID, day, time);
+
+        resp.getWriter().write(ret != -1 ? "添加课程成功" : "添加课程失败");
+    }
+
+    /**
+     * 责任教师删除班级
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void deleteSection(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        int ret = instructorService.deleteSection(courseID, classID);
+
+        resp.getWriter().write(ret != -1 ? "删除课程成功" : "删除课程失败");
+    }
+
 }

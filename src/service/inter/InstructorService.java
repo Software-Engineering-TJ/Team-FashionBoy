@@ -46,4 +46,7 @@ public interface InstructorService {
     int addAttend(String courseID,String classID,String attendName,String startTime,String endTime);
     //删除某个参考资料
     int deleteReference(String fileUrl);
+
+    int addSection(String courseID, int day, int time);
+    int deleteSection(String courseID, String classID);
 }

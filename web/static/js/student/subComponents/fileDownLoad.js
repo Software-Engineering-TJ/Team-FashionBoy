@@ -1,12 +1,9 @@
 var FileDownLoad = Vue.extend({
-    props:['fileList'],
+    props: ['fileList'],
     data() {
-        return {
-
-        };
+        return {};
     },
     methods: {
-
     },
     template: `
          <div style="padding: 20px">
@@ -17,16 +14,16 @@ var FileDownLoad = Vue.extend({
                     <el-col :span="4">
                         <div class="grid-content bg-purple" style="border-radius: 0;background-color: white;line-height: 36px">文件名</div>
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="4">
                         <div class="grid-content bg-purple" style="border-radius: 0;background-color: white"></div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="3">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 36px;background-color: white">文件大小</div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 36px;background-color: white"></div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="4">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 36px;background-color: white">上传时间</div>
                     </el-col>
                     <el-col :span="2">
@@ -47,21 +44,21 @@ var FileDownLoad = Vue.extend({
                             <i class="el-icon-document" style="font-size: 30px;padding-top: 10px"></i>
                         </div>
                     </el-col>
-                    <el-col :span="4">
+                    <el-col :span="7">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 48px">
-                            <el-link :underline="false" :href="item.fileURL" download="">{{item.fileName}}</el-link>
+                            <el-link :underline="false" type="text" :href="item.url" target="_blank">{{item.fileName}}</el-link>
                         </div>
                     </el-col>
-                    <el-col :span="7">
+                    <el-col :span="1">
                         <div class="grid-content bg-purple" style="border-radius: 0"></div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="3">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 50px">{{item.fileSize}}</div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 50px"></div>
                     </el-col>
-                    <el-col :span="2">
+                    <el-col :span="4">
                         <div class="grid-content bg-purple" style="border-radius: 0;line-height: 50px">{{item.upLoadDate}}</div>
                     </el-col>
                     <el-col :span="2">

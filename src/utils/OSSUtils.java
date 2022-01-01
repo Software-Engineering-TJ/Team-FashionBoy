@@ -41,7 +41,7 @@ public class OSSUtils {
      * @return 文件存储对应的OSS外网访问路径
      */
     public static String uploadFile(String filePath, FileItem fileItem){
-        //创建客户端实例
+//        创建客户端实例
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         //获取文件流
         try {

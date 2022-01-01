@@ -1,8 +1,8 @@
 var EpReportDetail = Vue.extend({
-    props:['reportInfo'],
+    props:['reportInfo','studentNumber', 'courseName', 'courseId', 'classId'],
     data() {
         return {
-            fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+            fileList: []
         };
     },
     methods: {
@@ -14,6 +14,12 @@ var EpReportDetail = Vue.extend({
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+        },
+        uploadSuccess() {
+            this.$message({
+                type: 'success',
+                message: '文件上传成功！'
+            });
         },
     },
     template: `
@@ -54,7 +60,7 @@ var EpReportDetail = Vue.extend({
                 <div>
                     <div>
                         <h4 style="display: inline-block">得分</h4>
-                        ：{{reportInfo.score}}
+                        ：<h3 style="display: inline-block">90</h3:sty>
                     </div>
                 </div>             
             </el-col>
@@ -105,10 +111,16 @@ var EpReportDetail = Vue.extend({
                 <div style="display: inline-block;margin-right: 10px;float: left;height: 76px;width: 250px">
                     <el-upload
                         class="upload-demo"
-                        action="/前端代码//static/file"
-                        :before-remove="beforeRemove"
-                        :limit="1"
-                        :on-exceed="handleExceed"
+                        ref="upload"
+                        :auto-upload="true"
+                        action="/SoftwareEngineering/fileServlet?action=uploadFile"
+                        :data="{
+                                courseID:this.$props.courseId,
+                                classID:this.$props.classId,
+                                userNumber:this.$props.studentNumber,
+                                expname:this.$props.reportInfo.expName
+                            }"
+                        :on-success="uploadSuccess"
                         :file-list="fileList">
                         <el-button type="primary">点击上传实验报告</el-button>
                     </el-upload>

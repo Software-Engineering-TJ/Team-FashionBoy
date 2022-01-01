@@ -17,6 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- 引入Element组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!--  引入Fullcalendar样式  -->
+    <link rel="stylesheet" href="../../static/util/fullcalendar/main.css">
     <title>管理员导航页</title>
 </head>
 
@@ -123,6 +125,7 @@
             </el-form>
         </el-container>
         <div slot="footer" class="dialog-footer">
+            <el-button @click="studentDialogFormVisible = false">批量导入</el-button>
             <el-button @click="studentDialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addNewStudent">确 定</el-button>
         </div>
@@ -151,6 +154,7 @@
             </el-form>
         </el-container>
         <div slot="footer" class="dialog-footer">
+            <el-button @click="teacherDialogFormVisible = false">批量导入</el-button>
             <el-button @click="teacherDialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addNewTeacher">确 定</el-button>
         </div>
@@ -294,6 +298,8 @@
     </div>
 </div>
 <!-- 引入axios -->
+<script src="/SoftwareEngineering/static/util/fullcalendar/main.js"></script>
+<script src="/SoftwareEngineering/static/js/calender.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../../static/js/administrator/aIndex.js"></script>
 </body>

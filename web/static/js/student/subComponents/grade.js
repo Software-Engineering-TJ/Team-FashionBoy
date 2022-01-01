@@ -1,5 +1,5 @@
 var Grade = Vue.extend({
-    props: ['noticeList'],
+    props: ['noticeList','gradeWeightList'],
     data() {
         return {
             attendance: [
@@ -43,14 +43,7 @@ var Grade = Vue.extend({
                         name: '成绩组成',
                         type: 'pie',
                         radius: '50%',
-                        data: [
-                            {value: 20, name: '帧中继实验'},
-                            {value: 10, name: '组播路由实验'},
-                            {value: 20, name: '静态路由实验'},
-                            {value: 20, name: '动态路由实验'},
-                            {value: 10, name: '考勤'},
-                            {value: 20, name: '对抗练习'},
-                        ],
+                        data: this.$props.gradeWeightList,
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -179,6 +172,7 @@ var Grade = Vue.extend({
         }
     },
     mounted() {
+        console.log(this.$props.gradeWeightList)
         this.drawLine()
         this.drawPie()
     },
@@ -215,7 +209,7 @@ var Grade = Vue.extend({
                         <div><h2 style="display: inline-block">您的总成绩为:</h2></div>
                     </el-col>
                     <el-col :span="2" :offset="20">
-                        <div><h1  style="color: green;display: inline-block">94</h1></div>
+                        <div><h1  style="color: green;display: inline-block">40</h1></div>
                     </el-col>
                 </el-row>
         </div>
