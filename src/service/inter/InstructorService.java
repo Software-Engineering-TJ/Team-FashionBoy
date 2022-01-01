@@ -48,7 +48,8 @@ public interface InstructorService {
     int deleteReference(String fileUrl);
 
     int addSection(String courseID, int day, int time);
-    int deleteSection(String courseID, String classID);
-    //开设课程
-    int createCourse(String title,String instructorNumber, String startDate,String endDate);
+    //添加新课程到course表，返回courseID
+    String createCourse(String title,String instructorNumber, String startDate,String endDate);
+    //添加新课程的实验大纲（实验，考勤，对抗练习）
+    void addCourseExp(String courseID,  List<Map<String,Object>> courseExpInfoList,int attendanceWeight,int practiceWeight);
 }

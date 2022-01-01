@@ -459,23 +459,40 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 责任教师删除班级
+     * 责任教师开设课程
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void deleteSection(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+    protected void addCourse(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
-        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        //因为传过来的参数有数组，所以先转化成Map<String,Object>
+        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, Object>>() {
         }.getType());
 
-        String courseID = reqObject.get("courseID");
-        String classID = reqObject.get("classID");
-        int ret = instructorService.deleteSection(courseID, classID);
+        String title = (String)reqObject.get("title");
+        String startDate = (String)reqObject.get("startDate");
+        String endDate = (String)reqObject.get("endDate");
+        String instructorNumber = (String)reqObject.get("instructorNumber");
+        //实验信息
+        String experimentForm = (String) reqObject.get("experimentForm");
+        List<Map<String,Object>> courseExpInfoList = gson.fromJson(experimentForm, new TypeToken<List<Map<String, Object>>>() {
+        }.getType());
+        int attendanceWeight = (int)reqObject.get("attendanceWeight");
+        int practiceWeight = (int)reqObject.get("practiceWeight");
 
-        resp.getWriter().write(ret != -1 ? "删除课程成功" : "删除课程失败");
+        String courseID = instructorService.createCourse(title,instructorNumber,startDate,endDate);
+        int result = 1;
+        Map<String, Integer> map = new HashMap<>();
+        if("".equals(courseID)){
+            result = 0;
+        }
+
+        instructorService.addCourseExp(courseID,courseExpInfoList,attendanceWeight,practiceWeight);
+
+        map.put("result",result);
+        resp.getWriter().write(gson.toJson(map));
     }
-
 }

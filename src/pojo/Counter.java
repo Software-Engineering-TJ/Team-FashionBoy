@@ -1,34 +1,34 @@
 package pojo;
 
 public class Counter {
-    private int courseId;
+    private int courseID;
 
-    private int classId;
+    private int classID;
 
     public Counter() {
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getCourseID() {
+        return courseID;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 
-    public int getClassId() {
-        return classId;
+    public int getClassID() {
+        return classID;
     }
 
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public void setClassID(int classID) {
+        this.classID = classID;
     }
 
     @Override
     public String toString() {
         return "Counter{" +
-                "courseId=" + courseId +
-                ", classId=" + classId +
+                "courseID=" + courseID +
+                ", classID=" + classID +
                 '}';
     }
 }

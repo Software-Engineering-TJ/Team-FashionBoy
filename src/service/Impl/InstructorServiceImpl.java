@@ -237,16 +237,30 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public int deleteSection(String courseID, String classID) {
-        return sectionDao.deleteSection(courseID, classID);
+    public String createCourse(String title, String instructorNumber, String startDate, String endDate) {
+        Counter counter = counterDao.QueryCounterById(1);
+        //上一个courseID
+        int courseId = counter.getCourseID();
+        //本课程的courseID
+        String newCourseID = courseId + 1 + "";
+        //添加课程
+        if(courseDao.InsertCourse(newCourseID,title,instructorNumber,startDate,endDate)!=1) {
+            return "";
+        }
+        //更新courseID计数
+        counterDao.UpdateCourseIDOfCounter(courseId+1);
+        return newCourseID;
     }
 
     @Override
-    public int createCourse(String title, String instructorNumber, String startDate, String endDate) {
-        Counter counter = counterDao.QueryCounterById(1);
-        int courseId = counter.getCourse();
-        int newCourseId = courseId + 1;
-
-        return 0;
+    public void addCourseExp(String courseID, List<Map<String,Object>> courseExpInfoList,int attendanceWeight,int practiceWeight) {
+        //添加实验
+        for(Map<String, Object> c : courseExpInfoList){
+            courseExpDao.InsertCourseExp(courseID,(String)c.get("expname"),(int)c.get("percent"),(int)c.get("priority"),(int)c.get("difficulty"));
+        }
+        //添加考勤
+        courseExpDao.InsertCourseExp(courseID,"考勤",attendanceWeight,1,1);
+        //添加对抗练习
+        courseExpDao.InsertCourseExp(courseID,"对抗练习",attendanceWeight,1,1);
     }
 }

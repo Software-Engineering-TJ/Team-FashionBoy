@@ -9,13 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修复教师发布签到的bug">
-      <change afterPath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/inter/CounterDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pojo/Counter.java" afterDir="false" />
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="数据库添加Counter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/CounterDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/CounterDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/Counter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +83,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.16210938" />
     <property name="project.structure.side.proportion" value="0.27537924" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -248,7 +251,7 @@
       <workItem from="1640246967778" duration="129000" />
       <workItem from="1640396818186" duration="2023000" />
       <workItem from="1640863953895" duration="3610000" />
-      <workItem from="1641035656007" duration="5536000" />
+      <workItem from="1641035656007" duration="8836000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -369,7 +372,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641041842523</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="数据库添加Counter">
+      <created>1641044115179</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1641044115179</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,7 +441,8 @@
     <MESSAGE value="修正：viewSubmission、取消签到的占比" />
     <MESSAGE value="删除文件功能实现" />
     <MESSAGE value="修复教师发布签到的bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复教师发布签到的bug" />
+    <MESSAGE value="数据库添加Counter" />
+    <option name="LAST_COMMIT_MESSAGE" value="数据库添加Counter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -443,7 +454,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>273</line>
+          <line>269</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -477,8 +488,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>263</line>
-          <properties class="web.UserServlet" method="changeUserInfo">
+          <line>259</line>
+          <properties class="web.UserServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="29" />
