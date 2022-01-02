@@ -8,7 +8,9 @@ var Course = Vue.extend({
             fileList: [],
             reportList: [],
             classInfoList:[],
-            gradeWeightList:[]
+            gradeWeightList:[],
+            experimentNames:[],
+            experimentScores:[],
         }
     },
     methods: {
@@ -46,6 +48,7 @@ var Course = Vue.extend({
                     break;
                 case "8":
                     this.getWeightOfGrade()
+                    this.getExperimentGrades()
                     break;
                 default:
                     break;
@@ -153,6 +156,25 @@ var Course = Vue.extend({
                 this.gradeWeightList = list
                 this.changeComponents = "Grade"
             })
+        },
+        getExperimentGrades(){
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=getExpGrades',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID:this.$props.courseId,
+                    studentNumber:this.$props.studentNumber
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                for(let index in resp.data){
+                    this.experimentScores.push(resp.data[index].score)
+                    this.experimentNames.push(resp.data[index].expname)
+                }
+                console.log(this.experimentScores)
+                console.log(this.experimentNames)
+            })
         }
     },
     components: {
@@ -246,6 +268,8 @@ var Course = Vue.extend({
                         :course-id="courseId"
                         :class-id="classId"
                         :class-info-list="classInfoList"
+                        :experiment-names="experimentNames"
+                        :experiment-scores="experimentScores"
                         :grade-weight-list="gradeWeightList"
                         @click-report="clickReport"
                         ></component>

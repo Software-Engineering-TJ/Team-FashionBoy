@@ -1,5 +1,5 @@
 var SAttendance = Vue.extend({
-    props: ['experimentList', 'studentNumber', 'courseName', 'courseId', 'classId'],
+    props: ['attendanceList', 'studentNumber', 'courseName', 'courseId', 'classId'],
     data() {
         return {
             attendanceList: [

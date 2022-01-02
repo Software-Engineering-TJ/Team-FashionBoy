@@ -129,6 +129,48 @@
     </el-dialog>
     <!-- 发布实验的弹窗结束 -->
 
+    <!-- 增加新班级的弹窗开始 -->
+    <el-dialog title="增加班级" :visible.sync="addClassDialogFormVisible">
+        <div style="width: 90%">
+            <el-form :model="addClassForm" :rules="rules" ref="addClassForm">
+                <el-form-item label="任课教师工号" required :label-width="formLabelWidth">
+                    <el-input v-model="addClassForm.instructorNumber" style="width: 250px"
+                              placeholder="请输入任课教师工号"></el-input>
+                </el-form-item>
+                <el-form-item label="上课日期" required :label-width="formLabelWidth">
+                    <el-select v-model="addClassForm.day" placeholder="请选择上课日期">
+                        <el-option label="星期一" value=1></el-option>
+                        <el-option label="星期二" value=2></el-option>
+                        <el-option label="星期三" value=3></el-option>
+                        <el-option label="星期四" value=4></el-option>
+                        <el-option label="星期五" value=5></el-option>
+                        <el-option label="星期六" value=6></el-option>
+                        <el-option label="星期日" value=7></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="上课时间" required :label-width="formLabelWidth">
+                    <el-select v-model="addClassForm.time" placeholder="请选择上课时间">
+                        <el-option label="第一、二节课" value=1></el-option>
+                        <el-option label="第三、四节课" value=2></el-option>
+                        <el-option label="第五、六节课" value=3></el-option>
+                        <el-option label="第七、八节课" value=4></el-option>
+                        <el-option label="第九、十节课" value=5></el-option>
+                        <el-option label="第十一、十二节课" value=6></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="班级容量" required :label-width="formLabelWidth">
+                    <el-input v-model="addClassForm.number" style="width: 250px"
+                              placeholder="请输入班级容量"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="addClassDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addClass()">确 定</el-button>
+        </div>
+    </el-dialog>
+    <!-- 增加新班级的弹窗结束 -->
+
     <!-- 查看班级信息的弹窗开始 -->
     <el-dialog title="班级信息" :visible.sync="sectionDialogFormVisible">
         <div style="width: 90%;margin-left: 5%">
@@ -168,14 +210,14 @@
                         fixed="right"
                         width="120">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" plain type="danger" size="small">删除该班级</el-button>
+                        <el-button @click="deleteClass(scope.row)" plain type="danger" size="small">删除该班级</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
         <div slot="footer" class="dialog-footer">
             <el-button @click="sectionDialogFormVisible = false">关 闭</el-button>
-            <el-button type="primary" @click="sectionDialogFormVisible = false">新 增 班 级</el-button>
+            <el-button type="primary" @click="addClassDialogFormVisible=true">新 增 班 级</el-button>
         </div>
     </el-dialog>
     <!-- 查看班级信息的弹窗结束 -->

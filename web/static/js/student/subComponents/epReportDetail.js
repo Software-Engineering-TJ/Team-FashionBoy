@@ -1,16 +1,28 @@
 var EpReportDetail = Vue.extend({
-    props:['reportInfo','studentNumber', 'courseName', 'courseId', 'classId'],
+    props: ['reportInfo', 'studentNumber', 'courseName', 'courseId', 'classId'],
     data() {
         return {
-            fileList: []
+            fileList: [],
+            beforeUpload:false,
         };
     },
+    created(){
+        let customTime = this.$props.reportInfo.endDate
+        let currentTime = new Date();
+        customTime = customTime.replace("-", "/");//替换字符，变成标准格式
+        customTime = new Date(Date.parse(customTime));
+        if (currentTime < customTime) {
+            this.beforeUpload = false;
+        } else {
+            this.beforeUpload = true;
+        }
+    },
     methods: {
-        goBackReport(){
+        goBackReport() {
             this.$emit('go-back-report')
         },
         beforeRemove(file, fileList) {
-            return this.$confirm(`确定移除 ${ file.name }？`);
+            return this.$confirm(`确定移除 ${file.name}？`);
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -21,6 +33,14 @@ var EpReportDetail = Vue.extend({
                 message: '文件上传成功！'
             });
         },
+        judge(){
+            if (this.beforeUpload === true){
+                this.$message({
+                    message: '已超过截止时间，不可提交！',
+                    type: 'error'
+                });
+            }
+        }
     },
     template: `
         <div style="padding-top: 20px">
@@ -60,7 +80,7 @@ var EpReportDetail = Vue.extend({
                 <div>
                     <div>
                         <h4 style="display: inline-block">得分</h4>
-                        ：<h3 style="display: inline-block">90</h3:sty>
+                        ：<h3 style="display: inline-block">90</h3>
                     </div>
                 </div>             
             </el-col>
@@ -108,11 +128,12 @@ var EpReportDetail = Vue.extend({
         
         <el-row :gutter="20">
             <el-col :span="20" :offset="2">
-                <div style="display: inline-block;margin-right: 10px;float: left;height: 76px;width: 250px">
+                <div style="display: inline-block;margin-right: 10px;float: left;height: 76px;width: 250px" >
                     <el-upload
                         class="upload-demo"
                         ref="upload"
                         :auto-upload="true"
+                        :disabled="beforeUpload"
                         action="/SoftwareEngineering/fileServlet?action=uploadFile"
                         :data="{
                                 courseID:this.$props.courseId,
@@ -122,7 +143,7 @@ var EpReportDetail = Vue.extend({
                             }"
                         :on-success="uploadSuccess"
                         :file-list="fileList">
-                        <el-button type="primary">点击上传实验报告</el-button>
+                        <el-button type="primary" @click="judge">点击上传实验报告</el-button>
                     </el-upload>
                 </div>
                 <div style="display: inline-block;float: right;margin-top: 40px" ><el-button type="info" plain @click="goBackReport">返回</el-button></div>

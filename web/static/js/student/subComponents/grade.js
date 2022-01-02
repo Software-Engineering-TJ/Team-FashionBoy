@@ -1,7 +1,9 @@
 var Grade = Vue.extend({
-    props: ['noticeList','gradeWeightList'],
+    props: ['noticeList','gradeWeightList','experimentNames','experimentScores'],
     data() {
         return {
+            scores:[],
+            names:[],
             attendance: [
                 {
                     date:'2021-11-11-12:21',
@@ -91,7 +93,7 @@ var Grade = Vue.extend({
                     axisTick: {
                         show: false,
                     },
-                    data: ['实验一', '实验二', '实验三', '实验四', '实验五']
+                    data: this.names
                 },
                 yAxis: [
                     {
@@ -158,7 +160,7 @@ var Grade = Vue.extend({
                         type: 'line',
                         yAxisIndex: 0,
                         //smooth: true,
-                        data: [480, 520, 600]
+                        data: this.scores
                     },
                     {
                         name: '班级排名',
@@ -173,6 +175,10 @@ var Grade = Vue.extend({
     },
     mounted() {
         console.log(this.$props.gradeWeightList)
+        console.log(this.$props.experimentNames)
+        console.log(this.$props.experimentScores)
+        this.scores=this.$props.experimentScores
+        this.names=this.$props.experimentNames
         this.drawLine()
         this.drawPie()
     },

@@ -1,52 +1,86 @@
 var ExperimentalReport = Vue.extend({
-    props: ['reportList','courseId', 'classId'],
-    data() {
-        return {
-            submitStudentList: [],
-            unSubmitStudentList: [],
-            form:{
-              score:0
+        props: ['reportList', 'courseId', 'classId'],
+        data() {
+            return {
+                studentNumber: '',
+                submitStudentList: [],
+                unSubmitStudentList: [],
+                form: {
+                    score: 0,
+                    comment: ''
+                },
+                submitDialogTableVisible: false,
+                innerVisible: false,
+                expname: '',
+            };
+        },
+        computed: {
+            percentage: function () {
+                let oriPercentage = this.submitStudentList.length / (this.unSubmitStudentList.length + this.submitStudentList.length) * 100;
+                return Number.parseFloat(oriPercentage.toString().substr(0, 5));
+            }
+        },
+        methods: {
+            clickReport(index) {
+                this.$emit('click-report', index)
             },
-            submitDialogTableVisible: false,
-            innerVisible:false,
-        };
-    },
-    computed: {
-        percentage: function () {
-            let oriPercentage = this.submitStudentList.length / (this.unSubmitStudentList.length + this.submitStudentList.length) * 100;
-            return Number.parseFloat(oriPercentage.toString().substr(0, 5));
-        }
-    },
-    methods: {
-        clickReport(index) {
-            this.$emit('click-report', index)
+            checkSubmission(expName) {
+                this.expname = expName
+                axios({
+                    url: '/SoftwareEngineering/instructorServlet?action=viewSubmission',
+                    method: "Post",
+                    data: {
+                        expname: expName,
+                        courseID: this.$props.courseId,
+                        classID: this.$props.classId,
+                    }
+                }).then(resp => {
+                    console.log(resp.data.submitted)
+                    this.submitStudentList = resp.data.submitted
+                    for (let index in this.submitStudentList) {
+                        if (this.submitStudentList[index].score === -1) {
+                            this.submitStudentList[index].score = "暂无"
+                            this.submitStudentList[index].isCorrect = "否"
+                        } else {
+                            this.submitStudentList[index].isCorrect = "是"
+                        }
+                    }
+                    this.unSubmitStudentList = resp.data.unSubmitted
+                })
+                this.submitDialogTableVisible = true;
+            },
+            releaseReportDesc() {
+                this.$emit('release-report-desc')
+            },
+            fileDownLoad(row) {
+                console.log(row)
+            },
+            registerMarks(row) {
+                this.studentNumber = row.studentNumber
+                this.innerVisible = true;
+            },
+            registerGrade() {
+                axios({
+                    url: '/SoftwareEngineering/instructorServlet?action=registerGrade',
+                    method: "Post",
+                    data: {
+                        courseID: this.$props.courseId,
+                        classID: this.$props.classId,
+                        studentNumber: this.studentNumber,
+                        expname: this.expname,
+                        score: this.form.score,
+                        comment: this.form.comment
+                    },
+                }).then(resp => {
+                    this.$message({
+                        message: '成绩录入成功！',
+                        type: 'success'
+                    });
+                    this.innerVisible = fasle;
+                });
+            }
         },
-        checkSubmission(expName) {
-            axios({
-                url: '/SoftwareEngineering/instructorServlet?action=viewSubmission',
-                method: "Post",
-                data: {
-                    expName: expName,
-                    courseID: this.$props.courseId,
-                    classID: this.$props.classId,
-                }
-            }).then(resp =>{
-                this.submitStudentList = resp.data.submitted
-                this.unSubmitStudentList = resp.data.unSubmitted
-            })
-            this.submitDialogTableVisible = true;
-        },
-        releaseReportDesc() {
-            this.$emit('release-report-desc')
-        },
-        fileDownLoad(row) {
-            console.log(row)
-        },
-        registerMarks(row){
-            this.innerVisible=true;
-        }
-    },
-    template: `
+        template: `
          <div style="padding: 20px">
                 <el-dialog title="实验报告提交情况" :visible.sync="submitDialogTableVisible" :fullscreen="true">
                        <el-dialog
@@ -58,10 +92,13 @@ var ExperimentalReport = Vue.extend({
                                 <el-form-item label="该生成绩" label-width="80px">
                                   <el-input v-model="form.score" autocomplete="off" style="width: 80%"></el-input>
                                 </el-form-item>
+                                <el-form-item label="评语" label-width="80px">
+                                  <el-input v-model="form.comment" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
                               </el-form>
                               <div slot="footer" class="dialog-footer">
                                 <el-button @click="innerVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+                                <el-button type="primary" @click="registerGrade">确 定</el-button>
                               </div>
                        </el-dialog>
                       <el-divider content-position="left"><h3>提交率</h3></el-divider>
@@ -79,7 +116,7 @@ var ExperimentalReport = Vue.extend({
                                              <el-table-column
                                                     label="操作">
                                                   <template slot-scope="scope">
-                                                    <el-button @click="fileDownLoad(scope.row)" type="text" size="small">下载实验报告</el-button>
+                                                    <el-link :underline="false" type="text" :href="scope.row.fileUrl" target="_blank">下载实验报告</el-link>
                                                     <el-button @click="registerMarks(scope.row)" type="text" size="small">成绩录入</el-button>
                                                   </template>
                                             </el-table-column>
@@ -176,4 +213,5 @@ var ExperimentalReport = Vue.extend({
             </div>
         </div>
         `
-});
+    })
+;

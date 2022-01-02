@@ -1,16 +1,25 @@
 var Attendance = Vue.extend({
-    props: ['attendanceList','courseId', 'classId'],
+    props: ['attendanceList', 'courseId', 'classId'],
     data() {
         return {
             //考勤发布窗口是否可见
-            innerVisible:false,
+            innerVisible: false,
             //考勤信息表单
-            form:{
-                attendanceName:'',
-                endTime:'',
-                percent:'25%'
+            form: {
+                attendanceName: '',
+                endTime: '',
+                percent: '25%'
             },
+            attendanceDialogTableVisible:false,
+            attendanceStudentList: [1],
+            unStudentList: [1],
         };
+    },
+    computed: {
+        percentage: function () {
+            let oriPercentage = this.attendanceStudentList.length / (this.unStudentList.length + this.attendanceStudentList.length) * 100;
+            return Number.parseFloat(oriPercentage.toString().substr(0, 5));
+        }
     },
     methods: {
         tableRowClassName({row, rowIndex}) {
@@ -21,37 +30,73 @@ var Attendance = Vue.extend({
             }
             return '';
         },
-        releaseAttendance(){
-            let endDate = this.form.endTime.getFullYear()+'-'+(this.form.endTime.getMonth()+1)+'-'+this.form.endTime.getDate()+' '+this.form.endTime.getHours()+':'+this.form.endTime.getMinutes()+':'+this.form.endTime.getSeconds()
+        releaseAttendance() {
+            let endDate = this.form.endTime.getFullYear() + '-' + (this.form.endTime.getMonth() + 1) + '-' + this.form.endTime.getDate() + ' ' + this.form.endTime.getHours() + ':' + this.form.endTime.getMinutes() + ':' + this.form.endTime.getSeconds()
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=releaseSignIn',
                 method: "Post",
                 data: {
-                    courseID:this.$props.courseId,
-                    classID:this.$props.classId,
-                    attendanceName:this.form.attendanceName,
-                    endTime:endDate,
-                    percent:'2'
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                    attendanceName: this.form.attendanceName,
+                    endTime: endDate,
+                    percent: '2'
                 },
-            }).then(resp =>{
-                if (resp.data.result === 0){
-                    if (resp.data.msg === 2){
-                        this.$message({
-                            type: 'error',
-                            message: '考勤命名重复，发布失败！'
-                        });
-                    }
-                } else if (resp.data.result === 1){
+            }).then(resp => {
+                if (resp.data.result === 0) {
+                    this.$message({
+                        type: 'error',
+                        message: '考勤命名重复，发布失败！'
+                    });
+                } else if (resp.data.result === 1) {
                     this.$message({
                         type: 'success',
                         message: '发布成功！'
                     });
                 }
             })
+        },
+        checkAttendance(row) {
+            console.log(row)
+            // axios({
+            //     url: '/SoftwareEngineering/instructorServlet?action=ViewAttendance',
+            //     method: "Post",
+            //     data: {
+            //         AttendanceName: row.attendanceName,
+            //         courseID: this.$props.courseId,
+            //         classID: this.$props.classId,
+            //     }
+            // }).then(resp =>{
+            //     this.submitStudentList = resp.data.submitted
+            //     this.unStudentList = resp.data.unSubmitted
+            // })
+            this.attendanceDialogTableVisible = true;
         }
     },
     template: `
      <div style="padding-top: 30px">
+     <el-dialog title="考勤提交情况" :visible.sync="attendanceDialogTableVisible" :fullscreen="true">
+                      <el-divider content-position="left"><h3>提交率</h3></el-divider>
+                      <el-progress style="margin: 50px 0 60px 0" :text-inside="true" :stroke-width="24" :percentage="percentage"></el-progress>
+                   
+                      <el-tabs value="first">
+                            <el-tab-pane label="已提交名单" name="first">
+                                <el-divider content-position="left"><h3>已提交学生人数：{{attendanceStudentList.length}}</h3></el-divider>
+                                      
+                                      <el-table :data="attendanceStudentList" row-class-name="success-row" max-height="600">
+                                             <el-table-column property="studentNumber" label="学号"></el-table-column>
+                                             <el-table-column property="studentName" label="姓名"></el-table-column>
+                                      </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="未提交名单" name="second">
+                                <el-divider content-position="left"><h3>未提交学生人数：{{unStudentList.length}}</h3></el-divider>
+                                <el-table :data="unStudentList" row-class-name="warning-row" max-height="600">
+                                    <el-table-column property="studentNumber" label="学号" ></el-table-column>
+                                    <el-table-column property="studentName" label="姓名" ></el-table-column>
+                                </el-table> 
+                            </el-tab-pane>
+                      </el-tabs>                 
+               </el-dialog>
         <el-dialog
                               width="30%"
                               title="考勤发布"
@@ -76,6 +121,7 @@ var Attendance = Vue.extend({
             <el-col :span="22" :offset="1">
                 <template>
                     <el-table
+                            height="500"
                             :data="attendanceList"
                             :row-class-name="tableRowClassName"
                             style="width: 100%">
@@ -104,7 +150,7 @@ var Attendance = Vue.extend({
                                 label="操作"
                                 >
                             <template slot-scope="scope">
-                                <el-button type="text" @click="releaseExperiment(scope.row)">查看考勤情况</el-button>
+                                <el-button type="text" @click="checkAttendance(scope.row)">查看考勤情况</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

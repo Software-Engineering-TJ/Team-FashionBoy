@@ -9,9 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f10a5fd4-7fbc-4b57-8e59-1c5e89b29030" name="变更" comment="新版">
+    <list default="true" id="9c32b776-a62b-4d9b-9337-b5ddb189a93e" name="更改" comment="最新版本">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/openCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/openCourse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,8 +104,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Tomcat 9.0.55" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.55" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/SoftwareEngineering/pages/login.html" />
+    <configuration name="Tomcat 9.0.55" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.55" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8098/SoftwareEngineering/pages/login.html" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <deployment>
         <artifact name="SoftwareEngineering:war exploded">
@@ -103,7 +115,8 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="0723062c-4cbd-450c-b023-16602b8c3e48" />
+        <option name="BASE_DIRECTORY_NAME" value="60c979a0-9845-485c-80ca-20348f65a87b" />
+        <option name="HTTP_PORT" value="8098" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -111,7 +124,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="63440" />
+        <option name="DEBUG_PORT" value="64521" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -482,11 +495,6 @@
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
           <line>269</line>
           <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/BaseServlet.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>

@@ -51,6 +51,10 @@ var vm = new Vue({
             passwordFormVisible: false,
             // 验证码弹窗是否可见
             verifyFromVisible: false,
+            // 添加班级的课程
+            addClassCourse:'',
+            // 增加班级的弹窗是否可见
+            addClassDialogFormVisible: false,
             verificationCode: '',
             password: {
                 // 新密码
@@ -62,6 +66,14 @@ var vm = new Vue({
             annoForm: {
                 title: '',
                 content: '',
+            },
+            // 添加班级表单
+            addClassForm: {
+                courseID: '',
+                instructorNumber: '',
+                day: '',
+                time: '',
+                number:''
             },
             // 实验表单
             experimentForm: {
@@ -75,7 +87,6 @@ var vm = new Vue({
             // 课程表单
             courseForm: {
                 title: '',
-                courseID: '',
                 startDate: '',
                 endDate: '',
                 experimentForm: [
@@ -86,7 +97,6 @@ var vm = new Vue({
                         weight: 0
                     }
                 ],
-                experimentWeight: 0,
                 attendanceWeight: 0,
                 practiceWeight: 0
             },
@@ -349,7 +359,7 @@ var vm = new Vue({
                             expName: this.experimentForm.title,
                             courseID: this.courseID,
                             classID: this.classID,
-                            endDate:this.experimentForm.date1.getFullYear()+"-"+this.experimentForm.date1.getMonth()+"-"+this.experimentForm.date1.getDate(),
+                            endDate: this.experimentForm.date1.getFullYear() + "-" + this.experimentForm.date1.getMonth() + "-" + this.experimentForm.date1.getDate(),
                             expInfo: this.experimentForm.desc
                         },
                     }).then(resp => {
@@ -453,6 +463,7 @@ var vm = new Vue({
                     courseID: courseID,
                 }
             }).then(resp => {
+                this.addClassCourse = courseID
                 this.sectionInfoList = resp.data
             })
             this.sectionDialogFormVisible = true
@@ -477,8 +488,8 @@ var vm = new Vue({
                 data: {
                     courseID: this.courseID,
                     classID: this.classID,
-                    instructorNumber:this.user.instructorNumber,
-                    date:date,
+                    instructorNumber: this.user.instructorNumber,
+                    date: date,
                 },
             }).then(resp => {
                 if (resp.data.result === 1) {
@@ -497,15 +508,15 @@ var vm = new Vue({
                 }
             })
         },
-        withdrawReportDesc(expName,reportName) {
+        withdrawReportDesc(expName, reportName) {
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=withdrawReportDesc',
                 method: "Post",
                 data: {
                     courseID: this.courseID,
                     classID: this.classID,
-                    expName:expName,
-                    reportName:reportName
+                    expName: expName,
+                    reportName: reportName
                 },
             }).then(resp => {
                 if (resp.data.result === 1) {
@@ -610,6 +621,35 @@ var vm = new Vue({
                 } else {
                     this.$message({
                         message: '新旧密码相同，重置失败！',
+                        type: 'error'
+                    });
+                }
+            });
+        },
+        deleteClass(row) {
+
+        },
+        addClass() {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=addSection',
+                method: "Post",
+                data: {
+                    courseID:this.addClassCourse,
+                    instructorNumber:this.addClassForm.instructorNumber,
+                    day:Number.parseInt(this.addClassForm.day),
+                    time:Number.parseInt(this.addClassForm.time),
+                    number:this.addClassCourse.number
+                },
+            }).then(resp => {
+                if (resp.data.result === '添加课程成功') {
+                    this.$message({
+                        message: '添加课程成功！',
+                        type: 'success'
+                    });
+                    this.passwordFormVisible = false;
+                } else {
+                    this.$message({
+                        message: '添加课程失败',
                         type: 'error'
                     });
                 }

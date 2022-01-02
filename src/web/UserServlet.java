@@ -486,7 +486,7 @@ public class UserServlet extends BaseServlet {
         String classID = reqObject.get("classID");
 
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = dateFormat.format(date);//获取当前时间
 
         List<Attend> attendList = userService.getAttendanceInfo(courseID, classID);
@@ -497,6 +497,7 @@ public class UserServlet extends BaseServlet {
             attendance.setAttendanceName(attend.getTitle());
             attendance.setStartTime(attend.getStartTime());
             attendance.setEndTime(attend.getEndTime());
+            System.out.println(currentTime);
             if (currentTime.compareTo(attend.getStartTime()) >= 0 && currentTime.compareTo(attend.getEndTime()) <= 0) {
                 attendance.setStatus("正在进行");
             }

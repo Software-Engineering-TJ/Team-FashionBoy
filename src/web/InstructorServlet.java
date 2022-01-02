@@ -417,6 +417,7 @@ public class InstructorServlet extends BaseServlet{
                 map.put("studentNumber",studentNumber);
                 map.put("studentName",student.getName());
                 map.put("score",expScore.getScore());
+                map.put("fileUrl",expScore.getFileUrl());
                 submitted.add(map);
             }
             for(String studentNumber : studentList){
@@ -473,8 +474,7 @@ public class InstructorServlet extends BaseServlet{
 
         Map<String,Object> map = new HashMap<>();
         //签到信息插入到数据库
-        if(instructorService.addAttend(courseID,classID,attendanceName,
-                startTime,endTime)==1){
+        if(instructorService.addAttend(courseID,classID,attendanceName,startTime,endTime)==1){
             map.put("result",1);
             map.put("msg","考勤发布成功");
         }else{

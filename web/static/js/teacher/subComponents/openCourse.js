@@ -24,9 +24,6 @@ var OpenCourse = Vue.extend({
                 <el-form-item label="课程名称" :label-width="formLabelWidth">
                     <el-input style="width: 50%" v-model="courseForm.title" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="课程编号" :label-width="formLabelWidth">
-                    <el-input style="width: 30%" v-model="courseForm.courseID" autocomplete="off"></el-input>
-                </el-form-item>
                 <el-form-item label="课程时间" :label-width="formLabelWidth">
                     <el-col :span="5">
                       <el-date-picker type="date" placeholder="选择开课日期" v-model="courseForm.startDate" style="width: 100%;"></el-date-picker>
@@ -84,14 +81,6 @@ var OpenCourse = Vue.extend({
                 </el-row>
 
                 <div style="width: 90%;"><el-divider content-position="left"><h3>成绩占比</h3></el-divider></div>
-                <el-form-item label="实验项目" :label-width="formLabelWidth">
-                    <el-slider
-                            style="width: 50%"
-                            v-model="courseForm.experimentWeight"
-                            :step="5"
-                            >
-                    </el-slider>
-                </el-form-item>
                 <el-form-item label="考勤" :label-width="formLabelWidth">
                     <el-slider
                             style="width: 50%"
