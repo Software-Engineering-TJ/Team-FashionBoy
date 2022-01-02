@@ -33,6 +33,8 @@ public class InstructorServiceImpl implements InstructorService {
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
     private ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
+    private AttendScoreDao attendScoredao = new AttendScoreDaoImpl();
+    private StudentDao studentDao = new StudentDaoImpl();
 
     @Override
     public Section getSection(String courseID, String classID) {
@@ -255,5 +257,15 @@ public class InstructorServiceImpl implements InstructorService {
         }
         return choiceQuestionList;
 
+    }
+
+    @Override
+    public List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title) {
+        return attendScoredao.getAttendScoreByCourseIDAndClassIDAndTitle(courseID, classID, title);
+    }
+
+    @Override
+    public Student getStudentByStudentNumber(String studentNumber) {
+        return studentDao.QueryStudentByStudentNumber(studentNumber);
     }
 }

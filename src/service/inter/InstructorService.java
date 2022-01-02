@@ -52,4 +52,6 @@ public interface InstructorService {
     int addSection(String courseID, String instructorNumber, int day, int time, int number);
     int deleteSection(String courseID, String classID);
     List<ChoiceQuestion> getRandomQuestionList(int size);
+    List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
+    Student getStudentByStudentNumber(String studentNumber);
 }
