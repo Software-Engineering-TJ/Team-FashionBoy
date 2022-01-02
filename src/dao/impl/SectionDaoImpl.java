@@ -26,9 +26,9 @@ public class SectionDaoImpl extends BaseDao implements SectionDao {
         return queryForList(Section.class,sql,courseID);
     }
     @Override
-    public int insertSection(String courseID, int day, int time) {
-        String sql = "insert into section(`courseID`,`day`,`time`) values (?,?,?)";
-        return update(sql, courseID, day, time);
+    public int insertSection (String courseID,String classID, int day, int time, int number) {
+        String sql = "insert into section(`courseID`,`classID`,`day`,`time`,`number`) values (?,?,?,?,?)";
+        return update(sql, courseID,classID, day, time,number);
     }
 
     @Override

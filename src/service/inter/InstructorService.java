@@ -47,7 +47,7 @@ public interface InstructorService {
     //删除某个参考资料
     int deleteReference(String fileUrl);
 
-    int addSection(String courseID, int day, int time);
+    int addSection(String courseID,String instructorNumber, int day, int time, int number);
     //添加新课程到course表，返回courseID
     String createCourse(String title,String instructorNumber, String startDate,String endDate);
     //添加新课程的实验大纲（实验，考勤，对抗练习）

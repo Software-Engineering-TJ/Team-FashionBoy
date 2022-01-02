@@ -452,9 +452,16 @@ public class InstructorServlet extends BaseServlet{
         }.getType());
 
         String courseID = reqObject.get("courseID");
+        String instructorNumber = reqObject.get("instructorNumber");
         int day = Integer.parseInt(reqObject.get("day"));
         int time = Integer.parseInt(reqObject.get("time"));
-        int ret = instructorService.addSection(courseID, day, time);
+        int number = Integer.parseInt(reqObject.get("number"));
+        if(administrationService.SearchInstructorByInstructorNumber(instructorNumber)==null){
+            resp.getWriter().write("添加课程失败");
+            return;
+        }
+
+        int ret = instructorService.addSection(courseID,instructorNumber, day, time,number);
 
         resp.getWriter().write(ret != -1 ? "添加课程成功" : "添加课程失败");
     }
@@ -517,7 +524,14 @@ public class InstructorServlet extends BaseServlet{
         float score = Float.parseFloat(reqObject.get("score"));
         String comment  = reqObject.get("comment");
 
-        instructorService.registerGrade(courseID,classID,studentNumber,expname,score,comment);
+        int result = 0;
+        if(instructorService.registerGrade(courseID,classID,studentNumber,expname,score,comment)==1){
+            result = 1;
+        }
 
+        Map<String,Integer> map = new HashMap<>();
+        map.put("result",result);
+
+        resp.getWriter().write(gson.toJson(map));
     }
 }

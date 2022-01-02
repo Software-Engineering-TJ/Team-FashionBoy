@@ -232,8 +232,16 @@ public class InstructorServiceImpl implements InstructorService {
         return referenceDao.DeleteReferenceByFileUrl(fileUrl);
     }
     @Override
-    public int addSection(String courseID, int day, int time) {
-        return sectionDao.insertSection(courseID, day, time);
+    public int addSection(String courseID,String instructorNumber, int day, int time, int number) {
+        Counter counter = counterDao.QueryCounterById(1);
+        //上一个classID
+        int classID = counter.getClassID();
+        //本课程的classID
+        String newClassID = classID + 1 + "";
+        if(sectionDao.insertSection(courseID,newClassID,day, time,number)==0){
+            return 0;
+        }
+        return teachesDao.insertTeaches(instructorNumber,courseID,newClassID);
     }
 
     @Override

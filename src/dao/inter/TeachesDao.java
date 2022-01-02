@@ -9,4 +9,6 @@ public interface TeachesDao {
     List<Teaches> QueryTeachesByCourseIDAndClassID(String courseID, String classID);
     //根据instructorNumber查找
     List<Teaches> QueryTeachesByInstructorNumber(String instructorNumber);
+    //添加教授的课程
+    int insertTeaches(String instructorNumber,String curseID,String classID);
 }

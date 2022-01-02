@@ -24,4 +24,10 @@ public class TeachesDaoImpl extends BaseDao implements TeachesDao{
         String sql = "select `instructorNumber`,`courseID`,`classID` from teaches where instructorNumber = ?";
         return queryForList(Teaches.class,sql,instructorNumber);
     }
+
+    @Override
+    public int insertTeaches(String instructorNumber, String curseID, String classID) {
+        String sql = "insert into teaches(instructorNumber,courseID,classID) value(?,?,?)";
+        return update(sql,instructorNumber,curseID,classID);
+    }
 }
