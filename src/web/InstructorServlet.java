@@ -1,8 +1,10 @@
 package web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
-import com.mysql.cj.util.DnsSrv;
+//import com.mysql.cj.util.DnsSrv;
 import pojo.Attend;
+import pojo.ChoiceQuestion;
 import pojo.ExpScore;
 import pojo.Student;
 import service.Impl.AdministrationServiceImpl;
@@ -10,13 +12,13 @@ import service.Impl.InstructorServiceImpl;
 import service.inter.AdministrationService;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.alibaba.fastjson.annotation.JSONType;
 
 /**
  * InstructorServlet类的描述：
@@ -30,6 +32,20 @@ public class InstructorServlet extends BaseServlet{
     InstructorService instructorService = new InstructorServiceImpl();
 
     AdministrationService administrationService = new AdministrationServiceImpl();
+
+    //教师发布对抗练习，将题目列表交给PracticeServer
+    protected void passQuestionListToPracticeServer(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        int size = Integer.parseInt(reqObject.get("size"));
+        List<ChoiceQuestion> choiceQuestionList = instructorService.getRandomQuestionList(size);
+
+        String json = JSONObject.toJSONString(choiceQuestionList);
+        resp.getWriter().write(json);
+    }
 
     /**
      * 教师获取教授的所有课程 √
@@ -438,7 +454,27 @@ public class InstructorServlet extends BaseServlet{
     }
 
     /**
-     * 教师添加班级
+     * 责任教师开设课程，涉及course
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void addCourse(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String instructorNumber = reqObject.get("instructorNumber");//责任教师工号
+
+        int ret = 0;
+        resp.getWriter().write(ret != -1 ? "开设课程成功" : "开设课程失败");
+    }
+
+    /**
+     * 任课教师添加班级，涉及teaches和section两张表
      * @param req
      * @param resp
      * @throws ServletException
@@ -451,11 +487,16 @@ public class InstructorServlet extends BaseServlet{
         }.getType());
 
         String courseID = reqObject.get("courseID");
+        String instructorNumber = reqObject.get("instructorNumber");
         int day = Integer.parseInt(reqObject.get("day"));
         int time = Integer.parseInt(reqObject.get("time"));
-        int ret = instructorService.addSection(courseID, day, time);
+        int number = Integer.parseInt(reqObject.get("number"));
 
-        resp.getWriter().write(ret != -1 ? "添加课程成功" : "添加课程失败");
+        //1.teaches表
+
+
+//        int ret = instructorService.addSection(courseID, day, time);
+//        resp.getWriter().write(ret != -1 ? "添加课程成功" : "添加课程失败");
     }
 
     /**

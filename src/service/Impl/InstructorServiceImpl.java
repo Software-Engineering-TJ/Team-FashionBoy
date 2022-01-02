@@ -5,6 +5,7 @@ import dao.impl.*;
 import dao.inter.*;
 import pojo.*;
 import service.inter.InstructorService;
+import utils.RandomHandler;
 import utils.RequestJsonUtils;
 
 import javax.naming.directory.Attributes;
@@ -31,6 +32,12 @@ public class InstructorServiceImpl implements InstructorService {
     private TakesDao takesDao = new TakesDaoImpl();
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
+    private ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
+
+    @Override
+    public Section getSection(String courseID, String classID) {
+        return sectionDao.QuerySectionByCourseIDAndClassID(courseID, classID);
+    }
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -228,12 +235,25 @@ public class InstructorServiceImpl implements InstructorService {
         return referenceDao.DeleteReferenceByFileUrl(fileUrl);
     }
     @Override
-    public int addSection(String courseID, int day, int time) {
-        return sectionDao.insertSection(courseID, day, time);
+    public int addSection(String courseID, String instructorNumber, int day, int time, int number) {
+        return sectionDao.insertSection(courseID, day, time, number);
     }
 
     @Override
     public int deleteSection(String courseID, String classID) {
         return sectionDao.deleteSection(courseID, classID);
+    }
+
+    @Override
+    public List<ChoiceQuestion> getRandomQuestionList(int size) {
+        //随机数的上限
+        int count = choiceQuestionDao.getCount();
+        List<ChoiceQuestion> choiceQuestionList = new ArrayList<ChoiceQuestion>();
+        HashSet<Integer> set = RandomHandler.createNonRepeatingRandom(size, 1, count);
+        for (Integer questionId : set) {
+            choiceQuestionList.add(choiceQuestionDao.getQuestionByQuestionId(questionId));
+        }
+        return choiceQuestionList;
+
     }
 }

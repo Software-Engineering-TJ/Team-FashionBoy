@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface InstructorService {
+    //获取这一门课程
+    Section getSection(String courseID, String classID);
     //获取教师教授的课程
     List<Map<String,String>> GetSections(String instructorNumber);
     //查看责任教师发布的实验大纲（也就是所有的实验）
@@ -47,6 +49,7 @@ public interface InstructorService {
     //删除某个参考资料
     int deleteReference(String fileUrl);
 
-    int addSection(String courseID, int day, int time);
+    int addSection(String courseID, String instructorNumber, int day, int time, int number);
     int deleteSection(String courseID, String classID);
+    List<ChoiceQuestion> getRandomQuestionList(int size);
 }

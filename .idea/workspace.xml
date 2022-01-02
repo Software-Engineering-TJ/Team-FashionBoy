@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="修正：viewSubmission、取消签到的占比">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -23,21 +24,14 @@
       <change afterPath="$PROJECT_DIR$/web/static/util/fullcalendar/main.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/web/static/util/fullcalendar/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+=======
+    <list default="true" id="b1be1780-683a-4a10-afb1-621f1ce2ce95" name="更改" comment="完善班级实验成绩查看的信息">
+>>>>>>> e3666243cb0ba244b3a785dc7621796bdf3f0552
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ExpScoreDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/SectionDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/AttendDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/AttendDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/ExpScoreDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/SectionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/SectionDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/OSSUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/OSSUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/FileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/FileServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/administrator/aIndex.html" afterDir="false" />
@@ -61,6 +55,8 @@
       <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/fileDownLoad.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
 >>>>>>> 294cd7f9ef50ba81717cc3a7a6d85b9d94b67d3c
+=======
+>>>>>>> e3666243cb0ba244b3a785dc7621796bdf3f0552
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,10 +67,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -118,7 +114,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/static/js/student/subComponents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -132,40 +128,22 @@
 >>>>>>> 294cd7f9ef50ba81717cc3a7a6d85b9d94b67d3c
     <property name="project.structure.proportion" value="0.16210938" />
     <property name="project.structure.side.proportion" value="0.27537924" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\projectAll\Team-FashionBoy\web\static\js\student\subComponents" />
-      <recent name="D:\projectAll\Team-FashionBoy\src\pojo\logicEntity" />
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
-      <recent name="D:\projectAll\Team-FashionBoy\src\service\Impl" />
-      <recent name="D:\projectAll\Team-FashionBoy\src" />
+      <recent name="D:\projectAll\Team-FashionBoy\web\static\js\teacher\subComponents" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projectAll\Team-FashionBoy\web\static\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat 服务器.Tomcat 9.0.53">
-    <configuration name="OSSUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="utils.OSSUtils" />
-      <module name="SoftwareEngineering" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Tomcat 9.0.53" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.53" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="corretto-11" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8098/SoftwareEngineering/pages/login.html" />
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.55" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.55" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/SoftwareEngineering/pages/login.html" />
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
-      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
         <artifact name="SoftwareEngineering:war exploded">
           <settings>
@@ -174,8 +152,7 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="2ef0876b-6d31-4fc8-92d9-e2809cf1b039" />
-        <option name="HTTP_PORT" value="8098" />
+        <option name="BASE_DIRECTORY_NAME" value="0723062c-4cbd-450c-b023-16602b8c3e48" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -183,7 +160,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="53723" />
+        <option name="DEBUG_PORT" value="63440" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -252,15 +229,6 @@
         </option>
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Tomcat 服务器.Tomcat 9.0.53" />
-      <item itemvalue="应用程序.OSSUtils" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="应用程序.OSSUtils" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -318,6 +286,7 @@
       <workItem from="1639635062225" duration="1188000" />
       <workItem from="1639743839688" duration="8497000" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <workItem from="1639807133889" duration="31000000" />
       <workItem from="1639897042463" duration="6641000" />
       <workItem from="1639958768977" duration="2001000" />
@@ -348,6 +317,17 @@
       <workItem from="1640846153098" duration="12592000" />
       <workItem from="1641035357727" duration="2328000" />
 >>>>>>> 294cd7f9ef50ba81717cc3a7a6d85b9d94b67d3c
+=======
+      <workItem from="1639807133889" duration="31000000" />
+      <workItem from="1639897042463" duration="6641000" />
+      <workItem from="1639958768977" duration="2093000" />
+      <workItem from="1640160255056" duration="2495000" />
+      <workItem from="1640170601479" duration="2415000" />
+      <workItem from="1640246967778" duration="129000" />
+      <workItem from="1640396818186" duration="2023000" />
+      <workItem from="1640863953895" duration="3610000" />
+      <workItem from="1641035656007" duration="10473000" />
+>>>>>>> e3666243cb0ba244b3a785dc7621796bdf3f0552
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -426,7 +406,70 @@
       <option name="project" value="LOCAL" />
       <updated>1639842460738</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="学生签到实现">
+      <created>1639844690640</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1639844690640</updated>
+    </task>
+    <task id="LOCAL-00013" summary="完善：教师查看实验发布情况（增加发布时间）">
+      <created>1639902715806</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1639902715806</updated>
+    </task>
+    <task id="LOCAL-00014" summary="修正：viewSubmission、取消签到的占比">
+      <created>1639959852481</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1639959852481</updated>
+    </task>
+    <task id="LOCAL-00015" summary="删除文件功能实现">
+      <created>1639960844167</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1639960844167</updated>
+    </task>
+    <task id="LOCAL-00016" summary="删除文件功能实现">
+      <created>1639960862631</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1639960862631</updated>
+    </task>
+    <task id="LOCAL-00017" summary="修复教师发布签到的bug">
+      <created>1641041842523</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1641041842523</updated>
+    </task>
+    <task id="LOCAL-00018" summary="数据库添加Counter">
+      <created>1641044115179</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1641044115179</updated>
+    </task>
+    <task id="LOCAL-00019" summary="责任教师开设课程">
+      <created>1641047399099</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1641047399099</updated>
+    </task>
+    <task id="LOCAL-00020" summary="完善班级实验成绩查看的信息">
+      <created>1641048416684</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1641048416685</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -483,7 +526,15 @@
     <MESSAGE value="添加参考资料记录表reference" />
     <MESSAGE value="老师获取学生提交的实验报告（更新）；&#10;老师和学生获取老师提交的参考资料（更新）" />
     <MESSAGE value="教师发布考勤实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="教师发布考勤实现" />
+    <MESSAGE value="学生签到实现" />
+    <MESSAGE value="完善：教师查看实验发布情况（增加发布时间）" />
+    <MESSAGE value="修正：viewSubmission、取消签到的占比" />
+    <MESSAGE value="删除文件功能实现" />
+    <MESSAGE value="修复教师发布签到的bug" />
+    <MESSAGE value="数据库添加Counter" />
+    <MESSAGE value="责任教师开设课程" />
+    <MESSAGE value="完善班级实验成绩查看的信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善班级实验成绩查看的信息" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -499,14 +550,9 @@
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/StudentServlet.java</url>
-          <line>137</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="75" />
+          <url>file://$PROJECT_DIR$/src/web/BaseServlet.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
@@ -535,50 +581,18 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
           <line>259</line>
-          <properties class="web.UserServlet" method="changeUserInfo">
+          <properties class="web.UserServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>158</line>
-          <properties class="web.InstructorServlet" method="releaseNotice">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java</url>
-          <line>131</line>
-          <properties class="service.Impl.InstructorServiceImpl" method="ModifyReportDesc">
+          <line>139</line>
+          <properties class="service.Impl.InstructorServiceImpl">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>193</line>
-          <properties class="web.InstructorServlet" method="withdrawNotice">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/FileServlet.java</url>
-          <line>60</line>
-          <properties class="web.FileServlet" method="uploadFile">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
-          <line>422</line>
-          <properties class="web.UserServlet" method="getReferenceMaterial">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -588,6 +602,10 @@
         <watch expression="((SQLException)e.next.cause).cause" custom="java.sql.SQLException" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Team_FashionBoy$Tomcat_9_0_53.ic" NAME="Tomcat 9.0.53 覆盖结果" MODIFIED="1636290007598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

@@ -1,12 +1,5 @@
 package pojo.logicEntity;
 
-/**
- * @author JiongJiongStrive
- * @version 1.0.0
- * @ClassName Attendance.java
- * @Description TODO
- * @createTime 2021年12月24日 05:34:00
- */
 public class Attendance {
     private String attendanceID;
     private String attendanceName;
