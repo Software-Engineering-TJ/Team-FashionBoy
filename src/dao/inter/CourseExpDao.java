@@ -1,6 +1,6 @@
 package dao.inter;
 
-import com.mysql.cj.util.DnsSrv;
+//import com.mysql.cj.util.DnsSrv;
 import pojo.CourseExp;
 
 import java.util.List;

@@ -33,20 +33,20 @@ public class ClassInfo {
         return instructors;
     }
 
-    public void setInstructors(List<Instructor> instructors) {
-        this.instructors = instructors;
-    }
-
     public List<Student> getAssistants() {
         return assistants;
     }
 
-    public void setAssistants(List<Student> assistants) {
-        this.assistants = assistants;
-    }
-
     public List<Student> getStudents() {
         return students;
+    }
+
+    public void setInstructors(List<Instructor> instructors) {
+        this.instructors = instructors;
+    }
+
+    public void setAssistants(List<Student> assistants) {
+        this.assistants = assistants;
     }
 
     public void setStudents(List<Student> students) {

@@ -1,22 +1,25 @@
 package web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
-import com.mysql.cj.util.DnsSrv;
+//import com.mysql.cj.util.DnsSrv;
 import pojo.Attend;
 import pojo.ExpScore;
 import pojo.Student;
+import pojo.*;
+import pojo.logicEntity.StudentAttendanceInfo;
 import service.Impl.AdministrationServiceImpl;
 import service.Impl.InstructorServiceImpl;
 import service.inter.AdministrationService;
 import service.inter.InstructorService;
 import utils.RequestJsonUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.alibaba.fastjson.annotation.JSONType;
 
 /**
  * InstructorServlet类的描述：
@@ -30,6 +33,49 @@ public class InstructorServlet extends BaseServlet{
     InstructorService instructorService = new InstructorServiceImpl();
 
     AdministrationService administrationService = new AdministrationServiceImpl();
+
+    protected void viewAttendance(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String title = reqObject.get("AttendanceName");
+
+        List<AttendScore> attendScoreList = instructorService.getAttendScoreByCourseIDAndClassIDAndTitle(courseID, classID, title);
+        StudentAttendanceInfo studentAttendanceInfo = new StudentAttendanceInfo();
+
+        for (AttendScore attendScore : attendScoreList) {
+            String studentNumber = attendScore.getStudentNumber();
+            int onTime = attendScore.getOnTime();// 0 or 1
+            String studentName = instructorService.getStudentByStudentNumber(studentNumber).getName();
+
+            if (onTime == 1) {
+                studentAttendanceInfo.addSubmitted(studentNumber, studentName);
+            }
+            else if (onTime == 0) {
+                studentAttendanceInfo.addUnSubmitted(studentNumber, studentName);
+            }
+        }
+
+        String json = JSONObject.toJSONString(studentAttendanceInfo);
+        resp.getWriter().write(json);
+    }
+
+    //教师发布对抗练习，将题目列表交给PracticeServer
+    protected void createQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        int size = Integer.parseInt(reqObject.get("size"));
+        List<ChoiceQuestion> choiceQuestionList = instructorService.getRandomQuestionList(size);
+
+        String json = JSONObject.toJSONString(choiceQuestionList);
+        resp.getWriter().write(json);
+    }
 
     /**
      * 教师获取教授的所有课程 √

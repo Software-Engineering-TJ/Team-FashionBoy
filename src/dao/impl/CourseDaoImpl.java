@@ -22,10 +22,4 @@ public class CourseDaoImpl extends BaseDao implements CourseDao {
         String sql = "update `course` set `instructorNumber` = ? where (`courseID` = ?)";
         return update(sql,instructorNumber,courseID);
     }
-
-    @Override
-    public int InsertCourse(String courseID, String title, String instructorNumber, String startDate, String endDate) {
-        String sql = "insert into course(courseID,title,instructorNumber,startDate,endDate) value(?,?,?,?,?)";
-        return update(sql,courseID,title,instructorNumber,startDate,endDate);
-    }
 }

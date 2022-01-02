@@ -7,7 +7,7 @@ import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.SimplifiedObjectMeta;
 import org.apache.commons.fileupload.FileItem;
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface InstructorService {
+    //获取这一门课程
+    Section getSection(String courseID, String classID);
     //获取教师教授的课程
     List<Map<String,String>> GetSections(String instructorNumber);
     //查看责任教师发布的实验大纲（也就是所有的实验）
@@ -54,4 +56,7 @@ public interface InstructorService {
     void addCourseExp(String courseID,  List<Map<String,Object>> courseExpInfoList,int attendanceWeight,int practiceWeight);
     //批改成绩录入
     int registerGrade(String courseID,String classID,String studentNumber,String expname,float score,String comment);
+    List<ChoiceQuestion> getRandomQuestionList(int size);
+    List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
+    Student getStudentByStudentNumber(String studentNumber);
 }

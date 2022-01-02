@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import pojo.*;
 
 import pojo.logicEntity.Attendance;
-import pojo.logicEntity.Attendanceq;
+//import pojo.logicEntity.Attendanceq;
 import pojo.logicEntity.ClassInfo;
 import service.Impl.AdministrationServiceImpl;
 import service.Impl.UserServiceImpl;

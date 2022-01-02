@@ -5,6 +5,7 @@ import dao.impl.*;
 import dao.inter.*;
 import pojo.*;
 import service.inter.InstructorService;
+import utils.RandomHandler;
 import utils.RequestJsonUtils;
 
 import javax.naming.directory.Attributes;
@@ -31,7 +32,14 @@ public class InstructorServiceImpl implements InstructorService {
     private TakesDao takesDao = new TakesDaoImpl();
     private ReferenceDao referenceDao = new ReferenceDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
-    private CounterDao counterDao = new CounterDaoImpl();
+    private ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
+    private AttendScoreDao attendScoredao = new AttendScoreDaoImpl();
+    private StudentDao studentDao = new StudentDaoImpl();
+
+    @Override
+    public Section getSection(String courseID, String classID) {
+        return sectionDao.QuerySectionByCourseIDAndClassID(courseID, classID);
+    }
 
     @Override
     public List<Map<String, String>> GetSections(String instructorNumber) {
@@ -276,4 +284,28 @@ public class InstructorServiceImpl implements InstructorService {
     public int registerGrade(String courseID, String classID, String studentNumber, String expname, float score, String comment) {
         return expScoreDao.UpdateExpScore(studentNumber,courseID,expname,classID,score,comment);
     }
+
+    @Override
+    public List<ChoiceQuestion> getRandomQuestionList(int size) {
+        //随机数的上限
+        int count = choiceQuestionDao.getCount();
+        List<ChoiceQuestion> choiceQuestionList = new ArrayList<ChoiceQuestion>();
+        HashSet<Integer> set = RandomHandler.createNonRepeatingRandom(size, 1, count);
+        for (Integer questionId : set) {
+            choiceQuestionList.add(choiceQuestionDao.getQuestionByQuestionId(questionId));
+        }
+        return choiceQuestionList;
+
+    }
+
+    @Override
+    public List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title) {
+        return attendScoredao.getAttendScoreByCourseIDAndClassIDAndTitle(courseID, classID, title);
+    }
+
+    @Override
+    public Student getStudentByStudentNumber(String studentNumber) {
+        return studentDao.QueryStudentByStudentNumber(studentNumber);
+    }
+
 }

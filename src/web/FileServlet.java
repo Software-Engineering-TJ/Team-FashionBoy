@@ -162,7 +162,7 @@ public class FileServlet extends BaseServlet {
         /*
         5.还要告诉客户端这是用来下载的.attachment表示一个附件，filename后面跟完整的文件名.URLEncoder.encode使得中文可以在IE和谷歌中存在
         火狐需要用base64编码
-        */
+         */
         resp.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
         //7.文件内容
         String filePath = fileUrl.replace("https://"+OSSUtils.bucketName+"."+OSSUtils.endpoint+"/","");
