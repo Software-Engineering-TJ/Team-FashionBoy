@@ -250,6 +250,8 @@ public class InstructorServiceImpl implements InstructorService {
         if(sectionDao.insertSection(courseID,newClassID,day, time,number)==0){
             return 0;
         }
+        //更新courseID计数
+        counterDao.UpdateCourseIDOfCounter(classID+1);
         return teachesDao.insertTeaches(instructorNumber,courseID,newClassID);
     }
 

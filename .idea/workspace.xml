@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f10a5fd4-7fbc-4b57-8e59-1c5e89b29030" name="变更" comment="">
+    <list default="true" id="f10a5fd4-7fbc-4b57-8e59-1c5e89b29030" name="变更" comment="新版">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/CourseDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -396,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641049059623</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="新版">
+      <created>1641126742597</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1641126742597</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +467,8 @@
     <MESSAGE value="责任教师开设课程" />
     <MESSAGE value="完善班级实验成绩查看的信息" />
     <MESSAGE value="批改实验报告" />
-    <option name="LAST_COMMIT_MESSAGE" value="批改实验报告" />
+    <MESSAGE value="新版" />
+    <option name="LAST_COMMIT_MESSAGE" value="新版" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
