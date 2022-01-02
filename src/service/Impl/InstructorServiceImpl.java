@@ -35,6 +35,7 @@ public class InstructorServiceImpl implements InstructorService {
     private ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
     private AttendScoreDao attendScoredao = new AttendScoreDaoImpl();
     private StudentDao studentDao = new StudentDaoImpl();
+    private CounterDao counterDao = new CounterDaoImpl();
 
     @Override
     public Section getSection(String courseID, String classID) {
