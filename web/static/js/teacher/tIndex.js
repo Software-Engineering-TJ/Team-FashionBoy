@@ -390,8 +390,8 @@ var vm = new Vue({
                 if (valid) {
                     let reportType = ""
                     let now = new Date()
-                    let startDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay() + ' ' + now.getHours() + ':' + now.getMinutes()
-                    let endDate = this.reportForm.endDate.getFullYear() + '-' + (this.reportForm.endDate.getMonth() + 1) + '-' + this.reportForm.endDate.getDay() + ' ' + this.reportForm.endDate.getHours() + ':' + this.reportForm.endDate.getMinutes()
+                    let startDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate()<10?('0'+now.getDate()):now.getDate() )+ ' ' +( now.getHours()<10?('0'+ now.getHours()): now.getHours()) + ':' +( now.getMinutes()<10?('0'+ now.getMinutes()):now.getMinutes())
+                    let endDate = this.reportForm.endDate.getFullYear() + '-' + (this.reportForm.endDate.getMonth() + 1) + '-' + (this.reportForm.endDate.getDate()<10?('0'+this.reportForm.endDate.getDate()):this.reportForm.endDate.getDate()) + ' ' +(this.reportForm.endDate.getHours()<10?('0'+this.reportForm.endDate.getHours()):this.reportForm.endDate.getHours())  + ':' +(this.reportForm.endDate.getMinutes()<10?('0'+this.reportForm.endDate.getMinutes()):this.reportForm.endDate.getMinutes())
                     for (let i = 0; i < this.reportForm.reportType.length; i++) {
                         reportType = reportType + this.reportForm.reportType[i]
                         if (i !== this.reportForm.reportType.length - 1) {

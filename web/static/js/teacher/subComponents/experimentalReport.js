@@ -76,7 +76,7 @@ var ExperimentalReport = Vue.extend({
                         message: '成绩录入成功！',
                         type: 'success'
                     });
-                    this.innerVisible = fasle;
+                    this.innerVisible = false;
                 });
             }
         },

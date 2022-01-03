@@ -4,6 +4,7 @@ var EpReportDetail = Vue.extend({
         return {
             fileList: [],
             beforeUpload:false,
+            grade:'',
         };
     },
     created(){
@@ -16,6 +17,34 @@ var EpReportDetail = Vue.extend({
         } else {
             this.beforeUpload = true;
         }
+    },
+    mounted(){
+        axios({
+            url: '/SoftwareEngineering/studentServlet?action=getGrade',
+            method: "Post",
+            data: {
+                courseID: this.$props.courseId,
+                classID:this.$props.courseId,
+                studentNumber:this.$props.studentNumber,
+                expName:this.reportInfo.expName
+            },
+        }).then(resp => {
+            this.grade = resp.data.grade
+        })
+    },
+    updated(){
+        axios({
+            url: '/SoftwareEngineering/studentServlet?action=getGrade',
+            method: "Post",
+            data: {
+                courseID: this.$props.courseId,
+                classID:this.$props.courseId,
+                studentNumber:this.$props.studentNumber,
+                expName:this.reportInfo.expName
+            },
+        }).then(resp => {
+            this.grade = resp.data.grade
+        })
     },
     methods: {
         goBackReport() {
@@ -80,7 +109,7 @@ var EpReportDetail = Vue.extend({
                 <div>
                     <div>
                         <h4 style="display: inline-block">得分</h4>
-                        ：<h3 style="display: inline-block">90</h3>
+                        ：<h4 style="display: inline-block">{{grade}}</h4>
                     </div>
                 </div>             
             </el-col>

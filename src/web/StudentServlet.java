@@ -82,7 +82,7 @@ public class StudentServlet extends BaseServlet {
     }
 
     /**
-     * 获取某个实验报告的成绩
+     * 获取某个实验报告的成绩 √
      * @param req
      * @param resp
      * @throws ServletException
@@ -188,7 +188,7 @@ public class StudentServlet extends BaseServlet {
     }
 
     /**
-     * 学生获取自己的实验成绩
+     * 学生获取自己的实验成绩 √
      * @param req
      * @param resp
      * @throws ServletException

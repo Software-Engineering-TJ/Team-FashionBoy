@@ -152,7 +152,6 @@ var vm = new Vue({
                 },
             }).then(resp => {
                 vm.courseList = JSON.parse(JSON.stringify(resp.data.sections));
-                console.log(vm.courseList)
             });
         },
         // 加载课程相关信息

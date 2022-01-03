@@ -9,20 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c32b776-a62b-4d9b-9337-b5ddb189a93e" name="更改" comment="最新版本">
+    <list default="true" id="9c32b776-a62b-4d9b-9337-b5ddb189a93e" name="更改" comment="学生成绩完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/AttendDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/InstructorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/InstructorServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/sIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/sIndex.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/openCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/openCourse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -414,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641126742597</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="学生成绩完成">
+      <created>1641133250094</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1641133250094</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,7 +482,8 @@
     <MESSAGE value="完善班级实验成绩查看的信息" />
     <MESSAGE value="批改实验报告" />
     <MESSAGE value="新版" />
-    <option name="LAST_COMMIT_MESSAGE" value="新版" />
+    <MESSAGE value="学生成绩完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="学生成绩完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

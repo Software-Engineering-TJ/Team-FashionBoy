@@ -61,6 +61,7 @@ var Course = Vue.extend({
         clickReport(index) {
             console.log(index)
             this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
+            console.log(this.reportInfo)
             this.changeComponents = 'EpReportDetail'
         },
         getReportDesc() {
@@ -145,7 +146,6 @@ var Course = Vue.extend({
                     courseID: this.$props.courseId,
                 },
             }).then(resp => {
-                console.log(resp.data)
                 let list = [];
                 for (let index in resp.data){
                     list.push({
@@ -154,7 +154,6 @@ var Course = Vue.extend({
                     })
                 }
                 this.gradeWeightList = list
-                this.changeComponents = "Grade"
             })
         },
         getExperimentGrades(){
@@ -167,13 +166,11 @@ var Course = Vue.extend({
                     studentNumber:this.$props.studentNumber
                 },
             }).then(resp => {
-                console.log(resp.data)
                 for(let index in resp.data){
                     this.experimentScores.push(resp.data[index].score)
                     this.experimentNames.push(resp.data[index].expname)
                 }
-                console.log(this.experimentScores)
-                console.log(this.experimentNames)
+                this.changeComponents = "Grade"
             })
         }
     },

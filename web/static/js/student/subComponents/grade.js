@@ -174,9 +174,6 @@ var Grade = Vue.extend({
         }
     },
     mounted() {
-        console.log(this.$props.gradeWeightList)
-        console.log(this.$props.experimentNames)
-        console.log(this.$props.experimentScores)
         this.scores=this.$props.experimentScores
         this.names=this.$props.experimentNames
         this.drawLine()
