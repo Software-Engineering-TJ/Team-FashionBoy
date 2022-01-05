@@ -515,5 +515,56 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(json);
     }
 
+    protected void getAttendanceInfoStu(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = dateFormat.format(date);//获取当前时间
+
+        List<AttendScore> attendScoreList = userService.getAttendScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
+        List<Attendance> attendanceList = new ArrayList<Attendance>();
+        for (AttendScore attendScore : attendScoreList) {
+            Attendance attendance = new Attendance();
+
+            attendance.setAttendanceID("没有");
+            String title = attendScore.getTitle();
+            attendance.setAttendanceName(title);
+
+            Attend attend = userService.getAttendByCourseIDAndClassIDAndTitle(courseID, classID, title);
+            attendance.setStartTime(attend.getStartTime());
+            attendance.setEndTime(attend.getEndTime());
+
+            int onTime = attendScore.getOnTime();
+            if (currentTime.compareTo(attend.getStartTime()) >= 0 && currentTime.compareTo(attend.getEndTime()) <= 0) {
+                if (onTime == 1) {
+                    attendance.setStatus("已签到");
+                }
+                else if (onTime == 0) {
+                    attendance.setStatus("未签到");
+                }
+            }
+            else if (currentTime.compareTo(attend.getStartTime()) < 0) {
+//                attendance.setStatus("未开始");
+            }
+            else {
+                if (onTime == 0) {
+                    attendance.setStatus("已过期");
+                }
+            }
+            attendanceList.add(attendance);
+        }
+
+        String json = JSONObject.toJSONString(attendanceList);
+        resp.getWriter().write(json);
+    }
+
 
 }

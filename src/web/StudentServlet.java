@@ -34,6 +34,39 @@ public class StudentServlet extends BaseServlet {
     StudentService studentService = new StudentServiceImpl();
     InstructorService instructorService = new InstructorServiceImpl();
 
+    protected void viewExperiment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        List<Experiment> experimentList = studentService.getExperimentByCourseIDAndClassID(courseID, classID);
+        List<ViewExperimentInfo> viewExperimentInfoList = new ArrayList<ViewExperimentInfo>();
+
+        for (Experiment experiment : experimentList) {
+            ViewExperimentInfo viewExperimentInfo = new ViewExperimentInfo();
+
+            String expname = experiment.getExpname();
+            viewExperimentInfo.setExpName(expname);
+            viewExperimentInfo.setStartDate(experiment.getStartDate());
+            viewExperimentInfo.setEndDate(experiment.getEndDate());
+            viewExperimentInfo.setExpInfo(experiment.getExpInfo());
+
+            CourseExp courseExp = studentService.getCourseExpByCourseIDAndExpname(courseID, expname);
+            viewExperimentInfo.setPriority(courseExp.getPriority());
+            viewExperimentInfo.setDifficulty(courseExp.getDifficulty());
+            viewExperimentInfo.setWeight(courseExp.getPercent());
+
+            viewExperimentInfoList.add(viewExperimentInfo);
+        }
+
+        String json = JSONObject.toJSONString(viewExperimentInfoList);
+        resp.getWriter().write(json);
+    }
+
     protected void getTakes(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
