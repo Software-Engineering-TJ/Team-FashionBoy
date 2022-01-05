@@ -22,4 +22,6 @@ public interface StudentService {
     int deleteCommit(String fileUrl);
     List<CourseExp> getCoursesByCourseID(String courseID);
     List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber);
+    List<Experiment> getExperimentByCourseIDAndClassID(String courseID, String classID);
+    CourseExp getCourseExpByCourseIDAndExpname(String courseID, String expname);
 }

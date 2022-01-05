@@ -34,4 +34,6 @@ public interface UserService {
     List<Reference> getReferencesOfSection(String courseID, String classID);
     ClassInfo getClassInfo(String courseID, String classID);
     List<Attend> getAttendanceInfo(String courseID, String classID);
+    List<AttendScore> getAttendScoreByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber);
+    Attend getAttendByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
 }

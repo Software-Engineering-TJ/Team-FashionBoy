@@ -84,5 +84,15 @@ public class StudentServiceImpl implements StudentService {
     public List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber) {
         return expScoreDao.QueryExpScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
     }
+    @Override
+    public List<Experiment> getExperimentByCourseIDAndClassID(String courseID, String classID) {
+        return experimentDao.QueryExperimentsByCourseIDAndClassID(courseID, classID);
+    }
+
+    @Override
+    public CourseExp getCourseExpByCourseIDAndExpname(String courseID, String expname) {
+        return courseExpDao.QueryCourseExpByCourseIDAndExpname(courseID, expname);
+    }
+
 
 }

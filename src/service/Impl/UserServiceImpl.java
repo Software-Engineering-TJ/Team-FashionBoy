@@ -208,4 +208,14 @@ public class UserServiceImpl implements UserService{
         return attendDao.QueryAttendsByCourseIDAndClassID(courseID, classID);
     }
 
+     @Override
+    public List<AttendScore> getAttendScoreByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber) {
+        return attendScoreDao.getAttendScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
+    }
+
+    @Override
+    public Attend getAttendByCourseIDAndClassIDAndTitle(String courseID, String classID, String title) {
+        return attendDao.QueryAttendByCourseIDAndClassIDAndTitle(courseID, classID, title);
+    }
+
 }
