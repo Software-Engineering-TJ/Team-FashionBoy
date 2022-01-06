@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService{
     private TakesDao takesDao = new TakesDaoImpl();
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
+    private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -204,7 +205,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Attend> getAttendanceInfo(String courseID, String classID) {
+    public List<Attend> getAttendInfo(String courseID, String classID) {
         return attendDao.QueryAttendsByCourseIDAndClassID(courseID, classID);
     }
 
@@ -216,6 +217,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public Attend getAttendByCourseIDAndClassIDAndTitle(String courseID, String classID, String title) {
         return attendDao.QueryAttendByCourseIDAndClassIDAndTitle(courseID, classID, title);
+    }
+
+    @Override
+    public Boolean judgeAttendScoreIfExist(String courseID, String classID, String title, String studentNumber) {
+        AttendScore attendScore = attendScoreDao.getAttendScoreByCourseIDAndClassIDAndTitleAndStudentNumber(courseID, classID, title, studentNumber);
+        return attendScore != null;
     }
 
 }

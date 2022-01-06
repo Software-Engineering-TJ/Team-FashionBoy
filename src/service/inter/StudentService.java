@@ -2,6 +2,7 @@ package service.inter;
 
 import pojo.CourseExp;
 import pojo.ExpScore;
+import pojo.Experiment;
 import pojo.Notice;
 
 import javax.naming.directory.Attributes;

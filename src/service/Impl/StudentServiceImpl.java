@@ -23,6 +23,7 @@ public class StudentServiceImpl implements StudentService {
     private TakesDao takesDao = new TakesDaoImpl();
     private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
+    private ExperimentDao experimentDao = new ExperimentDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {

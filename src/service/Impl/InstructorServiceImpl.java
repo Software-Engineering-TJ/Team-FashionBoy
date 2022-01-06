@@ -311,4 +311,9 @@ public class InstructorServiceImpl implements InstructorService {
         return studentDao.QueryStudentByStudentNumber(studentNumber);
     }
 
+    @Override
+    public List<Takes> getTakesNotInAttendScore(String courseID, String classID, String title) {
+        return takesDao.queryTakesNotInAttendScore(courseID, classID, title);
+    }
+
 }

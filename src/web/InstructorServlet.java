@@ -34,6 +34,7 @@ public class InstructorServlet extends BaseServlet{
 
     AdministrationService administrationService = new AdministrationServiceImpl();
 
+    //获取该考勤已经签到和未签到的学生，要做表的not in操作
     protected void viewAttendance(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -46,17 +47,20 @@ public class InstructorServlet extends BaseServlet{
         List<AttendScore> attendScoreList = instructorService.getAttendScoreByCourseIDAndClassIDAndTitle(courseID, classID, title);
         StudentAttendanceInfo studentAttendanceInfo = new StudentAttendanceInfo();
 
+        //能在attendScoreList里的都是已签到的，未签到的在整个班级里除去即可
+
         for (AttendScore attendScore : attendScoreList) {
             String studentNumber = attendScore.getStudentNumber();
-            int onTime = attendScore.getOnTime();// 0 or 1
             String studentName = instructorService.getStudentByStudentNumber(studentNumber).getName();
+            studentAttendanceInfo.addSubmitted(studentNumber, studentName);
+        }
 
-            if (onTime == 1) {
-                studentAttendanceInfo.addSubmitted(studentNumber, studentName);
-            }
-            else if (onTime == 0) {
-                studentAttendanceInfo.addUnSubmitted(studentNumber, studentName);
-            }
+        //未签到的
+        List<Takes> takesList = instructorService.getTakesNotInAttendScore(courseID, classID, title);
+        for (Takes takes : takesList) {
+            String studentNumber = takes.getStudentNumber();
+            String studentName = instructorService.getStudentByStudentNumber(studentNumber).getName();
+            studentAttendanceInfo.addUnSubmitted(studentNumber, studentName);
         }
 
         String json = JSONObject.toJSONString(studentAttendanceInfo);

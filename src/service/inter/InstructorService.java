@@ -59,4 +59,5 @@ public interface InstructorService {
     List<ChoiceQuestion> getRandomQuestionList(int size);
     List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
     Student getStudentByStudentNumber(String studentNumber);
+    List<Takes> getTakesNotInAttendScore(String courseID, String classID, String title);
 }

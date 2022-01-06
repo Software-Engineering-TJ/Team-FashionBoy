@@ -14,4 +14,5 @@ public interface TakesDao {
     List<Takes> QueryTakesByCourseIDAndClassID(String courseID,String classID);
     //根据courseID、classID、studentNumber查
     Takes QueryTakesByCourseIDAndClassIDAndStudentNumber(String courseID,String classID,String studentNumber);
+    List<Takes> queryTakesNotInAttendScore(String courseID, String classID, String title);
 }

@@ -23,4 +23,10 @@ public class AttendScoreDaoImpl extends BaseDao implements AttendScoreDao {
         String sql = "select * from attendscore where courseID = ? and classID = ? and studentNumber=?";
         return queryForList(AttendScore.class, sql, courseID, classID, studentNumber);
     }
+
+    @Override
+    public AttendScore getAttendScoreByCourseIDAndClassIDAndTitleAndStudentNumber(String courseID, String classID, String title, String studentNumber) {
+        String sql = "select * from attendscore where courseID = ? and classID = ? and title = ? and studentNumber= ?";
+        return queryForOne(AttendScore.class, sql, courseID, classID, title, studentNumber);
+    }
 }

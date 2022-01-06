@@ -489,7 +489,7 @@ public class UserServlet extends BaseServlet {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = dateFormat.format(date);//获取当前时间
 
-        List<Attend> attendList = userService.getAttendanceInfo(courseID, classID);
+        List<Attend> attendList = userService.getAttendInfo(courseID, classID);
         List<Attendance> attendanceList = new ArrayList<Attendance>();
         for (Attend attend : attendList) {
             Attendance attendance = new Attendance();
@@ -515,6 +515,7 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(json);
     }
 
+    //find in table 'attend'
     protected void getAttendanceInfoStu(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -529,25 +530,24 @@ public class UserServlet extends BaseServlet {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = dateFormat.format(date);//获取当前时间
 
-        List<AttendScore> attendScoreList = userService.getAttendScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
+        //获取所有签到
+        List<Attend> attendList = userService.getAttendInfo(courseID, classID);
         List<Attendance> attendanceList = new ArrayList<Attendance>();
-        for (AttendScore attendScore : attendScoreList) {
+        for (Attend attend : attendList) {
             Attendance attendance = new Attendance();
 
             attendance.setAttendanceID("没有");
-            String title = attendScore.getTitle();
+            String title = attend.getTitle();
             attendance.setAttendanceName(title);
-
-            Attend attend = userService.getAttendByCourseIDAndClassIDAndTitle(courseID, classID, title);
             attendance.setStartTime(attend.getStartTime());
             attendance.setEndTime(attend.getEndTime());
 
-            int onTime = attendScore.getOnTime();
+            boolean flag = userService.judgeAttendScoreIfExist(courseID, classID, title, studentNumber);
             if (currentTime.compareTo(attend.getStartTime()) >= 0 && currentTime.compareTo(attend.getEndTime()) <= 0) {
-                if (onTime == 1) {
+                if (flag) {
                     attendance.setStatus("已签到");
                 }
-                else if (onTime == 0) {
+                else {
                     attendance.setStatus("未签到");
                 }
             }
@@ -555,7 +555,7 @@ public class UserServlet extends BaseServlet {
 //                attendance.setStatus("未开始");
             }
             else {
-                if (onTime == 0) {
+                if (!flag) {
                     attendance.setStatus("已过期");
                 }
             }

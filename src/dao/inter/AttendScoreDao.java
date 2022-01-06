@@ -10,4 +10,6 @@ public interface AttendScoreDao {
     List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
 
     List<AttendScore> getAttendScoreByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber);
+
+    AttendScore getAttendScoreByCourseIDAndClassIDAndTitleAndStudentNumber(String courseID, String classID, String title, String studentNumber);
 }
