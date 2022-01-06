@@ -552,22 +552,18 @@ public class UserServlet extends BaseServlet {
             attendance.setEndTime(attend.getEndTime());
 
             boolean flag = userService.judgeAttendScoreIfExist(courseID, classID, title, studentNumber);
-            if (currentTime.compareTo(attend.getStartTime()) >= 0 && currentTime.compareTo(attend.getEndTime()) <= 0) {
-                if (flag) {
-                    attendance.setStatus("已签到");
-                }
-                else {
-                    attendance.setStatus("未签到");
-                }
-            }
-            else if (currentTime.compareTo(attend.getStartTime()) < 0) {
-//                attendance.setStatus("未开始");
+            if (flag) {
+                attendance.setStatus("已签到");
             }
             else {
-                if (!flag) {
+                if (currentTime.compareTo(attend.getEndTime()) <= 0) {
+                    attendance.setStatus("未签到");
+                }
+                else {
                     attendance.setStatus("已过期");
                 }
             }
+
             attendanceList.add(attendance);
         }
 

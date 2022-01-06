@@ -1,5 +1,5 @@
 var EpReportDetail = Vue.extend({
-    props:['reportInfo'],
+    props:['reportInfo','duty'],
     data() {
         return {
             fileList: [],
@@ -7,8 +7,6 @@ var EpReportDetail = Vue.extend({
     },
     methods: {
         withdrawReportDesc(){
-            console.log(this.$props.reportInfo)
-            console.log('withdrawReportDesc')
             this.$emit('withdraw-report-desc',this.$props.reportInfo.expName,this.$props.reportInfo.reportName)
         },
         goBackReport(){
@@ -93,8 +91,8 @@ var EpReportDetail = Vue.extend({
         
         <el-row :gutter="20">
                 <el-col :span="8" :offset="15">
-                    <el-button type="danger" plain @click="withdrawReportDesc">撤回此说明</el-button>
-                    <el-button type="warning" plain>修改报告信息</el-button>
+                    <el-button v-if="duty==='助教'?false:true" type="danger" plain @click="withdrawReportDesc">撤回此说明</el-button>
+                    <el-button v-if="duty==='助教'?false:true" type="warning" plain>修改报告信息</el-button>
                     <el-button type="info" plain @click="goBackReport">返回</el-button>
                 </el-col>
         </el-row>

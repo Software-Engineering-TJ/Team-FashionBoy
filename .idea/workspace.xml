@@ -11,13 +11,31 @@
   <component name="ChangeListManager">
     <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sEpReportDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sExperiment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sExperimentalReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pojo/logicEntity/StudentAttendanceInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/logicEntity/StudentAttendanceInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/InstructorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/InstructorService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/inter/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/student/sIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/student/sIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/css/student/sIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/student/sIndex.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/experimentalReport.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sAttendance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/attendance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/epReportDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experiment.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experiment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

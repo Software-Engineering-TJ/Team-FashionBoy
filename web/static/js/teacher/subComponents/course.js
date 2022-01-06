@@ -7,20 +7,7 @@ var Course = Vue.extend({
             reportInfo: {},
             fileList: [],
             reportList: [],
-            materialList: [
-                {
-                    name: 'food.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                },
-                {
-                    name: 'food.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                },
-                {
-                    name: 'food.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }
-            ],
+            materialList: [],
             //实验信息
             experimentList: [],
             //班级信息
@@ -296,6 +283,7 @@ var Course = Vue.extend({
                         @release-report-desc = "releaseReportDesc"
                         @withdraw-report-desc="withdrawReportDesc"
                         @withdraw-notice="withdrawNotice"
+                        @get-attendance-info="getAttendanceInfo"
                         ></component>
                     </keep-alive>
                 </div>

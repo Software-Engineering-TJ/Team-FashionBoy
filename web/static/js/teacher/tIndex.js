@@ -52,7 +52,7 @@ var vm = new Vue({
             // 验证码弹窗是否可见
             verifyFromVisible: false,
             // 添加班级的课程
-            addClassCourse:'',
+            addClassCourse: '',
             // 增加班级的弹窗是否可见
             addClassDialogFormVisible: false,
             verificationCode: '',
@@ -73,7 +73,7 @@ var vm = new Vue({
                 instructorNumber: '',
                 day: '',
                 time: '',
-                number:''
+                number: ''
             },
             // 实验表单
             experimentForm: {
@@ -359,7 +359,7 @@ var vm = new Vue({
                             expName: this.experimentForm.title,
                             courseID: this.courseID,
                             classID: this.classID,
-                            endDate: this.experimentForm.date1.getFullYear() + "-" + this.experimentForm.date1.getMonth() + "-" + this.experimentForm.date1.getDate(),
+                            endDate: this.experimentForm.date1.getFullYear() + "-" + ((this.experimentForm.date1.getMonth() + 1) < 10 ? '0' + (this.experimentForm.date1.getMonth() + 1) : (this.experimentForm.date1.getMonth() + 1)) + "-" + (this.experimentForm.date1.getDate() < 10 ? '0' + this.experimentForm.date1.getDate() : this.experimentForm.date1.getDate()),
                             expInfo: this.experimentForm.desc
                         },
                     }).then(resp => {
@@ -374,7 +374,7 @@ var vm = new Vue({
                         } else {
                             this.$message({
                                 showClose: true,
-                                message: '信息填写不正确，发布失败！',
+                                message: '本实验的实验学习任务尚未发布，不能先发布实验报告提交说明！',
                                 type: 'error'
                             })
                         }
@@ -390,8 +390,8 @@ var vm = new Vue({
                 if (valid) {
                     let reportType = ""
                     let now = new Date()
-                    let startDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate()<10?('0'+now.getDate()):now.getDate() )+ ' ' +( now.getHours()<10?('0'+ now.getHours()): now.getHours()) + ':' +( now.getMinutes()<10?('0'+ now.getMinutes()):now.getMinutes())
-                    let endDate = this.reportForm.endDate.getFullYear() + '-' + (this.reportForm.endDate.getMonth() + 1) + '-' + (this.reportForm.endDate.getDate()<10?('0'+this.reportForm.endDate.getDate()):this.reportForm.endDate.getDate()) + ' ' +(this.reportForm.endDate.getHours()<10?('0'+this.reportForm.endDate.getHours()):this.reportForm.endDate.getHours())  + ':' +(this.reportForm.endDate.getMinutes()<10?('0'+this.reportForm.endDate.getMinutes()):this.reportForm.endDate.getMinutes())
+                    let startDate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + (now.getDate() < 10 ? ('0' + now.getDate()) : now.getDate()) + ' ' + (now.getHours() < 10 ? ('0' + now.getHours()) : now.getHours()) + ':' + (now.getMinutes() < 10 ? ('0' + now.getMinutes()) : now.getMinutes())
+                    let endDate = this.reportForm.endDate.getFullYear() + '-' + (this.reportForm.endDate.getMonth() + 1) + '-' + (this.reportForm.endDate.getDate() < 10 ? ('0' + this.reportForm.endDate.getDate()) : this.reportForm.endDate.getDate()) + ' ' + (this.reportForm.endDate.getHours() < 10 ? ('0' + this.reportForm.endDate.getHours()) : this.reportForm.endDate.getHours()) + ':' + (this.reportForm.endDate.getMinutes() < 10 ? ('0' + this.reportForm.endDate.getMinutes()) : this.reportForm.endDate.getMinutes())
                     for (let i = 0; i < this.reportForm.reportType.length; i++) {
                         reportType = reportType + this.reportForm.reportType[i]
                         if (i !== this.reportForm.reportType.length - 1) {
@@ -546,8 +546,18 @@ var vm = new Vue({
             }).then(resp => {
                 let info = resp.data.sectionInformation
                 for (let i = 0; i < info.length; i++) {
-                    if (info[i].duty === "责任教师") {
-                        this.courseInfoList.push(info[i])
+                    if (info[i].duty === "责任教师" || info[i].duty === "教师and责任教师") {
+                        let judge = true
+                        for (let index in this.courseInfoList){
+                            if (this.courseInfoList[index].courseID === info[i].courseID){
+                                judge = false
+                                break
+                            }
+                        }
+                        if (judge === true){
+                            this.courseInfoList.push(info[i])
+                        }
+
                     }
                 }
                 console.log(this.courseInfoList)
@@ -634,11 +644,11 @@ var vm = new Vue({
                 url: '/SoftwareEngineering/instructorServlet?action=addSection',
                 method: "Post",
                 data: {
-                    courseID:this.addClassCourse,
-                    instructorNumber:this.addClassForm.instructorNumber,
-                    day:Number.parseInt(this.addClassForm.day),
-                    time:Number.parseInt(this.addClassForm.time),
-                    number:this.addClassCourse.number
+                    courseID: this.addClassCourse,
+                    instructorNumber: this.addClassForm.instructorNumber,
+                    day: Number.parseInt(this.addClassForm.day),
+                    time: Number.parseInt(this.addClassForm.time),
+                    number: this.addClassCourse.number
                 },
             }).then(resp => {
                 if (resp.data.result === '添加课程成功') {

@@ -1,5 +1,5 @@
 var Course = Vue.extend({
-    props: ['studentNumber', 'courseName', 'courseId', 'classId', 'noticeList'],
+    props: ['studentNumber', 'courseName', 'courseId', 'classId', 'noticeList', 'duty'],
     data() {
         return {
             changeComponents: 'notice',
@@ -7,10 +7,12 @@ var Course = Vue.extend({
             reportInfo: {},
             fileList: [],
             reportList: [],
-            classInfoList:[],
-            gradeWeightList:[],
-            experimentNames:[],
-            experimentScores:[],
+            classInfoList: [],
+            gradeWeightList: [],
+            experimentNames: [],
+            experimentScores: [],
+            attendanceList: [],
+            experimentList: []
         }
     },
     methods: {
@@ -23,24 +25,30 @@ var Course = Vue.extend({
         goBackReport() {
             this.changeComponents = 'ExperimentalReport'
         },
+        goBackReportS() {
+            this.changeComponents = 'sExperimentalReport'
+        },
         // 选择对应的导航栏项触发
         selectMenuItem(key, keyPath) {
             switch (key) {
                 case "1":
                     this.changeComponents = "Notice"
                     break;
+                case "2":
+                    this.viewExperiment()
+                    break;
                 case "3":
-                    this.getReferenceMaterial();
+                    this.getReferenceMaterial()
                     this.changeComponents = "FileDownLoad"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "4":
-                    this.getReportDesc();
-                    this.changeComponents = "ExperimentalReport"
+                    this.getReportDesc()
+                    this.changeComponents = "sExperimentalReport"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
                 case "6":
-                    this.changeComponents = "SAttendance"
+                    this.getAttendanceInfoStu()
                     break;
                 case "7":
                     this.getClassInfo()
@@ -50,6 +58,10 @@ var Course = Vue.extend({
                     this.getWeightOfGrade()
                     this.getExperimentGrades()
                     break;
+                case "9":
+                    this.getReportDesc()
+                    this.changeComponents = "ExperimentalReport"
+                    break;
                 default:
                     break;
             }
@@ -58,14 +70,15 @@ var Course = Vue.extend({
             this.noticeInfo = JSON.parse(JSON.stringify(this.noticeList[index]))
             this.changeComponents = 'NoticeDetail'
         },
-        clickReport(index) {
-            console.log(index)
+        clickReportS(index) {
             this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
-            console.log(this.reportInfo)
+            this.changeComponents = 'sEpReportDetail'
+        },
+        clickReport(index) {
+            this.reportInfo = JSON.parse(JSON.stringify(this.reportList[index]))
             this.changeComponents = 'EpReportDetail'
         },
         getReportDesc() {
-            console.log(this.$props.courseId, this.$props.classId)
             let course = this
             axios({
                 url: '/SoftwareEngineering/userServlet?action=getReportDesc',
@@ -103,7 +116,7 @@ var Course = Vue.extend({
                 this.fileList = resp.data;
             })
         },
-        getClassInfo(){
+        getClassInfo() {
             axios({
                 url: '/SoftwareEngineering/userServlet?action=getClassInfo',
                 method: "Post",
@@ -112,33 +125,33 @@ var Course = Vue.extend({
                     classID: this.$props.classId,
                 }
             }).then(resp => {
-                let infoList =[];
-                for(let instructor in resp.data.instructors){
+                let infoList = [];
+                for (let instructor in resp.data.instructors) {
                     infoList.push({
-                        userNumber:resp.data.instructors[instructor].instructorNumber,
-                        userName:resp.data.instructors[instructor].name,
-                        duty:'任课教师'
+                        userNumber: resp.data.instructors[instructor].instructorNumber,
+                        userName: resp.data.instructors[instructor].name,
+                        duty: '任课教师'
                     })
                 }
-                for(let assistant in resp.data.assistants){
+                for (let assistant in resp.data.assistants) {
 
                     infoList.push({
-                        userNumber:resp.data.assistants[assistant].studentNumber,
-                        userName:resp.data.assistants[assistant].name,
-                        duty:'助教'
+                        userNumber: resp.data.assistants[assistant].studentNumber,
+                        userName: resp.data.assistants[assistant].name,
+                        duty: '助教'
                     })
                 }
-                for(let student in resp.data.students){
+                for (let student in resp.data.students) {
                     infoList.push({
-                        userNumber:resp.data.students[student].studentNumber,
-                        userName:resp.data.students[student].name,
-                        duty:'学生'
+                        userNumber: resp.data.students[student].studentNumber,
+                        userName: resp.data.students[student].name,
+                        duty: '学生'
                     })
                 }
-                this.classInfoList=infoList
+                this.classInfoList = infoList
             })
         },
-        getWeightOfGrade(){
+        getWeightOfGrade() {
             axios({
                 url: '/SoftwareEngineering/studentServlet?action=getWeightOfGrade',
                 method: "Post",
@@ -147,32 +160,73 @@ var Course = Vue.extend({
                 },
             }).then(resp => {
                 let list = [];
-                for (let index in resp.data){
+                for (let index in resp.data) {
                     list.push({
-                        name:resp.data[index].expname,
-                        value:resp.data[index].percent
+                        name: resp.data[index].expname,
+                        value: resp.data[index].percent
                     })
                 }
                 this.gradeWeightList = list
             })
         },
-        getExperimentGrades(){
+        getExperimentGrades() {
             axios({
                 url: '/SoftwareEngineering/studentServlet?action=getExpGrades',
                 method: "Post",
                 data: {
                     courseID: this.$props.courseId,
-                    classID:this.$props.courseId,
-                    studentNumber:this.$props.studentNumber
+                    classID: this.$props.courseId,
+                    studentNumber: this.$props.studentNumber
                 },
             }).then(resp => {
-                for(let index in resp.data){
+                for (let index in resp.data) {
                     this.experimentScores.push(resp.data[index].score)
                     this.experimentNames.push(resp.data[index].expname)
                 }
-                this.changeComponents = "Grade"
+                axios({
+                    url: '/SoftwareEngineering/userServlet?action=getAttendanceInfoStu',
+                    method: "Post",
+                    data: {
+                        courseID: this.$props.courseId,
+                        classID: this.$props.courseId,
+                        studentNumber: this.$props.studentNumber
+                    },
+                }).then(resp => {
+                    console.log(resp.data)
+                    this.attendanceList = resp.data
+                    this.changeComponents = "Grade"
+                })
             })
-        }
+        },
+        getAttendanceInfoStu() {
+            axios({
+                url: '/SoftwareEngineering/userServlet?action=getAttendanceInfoStu',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.courseId,
+                    studentNumber: this.$props.studentNumber
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                this.attendanceList = resp.data
+                this.changeComponents = "SAttendance"
+            })
+        },
+        viewExperiment() {
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=viewExperiment',
+                method: "Post",
+                data: {
+                    courseID: this.$props.courseId,
+                    classID: this.$props.courseId,
+                },
+            }).then(resp => {
+                console.log(resp.data)
+                this.experimentList = resp.data
+                this.changeComponents = "SExperiment"
+            })
+        },
     },
     components: {
         // 公告板组件
@@ -182,15 +236,21 @@ var Course = Vue.extend({
         // 参考资料组件
         FileDownLoad,
         // 实验报告组件
-        ExperimentalReport,
+        SExperimentalReport,
         // 实验报告详情组件
-        EpReportDetail,
+        SEpReportDetail,
         // 我的成绩组件
         Grade,
         // 考勤组件
         SAttendance,
         // 班级信息组件
-        SClassInfo
+        SClassInfo,
+        // 实验组件
+        SExperiment,
+        // 助教批改页面
+        ExperimentalReport,
+        // 助教批改辅助页面
+        EpReportDetail,
     },
     template: `
     <el-row class="tac">
@@ -242,6 +302,9 @@ var Course = Vue.extend({
                         <el-menu-item index="8">
                             <span slot="title">我的成绩</span>
                         </el-menu-item>
+                        <el-menu-item index="9" v-if="duty==='助教'?true:false">
+                            <span slot="title">批改实验报告</span>
+                        </el-menu-item>
                     </el-menu>
                 </div>
             </el-col>
@@ -254,7 +317,8 @@ var Course = Vue.extend({
                         <component :is="changeComponents" 
                         @click-notice="clickNotice" 
                         @go-back-notice="goBackNotice" 
-                        @go-back-report="goBackReport" 
+                        @go-back-report="goBackReport"
+                        @go-back-report-s="goBackReportS" 
                         :noticeList="noticeList" 
                         :noticeInfo="noticeInfo" 
                         :file-list="fileList" 
@@ -264,11 +328,16 @@ var Course = Vue.extend({
                         :course-name="courseName"
                         :course-id="courseId"
                         :class-id="classId"
+                        :experiment-list="experimentList"
+                        :attendance-list="attendanceList"
                         :class-info-list="classInfoList"
                         :experiment-names="experimentNames"
                         :experiment-scores="experimentScores"
                         :grade-weight-list="gradeWeightList"
+                        :duty="duty"
                         @click-report="clickReport"
+                        @click-report-s="clickReportS"
+                        @get-attendance-info-stu="getAttendanceInfoStu"
                         ></component>
                     </keep-alive>
                 </div>

@@ -1,4 +1,4 @@
-var ExperimentalReport = Vue.extend({
+var SExperimentalReport = Vue.extend({
     props:['reportList'],
     data() {
         return {
@@ -7,7 +7,7 @@ var ExperimentalReport = Vue.extend({
     },
     methods: {
         clickReport(index){
-            this.$emit('click-report',index)
+            this.$emit('click-report-s',index)
         }
     },
     template: `

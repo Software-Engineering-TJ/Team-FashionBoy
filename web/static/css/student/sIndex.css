@@ -25,3 +25,6 @@
 .el-table .success-row {
     background: #f0f9eb;
 }
+.el-table .error-row {
+    background: rgb(254, 240, 240);
+}

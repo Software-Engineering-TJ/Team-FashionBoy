@@ -1,5 +1,5 @@
 var Grade = Vue.extend({
-    props: ['noticeList','gradeWeightList','experimentNames','experimentScores'],
+    props: ['noticeList','gradeWeightList','experimentNames','experimentScores','attendanceList'],
     data() {
         return {
             scores:[],
@@ -189,18 +189,18 @@ var Grade = Vue.extend({
                <el-row>
                     <el-col :span="20" :offset="2">
                         <el-table
-                          :data="attendance"
+                          :data="attendanceList"
                           style="width: 100%">
                           <el-table-column
-                            prop="date"
+                            prop="endTime"
                             label="日期"
                             width="700">
                           </el-table-column>
                           <el-table-column
-                            prop="situation"
+                            prop="status"
                             label="考勤情况">
                             <template slot-scope="scope">
-                            <el-tag type="success">{{scope.row.situation}}</el-tag>
+                            <el-tag type="success">{{scope.row.status}}</el-tag>
                             </template>
                           </el-table-column>
                         </el-table>

@@ -10,9 +10,9 @@ var Attendance = Vue.extend({
                 endTime: '',
                 percent: '25%'
             },
-            attendanceDialogTableVisible:false,
-            attendanceStudentList: [1],
-            unStudentList: [1],
+            attendanceDialogTableVisible: false,
+            attendanceStudentList: [],
+            unStudentList: [],
         };
     },
     computed: {
@@ -31,7 +31,7 @@ var Attendance = Vue.extend({
             return '';
         },
         releaseAttendance() {
-            let endDate = this.form.endTime.getFullYear() + '-' + (this.form.endTime.getMonth() + 1) + '-' + this.form.endTime.getDate() + ' ' + this.form.endTime.getHours() + ':' + this.form.endTime.getMinutes() + ':' + this.form.endTime.getSeconds()
+            let endDate = this.form.endTime.getFullYear() + '-' + ((this.form.endTime.getMonth() + 1) < 10 ? '0' + (this.form.endTime.getMonth() + 1) : (this.form.endTime.getMonth() + 1)) + '-' + (this.form.endTime.getDate() < 10 ? '0' + this.form.endTime.getDate() : this.form.endTime.getDate()) + ' ' + (this.form.endTime.getHours()<10?'0'+  this.form.endTime.getHours(): this.form.endTime.getHours())+ ':' + (this.form.endTime.getMinutes()<10?'0'+this.form.endTime.getMinutes():this.form.endTime.getMinutes()) + ':' + (this.form.endTime.getSeconds()<10?'0'+this.form.endTime.getSeconds():this.form.endTime.getSeconds())
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=releaseSignIn',
                 method: "Post",
@@ -53,23 +53,25 @@ var Attendance = Vue.extend({
                         type: 'success',
                         message: '发布成功！'
                     });
+                    this.innerVisible =false
+                    this.$emit('get-attendance-info')
                 }
             })
         },
         checkAttendance(row) {
             console.log(row)
-            // axios({
-            //     url: '/SoftwareEngineering/instructorServlet?action=ViewAttendance',
-            //     method: "Post",
-            //     data: {
-            //         AttendanceName: row.attendanceName,
-            //         courseID: this.$props.courseId,
-            //         classID: this.$props.classId,
-            //     }
-            // }).then(resp =>{
-            //     this.submitStudentList = resp.data.submitted
-            //     this.unStudentList = resp.data.unSubmitted
-            // })
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=viewAttendance',
+                method: "Post",
+                data: {
+                    AttendanceName: row.attendanceName,
+                    courseID: this.$props.courseId,
+                    classID: this.$props.classId,
+                }
+            }).then(resp =>{
+                this.attendanceStudentList = resp.data.submitted
+                this.unStudentList = resp.data.unSubmitted
+            })
             this.attendanceDialogTableVisible = true;
         }
     },

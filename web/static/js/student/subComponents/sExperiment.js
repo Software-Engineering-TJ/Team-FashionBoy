@@ -1,42 +1,18 @@
-var Experiment = Vue.extend({
+var SExperiment = Vue.extend({
     props: ['experimentList','courseId','classId'],
     data() {
-        return {
-            expContent:'',
-            isDisabled:true
-        };
+        return {};
     },
     methods: {
         tableRowClassName({row, rowIndex}) {
-            if (row.status === '未发布') {
+            if (row.status === '正在进行') {
                 return 'warning-row';
-            } else if (row.status === '已发布') {
+            } else if (row.status === '已结束') {
                 return 'success-row';
             }
             return '';
         },
-        releaseExperiment(row) {
-            if (row.status === "已发布"){
-                this.$message({
-                    showClose: true,
-                    message: '此实验已发布，不能重复发布！',
-                    type: 'warning'
-                })
-                return false
-            }
-            this.$emit('release-experiment', row)
-        },
         viewInfo(row) {
-            if (row.status === "未发布"){
-                this.$message({
-                    showClose: true,
-                    message: '此实验尚未发布，无法查看详情！',
-                    type: 'warning'
-                })
-                this.isDisabled=true
-                return false
-            }
-            this.isDisabled=false
             axios({
                 url: '/SoftwareEngineering/instructorServlet?action=examineExperimentInfo',
                 method: "Post",
@@ -62,7 +38,7 @@ var Experiment = Vue.extend({
                             style="width: 100%">
                         <el-table-column
                                 fixed
-                                prop="title"
+                                prop="expName"
                                 label="实验项目"
                                 width="200">
                         </el-table-column>
@@ -72,13 +48,13 @@ var Experiment = Vue.extend({
                                 width="150">
                         </el-table-column>
                         <el-table-column
-                                prop="status"
-                                label="状态"
+                                prop="endDate"
+                                label="截止时间"
                                 width="150">
                         </el-table-column>
                         <el-table-column
-                                prop="priority"
-                                label="优先级"
+                                prop="status"
+                                label="状态"
                                 width="150">
                         </el-table-column>
                         <el-table-column
@@ -109,11 +85,9 @@ var Experiment = Vue.extend({
                                     title="实验详情"
                                     width="400"
                                     trigger="click"
-                                    :disabled="isDisabled"
-                                    :content="expContent">
-                                    <el-button @click="viewInfo(scope.row)" type="text" size="small" slot="reference">查看详情</el-button>
+                                    :content="scope.row.expInfo">
+                                    <el-button type="text" size="small" slot="reference">查看详情</el-button>
                                 </el-popover>
-                                <el-button type="text" size="small" @click="releaseExperiment(scope.row)">发布</el-button>
                             </template>
                         </el-table-column>
                     </el-table>

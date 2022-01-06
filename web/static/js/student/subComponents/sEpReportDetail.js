@@ -1,54 +1,59 @@
-var EpReportDetail = Vue.extend({
+var SEpReportDetail = Vue.extend({
     props: ['reportInfo', 'studentNumber', 'courseName', 'courseId', 'classId'],
     data() {
         return {
             fileList: [],
-            beforeUpload:false,
-            grade:'',
+            beforeUpload: false,
+            isDisabled:true,
+            grade: '',
+            comment:''
         };
     },
-    created(){
+    created() {
         let customTime = this.$props.reportInfo.endDate
         let currentTime = new Date();
         customTime = customTime.replace("-", "/");//替换字符，变成标准格式
         customTime = new Date(Date.parse(customTime));
-        if (currentTime < customTime) {
-            this.beforeUpload = false;
-        } else {
-            this.beforeUpload = true;
-        }
+        this.beforeUpload = currentTime >= customTime;
     },
-    mounted(){
+    mounted() {
         axios({
             url: '/SoftwareEngineering/studentServlet?action=getGrade',
             method: "Post",
             data: {
                 courseID: this.$props.courseId,
-                classID:this.$props.courseId,
-                studentNumber:this.$props.studentNumber,
-                expName:this.reportInfo.expName
+                classID: this.$props.courseId,
+                studentNumber: this.$props.studentNumber,
+                expName: this.reportInfo.expName
             },
         }).then(resp => {
             this.grade = resp.data.grade
+            this.comment = resp.data.comment
         })
     },
-    updated(){
+    updated() {
+        let customTime = this.$props.reportInfo.endDate
+        let currentTime = new Date();
+        customTime = customTime.replace("-", "/");//替换字符，变成标准格式
+        customTime = new Date(Date.parse(customTime));
+        this.beforeUpload = currentTime >= customTime;
         axios({
             url: '/SoftwareEngineering/studentServlet?action=getGrade',
             method: "Post",
             data: {
                 courseID: this.$props.courseId,
-                classID:this.$props.courseId,
-                studentNumber:this.$props.studentNumber,
-                expName:this.reportInfo.expName
+                classID: this.$props.courseId,
+                studentNumber: this.$props.studentNumber,
+                expName: this.reportInfo.expName
             },
         }).then(resp => {
             this.grade = resp.data.grade
+            this.comment = resp.data.comment
         })
     },
     methods: {
         goBackReport() {
-            this.$emit('go-back-report')
+            this.$emit('go-back-report-s')
         },
         beforeRemove(file, fileList) {
             return this.$confirm(`确定移除 ${file.name}？`);
@@ -62,13 +67,31 @@ var EpReportDetail = Vue.extend({
                 message: '文件上传成功！'
             });
         },
-        judge(){
-            if (this.beforeUpload === true){
+        judge() {
+            if (this.beforeUpload === true) {
                 this.$message({
                     message: '已超过截止时间，不可提交！',
                     type: 'error'
                 });
             }
+        },
+        viewComment() {
+            if (this.grade === "报告尚未提交") {
+                this.$message({
+                    showClose: true,
+                    message: '您尚未上传实验报告，无法查看评语！',
+                    type: 'warning'
+                })
+                return false
+            } else if (this.grade === "助教尚未批改") {
+                this.$message({
+                    showClose: true,
+                    message: '您的实验报告尚未被批改，无法查看评语！',
+                    type: 'warning'
+                })
+                return false
+            }
+            this.isDisabled=false;
         }
     },
     template: `
@@ -105,7 +128,7 @@ var EpReportDetail = Vue.extend({
                     </div>
                 </div>             
             </el-col>
-            <el-col :span="3">
+            <el-col :span="4">
                 <div>
                     <div>
                         <h4 style="display: inline-block">得分</h4>
@@ -129,7 +152,7 @@ var EpReportDetail = Vue.extend({
                     </div>
                 </div>             
             </el-col>
-            <el-col :span="5">
+            <el-col :span="3">
                 <div>
                     <div>
                         <h4 style="display: inline-block">成绩占比</h4>
@@ -176,6 +199,15 @@ var EpReportDetail = Vue.extend({
                     </el-upload>
                 </div>
                 <div style="display: inline-block;float: right;margin-top: 40px" ><el-button type="info" plain @click="goBackReport">返回</el-button></div>
+                <div style="display: inline-block;float: right;margin: 40px 20px 0 0" ><el-popover
+                                    placement="bottom"
+                                    title="查看评语"
+                                    width="400"
+                                    trigger="click"
+                                    :disabled="isDisabled"
+                                    :content="comment">
+                                    <el-button @click="viewComment()" type="success" plain slot="reference">查看评语</el-button>
+                                </el-popover></div>
             </el-col>
         </el-row>
         

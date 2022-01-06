@@ -1,6 +1,8 @@
 package pojo.logicEntity;
 
 import pojo.Student;
+
+import java.util.ArrayList;
 import java.util.List;
 
 class StudentNumberAndName {
@@ -25,8 +27,8 @@ class StudentNumberAndName {
 }
 
 public class StudentAttendanceInfo {
-    private List<StudentNumberAndName> submitted;
-    private List<StudentNumberAndName> unSubmitted;
+    private List<StudentNumberAndName> submitted = new ArrayList<>();
+    private List<StudentNumberAndName> unSubmitted= new ArrayList<>();
 
     public void addSubmitted(String studentNumber, String studentName) {
         StudentNumberAndName studentNumberAndName = new StudentNumberAndName();

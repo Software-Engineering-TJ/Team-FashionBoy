@@ -188,7 +188,7 @@ public class StudentServlet extends BaseServlet {
 
         String courseID = reqObject.get("courseID");
         String classID = reqObject.get("classID");
-        String title = reqObject.get("attendanceName");
+        String title = reqObject.get("AttendanceName");
         String studentNumber = reqObject.get("studentNumber");
         //学生当前签到的时间
         Date currentTime = new Date();
