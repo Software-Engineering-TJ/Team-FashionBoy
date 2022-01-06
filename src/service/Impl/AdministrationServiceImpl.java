@@ -133,7 +133,7 @@ public class AdministrationServiceImpl implements AdministrationService {
         Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
         map.put("name",instructor.getName());
         map.put("instructorNumber",instructorNumber);
-        //与该教师相关的所有课程
+        //教师教授的所有课程
         List<Teaches> teachesList = teachesDao.QueryTeachesByInstructorNumber(instructorNumber);
         //开始遍历课程
         Iterator<Teaches> iterator = teachesList.iterator();
@@ -159,6 +159,32 @@ public class AdministrationServiceImpl implements AdministrationService {
 
             //将课程相关信息加入到列表
             informationList.add(sectionInformation);
+        }
+        //老师管理的course（可能不在teachesList中）
+        List<Course> courseList = courseDao.QueryCourseByInstructorNumber(instructorNumber);
+        if(courseList != null){
+            for(Course course : courseList){
+                String courseID = course.getCourseID();
+                boolean flag = true;
+                if(teachesList != null){
+                    for(Teaches teaches : teachesList){
+                        //如果匹配上了就说明不必添加该课程信息了
+                        if(courseID.equals(teaches.getCourseID())){
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+                if(flag){
+                    SectionInformation sectionInformation = new SectionInformation();
+                    sectionInformation.setCourseID(courseID);
+                    sectionInformation.setDuty("责任教师");
+                    sectionInformation.setTitle(course.getTitle());
+
+                    //将课程相关信息加入到列表
+                    informationList.add(sectionInformation);
+                }
+            }
         }
         //将任课列表加入到map
         map.put("sectionInformation",informationList);

@@ -3,6 +3,8 @@ package dao.impl;
 import dao.inter.CourseDao;
 import pojo.Course;
 
+import java.util.List;
+
 /**
  * CourseDaoImpl类的描述：
  *
@@ -27,5 +29,11 @@ public class CourseDaoImpl extends BaseDao implements CourseDao {
     public int InsertCourse(String courseID, String title, String instructorNumber, String startDate, String endDate) {
         String sql = "insert into course(courseID,title,instructorNumber,startDate,endDate)";
         return update(sql,courseID,title,instructorNumber,startDate,endDate);
+    }
+
+    @Override
+    public List<Course> QueryCourseByInstructorNumber(String instructorNumber) {
+        String sql = "select * from course where instructorNumber = ?";
+        return queryForList(Course.class,sql,instructorNumber);
     }
 }
