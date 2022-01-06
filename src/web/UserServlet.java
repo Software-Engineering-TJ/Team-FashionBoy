@@ -584,6 +584,7 @@ public class UserServlet extends BaseServlet {
      */
     protected void getSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         HttpSession session = req.getSession();
+        resp.setContentType("application/json");
 
         //日程信息
         List<Map<String,String>> scheduleList = new ArrayList<>();

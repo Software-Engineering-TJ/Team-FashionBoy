@@ -247,6 +247,18 @@ public class AdministrationServlet extends BaseServlet{
     }
 
     /**
+     * 获取所有责任教师情况
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void getDutyInstructors(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+
+    }
+
+    /**
      * 
      * @param req
      * @param resp
