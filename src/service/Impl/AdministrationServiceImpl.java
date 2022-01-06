@@ -148,7 +148,7 @@ public class AdministrationServiceImpl implements AdministrationService {
             sectionInformation.setTitle(course.getTitle());
             //获取任课身份
             if(course.getInstructorNumber().equals(instructorNumber)){
-                sectionInformation.setDuty("责任教师");
+                sectionInformation.setDuty("教师and责任教师");
             }else{
                 sectionInformation.setDuty("教师");
             }

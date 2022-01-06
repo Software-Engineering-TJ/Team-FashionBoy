@@ -131,10 +131,28 @@ public class StudentServlet extends BaseServlet {
         String expname = reqObject.get("expName");
         String studentNumber = reqObject.get("studentNumber");
         //获取成绩，score可能是”助教尚未批改“or”报告尚未提交“or正常成绩
-        String score = studentService.getExpScore(courseID,classID,expname,studentNumber);
+        ExpScore expScore = studentService.getExpScore(courseID,classID,expname,studentNumber);
 
+        String score = "";
+        String comment= "";
+        if(expScore == null){
+            //数据库中没有找到，说明没有提交作业
+            score = "报告尚未提交";
+            comment = "报告未提交，请先提交报告";
+        }else{
+            if(expScore.getScore()==-1) {
+                //"-1"意味着报告尚未批改
+                score = "助教尚未批改";
+                comment = "助教还没有来得及批改，请耐心等待^-^";
+            }else{
+                //成绩正常
+                score = Float.toString(expScore.getScore());
+                comment = expScore.getComment();
+            }
+        }
         Map<String,String> map = new HashMap<>();
         map.put("grade",score);
+        map.put("comment",comment);
 
         resp.getWriter().write(gson.toJson(map));
     }
