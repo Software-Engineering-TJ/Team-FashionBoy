@@ -9,15 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c32b776-a62b-4d9b-9337-b5ddb189a93e" name="更改" comment="学生成绩完成">
+    <list default="true" id="9c32b776-a62b-4d9b-9337-b5ddb189a93e" name="更改" comment="批改实验报告">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/AdministrationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/inter/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inter/StudentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web/StudentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/StudentServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/sIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/sIndex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/epReportDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/experimentalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="lza" />
+        <entry key="$PROJECT_DIR$" value="beifen" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -514,7 +512,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
           <line>47</line>
-          <properties class="web.AdministrationServlet" method="alterUserInformation">
+          <properties class="web.AdministrationServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="24" />
@@ -530,7 +528,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/UserServlet.java</url>
           <line>259</line>
-          <properties class="web.UserServlet" method="changeUserInfo">
+          <properties class="web.UserServlet">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="29" />
@@ -546,7 +544,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/dao/inter/SectionDao.java</url>
           <line>9</line>
-          <properties class="dao.inter.SectionDao" method="insertSection">
+          <properties class="dao.inter.SectionDao">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="73" />

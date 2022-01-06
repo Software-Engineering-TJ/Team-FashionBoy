@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService{
     private TakesDao takesDao = new TakesDaoImpl();
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
+    private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
