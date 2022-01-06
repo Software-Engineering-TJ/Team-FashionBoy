@@ -8,8 +8,12 @@ import pojo.logicEntity.Attendance;
 //import pojo.logicEntity.Attendanceq;
 import pojo.logicEntity.ClassInfo;
 import service.Impl.AdministrationServiceImpl;
+import service.Impl.InstructorServiceImpl;
+import service.Impl.StudentServiceImpl;
 import service.Impl.UserServiceImpl;
 import service.inter.AdministrationService;
+import service.inter.InstructorService;
+import service.inter.StudentService;
 import service.inter.UserService;
 import utils.OSSUtils;
 import utils.RequestJsonUtils;
@@ -39,6 +43,10 @@ public class UserServlet extends BaseServlet {
     private UserService userService = new UserServiceImpl();
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
+
+    private StudentService studentService = new StudentServiceImpl();
+
+    private InstructorService instructorService = new InstructorServiceImpl();
 
     //发送邮件 √
     public void sendEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -84,6 +92,7 @@ public class UserServlet extends BaseServlet {
                 // 构建授权信息，用于进行SMTP进行身份验证
                 Authenticator authenticator = new Authenticator() {
 
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         // 用户名、密码
                         String userName = props.getProperty("mail.user");
@@ -566,5 +575,74 @@ public class UserServlet extends BaseServlet {
         resp.getWriter().write(json);
     }
 
+    /**
+     * 用户获取日程表，包括：所有班级实验、报告的截止日期
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        HttpSession session = req.getSession();
 
+        //日程信息
+        List<Map<String,String>> scheduleList = new ArrayList<>();
+        //课程列表
+        List<?> sectionList = new ArrayList<>();
+        //用户登录的身份
+        String identity = (String) session.getAttribute("identity");
+        if(identity == null){
+            //用户没有登录
+            return;
+        }else{
+            String userNumber = (String) session.getAttribute("userNumber");
+            if ("student".equals(identity)) {
+                //学生上的课
+                sectionList = studentService.getTakesListByStudentNumber(userNumber);
+            } else {
+                //老师交的课
+                sectionList = instructorService.getTeachesListByInstructorNumber(userNumber);
+            }
+            if (sectionList != null) {
+                for (int i = 0; i < sectionList.size(); i++) {
+                    String courseID = "";
+                    String classID = "";
+                    if ("student".equals(identity)) {
+                        Takes takes = (Takes) sectionList.get(i);
+                        courseID = takes.getCourseID();
+                        classID = takes.getClassID();
+                    } else {
+                        Teaches teaches = (Teaches) sectionList.get(i);
+                        courseID = teaches.getCourseID();
+                        classID = teaches.getClassID();
+                    }
+                    //该课程下的试验任务
+                    List<Experiment> experimentList = userService.getExperimentListByCourseIDAndClassID(courseID, classID);
+                    if (experimentList != null) {
+                        for (Experiment experiment : experimentList) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("title", experiment.getExpname());
+                            map.put("start", experiment.getStartDate());
+                            map.put("end", experiment.getEndDate());
+
+                            scheduleList.add(map);
+                        }
+                    }
+                    //该课程下的实验报告
+                    List<ExpReport> expReportList = userService.getExpReportListByCourseIDAndClassID(courseID,classID);
+                    if(expReportList != null){
+                        for(ExpReport expReport : expReportList){
+                            Map<String, String> map = new HashMap<>();
+                            map.put("title", expReport.getReportName());
+                            map.put("start", expReport.getStartDate());
+                            map.put("end", expReport.getEndDate());
+
+                            scheduleList.add(map);
+                        }
+                    }
+                }
+            }
+        }
+        resp.getWriter().write(gson.toJson(scheduleList));
+    }
 }

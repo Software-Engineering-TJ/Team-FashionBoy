@@ -37,4 +37,8 @@ public interface UserService {
     List<AttendScore> getAttendScoreByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber);
     Attend getAttendByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
     Boolean judgeAttendScoreIfExist(String courseID, String classID, String title, String studentNumber);
+    //获取课程实验任务
+    List<Experiment> getExperimentListByCourseIDAndClassID(String courseID,String classID);
+    //获取课程报告任务
+    List<ExpReport> getExpReportListByCourseIDAndClassID(String courseID,String classID);
 }

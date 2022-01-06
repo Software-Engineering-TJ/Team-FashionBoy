@@ -1,9 +1,6 @@
 package service.inter;
 
-import pojo.CourseExp;
-import pojo.ExpScore;
-import pojo.Experiment;
-import pojo.Notice;
+import pojo.*;
 
 import javax.naming.directory.Attributes;
 import java.util.List;
@@ -25,4 +22,6 @@ public interface StudentService {
     List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber);
     List<Experiment> getExperimentByCourseIDAndClassID(String courseID, String classID);
     CourseExp getCourseExpByCourseIDAndExpname(String courseID, String expname);
+    //获取学生上的课
+    List<Takes> getTakesListByStudentNumber(String studentNumber);
 }

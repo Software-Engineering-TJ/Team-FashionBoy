@@ -60,4 +60,5 @@ public interface InstructorService {
     List<AttendScore> getAttendScoreByCourseIDAndClassIDAndTitle(String courseID, String classID, String title);
     Student getStudentByStudentNumber(String studentNumber);
     List<Takes> getTakesNotInAttendScore(String courseID, String classID, String title);
+    List<Teaches> getTeachesListByInstructorNumber(String instructorNumber);
 }

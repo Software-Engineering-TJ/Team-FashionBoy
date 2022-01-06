@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private AttendDao attendDao = new AttendDaoImpl();
     private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
+    private ExperimentDao experimentDao = new ExperimentDaoImpl();
 
     @Override
     public User ExistEmail(String email) {
@@ -223,6 +224,16 @@ public class UserServiceImpl implements UserService{
     public Boolean judgeAttendScoreIfExist(String courseID, String classID, String title, String studentNumber) {
         AttendScore attendScore = attendScoreDao.getAttendScoreByCourseIDAndClassIDAndTitleAndStudentNumber(courseID, classID, title, studentNumber);
         return attendScore != null;
+    }
+
+    @Override
+    public List<Experiment> getExperimentListByCourseIDAndClassID(String courseID, String classID) {
+        return experimentDao.QueryExperimentsByCourseIDAndClassID(courseID,classID);
+    }
+
+    @Override
+    public List<ExpReport> getExpReportListByCourseIDAndClassID(String courseID, String classID) {
+        return expReportDao.QueryExpReportsByCourseIDAndClassID(courseID,classID);
     }
 
 }

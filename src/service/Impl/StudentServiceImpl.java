@@ -84,5 +84,8 @@ public class StudentServiceImpl implements StudentService {
         return courseExpDao.QueryCourseExpByCourseIDAndExpname(courseID, expname);
     }
 
-
+    @Override
+    public List<Takes> getTakesListByStudentNumber(String studentNumber) {
+        return takesDao.QueryTakesByStudentNumber(studentNumber);
+    }
 }

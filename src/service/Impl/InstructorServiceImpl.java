@@ -316,4 +316,9 @@ public class InstructorServiceImpl implements InstructorService {
         return takesDao.queryTakesNotInAttendScore(courseID, classID, title);
     }
 
+    @Override
+    public List<Teaches> getTeachesListByInstructorNumber(String instructorNumber) {
+        return teachesDao.QueryTeachesByInstructorNumber(instructorNumber);
+    }
+
 }
