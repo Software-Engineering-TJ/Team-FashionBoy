@@ -263,7 +263,8 @@ public class InstructorServiceImpl implements InstructorService {
         //本课程的courseID
         String newCourseID = courseId + 1 + "";
         //添加课程
-        if(courseDao.InsertCourse(newCourseID,title,instructorNumber,startDate,endDate)!=1) {
+        int result = courseDao.InsertCourse(newCourseID,title,instructorNumber,startDate,endDate);
+        if(result!=1) {
             return "";
         }
         //更新courseID计数
@@ -275,7 +276,7 @@ public class InstructorServiceImpl implements InstructorService {
     public void addCourseExp(String courseID, List<Map<String,Object>> courseExpInfoList,int attendanceWeight,int practiceWeight) {
         //添加实验
         for(Map<String, Object> c : courseExpInfoList){
-            courseExpDao.InsertCourseExp(courseID,(String)c.get("expname"),(int)c.get("percent"),(int)c.get("priority"),(int)c.get("difficulty"));
+            courseExpDao.InsertCourseExp(courseID,(String)c.get("title"),(int)Math.round((Double)c.get("weight")),(int)Math.round((Double)c.get("priority")),(int)Math.round((Double)c.get("difficulty")));
         }
         //添加考勤
         courseExpDao.InsertCourseExp(courseID,"考勤",attendanceWeight,1,1);
