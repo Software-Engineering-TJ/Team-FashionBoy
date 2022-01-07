@@ -85,6 +85,22 @@
         <servlet-name>InstructorServlet</servlet-name>
         <url-pattern>/instructorServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PracticeServer</servlet-name>
+        <servlet-class>web.PracticeServer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PracticeServer</servlet-name>
+        <url-pattern>/practiceServer</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PracticeClient</servlet-name>
+        <servlet-class>web.PracticeClient</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PracticeClient</servlet-name>
+        <url-pattern>/practiceClient</url-pattern>
+    </servlet-mapping>
 </web-app>
 
 

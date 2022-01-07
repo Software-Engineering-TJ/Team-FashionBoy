@@ -125,7 +125,16 @@
             </el-form>
         </el-container>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="studentDialogFormVisible = false">批量导入</el-button>
+            <el-upload
+                    style="display:inline-block;margin-right: 10px"
+                    class="upload-demo"
+                    ref="upload"
+                    :auto-upload="true"
+                    action="/SoftwareEngineering/administrationServlet?action=createStudentFromExcel"
+                    :on-success="uploadSuccess"
+                    :file-list="fileList">
+                <el-button type="primary">批量导入</el-button>
+            </el-upload>
             <el-button @click="studentDialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addNewStudent">确 定</el-button>
         </div>
@@ -154,7 +163,15 @@
             </el-form>
         </el-container>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="teacherDialogFormVisible = false">批量导入</el-button>
+            <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    :auto-upload="true"
+                    action="/SoftwareEngineering/AdministrationServlet?action=createStudentFromExcel"
+                    :on-success="uploadSuccess"
+                    :file-list="fileList">
+                <el-button type="primary" @click="judge">批量导入</el-button>
+            </el-upload>
             <el-button @click="teacherDialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addNewTeacher">确 定</el-button>
         </div>
@@ -299,6 +316,7 @@
 </div>
 <!-- 引入axios -->
 <script src="/SoftwareEngineering/static/util/fullcalendar/main.js"></script>
+<script src="/SoftwareEngineering/static/js/administrator/info.js"></script>
 <script src="/SoftwareEngineering/static/js/calender.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../../static/js/administrator/aIndex.js"></script>

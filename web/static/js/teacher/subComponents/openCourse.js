@@ -1,5 +1,5 @@
 var OpenCourse = Vue.extend({
-    props: ['courseForm','formLabelWidth'],
+    props: ['courseForm','formLabelWidth','instructorNumber'],
     data() {
         return {};
     },
@@ -11,6 +11,27 @@ var OpenCourse = Vue.extend({
             console.log('removeDomain')
             console.log(index)
             this.$emit('remove-domain',index)
+        },
+        openCourse(){
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=addCourse',
+                method: "Post",
+                data:{
+                    title:this.courseForm.title,
+                    startDate:this.courseForm.startDate,
+                    endDate:this.courseForm.endDate,
+                    instructorNumber:this.instructorNumber,
+                    experimentForm:this.courseForm.experimentForm,
+                    attendanceWeight:this.courseForm.attendanceWeight,
+                    practiceWeight:this.courseForm.practiceWeight
+                }
+            }).then(resp => {
+                this.$message({
+                    showClose: true,
+                    message: '申请成功！',
+                    type: 'success'
+                })
+            })
         }
     },
     template: `
@@ -99,7 +120,7 @@ var OpenCourse = Vue.extend({
                 </el-form-item>
             </el-form>
             <div class="dialog-footer" style="text-align: right;width: 90%;padding-bottom: 40px">
-                <el-button type="primary" @click="courseDialogFormVisible = false">申 请</el-button>
+                <el-button type="primary" @click="openCourse">申 请</el-button>
             </div>
         </div>
         

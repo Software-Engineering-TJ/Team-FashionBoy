@@ -71,19 +71,24 @@ public class PracticeServer extends BaseServlet{
         String classID = reqObject.get("classID");
 
         //设置当前房间的人数
-        currentNumber = instructorService.getSection(courseID, classID).getCurrentNumber();
+//        currentNumber = instructorService.getSection(courseID, classID).getCurrentNumber();
+        currentNumber = 1;
         //设置题目答案
         standardAnswer = "ABC";
-        int size = 3;
+        int size = Integer.parseInt(reqObject.get("size")) ;
         //设置题目列表
         choiceQuestionList = instructorService.getRandomQuestionList(size);
+
+        System.out.println(currentNumber);
+        System.out.println(choiceQuestionList);
     }
 
     //点击进入对抗练习，运行此入口
-    protected void startServer() {
+    protected void startServer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //创建服务器对象
-        PracticeServer practiceServer = new PracticeServer();
-        practiceServer.listen();
+//        PracticeServer practiceServer = new PracticeServer();
+//        practiceServer.listen();
+        listen();
     }
 
     //前端获取对抗练习成绩单，servlet

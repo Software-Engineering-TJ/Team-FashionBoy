@@ -47,6 +47,10 @@ var Course = Vue.extend({
                     this.changeComponents = "sExperimentalReport"
                     // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
                     break;
+                case "5":
+                    this.changeComponents = "SPractice"
+                    // 在选择”参考文件“选项后，还需要向后端请求该课程下老师发布的所有文件
+                    break;
                 case "6":
                     this.getAttendanceInfoStu()
                     break;
@@ -251,6 +255,8 @@ var Course = Vue.extend({
         ExperimentalReport,
         // 助教批改辅助页面
         EpReportDetail,
+        // 对抗练习
+        SPractice
     },
     template: `
     <el-row class="tac">

@@ -297,6 +297,7 @@ public class InstructorServiceImpl implements InstructorService {
         for (Integer questionId : set) {
             choiceQuestionList.add(choiceQuestionDao.getQuestionByQuestionId(questionId));
         }
+
         return choiceQuestionList;
 
     }

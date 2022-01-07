@@ -1,80 +1,80 @@
 package pojo;
 
 public class ChoiceQuestion {
-    private int choiceID;
-    private String choiceQuestion;
-    private String choiceOption;
-    private int choiceDifficulty;
-    private String choiceAnswer;
-    private String choiceAnalysis;
-    private double choiceScore;
+    private int choice_id;
+    private String choice_question;
+    private String choice_option;
+    private int choice_difficulty;
+    private String choice_answer;
+    private String choice_analysis;
+    private double choice_score;
 
-    public int getChoiceID() {
-        return choiceID;
+    public int getChoice_id() {
+        return choice_id;
     }
 
-    public void setChoiceID(int choiceID) {
-        this.choiceID = choiceID;
+    public void setChoice_id(int choice_id) {
+        this.choice_id = choice_id;
     }
 
-    public String getChoiceQuestion() {
-        return choiceQuestion;
+    public String getChoice_question() {
+        return choice_question;
     }
 
-    public void setChoiceQuestion(String choiceQuestion) {
-        this.choiceQuestion = choiceQuestion;
+    public void setChoice_question(String choice_question) {
+        this.choice_question = choice_question;
     }
 
-    public String getChoiceOption() {
-        return choiceOption;
+    public String getChoice_option() {
+        return choice_option;
     }
 
-    public void setChoiceOption(String choiceOption) {
-        this.choiceOption = choiceOption;
+    public void setChoice_option(String choice_option) {
+        this.choice_option = choice_option;
     }
 
-    public int getChoiceDifficulty() {
-        return choiceDifficulty;
+    public int getChoice_difficulty() {
+        return choice_difficulty;
     }
 
-    public void setChoiceDifficulty(int choiceDifficulty) {
-        this.choiceDifficulty = choiceDifficulty;
+    public void setChoice_difficulty(int choice_difficulty) {
+        this.choice_difficulty = choice_difficulty;
     }
 
-    public String getChoiceAnswer() {
-        return choiceAnswer;
+    public String getChoice_answer() {
+        return choice_answer;
     }
 
-    public void setChoiceAnswer(String choiceAnswer) {
-        this.choiceAnswer = choiceAnswer;
+    public void setChoice_answer(String choice_answer) {
+        this.choice_answer = choice_answer;
     }
 
-    public String getChoiceAnalysis() {
-        return choiceAnalysis;
+    public String getChoice_analysis() {
+        return choice_analysis;
     }
 
-    public void setChoiceAnalysis(String choiceAnalysis) {
-        this.choiceAnalysis = choiceAnalysis;
+    public void setChoice_analysis(String choice_analysis) {
+        this.choice_analysis = choice_analysis;
     }
 
-    public double getChoiceScore() {
-        return choiceScore;
+    public double getChoice_score() {
+        return choice_score;
     }
 
-    public void setChoiceScore(double choiceScore) {
-        this.choiceScore = choiceScore;
+    public void setChoice_score(double choice_score) {
+        this.choice_score = choice_score;
     }
 
     @Override
     public String toString() {
         return "ChoiceQuestion{" +
-                "choiceID=" + choiceID +
-                ", choiceQuestion='" + choiceQuestion + '\'' +
-                ", choiceOption='" + choiceOption + '\'' +
-                ", choiceDifficulty=" + choiceDifficulty +
-                ", choiceAnswer='" + choiceAnswer + '\'' +
-                ", choiceAnalysis='" + choiceAnalysis + '\'' +
-                ", choiceScore=" + choiceScore +
+                "choiceID=" + choice_id +
+                ", choiceQuestion='" + choice_question + '\'' +
+                ", choiceOption='" + choice_option + '\'' +
+                ", choiceDifficulty=" + choice_difficulty +
+                ", choiceAnswer='" + choice_answer + '\'' +
+                ", choiceAnalysis='" + choice_analysis + '\'' +
+                ", choiceScore=" + choice_score +
                 '}';
     }
 }

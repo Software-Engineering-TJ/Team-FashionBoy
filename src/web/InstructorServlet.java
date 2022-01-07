@@ -535,11 +535,12 @@ public class InstructorServlet extends BaseServlet{
         String endDate = (String)reqObject.get("endDate");
         String instructorNumber = (String)reqObject.get("instructorNumber");
         //实验信息
-        String experimentForm = (String) reqObject.get("experimentForm");
-        List<Map<String,Object>> courseExpInfoList = gson.fromJson(experimentForm, new TypeToken<List<Map<String, Object>>>() {
-        }.getType());
-        int attendanceWeight = (int)reqObject.get("attendanceWeight");
-        int practiceWeight = (int)reqObject.get("practiceWeight");
+//        String experimentForm = (String) reqObject.get("experimentForm");
+//        List<Map<String,Object>> courseExpInfoList = gson.fromJson(experimentForm, new TypeToken<List<Map<String, Object>>>() {
+//        }.getType());
+        List<Map<String,Object>> courseExpInfoList = (List<Map<String,Object>>) reqObject.get("experimentForm");
+        int attendanceWeight =  (int)Math.round((Double)reqObject.get("attendanceWeight"));
+        int practiceWeight = (int)Math.round((Double)reqObject.get("practiceWeight"));
 
         String courseID = instructorService.createCourse(title,instructorNumber,startDate,endDate);
         int result = 1;

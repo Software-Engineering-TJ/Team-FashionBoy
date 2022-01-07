@@ -52,6 +52,6 @@ public class CourseDaoImpl extends BaseDao implements CourseDao {
     @Override
     public int UpdateFlagOfCourseByCourseID(String courseID, int flag) {
         String sql = "update course set flag = ? where courseID = ?";
-        return update(sql,courseID,flag);
+        return update(sql,flag,courseID);
     }
 }

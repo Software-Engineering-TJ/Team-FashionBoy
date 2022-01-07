@@ -11,9 +11,9 @@ var Course = Vue.extend({
             //实验信息
             experimentList: [],
             //班级信息
-            classInfoList:[],
+            classInfoList: [],
             //考勤信息
-            attendanceList:[]
+            attendanceList: []
         }
     },
     methods: {
@@ -44,6 +44,9 @@ var Course = Vue.extend({
                 case "4":
                     this.getReportDesc()
                     this.changeComponents = "ExperimentalReport"
+                    break;
+                case "5":
+                    this.changeComponents = "Practice"
                     break;
                 case "6":
                     this.getAttendanceInfo()
@@ -95,7 +98,7 @@ var Course = Vue.extend({
                 method: "Post",
                 data: {
                     courseID: this.$props.courseId,
-                    classID:this.$props.classId
+                    classID: this.$props.classId
                 },
             }).then(resp => {
                 course.experimentList = JSON.parse(JSON.stringify(resp.data));
@@ -136,7 +139,7 @@ var Course = Vue.extend({
                 this.fileList = resp.data;
             })
         },
-        getClassInfo(){
+        getClassInfo() {
             axios({
                 url: '/SoftwareEngineering/userServlet?action=getClassInfo',
                 method: "Post",
@@ -145,30 +148,30 @@ var Course = Vue.extend({
                     classID: this.$props.classId,
                 }
             }).then(resp => {
-                let infoList =[];
-                for(let instructor in resp.data.instructors){
+                let infoList = [];
+                for (let instructor in resp.data.instructors) {
                     infoList.push({
-                        userNumber:resp.data.instructors[instructor].instructorNumber,
-                        userName:resp.data.instructors[instructor].name,
-                        duty:'任课教师'
+                        userNumber: resp.data.instructors[instructor].instructorNumber,
+                        userName: resp.data.instructors[instructor].name,
+                        duty: '任课教师'
                     })
                 }
-                for(let assistant in resp.data.assistants){
+                for (let assistant in resp.data.assistants) {
 
                     infoList.push({
-                        userNumber:resp.data.assistants[assistant].studentNumber,
-                        userName:resp.data.assistants[assistant].name,
-                        duty:'助教'
+                        userNumber: resp.data.assistants[assistant].studentNumber,
+                        userName: resp.data.assistants[assistant].name,
+                        duty: '助教'
                     })
                 }
-                for(let student in resp.data.students){
+                for (let student in resp.data.students) {
                     infoList.push({
-                        userNumber:resp.data.students[student].studentNumber,
-                        userName:resp.data.students[student].name,
-                        duty:'学生'
+                        userNumber: resp.data.students[student].studentNumber,
+                        userName: resp.data.students[student].name,
+                        duty: '学生'
                     })
                 }
-                this.classInfoList=infoList
+                this.classInfoList = infoList
             })
         },
         getAttendanceInfo() {
@@ -200,7 +203,9 @@ var Course = Vue.extend({
         // 考勤组件
         Attendance,
         // 班级信息组件
-        ClassInfo
+        ClassInfo,
+        // 对抗练习模块
+        Practice
     },
     template: `
     <el-row class="tac">

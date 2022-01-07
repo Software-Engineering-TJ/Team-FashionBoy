@@ -45,5 +45,8 @@
 .el-table .success-row {
     background: #f0f9eb;
 }
+.fill input.el-input__inner {
+    border-radius: 0 4px 4px 0;
+}
 
 

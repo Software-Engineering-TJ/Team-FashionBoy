@@ -26,7 +26,7 @@ public class Counter {
 
     @Override
     public String toString() {
-        return "Counter{" +
+        return "Count{" +
                 "courseID=" + courseID +
                 ", classID=" + classID +
                 '}';

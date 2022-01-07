@@ -52,6 +52,12 @@ public class PracticeClient extends BaseServlet{
         System.out.println(info);
     }
 
+    //servlet
+    protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        readInfo();
+
+    }
+
 
     //向服务器发送消息
     public void sendInfo() {

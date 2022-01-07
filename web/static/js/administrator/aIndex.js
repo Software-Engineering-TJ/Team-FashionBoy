@@ -41,7 +41,7 @@ var AuthorityTabs = Vue.extend({
                 if (row.duty === '教师') {
                     console.log(row)
                     console.log(row.duty)
-                    this.$emit('change-teacher-duty', teacherNumber, row.courseID ,row.duty)
+                    this.$emit('change-teacher-duty', teacherNumber, row.courseID, row.duty)
                     row.duty = '责任教师';
                 } else {
                     this.$prompt('请输入该课程新责任教师工号', '更换责任教师', {
@@ -50,7 +50,7 @@ var AuthorityTabs = Vue.extend({
                         inputPattern: /^[0-9]*$/,
                         inputErrorMessage: '工号格式不正确'
                     }).then(({value}) => {
-                        this.$emit('change-teacher-duty', value, row.courseID ,row.duty)
+                        this.$emit('change-teacher-duty', value, row.courseID, row.duty)
                         row.duty = '教师';
                     }).catch(() => {
                         this.$message({
@@ -244,15 +244,15 @@ var AccountInfoTabs = Vue.extend({
         searchTeacherAc() {
             this.$emit('search-teacher-ac', this.teacher);
         },
-        changeStudentInfo(row){
+        changeStudentInfo(row) {
             console.log(row)
             console.log("changeStudentInfo被调用了")
-            this.$emit('change-student-info',row)
+            this.$emit('change-student-info', row)
         },
-        changeTeacherInfo(row){
+        changeTeacherInfo(row) {
             console.log(row)
             console.log("changeTeacherInfo被调用了")
-            this.$emit('change-teacher-info',row)
+            this.$emit('change-teacher-info', row)
         }
     },
     data() {
@@ -391,7 +391,7 @@ var AccountInfoTabs = Vue.extend({
 // Vue实例
 var vm = new Vue({
     el: "#box",
-    mounted:function () {
+    mounted: function () {
         axios({
             url: '/SoftwareEngineering/userServlet?action=getUserInfo',
             method: "Get",
@@ -399,12 +399,13 @@ var vm = new Vue({
             this.administrator.name = resp.data.name
             this.administrator.sex = resp.data.sex
             this.administrator.email = resp.data.email
-            this.administrator.phoneNumber=resp.data.phoneNumber
+            this.administrator.phoneNumber = resp.data.phoneNumber
             this.administrator.teacherNumber = resp.data.userNumber
         })
     },
     data() {
         return {
+            fileList: [],
             // 动态组件切换
             changeComponents: 'calender',
             // 抽屉是否显示
@@ -426,7 +427,7 @@ var vm = new Vue({
             // 管理员实体
             administrator: {
                 name: '',
-                sex:'',
+                sex: '',
                 teacherNumber: '',
                 phoneNumber: '',
                 email: '',
@@ -516,6 +517,9 @@ var vm = new Vue({
                     break;
                 case "2-1-2":
                     this.$data.teacherDialogFormVisible = true;
+                    break;
+                case "4":
+                    this.changeComponents = "Info"
                     break;
                 default:
                     break;
@@ -628,6 +632,12 @@ var vm = new Vue({
                     })
                 }
             })
+        },
+        uploadSuccess() {
+            this.$message({
+                type: 'success',
+                message: '导入成功！'
+            });
         },
         // 搜索教师账号
         searchTeacherAc(teacher) {
@@ -811,7 +821,7 @@ var vm = new Vue({
                 }
             });
         },
-        changeTeacherDuty(teacherNumber, courseID ,duty) {
+        changeTeacherDuty(teacherNumber, courseID, duty) {
             console.log(duty)
             axios({
                 url: '/SoftwareEngineering/administrationServlet?action=changeDutyInstructor',
@@ -819,7 +829,7 @@ var vm = new Vue({
                 data: {
                     instructorNumber: teacherNumber,
                     courseID: courseID,
-                    duty:duty
+                    duty: duty
                 },
             }).then(resp => {
                 console.log(resp.data)
@@ -847,7 +857,7 @@ var vm = new Vue({
             this.studentAccountForm.phoneNumber = row.phoneNumber
             this.changeStudentDialogFormVisible = true
         },
-        changeStudentInfoIdentify(){
+        changeStudentInfoIdentify() {
             axios({
                 url: '/SoftwareEngineering/administrationServlet?action=alterUserInformation',
                 method: "Post",
@@ -856,8 +866,8 @@ var vm = new Vue({
                     name: this.studentAccountForm.name,
                     email: this.studentAccountForm.email,
                     sex: this.studentAccountForm.sex,
-                    phoneNumber:this.studentAccountForm.phoneNumber,
-                    identify:'student'
+                    phoneNumber: this.studentAccountForm.phoneNumber,
+                    identify: 'student'
                 },
             }).then(resp => {
                 if (resp.data.msg === 1) {
@@ -876,7 +886,7 @@ var vm = new Vue({
             });
         },
         // 更改老师信息
-        changeTeacherInfo(row){
+        changeTeacherInfo(row) {
             console.log("changeTeacherInfo")
             console.log(row)
             this.teacherAccountForm.teacherNumber = row.teacherNumber
@@ -884,9 +894,9 @@ var vm = new Vue({
             this.teacherAccountForm.email = row.email
             this.teacherAccountForm.sex = row.sex
             this.teacherAccountForm.phoneNumber = row.phoneNumber
-            this.changeTeacherDialogFormVisible=true
+            this.changeTeacherDialogFormVisible = true
         },
-        changeTeacherInfoIdentify(){
+        changeTeacherInfoIdentify() {
             axios({
                 url: '/SoftwareEngineering/administrationServlet?action=alterUserInformation',
                 method: "Post",
@@ -895,8 +905,8 @@ var vm = new Vue({
                     name: this.teacherAccountForm.name,
                     email: this.teacherAccountForm.email,
                     sex: this.teacherAccountForm.sex,
-                    phoneNumber:this.teacherAccountForm.phoneNumber,
-                    identify:'teacher'
+                    phoneNumber: this.teacherAccountForm.phoneNumber,
+                    identify: 'teacher'
                 },
             }).then(resp => {
                 if (resp.data.msg === 1) {
@@ -921,7 +931,9 @@ var vm = new Vue({
         // 权限管理卡组件
         AuthorityTabs,
         // 账号信息组件
-        AccountInfoTabs
+        AccountInfoTabs,
+        // 批改
+        Info
     }
 })
 
