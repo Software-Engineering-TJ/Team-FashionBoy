@@ -253,8 +253,17 @@ public class StudentServlet extends BaseServlet {
         String classID = reqObject.get("classID");
         String studentNumber = reqObject.get("studentNumber");
 
-        List<ExpScore> expScoreList = studentService.getAllExpScore(courseID, classID, studentNumber);
+        //先查看都有哪些已发布的实验
+        List<Experiment> experimentList = studentService.getExperimentByCourseIDAndClassID(courseID,classID);
+        //成绩和排名信息
+        List<Map<String, Object>> expGradeInfoList = new ArrayList<>();
+        if(experimentList != null){
+            for(Experiment experiment : experimentList){
+                Map<String, Object> map = studentService.getGradeAndRankingOfExperiment(experiment,studentNumber);
+                expGradeInfoList.add(map);
+            }
+        }
 
-        resp.getWriter().write(JSONObject.toJSONString(expScoreList));
+        resp.getWriter().write(JSONObject.toJSONString(expGradeInfoList));
     }
 }

@@ -71,10 +71,7 @@ public class StudentServiceImpl implements StudentService {
     public List<CourseExp> getCoursesByCourseID(String courseID) {
         return courseExpDao.QueryCourseExpsByCourseID(courseID);
     }
-    @Override
-    public List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber) {
-        return expScoreDao.QueryExpScoreByCourseIDAndClassIDAndStudentNumber(courseID, classID, studentNumber);
-    }
+
     @Override
     public List<Experiment> getExperimentByCourseIDAndClassID(String courseID, String classID) {
         return experimentDao.QueryExperimentsByCourseIDAndClassID(courseID, classID);
@@ -93,6 +90,43 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getAllStudents() {
         return studentDao.QueryAllStudents();
+    }
+
+    @Override
+    public List<Experiment> getExperimentListByCourseIDAndClassID(String courseID, String classID) {
+        return experimentDao.QueryExperimentsByCourseIDAndClassID(courseID,classID);
+    }
+
+    @Override
+    public Map<String, Object> getGradeAndRankingOfExperiment(Experiment experiment, String studentNumber) {
+        //按照score倒叙排列的名单
+        List<ExpScore> expScoreList = expScoreDao.QueryExpScoresByExperimentAndScoreDESC(experiment.getCourseID(),experiment.getClassID(),experiment.getExpname());
+        Map<String,Object> map = new HashMap<>();
+        map.put("name",experiment.getExpname());
+        if(expScoreList == null){
+            //还没有人提交报告，成绩为零分，默认第一名
+            map.put("grade",0.0);
+            map.put("ranking",1);
+        }else{
+            boolean exist = false;
+            for(int i =0 ;i < expScoreList.size();i++){
+                ExpScore expScore = expScoreList.get(i);
+                //找到学生在排名中的位置
+                if(expScore.getStudentNumber().equals(studentNumber)){
+                    float score = expScore.getScore();
+                    map.put("grade",(score==-1)?0:score);
+                    map.put("ranking",i+1);
+                    exist = true;
+                    break;
+                }
+            }
+            //没找到学生时，说明学生没有提交作业
+            if(!exist) {
+                map.put("grade", 0.0);
+                map.put("ranking", expScoreList.size() + 1);
+            }
+        }
+        return map;
     }
 
 }

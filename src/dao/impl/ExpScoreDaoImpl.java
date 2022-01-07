@@ -51,10 +51,11 @@ public class ExpScoreDaoImpl extends BaseDao implements ExpScoreDao {
         String sql = "delete from expscore where fileUrl = ?";
         return update(sql,fileUrl);
     }
+
     @Override
-    public List<ExpScore> QueryExpScoreByCourseIDAndClassIDAndStudentNumber(String courseID, String classID, String studentNumber) {
-        String sql = "select * from expscore where courseID = ? and classID = ? and studentNumber = ?";
-        return queryForList(ExpScore.class,sql,courseID,classID,studentNumber);
+    public List<ExpScore> QueryExpScoresByExperimentAndScoreDESC(String courseID, String classID, String expname) {
+        String sql = "select * from expscore where (courseID = ? and classID = ? and expname = ?) order by score DESC";
+        return queryForList(ExpScore.class,sql,courseID,classID,expname);
     }
 
 }

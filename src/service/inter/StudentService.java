@@ -4,6 +4,7 @@ import pojo.*;
 
 import javax.naming.directory.Attributes;
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
     //学生获取教师发布的通知
@@ -19,12 +20,14 @@ public interface StudentService {
     //删除提交的实验报告
     int deleteCommit(String fileUrl);
     List<CourseExp> getCoursesByCourseID(String courseID);
-    List<ExpScore> getAllExpScore(String courseID, String classID, String studentNumber);
     List<Experiment> getExperimentByCourseIDAndClassID(String courseID, String classID);
     CourseExp getCourseExpByCourseIDAndExpname(String courseID, String expname);
     //获取学生上的课
     List<Takes> getTakesListByStudentNumber(String studentNumber);
     //获取所有的学生信息
     List<Student> getAllStudents();
-
+    //某个班发布的实验
+    List<Experiment> getExperimentListByCourseIDAndClassID(String courseID,String classID);
+    //某个学生在某个班已发布的某个实验中的成绩和排名
+    Map<String,Object> getGradeAndRankingOfExperiment(Experiment experiment,String studentNumber);
 }
