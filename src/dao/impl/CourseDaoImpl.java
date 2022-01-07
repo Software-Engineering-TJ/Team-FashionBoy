@@ -36,4 +36,22 @@ public class CourseDaoImpl extends BaseDao implements CourseDao {
         String sql = "select * from course where instructorNumber = ?";
         return queryForList(Course.class,sql,instructorNumber);
     }
+
+    @Override
+    public List<Course> QueryCoursesByFlag(int flag){
+        String sql = "select * from course where flag = ?";
+        return queryForList(Course.class,sql,flag);
+    }
+
+    @Override
+    public int DeleteCourseByCourseID(String courseID) {
+        String sql = "delete from course where courseID = ?";
+        return update(sql,courseID);
+    }
+
+    @Override
+    public int UpdateFlagOfCourseByCourseID(String courseID, int flag) {
+        String sql = "update course set flag = ? where courseID = ?";
+        return update(sql,courseID,flag);
+    }
 }

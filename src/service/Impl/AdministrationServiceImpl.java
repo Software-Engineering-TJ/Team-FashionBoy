@@ -24,6 +24,7 @@ public class AdministrationServiceImpl implements AdministrationService {
     private TeachesDao teachesDao = new TeachesDaoImpl();
     private CourseDao courseDao = new CourseDaoImpl();
     private SectionDao sectionDao = new SectionDaoImpl();
+    private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     //后续肯定还需要takes、teaches
 
     @Override
@@ -34,6 +35,27 @@ public class AdministrationServiceImpl implements AdministrationService {
     @Override
     public Administrator getAdministrationInfo(String adminNumber) {
         return administratorDao.QueryAdministratorByNumber(adminNumber);
+    }
+
+    @Override
+    public List<Course> getCourseAppliedList() {
+        return courseDao.QueryCoursesByFlag(0);
+    }
+
+    @Override
+    public Instructor getInstructorByInstructorNumber(String instructorNumber) {
+        return instructorDao.QueryInstructorByInstructorNumber(instructorNumber);
+    }
+
+    @Override
+    public void aduitCourse(String courseID, String result) {
+        if("yes".equals(result)){
+            courseDao.UpdateFlagOfCourseByCourseID(courseID,1);
+        }else{
+            //1.先删试验大纲
+            courseExpDao.DeleteCourseExpByCourseID(courseID);
+            courseDao.DeleteCourseByCourseID(courseID);
+        }
     }
 
 

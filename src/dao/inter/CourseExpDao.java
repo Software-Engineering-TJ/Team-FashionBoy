@@ -9,4 +9,5 @@ public interface CourseExpDao {
     int InsertCourseExp(String courseID,String expname,int percent,int priority,int difficulty);
     List<CourseExp> QueryCourseExpsByCourseID(String courseID);
     CourseExp QueryCourseExpByCourseIDAndExpname(String courseID,String expname);
+    int DeleteCourseExpByCourseID(String courseID);
 }

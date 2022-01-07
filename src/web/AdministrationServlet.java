@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import pojo.Administrator;
+import pojo.Course;
 import pojo.Instructor;
 import pojo.Student;
 import service.Impl.UserServiceImpl;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,7 @@ import java.util.Map;
  * @since 2021/10/21  14:03
  */
 
-public class AdministrationServlet extends BaseServlet{
+public class AdministrationServlet extends BaseServlet {
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
     protected UserService userService = new UserServiceImpl();
@@ -60,23 +62,23 @@ public class AdministrationServlet extends BaseServlet{
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
 
-        String userNumber = reqObject.get("userNumber");; //主码
+        String userNumber = reqObject.get("userNumber");
+        ; //主码
         String email = reqObject.get("email");
         String name = reqObject.get("name");
-        int sex = (reqObject.get("sex").equals("男"))?1:0;
+        int sex = (reqObject.get("sex").equals("男")) ? 1 : 0;
         String phoneNumber = reqObject.get("phoneNumber");
         String identify = reqObject.get("identify");
         int msg = 0;
-        if ("student".equals(identify)){
+        if ("student".equals(identify)) {
             msg = userService.alterStudentInformation(userNumber, email, name, sex, phoneNumber);
-        }
-        else if ("teacher".equals(identify)){
+        } else if ("teacher".equals(identify)) {
             msg = userService.alterInstructorInformation(userNumber, email, name, sex, phoneNumber);
         }
 
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("msg",msg);
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
@@ -91,15 +93,14 @@ public class AdministrationServlet extends BaseServlet{
         Administrator administrator = administrationService.getAdministrationInfo(adminNumber);
 
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("admin",administrator);
+        Map<String, Object> map = new HashMap<>();
+        map.put("admin", administrator);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
 
     /**
-     *
-     * @param req √
+     * @param req  √
      * @param resp
      * @throws ServletException
      * @throws IOException
@@ -113,21 +114,21 @@ public class AdministrationServlet extends BaseServlet{
         Student student = administrationService.getStudentByStudentNumber(studentNumber);
 
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("student",student);
+        Map<String, Object> map = new HashMap<>();
+        map.put("student", student);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
 
     /**
      * 创建新的学生账号 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void createStudent(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void createStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
@@ -135,7 +136,7 @@ public class AdministrationServlet extends BaseServlet{
         String name = reqObject.get("name");
         String sexString = reqObject.get("sex");
         int sex = 0;
-        if(sexString.equals("男")){
+        if (sexString.equals("男")) {
             sex = 1;
         }
         String studentNumber = reqObject.get("studentNumber");
@@ -143,23 +144,23 @@ public class AdministrationServlet extends BaseServlet{
         String phoneNumber = reqObject.get("phoneNumber");
 
         String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
-        msg = administrationService.AddStudent(studentNumber,email,name,phoneNumber,sex);
+        msg = administrationService.AddStudent(studentNumber, email, name, phoneNumber, sex);
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("msg",msg);
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
 
     /**
      * 创建教师账号 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected  void createTeacher(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void createTeacher(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
@@ -167,7 +168,7 @@ public class AdministrationServlet extends BaseServlet{
         String name = reqObject.get("name");
         String sexString = reqObject.get("sex");
         int sex = 0;
-        if(sexString.equals("男")){
+        if (sexString.equals("男")) {
             sex = 1;
         }
         String instructorNumber = reqObject.get("instructorNumber");
@@ -175,30 +176,30 @@ public class AdministrationServlet extends BaseServlet{
         String phoneNumber = reqObject.get("phoneNumber");
 
         String msg;        //记录添加结果:成功”success“、失败的话msg包含错误提示
-        msg = administrationService.AddInstructor(instructorNumber,email,name,phoneNumber,sex);
+        msg = administrationService.AddInstructor(instructorNumber, email, name, phoneNumber, sex);
         //返回响应
-        Map<String,Object> map = new HashMap<>();
-        map.put("result",msg);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", msg);
         String msgJson = gson.toJson(map);
         resp.getWriter().write(msgJson);
     }
 
     /**
      * 根据学生的学号获得他参与的课程信息 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void getTakesByStudentNumber(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
         String studentNumber = reqObject.get("studentNumber");
         //获取查询结果
-        Map<String,Object> map = administrationService.GetTakesInfoByStudentNumber(studentNumber);
+        Map<String, Object> map = administrationService.GetTakesInfoByStudentNumber(studentNumber);
         //返回响应
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
@@ -206,20 +207,20 @@ public class AdministrationServlet extends BaseServlet{
 
     /**
      * 根据老师的工号获得老师信息，用于搜索对应的老师 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void getTeacherByTeacherNumber(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
         String instructorNumber = reqObject.get("instructorNumber");
         //将信息填入map
-        Map<String,Object> map = administrationService.SearchInstructorByInstructorNumber(instructorNumber);
+        Map<String, Object> map = administrationService.SearchInstructorByInstructorNumber(instructorNumber);
         //返回响应
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
@@ -227,34 +228,32 @@ public class AdministrationServlet extends BaseServlet{
 
     /**
      * 根据教师工号获得教授的课程信息 √
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void getTeachesByTeacherNumber(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void getTeachesByTeacherNumber(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
         String instructorNumber = reqObject.get("instructorNumber");
         //获取任课信息
-        Map<String,Object> map = administrationService.GetTeachesInfoByInstructorNumber(instructorNumber);
+        Map<String, Object> map = administrationService.GetTeachesInfoByInstructorNumber(instructorNumber);
         //JSON化后传给前端
         String mapJson = gson.toJson(map);
         resp.getWriter().write(mapJson);
     }
 
     /**
-     * 
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void changeStudentDuty(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void changeStudentDuty(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -266,13 +265,13 @@ public class AdministrationServlet extends BaseServlet{
         String classID = reqObject.get("classID");
         String duty = reqObject.get("duty");
         //获取修改结果
-        String msg =  administrationService.ChangeStudentDuty(studentNumber,courseID,classID,duty);
-        Map<String,Object> map = new HashMap<>();
-        map.put("result",msg);
-        if ("学生".equals(duty)){
-            map.put("duty","助教");
-        }else {
-            map.put("duty","学生");
+        String msg = administrationService.ChangeStudentDuty(studentNumber, courseID, classID, duty);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", msg);
+        if ("学生".equals(duty)) {
+            map.put("duty", "助教");
+        } else {
+            map.put("duty", "学生");
         }
         //JSON化
         resp.getWriter().write(gson.toJson(map));
@@ -280,13 +279,13 @@ public class AdministrationServlet extends BaseServlet{
 
     /**
      * 修改某个课程下该教师的职务。（将普通老师改为责任教师）
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void changeDutyInstructor(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void changeDutyInstructor(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
@@ -297,13 +296,13 @@ public class AdministrationServlet extends BaseServlet{
         String courseID = reqObject.get("courseID");
         String duty = reqObject.get("duty");
         //获取修改结果
-        String msg = administrationService.ChangeDutyInstructor(instructorNumber,courseID);
-        Map<String,Object> map = new HashMap<>();
-        map.put("result",msg);
-        if ("教师".equals(duty)){
-            map.put("duty","责任教师");
-        }else {
-            map.put("duty","教师");
+        String msg = administrationService.ChangeDutyInstructor(instructorNumber, courseID);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", msg);
+        if ("教师".equals(duty)) {
+            map.put("duty", "责任教师");
+        } else {
+            map.put("duty", "教师");
         }
         //JSON化
         resp.getWriter().write(gson.toJson(map));
@@ -311,48 +310,47 @@ public class AdministrationServlet extends BaseServlet{
 
     /**
      * 查看某门课程下的责任教师
+     *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    protected void checkTeacherDuty(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void checkTeacherDuty(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String courseID = req.getParameter("courseID");
         //获取责任教师的工号和姓名
-        Map<String,Object> map = administrationService.CheckTeacherDuty(courseID);
+        Map<String, Object> map = administrationService.CheckTeacherDuty(courseID);
         //JSON化
         resp.getWriter().write(gson.toJson(map));
     }
 
-    protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
-    {
+    protected void DeleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String email = req.getParameter("email");
         //1.根据req中的具体请求，确定删除的是老师or学生
         String identity = req.getParameter("identity");
 
         boolean result;
-        if(identity.equals("student")){
+        if (identity.equals("student")) {
             result = administrationService.DeleteStudent(email);
-        }else{
+        } else {
             result = administrationService.DeleteInstructor(email);
         }
 
-        if(!result){
+        if (!result) {
             //删除失败，提醒重新尝试
-        }else{
+        } else {
             //成功
         }
 
     }
 
-    protected void createStudentFromExcel(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+    protected void createStudentFromExcel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("先上传excel文件");
         //后续需要读取的文件
         File objectFile = null;
         //1.先判断是否是多段数据,不是多段数据的话一定不是文件上传，后续操作无法展开
-        if(ServletFileUpload.isMultipartContent(req)){
+        if (ServletFileUpload.isMultipartContent(req)) {
             //2.创建FileItemFactory实现类
             FileItemFactory fileItemFactory = new DiskFileItemFactory();
             //3.用于解析上传数据的工具类ServletFileUpload
@@ -365,17 +363,17 @@ public class AdministrationServlet extends BaseServlet{
                 String filename = null;
                 FileItem fileItemToBeStore = null;
                 //5.判断每个表单项是否是文件
-                for(FileItem fileItem:list){
-                    if(fileItem.isFormField()){
+                for (FileItem fileItem : list) {
+                    if (fileItem.isFormField()) {
                         //获取存储位置信息
                         String name = fileItem.getFieldName();   //普通表单项名字
-                        if(name.equals("administratorNumber")){
+                        if (name.equals("administratorNumber")) {
                             administratorNumber = fileItem.getString("UTF-8"); //参数UTF-8解决乱码问题
                         }
-                    }else{
+                    } else {
                         //文件表单项
                         filename = fileItem.getName();//上传的文件名
-                        System.out.println("文件："+filename);
+                        System.out.println("文件：" + filename);
                         fileItemToBeStore = fileItem; //先放着，等待文件路径确定后再写到磁盘
                     }
                 }
@@ -386,12 +384,12 @@ public class AdministrationServlet extends BaseServlet{
                     //定位到“整个项目”所在的路径
                     path = path.getParent().getParent().getParent();
                     //定位到文件应存放的路径
-                    Path fileDirectory = Paths.get(path.toString(),"web/WEB-INF/excels/"+administratorNumber);
+                    Path fileDirectory = Paths.get(path.toString(), "web/WEB-INF/excels/" + administratorNumber);
                     File file = new File(fileDirectory.toString());
-                    if(!file.isDirectory()){
+                    if (!file.isDirectory()) {
                         file.mkdirs(); //这个方法可以将路径中确实的父类目录均创建出来
                     }
-                    Path filePath = Paths.get(fileDirectory.toString(),filename);
+                    Path filePath = Paths.get(fileDirectory.toString(), filename);
                     objectFile = new File(filePath.toString());
                     fileItemToBeStore.write(objectFile);
                 } catch (Exception e) {
@@ -430,4 +428,56 @@ public class AdministrationServlet extends BaseServlet{
         }
     }
 
+    /**
+     * 管理员查看需要审核的课程（责任教师申请的）
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getCourseApplied(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        //等待审核的课程
+        List<Course> courseAppliedList = administrationService.getCourseAppliedList();
+
+        List<Map<String, String>> courseAppliedInfoList = new ArrayList<>();
+        if (courseAppliedList != null) {
+            for (Course course : courseAppliedList) {
+                Instructor instructor = administrationService.getInstructorByInstructorNumber(course.getInstructorNumber());
+
+                Map<String, String> map = new HashMap<>();
+
+                map.put("title", course.getTitle());
+                map.put("courseID",course.getCourseID());
+                map.put("instructorNumber", course.getInstructorNumber());
+                map.put("instructorName", instructor.getName());
+
+                courseAppliedInfoList.add(map);
+            }
+        }
+
+        resp.getWriter().write(gson.toJson(courseAppliedInfoList));
+    }
+
+    /**
+     * 审核课程
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void AuditCourse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        //评审结果
+        String result = reqObject.get("result");
+
+        administrationService.aduitCourse(courseID, result);
+
+    }
 }

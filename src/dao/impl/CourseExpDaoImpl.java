@@ -30,4 +30,10 @@ public class CourseExpDaoImpl extends BaseDao implements CourseExpDao {
         String sql = "select * from courseexp where courseID = ? and expname = ?";
         return queryForOne(CourseExp.class,sql,courseID,expname);
     }
+
+    @Override
+    public int DeleteCourseExpByCourseID(String courseID) {
+        String sql = "delete from courseexp where courseID = ?";
+        return update(sql,courseID);
+    }
 }

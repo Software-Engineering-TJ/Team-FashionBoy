@@ -40,4 +40,10 @@ public interface AdministrationService {
     public Student getStudentByStudentNumber(String studentNumber);
 
     public Administrator getAdministrationInfo(String adminNumber);
+    //获取待审核的课程
+    List<Course> getCourseAppliedList();
+    //用工号搜索老师
+    Instructor getInstructorByInstructorNumber(String instructorNumber);
+    //评审课程
+    void aduitCourse(String courseID,String result);
 }
