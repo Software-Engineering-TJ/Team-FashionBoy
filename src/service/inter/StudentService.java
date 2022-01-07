@@ -24,4 +24,7 @@ public interface StudentService {
     CourseExp getCourseExpByCourseIDAndExpname(String courseID, String expname);
     //获取学生上的课
     List<Takes> getTakesListByStudentNumber(String studentNumber);
+    //获取所有的学生信息
+    List<Student> getAllStudents();
+
 }

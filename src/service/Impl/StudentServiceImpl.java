@@ -24,6 +24,7 @@ public class StudentServiceImpl implements StudentService {
     private AttendScoreDao attendScoreDao = new AttendScoreDaoImpl();
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExperimentDao experimentDao = new ExperimentDaoImpl();
+    private StudentDao studentDao = new StudentDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -88,4 +89,10 @@ public class StudentServiceImpl implements StudentService {
     public List<Takes> getTakesListByStudentNumber(String studentNumber) {
         return takesDao.QueryTakesByStudentNumber(studentNumber);
     }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentDao.QueryAllStudents();
+    }
+
 }

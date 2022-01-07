@@ -10,13 +10,15 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import pojo.Administrator;
-import pojo.Course;
-import pojo.Instructor;
-import pojo.Student;
+import pojo.*;
+import pojo.logicEntity.UserInfo;
+import service.Impl.InstructorServiceImpl;
+import service.Impl.StudentServiceImpl;
 import service.Impl.UserServiceImpl;
 import service.inter.AdministrationService;
 import service.Impl.AdministrationServiceImpl;
+import service.inter.InstructorService;
+import service.inter.StudentService;
 import service.inter.UserService;
 import utils.RequestJsonUtils;
 
@@ -45,6 +47,8 @@ public class AdministrationServlet extends BaseServlet {
 
     private AdministrationService administrationService = new AdministrationServiceImpl();
     protected UserService userService = new UserServiceImpl();
+    private StudentService studentService = new StudentServiceImpl();
+    private InstructorService instructorService = new InstructorServiceImpl();
 
 
     /**
@@ -449,7 +453,7 @@ public class AdministrationServlet extends BaseServlet {
                 Map<String, String> map = new HashMap<>();
 
                 map.put("title", course.getTitle());
-                map.put("courseID",course.getCourseID());
+                map.put("courseID", course.getCourseID());
                 map.put("instructorNumber", course.getInstructorNumber());
                 map.put("instructorName", instructor.getName());
 
@@ -462,6 +466,7 @@ public class AdministrationServlet extends BaseServlet {
 
     /**
      * 审核课程
+     *
      * @param req
      * @param resp
      * @throws ServletException
@@ -479,5 +484,53 @@ public class AdministrationServlet extends BaseServlet {
 
         administrationService.aduitCourse(courseID, result);
 
+    }
+
+    /**
+     * 获取所有学生信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getStudentInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+
+        List<Student> studentList = studentService.getAllStudents();
+        List<UserInfo> userInfoList = new ArrayList<>();
+        if(studentList != null){
+            for(Student student : studentList){
+                UserInfo userInfo = new UserInfo();
+                String sex = (student.getSex()==1)?"男":"女";
+                userInfo.setStudentInfo(student.getName(),sex,student.getStudentNumber(),student.getPhoneNumber(),student.getEmail());
+                userInfoList.add(userInfo);
+            }
+        }
+
+        resp.getWriter().write(gson.toJson(userInfoList));
+    }
+
+    /**
+     * 获取所有老师信息
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTeacherInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+
+        List<Instructor> instructorList = instructorService.getAllInstructors();
+        List<UserInfo> userInfoList = new ArrayList<>();
+        if(instructorList != null){
+            for(Instructor instructor : instructorList){
+                UserInfo userInfo = new UserInfo();
+                String sex = (instructor.getSex()==1)?"男":"女";
+                userInfo.setTeacherInfo(instructor.getName(),sex,instructor.getStudentNumber(),instructor.getPhoneNumber(),instructor.getEmail());
+                userInfoList.add(userInfo);
+            }
+        }
+
+        resp.getWriter().write(gson.toJson(userInfoList));
     }
 }

@@ -33,7 +33,7 @@ public class InstructorDaoImpl extends BaseDao implements InstructorDao {
 
     @Override
     public List<Instructor> QueryAllInstructors() {
-        String sql = "select select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from from instructor";
+        String sql = "select `instructorNumber`,`email`,`password`,`name`,`sex`,`phoneNumber`,`status` from instructor";
         return queryForList(Instructor.class,sql);
     }
 

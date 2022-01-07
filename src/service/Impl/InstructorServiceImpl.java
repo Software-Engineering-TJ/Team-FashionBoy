@@ -321,4 +321,9 @@ public class InstructorServiceImpl implements InstructorService {
         return teachesDao.QueryTeachesByInstructorNumber(instructorNumber);
     }
 
+    @Override
+    public List<Instructor> getAllInstructors() {
+        return instructorDao.QueryAllInstructors();
+    }
+
 }

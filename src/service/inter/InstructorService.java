@@ -61,5 +61,6 @@ public interface InstructorService {
     Student getStudentByStudentNumber(String studentNumber);
     List<Takes> getTakesNotInAttendScore(String courseID, String classID, String title);
     List<Teaches> getTeachesListByInstructorNumber(String instructorNumber);
-
+    //获取所有教师信息
+    List<Instructor> getAllInstructors();
 }
