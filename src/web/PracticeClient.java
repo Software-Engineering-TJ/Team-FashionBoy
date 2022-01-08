@@ -1,5 +1,6 @@
 package web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
 import pojo.ChoiceQuestion;
 import utils.RequestJsonUtils;
@@ -24,13 +25,15 @@ public class PracticeClient extends BaseServlet{
     private SocketChannel socketChannel;
     private String username;
     private String info;
-    private List<String> choiceQuestionList;
+    private List<String> choiceQuestionListOfString;
+    private List<ChoiceQuestion> choiceQuestionList;
 
     //构造器,完成初始化工作
     public PracticeClient() throws IOException {
 
         //初始化题目列表
-        choiceQuestionList = new ArrayList<String>();
+        choiceQuestionListOfString = new ArrayList<String>();
+        choiceQuestionList = new ArrayList<ChoiceQuestion>();
         selector = Selector.open();
         //连接服务器
         socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
@@ -58,7 +61,32 @@ public class PracticeClient extends BaseServlet{
     //servlet，将题目列表传给前端
     protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         readInfo();
-        resp.getWriter().write(String.valueOf(choiceQuestionList));
+//        resp.getWriter().write(String.valueOf(choiceQuestionList));
+        for (String s : choiceQuestionListOfString) {
+            String[] values = s.split(",");
+
+            int choiceId = Integer.parseInt(values[0].split(":")[1]);
+            String choiceQuestion = values[1].split(":")[1];
+            String choiceOption = values[2].split(":")[1];
+            int choiceDifficulty = Integer.parseInt(values[3].split(":")[1]);
+            String choiceAnswer = values[4].split(":")[1];
+            String choiceAnalysis = values[5].split(":")[1];
+            double choiceScore = Double.parseDouble(values[6].split(":")[1]);
+            ChoiceQuestion choiceQuestionObj = new ChoiceQuestion();
+
+            choiceQuestionObj.setChoiceId(choiceId);
+            choiceQuestionObj.setChoiceQuestion(choiceQuestion);
+            choiceQuestionObj.setChoiceOption(choiceOption);
+            choiceQuestionObj.setChoiceDifficulty(choiceDifficulty);
+            choiceQuestionObj.setChoiceAnswer(choiceAnswer);
+            choiceQuestionObj.setChoiceAnalysis(choiceAnalysis);
+            choiceQuestionObj.setChoiceScore(choiceScore);
+
+            choiceQuestionList.add(choiceQuestionObj);
+        }
+        
+        String json = JSONObject.toJSONString(choiceQuestionList);
+        resp.getWriter().write(json);
     }
 
 
@@ -91,7 +119,7 @@ public class PracticeClient extends BaseServlet{
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
                         System.out.println(msg.trim());
-                        choiceQuestionList.add(msg);
+                        choiceQuestionListOfString.add(msg);
                     }
                 }
                 iterator.remove(); //删除当前的 selectionKey,防止重复操作
