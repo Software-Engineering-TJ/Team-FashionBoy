@@ -1,7 +1,7 @@
 package dao.impl;
 
 import dao.inter.ChoiceQuestionDao;
-import org.junit.Test;
+//import org.junit.Test;
 import pojo.ChoiceQuestion;
 
 import pojo.Course;

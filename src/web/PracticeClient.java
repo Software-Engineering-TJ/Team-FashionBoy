@@ -1,6 +1,7 @@
 package web;
 
 import com.google.gson.reflect.TypeToken;
+import pojo.ChoiceQuestion;
 import utils.RequestJsonUtils;
 
 import javax.servlet.ServletException;
@@ -12,9 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class PracticeClient extends BaseServlet{
 
@@ -25,10 +24,13 @@ public class PracticeClient extends BaseServlet{
     private SocketChannel socketChannel;
     private String username;
     private String info;
+    private List<String> choiceQuestionList;
 
     //构造器,完成初始化工作
     public PracticeClient() throws IOException {
 
+        //初始化题目列表
+        choiceQuestionList = new ArrayList<String>();
         selector = Selector.open();
         //连接服务器
         socketChannel = SocketChannel.open(new InetSocketAddress(HOST, PORT));
@@ -50,16 +52,17 @@ public class PracticeClient extends BaseServlet{
 
         info = reqObject.get("answer");
         System.out.println(info);
+        sendInfo();
     }
 
-    //servlet
+    //servlet，将题目列表传给前端
     protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         readInfo();
-
+        resp.getWriter().write(String.valueOf(choiceQuestionList));
     }
 
 
-    //向服务器发送消息
+    //交给服务器批改
     public void sendInfo() {
 
         info = username + " says: " + info;
@@ -88,6 +91,7 @@ public class PracticeClient extends BaseServlet{
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
                         System.out.println(msg.trim());
+                        choiceQuestionList.add(msg);
                     }
                 }
                 iterator.remove(); //删除当前的 selectionKey,防止重复操作
@@ -99,32 +103,32 @@ public class PracticeClient extends BaseServlet{
         }
     }
 
-    //客户端入口
-    public void startClient() throws Exception {
-
-        //启动我们客户端
-        final PracticeClient chatClient = new PracticeClient();
-        //启动一个线程,每隔 3 秒，读取从服务器发送数据
-        new Thread() {
-            public void run() {
-                while (true) {
-                    chatClient.readInfo();
-                    try {
-                        Thread.currentThread().sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-
-        //发送数据给服务器端
-        chatClient.sendInfo();
+//    //客户端入口
+//    public void startClient() throws Exception {
+//
+//        //启动我们客户端
+////        final PracticeClient chatClient = new PracticeClient();
+//        //启动一个线程,每隔 3 秒，读取从服务器发送数据
+////        new Thread() {
+////            public void run() {
+////                while (true) {
+////                    chatClient.readInfo();
+////                    try {
+////                        Thread.currentThread().sleep(3000);
+////                    } catch (InterruptedException e) {
+////                        e.printStackTrace();
+////                    }
+////                }
+////            }
+////        }.start();
+//
 //        //发送数据给服务器端
-//        Scanner scanner = new Scanner(System.in);
-//        while (scanner.hasNextLine()) {
-//            String s = scanner.nextLine();
-//            chatClient.sendInfo();
-//        }
-    }
+//        sendInfo();
+////        //发送数据给服务器端
+////        Scanner scanner = new Scanner(System.in);
+////        while (scanner.hasNextLine()) {
+////            String s = scanner.nextLine();
+////            chatClient.sendInfo();
+////        }
+//    }
 }

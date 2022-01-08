@@ -67,14 +67,14 @@ public class ChoiceQuestion {
 
     @Override
     public String toString() {
-        return "ChoiceQuestion{" +
-                "choiceID=" + choice_id +
-                ", choiceQuestion='" + choice_question + '\'' +
-                ", choiceOption='" + choice_option + '\'' +
-                ", choiceDifficulty=" + choice_difficulty +
-                ", choiceAnswer='" + choice_answer + '\'' +
-                ", choiceAnalysis='" + choice_analysis + '\'' +
-                ", choiceScore=" + choice_score +
+        return '{' +
+                "\"choiceID\":" + choice_id +
+                ", \"choiceQuestion\":" + '\"' + choice_question + '\"' +
+                ", \"choiceOption\":" + '\"' + choice_option + '\"' +
+                ", \"choiceDifficulty\":" + choice_difficulty +
+                ", \"choiceAnswer\":" + '\"' + choice_answer + '\"' +
+                ", \"choiceAnalysis\":" + '\"' + choice_analysis + '\"' +
+                ", \"choiceScore\":" + choice_score +
                 '}';
     }
 }
