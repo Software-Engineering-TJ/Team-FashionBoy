@@ -9,24 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="考勤模块完成">
-      <change afterPath="$PROJECT_DIR$/web/pages/answerFinish.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/css/answerFinish.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/js/answerFinish.js" afterDir="false" />
+    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="修复开课bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/ChoiceQuestionDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/ChoiceQuestionDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pojo/ChoiceQuestion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pojo/ChoiceQuestion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/PracticeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/PracticeClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/answer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/css/answer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/answer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/administrator/info.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/administrator/info.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/answer.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/answer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseOverview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/tIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +25,8 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="SCSS File" />
         <option value="JavaScript File" />
       </list>
@@ -48,7 +35,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="beifen" />
+        <entry key="$PROJECT_DIR$" value="备份" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +72,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/static/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/static/js/student/subComponents" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -100,7 +87,6 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\projectAll\Team-FashionBoy\web\static\img" />
       <recent name="D:\projectAll\Team-FashionBoy\web\static\js\student\subComponents" />
       <recent name="D:\projectAll\Team-FashionBoy\web\WEB-INF\lib" />
       <recent name="D:\projectAll\Team-FashionBoy\web\static\js\teacher\subComponents" />
@@ -230,6 +216,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="应用程序.ChoiceQuestionDaoImpl" />
+        <item itemvalue="JUnit.ChoiceQuestionDaoImpl.test" />
         <item itemvalue="JUnit.ChoiceQuestionDaoImpl.test" />
         <item itemvalue="应用程序.ChoiceQuestionDaoImpl" />
       </list>
@@ -238,6 +226,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
+      <changelist id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="修复开课bug" />
       <created>1636465516960</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -301,7 +290,7 @@
       <workItem from="1641121615873" duration="2931000" />
       <workItem from="1641470848067" duration="4182000" />
       <workItem from="1641555395798" duration="8408000" />
-      <workItem from="1641692481576" duration="5129000" />
+      <workItem from="1641693901371" duration="705000" />
     </task>
     <task id="LOCAL-00001" summary="最新版代码">
       <created>1636899511052</created>
@@ -478,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641476703686</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="修复开课bug">
+      <created>1641573919740</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1641573919740</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,9 +499,9 @@
               </option>
               <option name="COLUMN_ID_WIDTH">
                 <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="56" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="44" />
-                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="26" />
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="164" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="147" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="147" />
                 </map>
               </option>
             </State>
@@ -555,7 +551,8 @@
     <MESSAGE value="学生成绩完成" />
     <MESSAGE value="学生查看报告评论" />
     <MESSAGE value="考勤模块完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="考勤模块完成" />
+    <MESSAGE value="修复开课bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复开课bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -577,18 +574,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>513</line>
-          <option name="timeStamp" value="97" />
+          <line>542</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/PracticeClient.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="99" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/web/PracticeClient.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="101" />
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>551</line>
+          <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/web/AdministrationServlet.java</url>
@@ -654,29 +646,12 @@
           </properties>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
-          <line>497</line>
-          <properties class="web.InstructorServlet" method="addSection">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="96" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/web/PracticeClient.java</url>
-          <line>59</line>
-          <properties class="web.PracticeClient" method="getQuestionList">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="98" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
         <watch expression="courseExpInfoList.get(0)" />
         <watch expression="((SQLException)e.next.cause).cause" custom="java.sql.SQLException" />
-        <watch expression="choiceQuestionListOfString" />
       </configuration>
     </watches-manager>
   </component>
