@@ -181,7 +181,7 @@ public class StudentServiceImpl implements StudentService {
             ExpScore expScore = expScoreDao.QueryExpScoreByCourseIDAndClassIDAndExpnameAndStudentNumber(courseID,classID,courseExp.getExpname(),studentNumber);
             if(expScore!=null && expScore.getScore() != -1){
                 //只计算已经提交且批改过的报告
-                expGrade += expScore.getScore()*expPercent;
+                expGrade += expScore.getScore()*expPercent/100;
             }
         }
 
@@ -229,6 +229,6 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
-        return sumScore/practiceList.size()*percent;
+        return sumScore/practiceList.size()*percent/100;
     }
 }
