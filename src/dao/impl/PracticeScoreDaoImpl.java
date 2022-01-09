@@ -7,9 +7,9 @@ import java.util.List;
 
 public class PracticeScoreDaoImpl extends BaseDao implements PracticeScoreDao {
     @Override
-    public List<PracticeScore> QueryPracticeScoreByGroup(String courseID, String classID, String practiceName) {
-        String sql = "select groupNumber from practicescore where (courseID = ? and classID = ? and practiceName = ?) group by groupNumber order by groupScore DESC,finishTime ASC";
-        return queryForList(PracticeScore.class,sql,courseID,classID,practiceName);
+    public List<PracticeScore> QueryPracticeScoreByGroup(String courseID,String classID,String practiceName,int groupNumber) {
+        String sql = "select studentNumber from practicescore where (courseID = ? and classID = ? and practiceName = ? and groupNumber = ?) order by individualScore DESC,individualTime ASC";
+        return queryForList(PracticeScore.class,sql,courseID,classID,practiceName,groupNumber);
     }
 
     @Override

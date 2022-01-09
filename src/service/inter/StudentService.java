@@ -36,4 +36,6 @@ public interface StudentService {
     float getGradeOfExperiment(String courseID,String classID,String studentNumber);
     //获取某个课程、某个班级、某个学生的"所有对抗"总分数
     float getGradeOfPractice(String courseID,String classID,String studentNumber);
+    //写课程反馈
+    int writeReflection(String courseID,String classID,String studentNumber,String content,String date);
 }

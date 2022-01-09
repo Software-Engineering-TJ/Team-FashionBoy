@@ -12,8 +12,6 @@ public class PracticeScore {
     private float individualScore;
     private Timestamp individualTime;
     private int groupNumber;
-    private Timestamp finishTime;
-    private float groupScore;
 
     public PracticeScore() {
     }
@@ -66,21 +64,6 @@ public class PracticeScore {
         this.groupNumber = groupNumber;
     }
 
-    public Timestamp getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(Timestamp finishTime) {
-        this.finishTime = finishTime;
-    }
-
-    public float getGroupScore() {
-        return groupScore;
-    }
-
-    public void setGroupScore(float groupScore) {
-        this.groupScore = groupScore;
-    }
 
     @Override
     public String toString() {
@@ -91,8 +74,6 @@ public class PracticeScore {
                 ", individualScore=" + individualScore +
                 ", individualTime=" + individualTime +
                 ", groupNumber=" + groupNumber +
-                ", finishTime=" + finishTime +
-                ", groupScore=" + groupScore +
                 '}';
     }
 }

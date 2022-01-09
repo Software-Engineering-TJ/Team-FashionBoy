@@ -28,8 +28,7 @@ public class StudentServiceImpl implements StudentService {
     private AttendDao attendDao = new AttendDaoImpl();
     private PracticeDao practiceDao = new PracticeDaoImpl();
     private PracticeScoreDao practiceScoreDao = new PracticeScoreDaoImpl();
-    //默认小组总数，方便计算成绩
-    public static int groupNumber = 50;
+    private ReflectionDao reflectionDao = new ReflectionDaoImpl();
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -207,22 +206,22 @@ public class StudentServiceImpl implements StudentService {
             //如果没有对抗练习，默认满分
             return percent;
         }
-        //查找每一个对抗练习中该学生的小组排名，确定成绩
+        //查找每一个对抗练习中在该学生的小组中的排名，确定成绩
         for(Practice practice : practiceList){
-            //该学生再本次对抗练习中的成绩信息
+            //该学生在本次对抗练习中的成绩信息
             PracticeScore practiceScore = practiceScoreDao.QueryPracticeScoreByCourseIDAndClassIDAndPracticeNameAndStudentNumber(courseID,classID,practice.getPracticeName(),studentNumber);
             if(practiceScore == null){
                 //没有参加该次对抗练习，成绩为0
                 continue;
             }
-            //排序后的小组
-            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName());
+            //排序后的小组成员
+            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName(),practiceScore.getGroupNumber());
             //算成绩
             if(practiceScoreList != null){
                 for(int i=0;i<practiceScoreList.size();i++){
-                    if(practiceScoreList.get(i).getGroupNumber()==practiceScore.getGroupNumber()){
-                        //找到所在的组的名次i
-                        sumScore += (1-i/groupNumber)*100;
+                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
+                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
+                        sumScore += ((3-i)*2-1)*20;
                         break;
                     }
                 }
@@ -230,5 +229,10 @@ public class StudentServiceImpl implements StudentService {
         }
 
         return sumScore/practiceList.size()*percent/100;
+    }
+
+    @Override
+    public int writeReflection(String courseID, String classID, String studentNumber,String content,String date) {
+        return reflectionDao.addReflection(courseID, classID, studentNumber, content, date);
     }
 }

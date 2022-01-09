@@ -585,4 +585,40 @@ public class InstructorServlet extends BaseServlet{
 
         resp.getWriter().write(gson.toJson(map));
     }
+
+    /**
+     * 查看每个班的学生反馈
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void viewReflection(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        List<Reflection> reflectionList = instructorService.getAllReflection(courseID,classID);
+
+        List<Map<String, Object>> reflectionInfoList = new ArrayList<>();
+
+        if(reflectionList != null){
+            for(Reflection reflection : reflectionList){
+                Student student = administrationService.getStudentByStudentNumber(reflection.getStudentNumber());
+                Map<String, Object> map = new HashMap<>();
+                map.put("studentNumber",student.getStudentNumber());
+                map.put("studentName",student.getName());
+                map.put("content",reflection.getContent());
+                map.put("date",reflection.getDate());
+
+                reflectionInfoList.add(map);
+            }
+        }
+
+        resp.getWriter().write(gson.toJson(reflectionInfoList));
+    }
 }

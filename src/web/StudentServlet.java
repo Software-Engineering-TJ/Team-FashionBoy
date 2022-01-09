@@ -322,6 +322,7 @@ public class StudentServlet extends BaseServlet {
 
         //该班级发布的所有对抗练习
         List<Practice> practiceList = practiceDao.QueryPracticesByCourseIDAndClassID(courseID,classID);
+
         //查找每一个对抗练习中该学生的小组排名，确定成绩
         for(Practice practice : practiceList){
             Map<String, Object> map = new HashMap<>();
@@ -348,14 +349,14 @@ public class StudentServlet extends BaseServlet {
                 practiceInfoList.add(map);
                 continue;
             }
-            //排序后的小组
-            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName());
+            //排序后的小组成员
+            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName(), practiceScore.getGroupNumber());
             //算成绩
             if(practiceScoreList != null){
                 for(int i=0;i<practiceScoreList.size();i++){
-                    if(practiceScoreList.get(i).getGroupNumber()==practiceScore.getGroupNumber()){
-                        //找到所在的组的名次i
-                        grade = (1-i/StudentServiceImpl.groupNumber)*100;
+                    if(practiceScoreList.get(i).getStudentNumber().equals(practiceScore.getStudentNumber())){
+                        //找到所在的组的名次i(第一名100，第二名60，第三名20)
+                        grade = ((3-i)*2-1)*20;
                         map.put("grade",grade);
                         practiceInfoList.add(map);
                         break;
@@ -365,5 +366,34 @@ public class StudentServlet extends BaseServlet {
         }
 
         resp.getWriter().write(gson.toJson(practiceInfoList));
+    }
+
+    /**
+     * 学生写课程反馈
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void writeReflection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+        String content = reqObject.get("content");
+
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr = dateFormat.format(date);
+
+        if(studentService.writeReflection(courseID,classID,studentNumber,content,dateStr)==1){
+            resp.getWriter().write("反馈成功");
+        }else{
+            resp.getWriter().write("反馈失败，请重试");
+        }
     }
 }
