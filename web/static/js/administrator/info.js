@@ -28,6 +28,12 @@ var Info = Vue.extend({
                     message: '已批准开课申请！',
                     type: 'success'
                 })
+                axios({
+                    url: '/SoftwareEngineering/administrationServlet?action=getCourseApplied',
+                    method: "Post",
+                }).then(resp => {
+                    this.infoList = resp.data;
+                })
             })
         },
         unCorrect(row) {
@@ -44,12 +50,19 @@ var Info = Vue.extend({
                     message: '已拒绝开课申请！',
                     type: 'error'
                 })
+                axios({
+                    url: '/SoftwareEngineering/administrationServlet?action=getCourseApplied',
+                    method: "Post",
+                }).then(resp => {
+                    this.infoList = resp.data;
+                })
             })
         }
     },
     template: `
         <div style="padding-top: 30px">
         <hr style="color: #C0C4CC;width: 94%;margin-left: 3%;margin-bottom: 6px">
+        <el-card>
         <el-row>
             <el-col :span="22" :offset="1">
                 <template>
@@ -67,17 +80,17 @@ var Info = Vue.extend({
                         <el-table-column
                                 prop="courseID"
                                 label="课程ID"
-                                width="200">
+                                width="250">
                         </el-table-column>
                         <el-table-column
                                 prop="instructorNumber"
                                 label="教师工号"
-                                width="200">
+                                width="250">
                         </el-table-column>
                         <el-table-column
                                 prop="instructorName"
                                 label="教师姓名"
-                                width="150">
+                                width="250">
                         </el-table-column>
                         <el-table-column
                                 label="操作"
@@ -91,6 +104,8 @@ var Info = Vue.extend({
                 </template>
             </el-col>
         </el-row>
+        </el-card>
+        
      </div>
         `
 });

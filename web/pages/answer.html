@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../static/css/common.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/SoftwareEngineering/static/img/icon.ico" />
+    <!-- 引入Element样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/SoftwareEngineering/static/css/common.css">
     <!-- 引入本页面样式 -->
-    <link rel="stylesheet" href="../../static/css/answer.scss">
+    <link rel="stylesheet" href="/SoftwareEngineering/static/css/answer.scss">
+    <!-- 引入Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <!-- 引入Element组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <base href="http://localhost:8098/SoftwareEngineering">
     <title>对抗练习</title>
 </head>
 <body>
@@ -38,13 +48,13 @@
                     style="
             position: fixed;
             top: 610px;
-            height: 60px;
-            width: 240px;
-            left: 80px;
+            height: 80px;
+            width: 245px;
+            left: 77px;
           "
             >
-                <div class="left">
-                    <ul class="l-top">
+                <div class="left" style="height: 50px">
+                    <ul class="l-top" style="height: 50px">
                         <li>
                             <a href="javascript:;"></a>
                             <span>未答</span>
@@ -83,47 +93,47 @@
                     </ul>
                 </div>
             </div>
-            <div class="item">
-                <div class="my-item">
-                    <h4 style="margin: 18px 0 18px 0">填空题</h4>
-                    <ul>
-                        <li v-for="indexA in fillLength" :key="indexA" class="tag-li">
-                            <a
-                                    :href="'#my-index' + (indexA - 1 + choiceLength)"
-                                    :class="{ bg: written[indexA - 1 + choiceLength] === true }"
-                            >
-                  <span
-                          :class="{ mark: tag[indexA - 1 + choiceLength] }"
-                  ></span>
-                                {{ indexA + choiceLength }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="item">
-                <div class="my-item">
-                    <h4 style="margin: 18px 0 18px 0">判断题</h4>
-                    <ul>
-                        <li v-for="indexA in judgeLength" :key="indexA" class="tag-li">
-                            <a
-                                    :href="'#my-index' + (indexA - 1 + fillLength + choiceLength)"
-                                    :class="{
-                    bg:
-                      written[indexA - 1 + fillLength + choiceLength] === true,
-                  }"
-                            >
-                  <span
-                          :class="{
-                      mark: tag[indexA - 1 + fillLength + choiceLength],
-                    }"
-                  ></span>
-                                {{ indexA + fillLength + choiceLength }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!--            <div class="item">-->
+<!--                <div class="my-item">-->
+<!--                    <h4 style="margin: 18px 0 18px 0">填空题</h4>-->
+<!--                    <ul>-->
+<!--                        <li v-for="indexA in fillLength" :key="indexA" class="tag-li">-->
+<!--                            <a-->
+<!--                                    :href="'#my-index' + (indexA - 1 + choiceLength)"-->
+<!--                                    :class="{ bg: written[indexA - 1 + choiceLength] === true }"-->
+<!--                            >-->
+<!--                  <span-->
+<!--                          :class="{ mark: tag[indexA - 1 + choiceLength] }"-->
+<!--                  ></span>-->
+<!--                                {{ indexA + choiceLength }}-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="item">-->
+<!--                <div class="my-item">-->
+<!--                    <h4 style="margin: 18px 0 18px 0">判断题</h4>-->
+<!--                    <ul>-->
+<!--                        <li v-for="indexA in judgeLength" :key="indexA" class="tag-li">-->
+<!--                            <a-->
+<!--                                    :href="'#my-index' + (indexA - 1 + fillLength + choiceLength)"-->
+<!--                                    :class="{-->
+<!--                    bg:-->
+<!--                      written[indexA - 1 + fillLength + choiceLength] === true,-->
+<!--                  }"-->
+<!--                            >-->
+<!--                  <span-->
+<!--                          :class="{-->
+<!--                      mark: tag[indexA - 1 + fillLength + choiceLength],-->
+<!--                    }"-->
+<!--                  ></span>-->
+<!--                                {{ indexA + fillLength + choiceLength }}-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </el-card>
 
@@ -196,158 +206,158 @@
                     </div>
                 </div>
 
-                <!--   填空题   -->
-                <div class="myChoice" style="font-weight: bolder">填空题</div>
-                <div class="my-content">
-                    <!--    答题区域    -->
-                    <!--    标题    -->
+<!--                &lt;!&ndash;   填空题   &ndash;&gt;-->
+<!--                <div class="myChoice" style="font-weight: bolder">填空题</div>-->
+<!--                <div class="my-content">-->
+<!--                    &lt;!&ndash;    答题区域    &ndash;&gt;-->
+<!--                    &lt;!&ndash;    标题    &ndash;&gt;-->
 
-                    <div v-for="(item, indexB) in problem.fillProblem" :key="indexB">
-                        <p class="topic" :id="'my-index' + (indexB + choiceLength)">
-                <span class="number">{{ indexB + choiceLength + 1 }}</span
-                >{{ item.fillQuestion }}
-                            <el-tooltip
-                                    class="item"
-                                    effect="dark"
-                                    content="标记"
-                                    placement="top"
-                                    style="float: right"
-                            >
-                                <el-button
-                                        size="medium"
-                                        type="text"
-                                        icon="el-icon-s-flag"
-                                        @click="setSign(indexB + choiceLength)"
-                                ></el-button>
-                            </el-tooltip>
-                        </p>
-                        <div class="fill">
-                            <div
-                                    v-for="indexInner in item.fillSpaceNumber"
-                                    :key="indexInner"
-                                    style="margin-bottom: 20px"
-                            >
-                                <span class="my-input">{{ indexInner }}</span>
-                                <div style="display: inline-block">
-                                    <el-input
-                                            style="width: 200px"
-                                            :disabled="isFinished"
-                                            v-model="fillAnswer[indexB][indexInner - 1]"
-                                            placeholder="请填在此处"
-                                            clearable
-                                            @blur="
-                        setWritten(
-                          fillAnswer[indexB][indexInner - 1],
-                          indexB + choiceLength
-                        )
-                      "
-                                    ></el-input>
-                                </div>
-                            </div>
-                        </div>
+<!--                    <div v-for="(item, indexB) in problem.fillProblem" :key="indexB">-->
+<!--                        <p class="topic" :id="'my-index' + (indexB + choiceLength)">-->
+<!--                <span class="number">{{ indexB + choiceLength + 1 }}</span-->
+<!--                >{{ item.fillQuestion }}-->
+<!--                            <el-tooltip-->
+<!--                                    class="item"-->
+<!--                                    effect="dark"-->
+<!--                                    content="标记"-->
+<!--                                    placement="top"-->
+<!--                                    style="float: right"-->
+<!--                            >-->
+<!--                                <el-button-->
+<!--                                        size="medium"-->
+<!--                                        type="text"-->
+<!--                                        icon="el-icon-s-flag"-->
+<!--                                        @click="setSign(indexB + choiceLength)"-->
+<!--                                ></el-button>-->
+<!--                            </el-tooltip>-->
+<!--                        </p>-->
+<!--                        <div class="fill">-->
+<!--                            <div-->
+<!--                                    v-for="indexInner in item.fillSpaceNumber"-->
+<!--                                    :key="indexInner"-->
+<!--                                    style="margin-bottom: 20px"-->
+<!--                            >-->
+<!--                                <span class="my-input">{{ indexInner }}</span>-->
+<!--                                <div style="display: inline-block">-->
+<!--                                    <el-input-->
+<!--                                            style="width: 200px"-->
+<!--                                            :disabled="isFinished"-->
+<!--                                            v-model="fillAnswer[indexB][indexInner - 1]"-->
+<!--                                            placeholder="请填在此处"-->
+<!--                                            clearable-->
+<!--                                            @blur="-->
+<!--                        setWritten(-->
+<!--                          fillAnswer[indexB][indexInner - 1],-->
+<!--                          indexB + choiceLength-->
+<!--                        )-->
+<!--                      "-->
+<!--                                    ></el-input>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                        <!--    正确答案及解析    -->
-                        <div class="analysis" v-if="isFinished">
-                            <ul>
-                                <li style="text-align: left">
-                                    <el-tag type="info">您的答案：</el-tag>
-                                    <span class="right">{{ fillAnswer[indexB] }}</span>
-                                </li>
-                                <li>
-                                    <el-tag type="success">正确答案：</el-tag>
-                                    <span class="right">{{ item.fillAnswer }}</span>
-                                </li>
-                                <li>
-                                    <el-tag>题目解析：</el-tag>
-                                </li>
-                                <li>
-                                    {{
-                                    item.fillAnalysis == null ? "暂无解析" : item.fillAnalysis
-                                    }}
-                                </li>
-                            </ul>
-                        </div>
-                        <el-divider></el-divider>
-                    </div>
-                </div>
+<!--                        &lt;!&ndash;    正确答案及解析    &ndash;&gt;-->
+<!--                        <div class="analysis" v-if="isFinished">-->
+<!--                            <ul>-->
+<!--                                <li style="text-align: left">-->
+<!--                                    <el-tag type="info">您的答案：</el-tag>-->
+<!--                                    <span class="right">{{ fillAnswer[indexB] }}</span>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <el-tag type="success">正确答案：</el-tag>-->
+<!--                                    <span class="right">{{ item.fillAnswer }}</span>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <el-tag>题目解析：</el-tag>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    {{-->
+<!--                                    item.fillAnalysis == null ? "暂无解析" : item.fillAnalysis-->
+<!--                                    }}-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <el-divider></el-divider>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <!--   判断题   -->
-                <div class="myChoice" style="font-weight: bolder">判断题</div>
-                <div class="my-content">
-                    <!--    标题    -->
+<!--                &lt;!&ndash;   判断题   &ndash;&gt;-->
+<!--                <div class="myChoice" style="font-weight: bolder">判断题</div>-->
+<!--                <div class="my-content">-->
+<!--                    &lt;!&ndash;    标题    &ndash;&gt;-->
 
-                    <div v-for="(item, indexC) in problem.judgeProblem" :key="indexC">
-                        <p
-                                class="topic"
-                                :id="'my-index' + (indexC + choiceLength + fillLength)"
-                        >
-                <span class="number">{{
-                    indexC + choiceLength + fillLength + 1
-                  }}</span
-                >{{ item.judgementQuestion }}
-                            <el-tooltip
-                                    class="item"
-                                    effect="dark"
-                                    content="标记"
-                                    placement="top"
-                                    style="float: right"
-                            >
-                                <el-button
-                                        size="medium"
-                                        type="text"
-                                        icon="el-icon-s-flag"
-                                        @click="setSign(indexC + choiceLength + fillLength)"
-                                ></el-button>
-                            </el-tooltip>
-                        </p>
+<!--                    <div v-for="(item, indexC) in problem.judgeProblem" :key="indexC">-->
+<!--                        <p-->
+<!--                                class="topic"-->
+<!--                                :id="'my-index' + (indexC + choiceLength + fillLength)"-->
+<!--                        >-->
+<!--                <span class="number">{{-->
+<!--                    indexC + choiceLength + fillLength + 1-->
+<!--                  }}</span-->
+<!--                >{{ item.judgementQuestion }}-->
+<!--                            <el-tooltip-->
+<!--                                    class="item"-->
+<!--                                    effect="dark"-->
+<!--                                    content="标记"-->
+<!--                                    placement="top"-->
+<!--                                    style="float: right"-->
+<!--                            >-->
+<!--                                <el-button-->
+<!--                                        size="medium"-->
+<!--                                        type="text"-->
+<!--                                        icon="el-icon-s-flag"-->
+<!--                                        @click="setSign(indexC + choiceLength + fillLength)"-->
+<!--                                ></el-button>-->
+<!--                            </el-tooltip>-->
+<!--                        </p>-->
 
-                        <!--    选项    -->
-                        <div class="judge">
-                            <el-radio-group
-                                    :disabled="isFinished"
-                                    v-model="judgeAnswer[indexC]"
-                                    @change="
-                    setWritten(
-                      judgeAnswer[indexC],
-                      indexC + choiceLength + fillLength
-                    )
-                  "
-                            >
-                                <el-radio :label="0">正确</el-radio>
-                                <el-radio :label="1">错误</el-radio>
-                            </el-radio-group>
-                        </div>
+<!--                        &lt;!&ndash;    选项    &ndash;&gt;-->
+<!--                        <div class="judge">-->
+<!--                            <el-radio-group-->
+<!--                                    :disabled="isFinished"-->
+<!--                                    v-model="judgeAnswer[indexC]"-->
+<!--                                    @change="-->
+<!--                    setWritten(-->
+<!--                      judgeAnswer[indexC],-->
+<!--                      indexC + choiceLength + fillLength-->
+<!--                    )-->
+<!--                  "-->
+<!--                            >-->
+<!--                                <el-radio :label="0">正确</el-radio>-->
+<!--                                <el-radio :label="1">错误</el-radio>-->
+<!--                            </el-radio-group>-->
+<!--                        </div>-->
 
-                        <!--    正确答案及解析    -->
-                        <div class="analysis" v-if="isFinished">
-                            <ul>
-                                <li style="text-align: left">
-                                    <el-tag type="info">您的答案：</el-tag>
-                                    <span class="right">{{
-                        judgeAnswer[indexC] ==="正确"?"√":"X"
-                      }}</span>
-                                </li>
-                                <li>
-                                    <el-tag type="success">正确答案：</el-tag>
-                                    <span class="right">{{
-                        item.judgementAnswer === 0 ? "X" : "√"
-                      }}</span>
-                                </li>
-                                <li>
-                                    <el-tag>题目解析：</el-tag>
-                                </li>
-                                <li>
-                                    {{
-                                    item.judgementAnalysis == null
-                                    ? "暂无解析"
-                                    : item.judgementAnalysis
-                                    }}
-                                </li>
-                            </ul>
-                        </div>
-                        <el-divider></el-divider>
-                    </div>
-                </div>
+<!--                        &lt;!&ndash;    正确答案及解析    &ndash;&gt;-->
+<!--                        <div class="analysis" v-if="isFinished">-->
+<!--                            <ul>-->
+<!--                                <li style="text-align: left">-->
+<!--                                    <el-tag type="info">您的答案：</el-tag>-->
+<!--                                    <span class="right">{{-->
+<!--                        judgeAnswer[indexC] ==="正确"?"√":"X"-->
+<!--                      }}</span>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <el-tag type="success">正确答案：</el-tag>-->
+<!--                                    <span class="right">{{-->
+<!--                        item.judgementAnswer === 0 ? "X" : "√"-->
+<!--                      }}</span>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <el-tag>题目解析：</el-tag>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    {{-->
+<!--                                    item.judgementAnalysis == null-->
+<!--                                    ? "暂无解析"-->
+<!--                                    : item.judgementAnalysis-->
+<!--                                    }}-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <el-divider></el-divider>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </transition>
     </el-card>
@@ -391,7 +401,6 @@
         <el-button type="info" @click="goBack" v-if="isFinished">返回主页</el-button>
     </div>
 </div>
-<script src="/SoftwareEngineering/static/js/answer.js">
-</script>
+<script src="/SoftwareEngineering/static/js/answer.js"></script>
 </body>
 </html>

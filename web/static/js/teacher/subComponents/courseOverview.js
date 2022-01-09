@@ -3,6 +3,16 @@ var CourseOverview = Vue.extend({
     data() {
         return {};
     },
+    mounted(){
+        console.log(this.courseInfoList)
+        for(let index in this.courseList){
+            if (this.courseInfoList[index].flag === 0 ){
+                this.courseInfoList[index].flag = '待审核'
+            } else{
+                this.courseInfoList[index].flag = '正在进行'
+            }
+        }
+    },
     methods: {
         getSectionInfo(row){
             this.$emit('get-section-info',row.courseID)
@@ -26,10 +36,15 @@ var CourseOverview = Vue.extend({
                       prop="title"
                       label="课程名"
                       fixed
-                      width="600">
+                      width="300">
                       <template slot-scope="scope">
                          <h3 style="margin-left: 10px"><i>{{ scope.row.title }}</i></h3>
                       </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="flag"
+                      label="课程状态"
+                      width="150">
                     </el-table-column>
                     <el-table-column
                       prop="courseID"

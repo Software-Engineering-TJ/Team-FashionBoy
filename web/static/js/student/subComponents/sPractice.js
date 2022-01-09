@@ -17,15 +17,8 @@ var SPractice = Vue.extend({
             this.innerVisible = true
         },
         releasePractice() {
-            axios({
-                url: '/SoftwareEngineering/practiceClient?action=getQuestionList',
-                method: "Post",
-            }).then(resp => {
-                this.$message({
-                    message: '参与成功！',
-                    type: 'success'
-                });
-            })
+            window.location.href = "/SoftwareEngineering/pages/answer.html"
+
         }
     },
     template: `

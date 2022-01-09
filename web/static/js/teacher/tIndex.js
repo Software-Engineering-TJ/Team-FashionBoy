@@ -648,15 +648,25 @@ var vm = new Vue({
                     instructorNumber: this.addClassForm.instructorNumber,
                     day: Number.parseInt(this.addClassForm.day),
                     time: Number.parseInt(this.addClassForm.time),
-                    number: this.addClassCourse.number
+                    number:Number.parseInt(this.addClassForm.number)
                 },
             }).then(resp => {
-                if (resp.data.result === '添加课程成功') {
+                if (resp.data === '添加课程成功') {
                     this.$message({
                         message: '添加课程成功！',
                         type: 'success'
                     });
                     this.passwordFormVisible = false;
+                    axios({
+                        url: '/SoftwareEngineering/instructorServlet?action=getClassInfo',
+                        method: "Post",
+                        data: {
+                            courseID: courseID,
+                        }
+                    }).then(resp => {
+                        this.addClassCourse = courseID
+                        this.sectionInfoList = resp.data
+                    })
                 } else {
                     this.$message({
                         message: '添加课程失败',

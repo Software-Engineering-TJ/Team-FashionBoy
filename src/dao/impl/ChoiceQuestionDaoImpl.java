@@ -15,7 +15,7 @@ public class ChoiceQuestionDaoImpl extends BaseDao implements ChoiceQuestionDao 
 
     @Override
     public ChoiceQuestion getQuestionByQuestionId(int id) {
-        String sql = "select * from choicequestion where choice_id = ?";
+        String sql = "select * from choicequestion where choiceId = ?";
         return queryForOne(ChoiceQuestion.class, sql, id);
     }
 

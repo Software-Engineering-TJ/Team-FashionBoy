@@ -16,7 +16,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.*;
 
-public class PracticeClient extends BaseServlet{
+public class PracticeClient extends BaseServlet {
 
     //定义相关的属性
     private final String HOST = "127.0.0.1";//服务器的ip
@@ -25,14 +25,12 @@ public class PracticeClient extends BaseServlet{
     private SocketChannel socketChannel;
     private String username;
     private String info;
-    private List<String> choiceQuestionListOfString;
     private List<ChoiceQuestion> choiceQuestionList;
 
     //构造器,完成初始化工作
     public PracticeClient() throws IOException {
 
         //初始化题目列表
-        choiceQuestionListOfString = new ArrayList<String>();
         choiceQuestionList = new ArrayList<ChoiceQuestion>();
         selector = Selector.open();
         //连接服务器
@@ -60,11 +58,16 @@ public class PracticeClient extends BaseServlet{
 
     //servlet，将题目列表传给前端
     protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        readInfo();
-//        resp.getWriter().write(String.valueOf(choiceQuestionList));
-        for (String s : choiceQuestionListOfString) {
+        String choiceQuestionListOfString = readInfo();
+        String[] eachQuestion = choiceQuestionListOfString.split(" ");
+        for (String s : eachQuestion) {
+            if (s == null || "".equals(s) || s.equals("")) {
+                break;
+            }
             String[] values = s.split(",");
-
+            if (values.length == 1) {
+                break;
+            }
             int choiceId = Integer.parseInt(values[0].split(":")[1]);
             String choiceQuestion = values[1].split(":")[1];
             String choiceOption = values[2].split(":")[1];
@@ -81,11 +84,12 @@ public class PracticeClient extends BaseServlet{
             choiceQuestionObj.setChoiceAnswer(choiceAnswer);
             choiceQuestionObj.setChoiceAnalysis(choiceAnalysis);
             choiceQuestionObj.setChoiceScore(choiceScore);
-
+            System.out.println(choiceQuestionObj);
             choiceQuestionList.add(choiceQuestionObj);
         }
-        
+
         String json = JSONObject.toJSONString(choiceQuestionList);
+        System.out.println(json);
         resp.getWriter().write(json);
     }
 
@@ -102,7 +106,7 @@ public class PracticeClient extends BaseServlet{
     }
 
     //读取从服务器端回复的消息
-    public void readInfo() {
+    public String readInfo() {
         try {
             int readChannels = selector.select();
             if (readChannels > 0) {//有可以用的通道
@@ -119,7 +123,7 @@ public class PracticeClient extends BaseServlet{
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
                         System.out.println(msg.trim());
-                        choiceQuestionListOfString.add(msg);
+                        return msg;
                     }
                 }
                 iterator.remove(); //删除当前的 selectionKey,防止重复操作
@@ -129,6 +133,7 @@ public class PracticeClient extends BaseServlet{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 //    //客户端入口

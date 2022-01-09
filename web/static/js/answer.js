@@ -60,9 +60,6 @@ var vm = new Vue({
             this.$router.push("home")
         },
         setWritten(val, index) {
-            console.log(this.choiceAnswer);
-            console.log(this.fillAnswer);
-            console.log(this.judgeAnswer);
             let fillIndex = index - this.choiceLength;
             if (val !== null && val !== "") {
                 if (this.finished < this.allLength && !this.written[index]) {
@@ -133,7 +130,6 @@ var vm = new Vue({
                     //  计算选择题总分
                     clearTimeout(this.timer);
                     for (let i = 0; i < this.choiceLength; i++) {
-                        console.log("计算选择题总分");
                         this.totalScore = this.totalScore + this.choiceList[i].choiceScore;
                         let choiceRightAnswer;
                         switch (this.choiceList[i].choiceAnswer) {
@@ -153,29 +149,6 @@ var vm = new Vue({
                         if (this.choiceAnswer[i] === choiceRightAnswer)
                             this.score = this.score + this.choiceList[i].choiceScore;
                     }
-                    //  计算填空题总分
-                    for (let i = 0; i < this.fillLength; i++) {
-                        console.log("计算填空题总分");
-                        this.totalScore = this.totalScore + this.fillList[i].fillScore;
-                        for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {
-                            if (this.fillAnswer[i][j] === this.fillList[i].fillAnswer[j]) {
-                                this.score =
-                                    this.score +
-                                    this.fillList[i].fillScore / this.fillList[i].fillSpaceNumber;
-                            }
-                        }
-                    }
-                    //  计算判断题总分
-                    for (let i = 0; i < this.judgeList.length; i++) {
-                        this.totalScore =
-                            this.totalScore + this.judgeList[i].judgementScore;
-                        let rightAnswer =
-                            this.judgeList[i].judgementAnswer === "对" ? 0 : 1;
-                        if (this.judgeAnswer[i] === rightAnswer) {
-                            this.score = this.score + this.judgeList[i].judgementScore;
-                        }
-                    }
-                    this.savePaper();
                 });
             } else {
                 for (let i = 0; i < this.choiceLength; i++) {
@@ -199,27 +172,7 @@ var vm = new Vue({
                     if (this.choiceAnswer[i] === choiceRightAnswer)
                         this.score = this.score + this.choiceList[i].choiceScore;
                 }
-                //  计算填空题总分
-                for (let i = 0; i < this.fillLength; i++) {
-                    console.log("计算填空题总分");
-                    this.totalScore = this.totalScore + this.fillList[i].fillScore;
-                    for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {
-                        if (this.fillAnswer[i][j] === this.fillList[i].fillAnswer[j]) {
-                            this.score =
-                                this.score +
-                                this.fillList[i].fillScore / this.fillList[i].fillSpaceNumber;
-                        }
-                    }
-                }
-                //  计算判断题总分
-                for (let i = 0; i < this.judgeList.length; i++) {
-                    this.totalScore = this.totalScore + this.judgeList[i].judgementScore;
-                    let rightAnswer = this.judgeList[i].judgementAnswer === "对" ? 0 : 1;
-                    if (this.judgeAnswer[i] === rightAnswer) {
-                        this.score = this.score + this.judgeList[i].judgementScore;
-                    }
-                }
-                this.savePaper();
+                window.location.href = "/SoftwareEngineering/pages/answerFinish.html?"+"totalScore="+this.totalScore+"&"+"score="+this.score
             }
         },
         savePaper() {
@@ -282,7 +235,16 @@ var vm = new Vue({
                         ? this.judgeList[i].judgementScore
                         : 0);
             }
-            this.$axios({
+            this.$router.push({
+                path: "/answerFinish",
+                query: {
+                    totalScore: this.totalScore.toString(),
+                    score: this.score.toString(),
+                    test_id: this.test_id,
+                    stu_id: this.$cookies.get("stu_id"),
+                },
+            });
+            axios({
                 url: "/savePaper",
                 method: "post",
                 data: {
@@ -305,22 +267,19 @@ var vm = new Vue({
         },
     },
     mounted() {
-        this.test_id = this.$route.query.test_id;
-        this.endTime = this.$route.query.test_endtime;
-        if (this.test_id !== undefined) {
-            this.$axios({
-                url: "/getProblem",
-                method: "post",
-                data: {
-                    test_id: parseInt(this.test_id),
-                },
+            axios({
+                url: '/SoftwareEngineering/practiceClient?action=getQuestionList',
+                method: "Post",
             }).then((resp) => {
-                if (resp.data.data !== undefined) {
-                    let data = resp.data.data;
-                    this.problem.choiceProblem = data.choiceQuestionList;
+                console.log(resp.data)
+                if (resp.data !== undefined) {
+                    let data = resp.data;
+                    this.problem.choiceProblem = data;
+                    console.log(this.problem.choiceProblem)
                     this.problem.fillProblem = data.fillBlankQuestionList;
                     this.problem.judgeProblem = data.judgementQuestionList;
                     for (let i = 0; i < this.problem.choiceProblem.length; i++) {
+                        console.log(this.problem.choiceProblem[i].choiceOption)
                         this.problem.choiceProblem[i]["answer"] =
                             this.problem.choiceProblem[i].choiceOption.split("|");
                     }
@@ -343,115 +302,5 @@ var vm = new Vue({
                     }
                 }
             });
-        } else {
-            this.$axios({
-                url: "/getProblem2",
-                method: "post",
-                data: {
-                    paper_id: parseInt(this.$route.query.paper_id),
-                },
-            }).then((resp) => {
-                if (resp.data.data !== undefined) {
-                    let data = resp.data.data;
-                    this.problem.choiceProblem = data.choiceQuestionList;
-                    this.problem.fillProblem = data.fillBlankQuestionList;
-                    this.problem.judgeProblem = data.judgementQuestionList;
-                    for (let i = 0; i < this.problem.choiceProblem.length; i++) {
-                        this.problem.choiceProblem[i]["answer"] =
-                            this.problem.choiceProblem[i].choiceOption.split("|");
-                    }
-                    this.choiceList = this.problem.choiceProblem;
-                    this.fillList = this.problem.fillProblem;
-                    this.judgeList = this.problem.judgeProblem;
-                    this.choiceLength = this.problem.choiceProblem.length;
-                    this.fillLength = this.problem.fillProblem.length;
-                    this.judgeLength = this.problem.judgeProblem.length;
-                    this.allLength = this.choiceLength + this.fillLength + this.judgeLength;
-                    for (let i = 0; i < this.fillLength; i++) {
-                        let child = [];
-                        for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {
-                            child.push("");
-                        }
-                        this.fillAnswer.push(child);
-                    }
-                    for (let i = 0; i < this.allLength; i++) {
-                        this.written[i] = false;
-                    }
-                }
-            });
-        }
-
-        if (this.$route.query.isFinished === undefined) {
-            this.countTime();
-        } else {
-            this.isFinished = true;
-            if (this.$route.query.test_id !== undefined) {
-                this.$axios({
-                    url: "/viewFinishedPaper",
-                    method: "post",
-                    data: {
-                        stu_id: Number.parseInt(this.$route.query.stu_id),
-                        test_id: Number.parseInt(this.$route.query.test_id)
-                    }
-                }).then(resp => {
-                    let finishedAnswer = resp.data.data;
-                    let i = 0;
-                    let j = 0;
-                    while (finishedAnswer[i].questionType === "选择题") {
-                        this.choiceAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                    ;
-                    j = 0;
-                    while (finishedAnswer[i].questionType === "填空题") {
-                        this.fillAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                    ;
-                    j = 0;
-                    while (i < finishedAnswer.length && finishedAnswer[i].questionType === "判断题") {
-                        this.judgeAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                });
-            } else {
-                this.$axios({
-                    url: "/viewFinishedPaper2",
-                    method: "post",
-                    data: {
-                        stu_id: Number.parseInt(this.$cookies.get("stu_id")),
-                        paper_id: Number.parseInt(this.$route.query.paper_id)
-                    }
-                }).then(resp => {
-                    console.log("2:" + resp.data.data)
-                    let finishedAnswer = resp.data.data;
-                    let i = 0;
-                    let j = 0;
-                    console.log(finishedAnswer)//正常
-                    while (finishedAnswer[i].questionType === "选择题") {
-                        this.choiceAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                    ;
-                    j = 0;
-                    while (finishedAnswer[i].questionType === "填空题") {
-                        this.fillAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                    ;
-                    j = 0;
-                    while (i < finishedAnswer.length && finishedAnswer[i].questionType === "判断题") {
-                        this.judgeAnswer[j] = finishedAnswer[i].myAnswer;
-                        i++;
-                        j++;
-                    }
-                });
-            }
-        }
     },
 })
