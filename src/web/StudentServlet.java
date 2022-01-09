@@ -326,6 +326,7 @@ public class StudentServlet extends BaseServlet {
         for(Practice practice : practiceList){
             Map<String, Object> map = new HashMap<>();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            map.put("practiceName",practice.getPracticeName());
             map.put("startTime",dateFormat.format(practice.getStartTime()));
             map.put("endTime",dateFormat.format(practice.getEndTime()));
             //当前时间
@@ -362,5 +363,7 @@ public class StudentServlet extends BaseServlet {
                 }
             }
         }
+
+        resp.getWriter().write(gson.toJson(practiceInfoList));
     }
 }
