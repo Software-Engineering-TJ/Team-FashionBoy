@@ -2,12 +2,8 @@ package web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
-import dao.impl.AttendDaoImpl;
-import dao.impl.ExpScoreDaoImpl;
-import dao.impl.InstructorDaoImpl;
-import dao.inter.AttendDao;
-import dao.inter.ExpScoreDao;
-import dao.inter.InstructorDao;
+import dao.impl.*;
+import dao.inter.*;
 import pojo.*;
 import pojo.logicEntity.ViewExperimentInfo;
 import service.Impl.AdministrationServiceImpl;
@@ -23,6 +19,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -265,5 +263,104 @@ public class StudentServlet extends BaseServlet {
         }
 
         resp.getWriter().write(JSONObject.toJSONString(expGradeInfoList));
+    }
+
+    /**
+     * 学生获取自己某门课程的总成绩
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getTotalGrade(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+
+        float attendGrade = studentService.getGradeOfAttendance(courseID,classID,studentNumber);
+        float practiceGrade = studentService.getGradeOfPractice(courseID,classID,studentNumber);
+        float expGrade = studentService.getGradeOfExperiment(courseID,classID,studentNumber);
+
+        float totalGrade = attendGrade+practiceGrade+expGrade;
+
+        Map<String,Float> map = new HashMap<>();
+        map.put("attendScore",attendGrade);
+        map.put("practiceScore",practiceGrade);
+        map.put("expScore",expGrade);
+        map.put("totalScore",totalGrade);
+
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+    /**
+     * 学生查看自己参加的对抗练习的成绩
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void viewPracticeStu(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String studentNumber = reqObject.get("studentNumber");
+
+        PracticeDao practiceDao = new PracticeDaoImpl();
+        PracticeScoreDao practiceScoreDao = new PracticeScoreDaoImpl();
+
+        //需要返回的信息列表
+        List<Map<String, Object>> practiceInfoList = new ArrayList<>();
+
+        //该班级发布的所有对抗练习
+        List<Practice> practiceList = practiceDao.QueryPracticesByCourseIDAndClassID(courseID,classID);
+        //查找每一个对抗练习中该学生的小组排名，确定成绩
+        for(Practice practice : practiceList){
+            Map<String, Object> map = new HashMap<>();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            map.put("startTime",dateFormat.format(practice.getStartTime()));
+            map.put("endTime",dateFormat.format(practice.getEndTime()));
+            //当前时间
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            if(now.before(practice.getEndTime())){
+                map.put("status","正在进行");
+            }else if(now.after(practice.getEndTime())){
+                map.put("status","已结束");
+            }else{
+                map.put("status","尚未开始");
+            }
+
+            float grade = 0;
+            //该学生再本次对抗练习中的成绩信息
+            PracticeScore practiceScore = practiceScoreDao.QueryPracticeScoreByCourseIDAndClassIDAndPracticeNameAndStudentNumber(courseID,classID,practice.getPracticeName(),studentNumber);
+            if(practiceScore == null){
+                //没有参加该次对抗练习，成绩为0
+                map.put("grade",grade);
+                practiceInfoList.add(map);
+                continue;
+            }
+            //排序后的小组
+            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName());
+            //算成绩
+            if(practiceScoreList != null){
+                for(int i=0;i<practiceScoreList.size();i++){
+                    if(practiceScoreList.get(i).getGroupNumber()==practiceScore.getGroupNumber()){
+                        //找到所在的组的名次i
+                        grade = (1-i/StudentServiceImpl.groupNumber)*100;
+                        map.put("grade",grade);
+                        practiceInfoList.add(map);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

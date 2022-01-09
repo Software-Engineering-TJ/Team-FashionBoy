@@ -41,4 +41,5 @@ public interface UserService {
     List<Experiment> getExperimentListByCourseIDAndClassID(String courseID,String classID);
     //获取课程报告任务
     List<ExpReport> getExpReportListByCourseIDAndClassID(String courseID,String classID);
+
 }

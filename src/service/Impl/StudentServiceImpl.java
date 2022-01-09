@@ -25,6 +25,11 @@ public class StudentServiceImpl implements StudentService {
     private CourseExpDao courseExpDao = new CourseExpDaoImpl();
     private ExperimentDao experimentDao = new ExperimentDaoImpl();
     private StudentDao studentDao = new StudentDaoImpl();
+    private AttendDao attendDao = new AttendDaoImpl();
+    private PracticeDao practiceDao = new PracticeDaoImpl();
+    private PracticeScoreDao practiceScoreDao = new PracticeScoreDaoImpl();
+    //默认小组总数，方便计算成绩
+    public static int groupNumber = 50;
 
     @Override
     public List<Notice> getCourseNotice(String courseID, String classID) {
@@ -129,4 +134,101 @@ public class StudentServiceImpl implements StudentService {
         return map;
     }
 
+    @Override
+    public float getGradeOfAttendance(String courseID, String classID, String studentNumber) {
+        //该课的各项成绩占比分配情况
+        List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
+        //考勤成绩占比
+        int percent = 0;
+        for(CourseExp courseExp : courseExpList){
+            if("考勤".equals(courseExp.getExpname())){
+                percent = courseExp.getPercent();
+            }
+        }
+        //该班发布的所有考勤
+        List<Attend> attendList = attendDao.QueryAttendsByCourseIDAndClassID(courseID,classID);
+        //考勤总次数
+        float totalCount = attendList.size();
+        if(totalCount == 0){
+            //老师如果从来没有发布过考勤，则默认考勤满分
+            return percent;
+        }
+        //学生参加的考勤数
+        float attendCount = 0;
+        if(attendList != null){
+            for(Attend attend : attendList){
+                AttendScore attendScore = attendScoreDao.getAttendScoreByCourseIDAndClassIDAndTitleAndStudentNumber(courseID, classID, attend.getTitle(), studentNumber);
+                if(attendScore != null){
+                    //该次签到准时参加了，计入分数
+                    attendCount += 1;
+                }
+            }
+        }
+        //返回考勤分数
+        return attendCount/totalCount*percent;
+    }
+
+    @Override
+    public float getGradeOfExperiment(String courseID, String classID, String studentNumber) {
+        //该课的各项成绩占比分配情况
+        List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
+        //开始算实验成绩
+        float expGrade = 0;
+        for(CourseExp courseExp : courseExpList){
+            //该实验的百分比
+            float expPercent = courseExp.getPercent();
+            //靠学生在本实验的成绩
+            ExpScore expScore = expScoreDao.QueryExpScoreByCourseIDAndClassIDAndExpnameAndStudentNumber(courseID,classID,courseExp.getExpname(),studentNumber);
+            if(expScore!=null && expScore.getScore() != -1){
+                //只计算已经提交且批改过的报告
+                expGrade += expScore.getScore()*expPercent;
+            }
+        }
+
+        return expGrade;
+    }
+
+    @Override
+    public float getGradeOfPractice(String courseID, String classID, String studentNumber) {
+        //该课的各项成绩占比分配情况
+        List<CourseExp> courseExpList = courseExpDao.QueryCourseExpsByCourseID(courseID);
+        //抗练习成绩总占比
+        float percent = 0;
+        for(CourseExp courseExp : courseExpList){
+            if("对抗练习".equals(courseExp.getExpname())){
+                percent = courseExp.getPercent();
+            }
+        }
+        //对抗练习总成绩
+        float sumScore = 0;
+        //该班级发布的所有对抗练习
+        List<Practice> practiceList = practiceDao.QueryPracticesByCourseIDAndClassID(courseID,classID);
+        if(practiceList == null){
+            //如果没有对抗练习，默认满分
+            return percent;
+        }
+        //查找每一个对抗练习中该学生的小组排名，确定成绩
+        for(Practice practice : practiceList){
+            //该学生再本次对抗练习中的成绩信息
+            PracticeScore practiceScore = practiceScoreDao.QueryPracticeScoreByCourseIDAndClassIDAndPracticeNameAndStudentNumber(courseID,classID,practice.getPracticeName(),studentNumber);
+            if(practiceScore == null){
+                //没有参加该次对抗练习，成绩为0
+                continue;
+            }
+            //排序后的小组
+            List<PracticeScore> practiceScoreList = practiceScoreDao.QueryPracticeScoreByGroup(courseID,classID,practice.getPracticeName());
+            //算成绩
+            if(practiceScoreList != null){
+                for(int i=0;i<practiceScoreList.size();i++){
+                    if(practiceScoreList.get(i).getGroupNumber()==practiceScore.getGroupNumber()){
+                        //找到所在的组的名次i
+                        sumScore += (1-i/groupNumber)*100;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return sumScore/practiceList.size()*percent;
+    }
 }

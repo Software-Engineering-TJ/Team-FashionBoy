@@ -30,4 +30,10 @@ public interface StudentService {
     List<Experiment> getExperimentListByCourseIDAndClassID(String courseID,String classID);
     //某个学生在某个班已发布的某个实验中的成绩和排名
     Map<String,Object> getGradeAndRankingOfExperiment(Experiment experiment,String studentNumber);
+    //获取某个课程、某个班级、某个学生的"所有考勤"总分数
+    float getGradeOfAttendance(String courseID,String classID,String studentNumber);
+    //获取某个课程、某个班级、某个学生的"所有实验"总分数
+    float getGradeOfExperiment(String courseID,String classID,String studentNumber);
+    //获取某个课程、某个班级、某个学生的"所有对抗"总分数
+    float getGradeOfPractice(String courseID,String classID,String studentNumber);
 }
