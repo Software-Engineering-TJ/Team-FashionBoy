@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
 //import com.mysql.cj.util.DnsSrv;
 import dao.impl.ChoiceQuestionDaoImpl;
+import dao.impl.CourseDaoImpl;
 import dao.inter.ChoiceQuestionDao;
+import dao.inter.CourseDao;
 import dao.inter.PracticeDao;
 import pojo.Attend;
 import pojo.ExpScore;
@@ -710,9 +712,6 @@ public class InstructorServlet extends BaseServlet{
     protected void getQuestion(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
     {
         resp.setContentType("application/json");
-        String reqJson = RequestJsonUtils.getJson(req);
-        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
-        }.getType());
 
         ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
         List<ChoiceQuestion> choiceQuestionList = choiceQuestionDao.getAllQuestions();
@@ -722,4 +721,26 @@ public class InstructorServlet extends BaseServlet{
 
         resp.getWriter().write(gson.toJson(choiceQuestionList));
     }
+
+    /**
+     * 责任教师关闭课程
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void shutDownCourse(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+
+        //关闭课程
+        CourseDao courseDao = new CourseDaoImpl();
+        int result= courseDao.UpdateFlagOfCourseByCourseID(courseID,-1);
+        resp.getWriter().write("课程已关闭");
+    }
+
 }
