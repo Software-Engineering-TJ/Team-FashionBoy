@@ -3,6 +3,7 @@ package dao.impl;
 import dao.inter.PracticeScoreDao;
 import pojo.PracticeScore;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class PracticeScoreDaoImpl extends BaseDao implements PracticeScoreDao {
@@ -19,7 +20,7 @@ public class PracticeScoreDaoImpl extends BaseDao implements PracticeScoreDao {
     }
 
     @Override
-    public int insertPracticeScore(String courseID, String classID, String practiceName, String studentNumber, double score, String time, int groupNumber) {
+    public int insertPracticeScore(String courseID, String classID, String practiceName, String studentNumber, double score, Timestamp time, int groupNumber) {
         String sql = "insert into practicescore(`courseID`,`classID`,`practiceName`,`studentNumber`,`individualScore`,`individualTime`,`groupNumber`)" +
                 " values (?,?,?,?,?,?,?)";
         return update(sql,courseID,classID,practiceName,studentNumber,score,time,groupNumber);

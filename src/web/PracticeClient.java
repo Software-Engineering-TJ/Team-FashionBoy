@@ -16,6 +16,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class PracticeClient extends BaseServlet {
@@ -49,29 +52,14 @@ public class PracticeClient extends BaseServlet {
     }
 
     protected void initPracticeClient(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
-        String reqJson = RequestJsonUtils.getJson(req);
-        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
-        }.getType());
+        final PracticeClient practiceClient = new PracticeClient();
+        practiceClient.getGroupNumberFromServer();//获取组号groupNumber
 
-        getGroupNumberFromServer();//获取组号groupNumber
-    }
+        String choiceQuestionListOfString = null;
+        while(choiceQuestionListOfString == null) {
+            choiceQuestionListOfString = practiceClient.readInfo();
+        }
 
-//    //servlet，获取学生填写的答案
-//    protected void setInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.setContentType("application/json");
-//        String reqJson = RequestJsonUtils.getJson(req);
-//        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
-//        }.getType());
-//
-//        info = reqObject.get("answer");
-//        System.out.println(info);
-//        sendInfo();
-//    }
-
-    //servlet，将题目列表传给前端
-    protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String choiceQuestionListOfString = readInfo();
         String[] eachQuestion = choiceQuestionListOfString.split(" ");
         for (String s : eachQuestion) {
 //            if (s == null || "".equals(s) || s.equals("")) {
@@ -106,6 +94,59 @@ public class PracticeClient extends BaseServlet {
         resp.getWriter().write(json);
     }
 
+//    //servlet，获取学生填写的答案
+//    protected void setInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setContentType("application/json");
+//        String reqJson = RequestJsonUtils.getJson(req);
+//        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+//        }.getType());
+//
+//        info = reqObject.get("answer");
+//        System.out.println(info);
+//        sendInfo();
+//    }
+
+//    //servlet，将题目列表传给前端
+//    protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String choiceQuestionListOfString = null;
+//        while(choiceQuestionListOfString == null) {
+//            choiceQuestionListOfString = readInfo();
+//        }
+//
+//        String[] eachQuestion = choiceQuestionListOfString.split(" ");
+//        for (String s : eachQuestion) {
+////            if (s == null || "".equals(s) || s.equals("")) {
+////                break;
+////            }
+//            String[] values = s.split(",");
+//            if (values.length == 1) {
+//                break;
+//            }
+//            int choiceId = Integer.parseInt(values[0].split(":")[1]);
+//            String choiceQuestion = values[1].split(":")[1];
+//            String choiceOption = values[2].split(":")[1];
+//            int choiceDifficulty = Integer.parseInt(values[3].split(":")[1]);
+//            String choiceAnswer = values[4].split(":")[1];
+//            String choiceAnalysis = values[5].split(":")[1];
+//            double choiceScore = Double.parseDouble(values[6].split(":")[1]);
+//            ChoiceQuestion choiceQuestionObj = new ChoiceQuestion();
+//
+//            choiceQuestionObj.setChoiceId(choiceId);
+//            choiceQuestionObj.setChoiceQuestion(choiceQuestion);
+//            choiceQuestionObj.setChoiceOption(choiceOption);
+//            choiceQuestionObj.setChoiceDifficulty(choiceDifficulty);
+//            choiceQuestionObj.setChoiceAnswer(choiceAnswer);
+//            choiceQuestionObj.setChoiceAnalysis(choiceAnalysis);
+//            choiceQuestionObj.setChoiceScore(choiceScore);
+//            System.out.println(choiceQuestionObj);
+//            choiceQuestionList.add(choiceQuestionObj);
+//        }
+//
+//        String json = JSONObject.toJSONString(choiceQuestionList);
+//        System.out.println(json);
+//        resp.getWriter().write(json);
+//    }
+
     protected void getPracticeInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
@@ -113,7 +154,7 @@ public class PracticeClient extends BaseServlet {
         }.getType());
 
         double score = Double.parseDouble(reqObject.get("score"));
-        String finishTime = reqObject.get("finishTime");
+        Timestamp finishTime = Timestamp.valueOf(reqObject.get("finishTime"));
         String studentNumber = reqObject.get("studentNumber");
         String courseID = reqObject.get("courseID");
         String classID = reqObject.get("classID");
@@ -149,8 +190,9 @@ public class PracticeClient extends BaseServlet {
                         //读取
                         sc.read(buffer);
                         //把读到的缓冲区的数据转成字符串
+
                         String msg = new String(buffer.array());
-                        groupNumber = Integer.parseInt(msg);
+                        groupNumber = Integer.parseInt(msg.trim());
                     }
                 }
                 iterator.remove(); //删除当前的 selectionKey,防止重复操作
@@ -179,15 +221,19 @@ public class PracticeClient extends BaseServlet {
                         sc.read(buffer);
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
-                        String[] msgArray = msg.split("group:");
-                        String groupNumberFromServer = msgArray[0];
-
-                        //如果服务器发放的组号与本客户端的组号匹配，则发放题目
-                        if (Objects.equals(groupNumberFromServer, String.valueOf(groupNumber))) {
-                            String question = msgArray[1];
-                            System.out.println(question);
-                            return question;
-                        }
+                        msg = msg;
+                        String question = msg;
+                        System.out.println(question);
+                        return question;
+//                        String[] msgArray = msg.split("group:");
+//                        String groupNumberFromServer = msgArray[0];
+//
+//                        //如果服务器发放的组号与本客户端的组号匹配，则发放题目
+//                        if (Objects.equals(groupNumberFromServer, String.valueOf(groupNumber))) {
+//                            String question = msgArray[1];
+//                            System.out.println(question);
+//                            return question;
+//                        }
 
                     }
                 }

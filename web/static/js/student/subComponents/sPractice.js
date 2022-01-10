@@ -6,7 +6,8 @@ var SPractice = Vue.extend({
                 amount: 0,
                 endTime: ''
             },
-            practiceList:[]
+            practiceList:[],
+            practiceName:"",
         };
     },
     methods: {
@@ -14,7 +15,7 @@ var SPractice = Vue.extend({
             this.$emit('click-notice', index)
         },
         publishPractice() {
-            window.location.href = "/SoftwareEngineering/pages/answer.html"
+            window.location.href = "/SoftwareEngineering/pages/answer.html?"+"courseID="+this.courseId+"&"+"classID="+this.classId+"&"+"studentNumber="+this.studentNumber+"&"+"practiceName="+this.practiceName
         },
     },
     mounted(){
@@ -27,8 +28,13 @@ var SPractice = Vue.extend({
                 studentNumber:this.studentNumber
             },
         }).then(resp => {
-            console.log(resp.data)
             this.practiceList = resp.data
+            for(let index in this.practiceList){
+                if (this.practiceList[index].status === "正在进行"){
+                    this.practiceName = this.practiceList[index].practiceName
+                    break;
+                }
+            }
         });
     },
     template: `

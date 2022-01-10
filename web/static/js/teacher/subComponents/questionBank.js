@@ -2,16 +2,27 @@ var QuestionBank = Vue.extend({
     props: ['attendanceList', 'courseId', 'classId'],
     data() {
         return {
+            questionList: [],
             //考勤发布窗口是否可见
             innerVisible: false,
-            questionForm:{},
-            stripe:true,
-            currentPage:1,
-            pagesize:5,
-            total:0,
-            currentHeight:522,
+            questionForm: {
+                choiceQuestion:"",
+                choiceOptionA:"",
+                choiceOptionB:"",
+                choiceOptionC:"",
+                choiceOptionD:"",
+                choiceDifficulty:0.0,
+                choiceAnswer:"",
+                choiceAnalysis:"",
+                choiceScore:0.0
+            },
+            stripe: true,
+            currentPage: 1,
+            pagesize: 5,
+            total: 0,
+            currentHeight: 522,
             // staff_id:'',
-            tableData:[],
+            tableData: [],
             loading: true,
             dialogVisible: false,
 
@@ -19,47 +30,81 @@ var QuestionBank = Vue.extend({
             form: {
                 // employee_id: '',
                 attribute: '',
-                newdata:'',
+                newdata: '',
             },
-            rowID:'',
+            rowID: '',
             // 查询员工信息
-            search_attribute:'',
-            search_value:'',
-            search_hint:'',
+            search_attribute: '',
+            search_value: '',
+            search_hint: '',
 
             //修改员工信息
-            rewrite_hint:'',
+            rewrite_hint: '',
 
             //新增员工
-            dialogEmpAdd:false,
-            form_add:{
-                job:'',
-                name:'',
-                phone:'',
-                ID_num:'',
+            dialogEmpAdd: false,
+            form_add: {
+                job: '',
+                name: '',
+                phone: '',
+                ID_num: '',
             },
-            empAdd_hint:'',
+            empAdd_hint: '',
 
             //删除员工
-            emp_del_staff_id:'',
+            emp_del_staff_id: '',
+            colors: ['#99A9BF', '#F7BA2A', '#FF9900']
         };
     },
+    mounted() {
+        axios({
+            url: '/SoftwareEngineering/instructorServlet?action=getQuestion',
+            method: "Post",
+            data: {
+                courseID: this.courseId,
+                classID: this.classId,
+            },
+        }).then(resp => {
+            this.questionList = resp.data
+            this.loading = false
+        });
+    },
     methods: {
-        addQuestion(){},
+        addQuestion() {
+            axios({
+                url: '/SoftwareEngineering/instructorServlet?action=addQuestion',
+                method: "Post",
+                data: {
+                    choiceQuestion:this.questionForm.choiceQuestion,
+                    choiceOption:this.questionForm.choiceOptionA+"|"+this.questionForm.choiceOptionB+"|"+this.questionForm.choiceOptionC+"|"+this.questionForm.choiceOptionD,
+                    choiceDifficulty:this.questionForm.choiceDifficulty,
+                    choiceAnswer:this.questionForm.choiceAnswer,
+                    choiceAnalysis:this.questionForm.choiceAnalysis,
+                    choiceScore:Number.parseFloat(this.questionForm.choiceScore)
+                },
+            }).then(resp => {
+                this.$message({
+                    message: '添加题目成功！',
+                    type: 'success'
+                });
+                this.innerVisible=false
+            });
+        },
         handleClose(done) {
             this.$confirm('确认关闭？')
                 .then(_ => {
                     this.callOff();
                     done();
                 })
-                .catch(_ => {});
+                .catch(_ => {
+                });
         },
 
         handleSizeChange(val) {
             this.pagesize = val;
-            if(val==5)
+            if (val == 5)
                 this.currentHeight = 285;
-            else if(val==10)
+            else if (val == 10)
                 this.currentHeight = 522;
         },
 
@@ -78,14 +123,14 @@ var QuestionBank = Vue.extend({
 
 
         //显示所有的员工
-        async  showAllStaff(){
+        async showAllStaff() {
             this.$axios.get("/api/Employee/getALLEmployeeInfo", {
                 params: {
                     // requester_id:this.requester_ID+'',
                 }
             })
-                .then(response=> {
-                    this.tableData=response.data;
+                .then(response => {
+                    this.tableData = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -95,14 +140,14 @@ var QuestionBank = Vue.extend({
         },
 
         //显示所有的问题
-        async  showAllQuestion(){
+        async showAllQuestion() {
             this.$axios({
                 url: "/testRelease/viewAllQuestion",
                 method: "get",
                 data: {},
             })
-                .then(response=> {
-                    this.tableData=response.data.data;
+                .then(response => {
+                    this.tableData = response.data.data;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -112,10 +157,12 @@ var QuestionBank = Vue.extend({
         },
 
 
-
         // 测试
         async modifyRow(rows) {
-            this.$router.push({path: "/setUpdateIngredient",query:{ingre_name:rows.ingre_name,buy_date:rows.buy_date,}});
+            this.$router.push({
+                path: "/setUpdateIngredient",
+                query: {ingre_name: rows.ingre_name, buy_date: rows.buy_date,}
+            });
         },
 
     },
@@ -127,17 +174,52 @@ var QuestionBank = Vue.extend({
                               :visible.sync="innerVisible"
                               append-to-body>
                               <el-form :model="questionForm">
-                                <el-form-item label="考勤名称" label-width="80px">
-                                  <el-input v-model="questionForm.attendanceName" autocomplete="off" style="width: 80%"></el-input>
+                                <el-form-item label="题干" label-width="80px">
+                                  <el-input
+                                          style="width:270px"
+                                          type="textarea"
+                                          :rows="4"
+                                          placeholder="请输入题干"
+                                          v-model="questionForm.choiceQuestion">
+                                        </el-input>
                                 </el-form-item>
-                                <el-form-item label="截止时间" label-width="80px">
-                                   <el-time-picker placeholder="选择时间" v-model="questionForm.endTime"
-                                            style="width: 80%;"></el-time-picker>
-                                 </el-form-item>
+                                <el-form-item label="选项A" label-width="80px">
+                                  <el-input v-model="questionForm.choiceOptionA" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="选项B" label-width="80px">
+                                  <el-input v-model="questionForm.choiceOptionB" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="选项C" label-width="80px">
+                                  <el-input v-model="questionForm.choiceOptionC" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="选项D" label-width="80px">
+                                  <el-input v-model="questionForm.choiceOptionD" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="正确答案" label-width="80px">
+                                  <el-input v-model="questionForm.choiceAnswer" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="解析" label-width="80px">
+                                  <el-input
+                                          style="width:270px"
+                                          type="textarea"
+                                          :rows="4"
+                                          placeholder="请输入题目解析"
+                                          v-model="questionForm.choiceAnalysis">
+                                        </el-input>
+                                </el-form-item>
+                                <el-form-item label="题目分数" label-width="80px">
+                                  <el-input v-model="questionForm.choiceScore" autocomplete="off" style="width: 80%"></el-input>
+                                </el-form-item>
+                                <el-form-item label="题目分数" label-width="80px">
+                                  <el-rate
+                                    v-model="questionForm.choiceDifficulty"
+                                    :colors="colors">
+                                  </el-rate>
+                                </el-form-item>
                               </el-form>
                               <div slot="footer" class="dialog-footer">
                                 <el-button @click="innerVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="addQuestion">发 布</el-button>
+                                <el-button type="primary" @click="addQuestion">增加到题库</el-button>
                               </div>
                        </el-dialog>
         <hr style="color: #C0C4CC;width: 94%;margin-left: 3%;margin-bottom: 6px">
@@ -152,22 +234,18 @@ var QuestionBank = Vue.extend({
             v-loading="loading"
             element-loading-text="拼命加载中"
             element-loading-spinner="el-icon-loading"
-            :data="tableData.slice((currentPage - 1) * pagesize,currentPage * pagesize)"
+            :data="questionList"
             :default-sort = "{prop: 'question_id', order: 'ascending'}"
-            @sort-change="sortChange"
             style="width: 90%;margin-bottom:20px;margin-left:50px;"
             max-height="1000"
             border
             stripe
           >
-            <el-table-column prop="question_id" label="题目编号" width="150%" align="center" sortable></el-table-column>
-            <el-table-column prop="question_type" label="题型" width="150%" align="center" column-key="question_type" :filters="[{text: '选择题', value: '选择题'}, 
-            {text: '填空题', value: '填空题'}, {text: '判断题', value: '判断题'}, ]"
-        :filter-method="filterHandler"></el-table-column>
-            <el-table-column prop="question_score" label="分值" width="150%" align="center" sortable></el-table-column>
-            <el-table-column prop="question_content" label="题干"  align="center"></el-table-column>
-            <el-table-column prop="question_answer" label="答案" width="190%" align="center"></el-table-column>
-            <el-table-column prop="question_analysis" label="解析" width="200%" align="center" sortable></el-table-column>
+            <el-table-column prop="choiceId" label="题目编号" width="150%" align="center" sortable></el-table-column>
+            <el-table-column prop="choiceScore" label="分值" width="150%" align="center" sortable></el-table-column>
+            <el-table-column prop="choiceQuestion" label="题干"  align="center"></el-table-column>
+            <el-table-column prop="choiceAnswer" label="答案" width="190%" align="center"></el-table-column>
+            <el-table-column prop="choiceAnalysis" label="解析" width="200%" align="center" sortable></el-table-column>
           </el-table>
 
           <el-pagination

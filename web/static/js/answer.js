@@ -52,10 +52,24 @@ var vm = new Vue({
             m: 0,
             //秒
             s: 0,
-            loading:true
+            loading:true,
+            studentNumber:"",
+            courseID:"",
+            classID:"",
+            practiceName:""
         };
     },
     methods: {
+        getQueryVariable(variable)
+        {
+            let query = window.location.search.substring(1);
+            let vars = query.split("&");
+            for (let i=0;i<vars.length;i++) {
+                let pair = vars[i].split("=");
+                if(pair[0] == variable){return pair[1];}
+            }
+            return false;
+        },
         //返回主界面
         goBack() {
             this.$router.push("home")
@@ -173,7 +187,7 @@ var vm = new Vue({
                     if (this.choiceAnswer[i] === choiceRightAnswer)
                         this.score = this.score + this.choiceList[i].choiceScore;
                 }
-                window.location.href = "/SoftwareEngineering/pages/answerFinish.html?"+"totalScore="+this.totalScore+"&"+"score="+this.score
+                window.location.href = "/SoftwareEngineering/pages/answerFinish.html?"+"totalScore="+this.totalScore+"&"+"score="+this.score+"&"+"courseID="+this.courseID+"&"+"classID="+this.classID+"&"+"studentNumber="+this.studentNumber+"&"+"practiceName="+this.practiceName
             }
         },
         savePaper() {
@@ -268,41 +282,46 @@ var vm = new Vue({
         },
     },
     mounted() {
-            axios({
-                url: '/SoftwareEngineering/practiceClient?action=getQuestionList',
-                method: "Post",
-            }).then((resp) => {
-                console.log(resp.data)
-                if (resp.data !== undefined) {
-                    let data = resp.data;
-                    this.problem.choiceProblem = data;
-                    console.log(this.problem.choiceProblem)
-                    this.problem.fillProblem = data.fillBlankQuestionList;
-                    this.problem.judgeProblem = data.judgementQuestionList;
-                    for (let i = 0; i < this.problem.choiceProblem.length; i++) {
-                        console.log(this.problem.choiceProblem[i].choiceOption)
-                        this.problem.choiceProblem[i]["answer"] =
-                            this.problem.choiceProblem[i].choiceOption.split("|");
-                    }
-                    this.choiceList = this.problem.choiceProblem;
-                    this.fillList = this.problem.fillProblem;
-                    this.judgeList = this.problem.judgeProblem;
-                    this.choiceLength = this.problem.choiceProblem.length;
-                    this.fillLength = this.problem.fillProblem.length;
-                    this.judgeLength = this.problem.judgeProblem.length;
-                    this.allLength = this.choiceLength + this.fillLength + this.judgeLength;
-                    for (let i = 0; i < this.fillLength; i++) {
-                        let child = [];
-                        for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {
-                            child.push("");
-                        }
-                        this.fillAnswer.push(child);
-                    }
-                    for (let i = 0; i < this.allLength; i++) {
-                        this.written[i] = false;
-                    }
-                    this.loading=false
+        this.studentNumber=this.getQueryVariable("studentNumber")
+        this.classID=this.getQueryVariable("classID")
+        this.courseID=this.getQueryVariable("courseID")
+        this.practiceName=this.getQueryVariable("practiceName")
+        axios({
+            url: '/SoftwareEngineering/practiceClient?action=initPracticeClient',
+            method: "Post",
+        }).then((resp) => {
+            console.log(resp.data)
+            this.loading=false
+            if (resp.data !== undefined) {
+                let data = resp.data;
+                this.problem.choiceProblem = data;
+                console.log(this.problem.choiceProblem)
+                this.problem.fillProblem = data.fillBlankQuestionList;
+                this.problem.judgeProblem = data.judgementQuestionList;
+                for (let i = 0; i < this.problem.choiceProblem.length; i++) {
+                    console.log(this.problem.choiceProblem[i].choiceOption)
+                    this.problem.choiceProblem[i]["answer"] =
+                        this.problem.choiceProblem[i].choiceOption.split("|");
                 }
-            });
+                this.choiceList = this.problem.choiceProblem;
+                this.fillList = this.problem.fillProblem;
+                this.judgeList = this.problem.judgeProblem;
+                this.choiceLength = this.problem.choiceProblem.length;
+                this.fillLength = this.problem.fillProblem.length;
+                this.judgeLength = this.problem.judgeProblem.length;
+                this.allLength = this.choiceLength + this.fillLength + this.judgeLength;
+                for (let i = 0; i < this.fillLength; i++) {
+                    let child = [];
+                    for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {
+                        child.push("");
+                    }
+                    this.fillAnswer.push(child);
+                }
+                for (let i = 0; i < this.allLength; i++) {
+                    this.written[i] = false;
+                }
+                this.loading=false
+            }
+        })
     },
 })

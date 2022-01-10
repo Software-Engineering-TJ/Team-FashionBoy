@@ -23,14 +23,17 @@ var Practice = Vue.extend({
             this.innerVisible=true
         },
         releasePractice(){
+            let now = new Date()
             axios({
                 url: '/SoftwareEngineering/practiceServer?action=initPracticeServer',
                 method: "Post",
                 data: {
                     courseID: this.courseId,
                     classID: this.classId,
+                    practiceName:this.form.title,
                     size:this.form.amount,
-                    endTime:this.form.endTime
+                    startTime:now.getFullYear() + '-' + ((now.getMonth() + 1) < 10 ? '0' + (now.getMonth() + 1) : (now.getMonth() + 1)) + '-' + (now.getDate() < 10 ? '0' + now.getDate() : now.getDate()) + ' ' + (now.getHours()<10?'0'+  now.getHours(): now.getHours())+ ':' + (now.getMinutes()<10?'0'+now.getMinutes():now.getMinutes()) + ':' + (now.getSeconds()<10?'0'+now.getSeconds():now.getSeconds()),
+                    endTime:this.form.endTime.getFullYear() + '-' + ((this.form.endTime.getMonth() + 1) < 10 ? '0' + (this.form.endTime.getMonth() + 1) : (this.form.endTime.getMonth() + 1)) + '-' + (this.form.endTime.getDate() < 10 ? '0' + this.form.endTime.getDate() : this.form.endTime.getDate()) + ' ' + (this.form.endTime.getHours()<10?'0'+  this.form.endTime.getHours(): this.form.endTime.getHours())+ ':' + (this.form.endTime.getMinutes()<10?'0'+this.form.endTime.getMinutes():this.form.endTime.getMinutes()) + ':' + (this.form.endTime.getSeconds()<10?'0'+this.form.endTime.getSeconds():this.form.endTime.getSeconds())
                 },
             }).then(resp => {
                 axios({
@@ -42,13 +45,23 @@ var Practice = Vue.extend({
                     message: '对抗练习发布成功！',
                     type: 'success'
                 })
+                axios({
+                    url: '/SoftwareEngineering/instructorServlet?action=viewPractice',
+                    method: "Post",
+                    data: {
+                        courseID: this.courseId,
+                        classID: this.classId,
+                    },
+                }).then(resp => {
+                    this.practiceList = resp.data
+                });
                 this.innerVisible = false;
             });
         }
     },
     mounted(){
         axios({
-            url: '/SoftwareEngineering/instructorServlet?action=getPractice',
+            url: '/SoftwareEngineering/instructorServlet?action=viewPractice',
             method: "Post",
             data: {
                 courseID: this.courseId,
@@ -66,15 +79,15 @@ var Practice = Vue.extend({
                               :visible.sync="innerVisible"
                               append-to-body>
                               <el-form :model="form">
-                              <el-form-item label="对抗练习标题" label-width="80px">
-                                  <el-input v-model="form.title" autocomplete="off" style="width: 80%"></el-input>
+                              <el-form-item label="对抗练习标题" label-width="100px">
+                                  <el-input v-model="form.title" placeholder="填写标题" autocomplete="off" style="width: 75%"></el-input>
                                 </el-form-item>
                                 <el-form-item label="题目数量" label-width="80px">
                                   <el-input v-model="form.amount" autocomplete="off" style="width: 80%"></el-input>
                                 </el-form-item>
-                                <el-form-item prop="form.endTime">
-                                    <el-date-picker type="date" placeholder="截止时间" v-model="form.endTime"
-                                            style="width: 100%;"></el-date-picker>
+                                <el-form-item label="截止时间" label-width="80px">
+                                    <el-date-picker type="datetime" placeholder="填写截止时间" v-model="form.endTime"
+                                            style="width: 80%;"></el-date-picker>
                                 </el-form-item>
                               </el-form>
                               <div slot="footer" class="dialog-footer">

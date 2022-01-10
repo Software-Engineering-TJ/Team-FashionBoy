@@ -132,7 +132,7 @@ public class PracticeServer extends BaseServlet{
                             currentGroupNumber = (connectAmount - 1) / totalAmountEachGroup + 1; //从1开始
                             broadcastToEachClient(String.valueOf(currentGroupNumber));
                             //计算组内连接数
-                            connectAmountEachGroup = connectAmount % totalAmountEachGroup;
+                            connectAmountEachGroup = (connectAmount - 1) % totalAmountEachGroup + 1;
                             System.out.println(connectAmount);
                         }
                         if (key.isReadable()) {//通道发送read事件，即通道是可读的状态
@@ -142,7 +142,7 @@ public class PracticeServer extends BaseServlet{
                         if (connectAmountEachGroup == totalAmountEachGroup && !isIssued) {
                             System.out.println("currentGroupNumber:" + currentGroupNumber);
                             //发题
-                            broadcastToEachClient(currentGroupNumber + "group:" );
+//                            broadcastToEachClient(currentGroupNumber + "group:" );
                             for (ChoiceQuestion choiceQuestion : choiceQuestionList) {
                                 String question = choiceQuestion.toString();
                                 broadcastToEachClient(question);
@@ -236,5 +236,27 @@ public class PracticeServer extends BaseServlet{
             }
         }
     }
+
+    //
+//    private void assignGroupNumber(String msg, SocketChannel self) throws IOException {
+//
+//        System.out.println("服务器转发消息中...");
+//        //遍历所有注册到 selector 上的 SocketChannel,并排除 self
+//        for (SelectionKey key : selector.keys()) {
+//            //通过 key 取出对应的 SocketChannel
+//            Channel targetChannel = key.channel();
+//            //找到自己
+//            if (targetChannel instanceof SocketChannel && targetChannel == self) {
+//                //转型
+//                SocketChannel dest = (SocketChannel) targetChannel;
+//                //将 msg 存储到 buffer
+//                ByteBuffer buffer = ByteBuffer.wrap(msg.getBytes());
+//                //将 buffer 的数据写入通道
+//                dest.write(buffer);
+//                break;
+//            }
+//        }
+//    }
+
 
 }

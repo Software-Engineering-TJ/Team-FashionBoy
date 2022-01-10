@@ -2,6 +2,7 @@ package dao.inter;
 
 import pojo.PracticeScore;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface PracticeScoreDao {
@@ -10,5 +11,5 @@ public interface PracticeScoreDao {
     //找某次练习中，某个学生的成绩
     PracticeScore QueryPracticeScoreByCourseIDAndClassIDAndPracticeNameAndStudentNumber(String courseID,String classID,String practiceName,String studentNumber);
     //写入对抗联系成绩
-    int insertPracticeScore(String courseID, String classID, String practiceName, String studentNumber, double score, String time, int groupNumber);
+    int insertPracticeScore(String courseID, String classID, String practiceName, String studentNumber, double score, Timestamp time, int groupNumber);
 }
