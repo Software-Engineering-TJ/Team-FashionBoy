@@ -17,4 +17,11 @@ public class PracticeScoreDaoImpl extends BaseDao implements PracticeScoreDao {
         String sql = "select * from practicescore where (courseID = ? and classID = ? and practiceName = ? and studentNumber = ?)";
         return queryForOne(PracticeScore.class,sql,courseID,classID,practiceName,studentNumber);
     }
+
+    @Override
+    public int insertPracticeScore(String courseID, String classID, String practiceName, String studentNumber, double score, String time, int groupNumber) {
+        String sql = "insert into practicescore(`courseID`,`classID`,`practiceName`,`studentNumber`,`individualScore`,`individualTime`,`groupNumber`)" +
+                " values (?,?,?,?,?,?,?)";
+        return update(sql,courseID,classID,practiceName,studentNumber,score,time,groupNumber);
+    }
 }

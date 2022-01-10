@@ -2,6 +2,8 @@ package web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
+import dao.impl.PracticeScoreDaoImpl;
+import dao.inter.PracticeScoreDao;
 import pojo.ChoiceQuestion;
 import utils.RequestJsonUtils;
 
@@ -26,6 +28,8 @@ public class PracticeClient extends BaseServlet {
     private String username;
     private String info;
     private List<ChoiceQuestion> choiceQuestionList;
+    private int groupNumber;//组号
+    private PracticeScoreDao practiceScoreDao = new PracticeScoreDaoImpl();
 
     //构造器,完成初始化工作
     public PracticeClient() throws IOException {
@@ -44,26 +48,35 @@ public class PracticeClient extends BaseServlet {
         System.out.println(username + " is ok...");
     }
 
-    //servlet，获取学生填写的答案
-    protected void setInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void initPracticeClient(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         String reqJson = RequestJsonUtils.getJson(req);
         Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
         }.getType());
 
-        info = reqObject.get("answer");
-        System.out.println(info);
-        sendInfo();
+        getGroupNumberFromServer();//获取组号groupNumber
     }
+
+//    //servlet，获取学生填写的答案
+//    protected void setInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setContentType("application/json");
+//        String reqJson = RequestJsonUtils.getJson(req);
+//        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+//        }.getType());
+//
+//        info = reqObject.get("answer");
+//        System.out.println(info);
+//        sendInfo();
+//    }
 
     //servlet，将题目列表传给前端
     protected void getQuestionList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String choiceQuestionListOfString = readInfo();
         String[] eachQuestion = choiceQuestionListOfString.split(" ");
         for (String s : eachQuestion) {
-            if (s == null || "".equals(s) || s.equals("")) {
-                break;
-            }
+//            if (s == null || "".equals(s) || s.equals("")) {
+//                break;
+//            }
             String[] values = s.split(",");
             if (values.length == 1) {
                 break;
@@ -93,14 +106,58 @@ public class PracticeClient extends BaseServlet {
         resp.getWriter().write(json);
     }
 
+    protected void getPracticeInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
 
-    //交给服务器批改
-    public void sendInfo() {
+        double score = Double.parseDouble(reqObject.get("score"));
+        String finishTime = reqObject.get("finishTime");
+        String studentNumber = reqObject.get("studentNumber");
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+        String practiceName = reqObject.get("practiceName"); //待定
 
-        info = username + " says: " + info;
+        practiceScoreDao.insertPracticeScore(courseID, classID, practiceName, studentNumber, score, finishTime, groupNumber);
+    }
+
+//    //交给服务器批改
+//    public void sendInfo() {
+//
+//        info = username + " says: " + info;
+//        try {
+//            socketChannel.write(ByteBuffer.wrap(info.getBytes()));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    //首先获取从服务器分配的组号
+    public void getGroupNumberFromServer() {
         try {
-            socketChannel.write(ByteBuffer.wrap(info.getBytes()));
-        } catch (IOException e) {
+            int readChannels = selector.select();
+            if (readChannels > 0) {//有可以用的通道
+                Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+                while (iterator.hasNext()) {
+                    SelectionKey key = iterator.next();
+                    if (key.isReadable()) {
+                        //得到相关的通道
+                        SocketChannel sc = (SocketChannel) key.channel();
+                        //得到一个 Buffer
+                        ByteBuffer buffer = ByteBuffer.allocate(1024);
+                        //读取
+                        sc.read(buffer);
+                        //把读到的缓冲区的数据转成字符串
+                        String msg = new String(buffer.array());
+                        groupNumber = Integer.parseInt(msg);
+                    }
+                }
+                iterator.remove(); //删除当前的 selectionKey,防止重复操作
+            } else {
+                //System.out.println("没有可以用的通道...");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -122,8 +179,16 @@ public class PracticeClient extends BaseServlet {
                         sc.read(buffer);
                         //把读到的缓冲区的数据转成字符串
                         String msg = new String(buffer.array());
-                        System.out.println(msg.trim());
-                        return msg;
+                        String[] msgArray = msg.split("group:");
+                        String groupNumberFromServer = msgArray[0];
+
+                        //如果服务器发放的组号与本客户端的组号匹配，则发放题目
+                        if (Objects.equals(groupNumberFromServer, String.valueOf(groupNumber))) {
+                            String question = msgArray[1];
+                            System.out.println(question);
+                            return question;
+                        }
+
                     }
                 }
                 iterator.remove(); //删除当前的 selectionKey,防止重复操作
