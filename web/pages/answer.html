@@ -36,9 +36,9 @@
           z-index: 20 !important;
         "
             >
-                <el-col :span="2"><h2 style="margin: 18px 40px 18px 0">FIGHTING！</h2></el-col>
+                <el-col :span="2"><h2 style="margin: 18px 40px 18px 0"> FIGHTING！</h2></el-col>
                 <el-col :span="4" :offset="2"
-                ><h2 style="margin: 18px 0 18px 0">一起对抗练习，获得好成绩！</h2></el-col
+                ><h2 style="margin: 18px 0 18px 0">对抗练习，获得好成绩！</h2></el-col
                 >
                 <el-col :span="2" :offset="12">
                     <div style="line-height: 60px">
@@ -380,22 +380,6 @@
           "
                 >
                     <div class="my-timer">{{ h + ":" + m + ":" + s }}</div>
-                </div>
-            </el-row>
-            <el-row>
-                <div>当前进度</div>
-                <div
-                        style="
-            border-bottom: 1px rgb(222, 222, 222) solid;
-            margin-bottom: 5px;
-            padding-bottom: 15px;
-          "
-                >
-                    <div class="my-progress">{{ finished + " / " + allLength }}</div>
-                    <el-progress
-                            :show-text="false"
-                            :percentage="(finished / allLength) * 100"
-                    ></el-progress>
                 </div>
             </el-row>
         </el-card>

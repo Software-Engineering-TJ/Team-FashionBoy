@@ -51,6 +51,7 @@ var Answer = Vue.extend({
             m: 0,
             //秒
             s: 0,
+            nPercentage:0.0
         };
     },
     methods: {
@@ -59,37 +60,7 @@ var Answer = Vue.extend({
             this.$router.push("home")
         },
         setWritten(val, index) {
-            let fillIndex = index - this.choiceLength;
-            if (val !== null && val !== "") {
-                if (this.finished < this.allLength && !this.written[index]) {
-                    if (
-                        index > this.choiceLength - 1 &&
-                        index < this.choiceLength + this.fillLength - 1
-                    ) {
-                        for (let i = 0; i < this.fillList[fillIndex].fillSpaceNumber; i++) {
-                            if (this.fillAnswer[fillIndex][i] === "") {
-                                return;
-                            }
-                        }
-                    }
-                    this.finished++;
-                }
-                this.written[index] = true;
-                this.$forceUpdate();
-            } else if (
-                this.written[index] &&
-                index > this.choiceLength - 1 &&
-                index <= this.choiceLength + this.fillLength - 1
-            ) {
-                for (let i = 0; i < this.fillList[fillIndex].fillSpaceNumber; i++) {
-                    if (this.fillAnswer[fillIndex][i] === "") {
-                        this.finished--;
-                        this.written[index] = false;
-                        this.$forceUpdate();
-                        return;
-                    }
-                }
-            }
+            this.finished++;
         },
         setSign(index) {
             this.tag[index] = this.tag[index] !== true;
@@ -101,9 +72,9 @@ var Answer = Vue.extend({
             let date = new Date();
             let now = date.getTime();
             //设置截止时间
-            let endDate = new Date(
-                this.$route.query.test_date + " " + this.endTime + ":00"
-            );
+            let endDate = new Date();
+            let min=endDate.getMinutes();
+            endDate.setMinutes(min+10);
             let end = endDate.getTime();
             //时间差
             let leftTime = end - now;
@@ -300,6 +271,14 @@ var Answer = Vue.extend({
             });
         },
     },
+    computed: {
+        myPercentage: function () {
+            let oriPercentage = this.finished / (this.allLength) * 100;
+            console.log(oriPercentage)
+            this.nPercentage=oriPercentage
+            return Number.parseFloat(oriPercentage.toString().substr(0, 5));
+        }
+    },
     mounted() {
         this.test_id = this.$route.query.test_id;
         this.endTime = this.$route.query.test_endtime;
@@ -326,7 +305,7 @@ var Answer = Vue.extend({
                     this.choiceLength = this.problem.choiceProblem.length;
                     this.fillLength = this.problem.fillProblem.length;
                     this.judgeLength = this.problem.judgeProblem.length;
-                    this.allLength = this.choiceLength + this.fillLength + this.judgeLength;
+                    this.allLength = this.choiceLength;
                     for (let i = 0; i < this.fillLength; i++) {
                         let child = [];
                         for (let j = 0; j < this.fillList[i].fillSpaceNumber; j++) {

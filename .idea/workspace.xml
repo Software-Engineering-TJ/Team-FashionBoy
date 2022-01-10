@@ -9,19 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="课程反馈对接完毕">
+    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/PracticeScoreDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/PracticeScoreDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/inter/PracticeScoreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/inter/PracticeScoreDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/PracticeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/PracticeClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web/PracticeServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/web/PracticeServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/pages/answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/answer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pages/answerFinish.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/answerFinish.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/answer.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/answer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/answerFinish.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/answerFinish.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/questionBank.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/questionBank.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/answer.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/answer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -490,7 +481,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641777843158</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="完成">
+      <created>1641798675909</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1641798675909</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,7 +541,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="StudentServlet的getTakes实现" />
     <MESSAGE value="教师导航页面基本框架搭建完成" />
     <MESSAGE value="更新开设课程，课程概况，发布实验页面" />
     <MESSAGE value="新增的API大部分接完了，但出现了一些问题，可以去API需求文档中查看" />
@@ -568,7 +565,8 @@
     <MESSAGE value="考勤模块完成" />
     <MESSAGE value="修复开课bug" />
     <MESSAGE value="课程反馈对接完毕" />
-    <option name="LAST_COMMIT_MESSAGE" value="课程反馈对接完毕" />
+    <MESSAGE value="完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
