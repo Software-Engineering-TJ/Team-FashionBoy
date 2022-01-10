@@ -36,15 +36,19 @@ var Practice = Vue.extend({
                 axios({
                     url: '/SoftwareEngineering/practiceServer?action=startServer',
                     method: "Post",
-                }).then(resp => {
-                    this.innerVisible = false;
-                });
+                }).then(resp => {});
+                this.$message({
+                    showClose: true,
+                    message: '对抗练习发布成功！',
+                    type: 'success'
+                })
+                this.innerVisible = false;
             });
         }
     },
     mounted(){
         axios({
-            url: '/SoftwareEngineering/practiceServer?action=getPracticeServer',
+            url: '/SoftwareEngineering/instructorServlet?action=getPractice',
             method: "Post",
             data: {
                 courseID: this.courseId,

@@ -1,5 +1,5 @@
 var Grade = Vue.extend({
-    props: ['noticeList','gradeWeightList','experimentNames','experimentScores','attendanceList'],
+    props: ['noticeList','gradeWeightList','experimentNames','experimentScores','attendanceList','rankList','classId', 'courseId', 'practiceList','studentNumber'],
     data() {
         return {
             scores:[],
@@ -21,7 +21,11 @@ var Grade = Vue.extend({
                     date:'2021-12-23-12:21',
                     situation: '出勤'
                 },
-                ]
+                ],
+            expScore:0.0,
+            practiceScore:0.0,
+            attendanceScore:0.0,
+            totalScore:0.0
         };
     },
     methods: {
@@ -167,7 +171,7 @@ var Grade = Vue.extend({
                         type: 'line',
                         yAxisIndex: 1,
                         //smooth: true,
-                        data: [200, 80, 5]
+                        data: this.rankList
                     },
                 ]
             });
@@ -178,14 +182,28 @@ var Grade = Vue.extend({
         this.names=this.$props.experimentNames
         this.drawLine()
         this.drawPie()
+        axios({
+            url: '/SoftwareEngineering/studentServlet?action=getTotalGrade',
+            method: "Post",
+            data: {
+                courseID: this.courseId,
+                classID: this.classId,
+                studentNumber:this.studentNumber
+            },
+        }).then(resp => {
+            this.expScore = resp.data.expScore
+            this.attendanceScore = resp.data.attendScore
+            this.practiceScore = resp.data.practiceScore
+            this.totalScore = resp.data.totalScore
+        });
     },
     template: `
         <div id="app" style="height: 550px;overflow: auto;padding: 30px 0 70px 0">
                 <div style="width: 90%;padding-left: 50px"><el-divider content-position="right"><h3>模块占比</h3></el-divider></div>
                 <div id="myChart1" :style="{width: '83%', height: '350px', margin: '0 0 0 70px',padding: '30px 0 0 0'}"></div>
-                <div style="width: 90%;padding-left: 50px"><el-divider content-position="right"><h3>实验项目</h3></el-divider></div>
+                <div style="width: 90%;padding-left: 50px"><el-divider content-position="right"><h3>实验项目总成绩：{{expScore}}</h3></el-divider></div>
                <div id="myChart" :style="{width: '83%', height: '350px', margin: '0 0 0 70px',padding: '30px 0 0 0'}"></div>
-               <div style="width: 90%;padding:50px 0 0 50px"><el-divider content-position="right"><h3>考勤</h3></el-divider></div>
+               <div style="width: 90%;padding:50px 0 0 50px"><el-divider content-position="right"><h3>考勤总成绩：{{attendanceScore}}</h3></el-divider></div>
                <el-row>
                     <el-col :span="20" :offset="2">
                         <el-table
@@ -206,13 +224,13 @@ var Grade = Vue.extend({
                         </el-table>
                     </el-col>
                 </el-row>
-                <div style="width: 90%;padding:50px 0 0 50px"><el-divider content-position="right"><h3>对抗练习</h3></el-divider></div>
+                <div style="width: 90%;padding:50px 0 0 50px"><el-divider content-position="right"><h3>对抗练习总成绩：{{practiceScore}}</h3></el-divider></div>
                 <el-row>
                     <el-col :span="4" :offset="16">
                         <div><h2 style="display: inline-block">您的总成绩为:</h2></div>
                     </el-col>
                     <el-col :span="2" :offset="20">
-                        <div><h1  style="color: green;display: inline-block">40</h1></div>
+                        <div><h1  style="color: green;display: inline-block">{{totalScore}}</h1></div>
                     </el-col>
                 </el-row>
         </div>

@@ -9,11 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="修复开课bug">
+    <list default="true" id="5b5bf4c6-43f7-4a12-9436-845fd68d53fa" name="变更" comment="快写完了">
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/courseFeedBack.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/questionBank.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CounterDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/impl/CourseDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Impl/InstructorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/answer.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/answer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/pages/teacher/tIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/css/teacher/tIndex.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/answer.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/answer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/grade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/student/subComponents/sPractice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/course.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/static/js/teacher/subComponents/practice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -645,6 +653,14 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/web/InstructorServlet.java</url>
+          <line>595</line>
+          <properties class="web.InstructorServlet" method="viewReflection">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="102" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

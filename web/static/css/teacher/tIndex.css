@@ -11,6 +11,75 @@
     font-size: small;
 }
 
+.buteu1{
+    margin-top:-30px;
+    position:absolute;
+    left:130px;
+}
+
+.buteu2{
+    margin-top:-30px;
+    position:absolute;
+    left:230px;
+}
+
+.buteu3{
+    position:fixed;
+    left:1360px;
+    top:80px;
+    z-index: 1;
+}
+
+/* 新增员工按钮 */
+.addEmployee{
+    position:absolute;
+    right:50px;
+    top:186px;
+}
+
+/* 查询员工按钮 */
+.searchEmployee{
+    position:absolute;
+    left:250px;
+    top:186px;
+}
+
+/* 查询员工校验 */
+.search_hintText{
+    position:absolute;
+    left:640px;
+    top:-12px;
+    width:200px;
+    color: red;
+}
+
+/* 员工桌面 */
+.questionbankTable{
+    margin-top:60px;
+}
+
+/* 修改员工提示 */
+.emp_hint_rewrite{
+    position:absolute;
+    left:0px;
+    width:150px;
+    top:30px;
+    color: red;
+}
+
+/* 新增员工 */
+.emp_add_but1{
+    position:absolute;
+    left:275px;
+    top:380px;
+}
+
+.emp_add_but2{
+    position:absolute;
+    left:170px;
+    top:380px;
+}
+
 .my-bg{
     color: black;
     min-height: 50px;
@@ -30,6 +99,7 @@
     border-radius: 4px;
     min-height: 36px;
 }
+
 .el-table .warning-row {
     background: oldlace;
 }

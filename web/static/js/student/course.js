@@ -12,7 +12,13 @@ var Course = Vue.extend({
             experimentNames: [],
             experimentScores: [],
             attendanceList: [],
-            experimentList: []
+            experimentList: [],
+            rankList:[],
+            formLabelWidth: '120px',
+            feedbackVisible:false,
+            feedbackForm:{
+                content:""
+            }
         }
     },
     methods: {
@@ -65,6 +71,9 @@ var Course = Vue.extend({
                 case "9":
                     this.getReportDesc()
                     this.changeComponents = "ExperimentalReport"
+                    break;
+                case "10":
+                    this.feedbackVisible = true
                     break;
                 default:
                     break;
@@ -184,8 +193,9 @@ var Course = Vue.extend({
                 },
             }).then(resp => {
                 for (let index in resp.data) {
-                    this.experimentScores.push(resp.data[index].score)
-                    this.experimentNames.push(resp.data[index].expname)
+                    this.experimentScores.push(resp.data[index].grade)
+                    this.experimentNames.push(resp.data[index].name)
+                    this.rankList.push(resp.data[index].ranking)
                 }
                 axios({
                     url: '/SoftwareEngineering/userServlet?action=getAttendanceInfoStu',
@@ -231,6 +241,36 @@ var Course = Vue.extend({
                 this.changeComponents = "SExperiment"
             })
         },
+        submitFeedBack(){
+            axios({
+                url: '/SoftwareEngineering/studentServlet?action=writeReflection',
+                method: "Post",
+                data: {
+                    courseID: this.courseId,
+                    classID: this.courseId,
+                    studentNumber:this.studentNumber,
+                    content:this.feedbackForm.content
+                },
+            }).then(resp => {
+                if (resp.data === "反馈成功"){
+                    this.$message({
+                        showClose: true,
+                        message: '反馈成功！',
+                        type: 'success'
+                    })
+                    this.feedbackVisible=false
+                }else {
+                    this.$message({
+                        showClose: true,
+                        message: '反馈失败！请重试！',
+                        type: 'error'
+                    })
+                }
+            })
+        },
+        quitFeedBack(){
+            this.feedbackVisible=false
+        }
     },
     components: {
         // 公告板组件
@@ -256,11 +296,29 @@ var Course = Vue.extend({
         // 助教批改辅助页面
         EpReportDetail,
         // 对抗练习
-        SPractice
+        SPractice,
     },
     template: `
     <el-row class="tac">
-    
+        <el-dialog title="填写课程学习情况反馈" :visible.sync="feedbackVisible">
+        <el-container>
+            <el-form :model="feedbackForm" inline>
+                <el-form-item label="课程反馈：" :label-width="formLabelWidth">
+                    <el-input
+                      style="width: 540px"
+                      type="textarea"
+                      :rows="4"
+                      placeholder="请输入您最近的学习情况"
+                      v-model="feedbackForm.content">
+                    </el-input>
+                </el-form-item>
+            </el-form>
+        </el-container>
+        <div slot="footer" class="dialog-footer">
+                <el-button @click="quitFeedBack">取 消</el-button>
+                <el-button type="primary" @click="submitFeedBack">提交课程反馈</el-button>
+             </div>
+        </el-dialog>
         <!-- 页头开始 -->
         <el-row>
             <el-col>        
@@ -311,6 +369,9 @@ var Course = Vue.extend({
                         <el-menu-item index="9" v-if="duty==='助教'?true:false">
                             <span slot="title">批改实验报告</span>
                         </el-menu-item>
+                        <el-menu-item index="10">
+                            <span slot="title">课程反馈</span>
+                        </el-menu-item>
                     </el-menu>
                 </div>
             </el-col>
@@ -341,6 +402,7 @@ var Course = Vue.extend({
                         :experiment-scores="experimentScores"
                         :grade-weight-list="gradeWeightList"
                         :duty="duty"
+                        :rank-list="rankList"
                         @click-report="clickReport"
                         @click-report-s="clickReportS"
                         @get-attendance-info-stu="getAttendanceInfoStu"

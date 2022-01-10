@@ -49,12 +49,18 @@ var Course = Vue.extend({
                     this.changeComponents = "Practice"
                     break;
                 case "6":
+                    this.changeComponents = "QuestionBank"
+                    break;
+                case "7":
                     this.getAttendanceInfo()
                     this.changeComponents = "Attendance"
                     break;
-                case "7":
+                case "8":
                     this.getClassInfo()
                     this.changeComponents = "ClassInfo"
+                    break;
+                case "9":
+                    this.changeComponents = "CourseFeedBack"
                     break;
                 default:
                     break;
@@ -205,7 +211,11 @@ var Course = Vue.extend({
         // 班级信息组件
         ClassInfo,
         // 对抗练习模块
-        Practice
+        Practice,
+        // 对抗练习题库
+        QuestionBank,
+        // 课程反馈
+        CourseFeedBack
     },
     template: `
     <el-row class="tac">
@@ -249,13 +259,16 @@ var Course = Vue.extend({
                             <span slot="title">对抗练习</span>
                         </el-menu-item>
                         <el-menu-item index="6">
-                            <span slot="title">考勤</span>
+                            <span slot="title">题库管理</span>
                         </el-menu-item>
                         <el-menu-item index="7">
-                            <span slot="title">班级信息</span>
+                            <span slot="title">考勤</span>
                         </el-menu-item>
                         <el-menu-item index="8">
-                            <span slot="title">成绩导入</span>
+                            <span slot="title">班级信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="9">
+                            <span slot="title">课程反馈</span>
                         </el-menu-item>
                     </el-menu>
                 </div>

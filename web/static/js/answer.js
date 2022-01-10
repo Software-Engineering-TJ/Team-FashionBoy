@@ -52,6 +52,7 @@ var vm = new Vue({
             m: 0,
             //秒
             s: 0,
+            loading:true
         };
     },
     methods: {
@@ -300,6 +301,7 @@ var vm = new Vue({
                     for (let i = 0; i < this.allLength; i++) {
                         this.written[i] = false;
                     }
+                    this.loading=false
                 }
             });
     },
