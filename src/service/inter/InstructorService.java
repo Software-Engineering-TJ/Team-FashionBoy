@@ -65,4 +65,7 @@ public interface InstructorService {
     List<Instructor> getAllInstructors();
     //获取某班级的所有的评论
     List<Reflection> getAllReflection(String courseID,String classID);
+    //获取某班的对抗练习
+    List<Practice> getPracticeListOfSection(String courseID,String classID);
+
 }

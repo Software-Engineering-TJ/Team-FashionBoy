@@ -26,4 +26,15 @@ public class ChoiceQuestionDaoImpl extends BaseDao implements ChoiceQuestionDao 
         return c.getCount();
     }
 
+    @Override
+    public int addQuestion(String choiceQuestion, String choiceOption, int choiceDifficulty, String choiceAnswer, String choiceAnalysis, double choiceScore) {
+        String sql = "insert into choicequestion(choiceQuestion,choiceOption,choiceDifficulty,choiceAnswer,choiceAnalysis,choiceScore) value(?,?,?,?,?,?)";
+        return update(sql, choiceQuestion, choiceOption,  choiceDifficulty, choiceAnswer, choiceAnalysis, choiceScore);
+    }
+
+    @Override
+    public List<ChoiceQuestion> getAllQuestions() {
+        String sql = "select * from choicequestion";
+        return queryForList(ChoiceQuestion.class,sql);
+    }
 }

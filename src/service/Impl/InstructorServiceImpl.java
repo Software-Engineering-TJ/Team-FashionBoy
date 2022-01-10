@@ -37,6 +37,7 @@ public class InstructorServiceImpl implements InstructorService {
     private StudentDao studentDao = new StudentDaoImpl();
     private CounterDao counterDao = new CounterDaoImpl();
     private ReflectionDao reflectionDao = new ReflectionDaoImpl();
+    private PracticeDao practiceDao = new PracticeDaoImpl();
 
     @Override
     public Section getSection(String courseID, String classID) {
@@ -332,6 +333,11 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public List<Reflection> getAllReflection(String courseID, String classID) {
         return reflectionDao.QueryReflectionListByCourseIDAndClassID(courseID,classID);
+    }
+
+    @Override
+    public List<Practice> getPracticeListOfSection(String courseID, String classID) {
+        return practiceDao.QueryPracticesByCourseIDAndClassID(courseID,classID);
     }
 
 }

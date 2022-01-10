@@ -3,6 +3,9 @@ package web;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
 //import com.mysql.cj.util.DnsSrv;
+import dao.impl.ChoiceQuestionDaoImpl;
+import dao.inter.ChoiceQuestionDao;
+import dao.inter.PracticeDao;
 import pojo.Attend;
 import pojo.ExpScore;
 import pojo.Student;
@@ -17,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.alibaba.fastjson.annotation.JSONType;
@@ -620,5 +625,101 @@ public class InstructorServlet extends BaseServlet{
         }
 
         resp.getWriter().write(gson.toJson(reflectionInfoList));
+    }
+
+    /**
+     * 教师查看对抗练习
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void viewPractice(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, String> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        String courseID = reqObject.get("courseID");
+        String classID = reqObject.get("classID");
+
+        List<Practice> practiceList = instructorService.getPracticeListOfSection(courseID,classID);
+
+        List<Map<String,Object>> practiceInfoList = new ArrayList<>();
+
+        if(practiceList != null){
+            for(Practice practice: practiceList){
+                Map<String, Object> map = new HashMap<>();
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                map.put("practiceName",practice.getPracticeName());
+                map.put("startTime",df.format(practice.getStartTime()));
+                map.put("endTime",df.format(practice.getEndTime()));
+                //当前时间
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                if(now.before(practice.getEndTime())){
+                    map.put("status","正在进行");
+                }else if(now.after(practice.getEndTime())){
+                    map.put("status","已结束");
+                }else{
+                    map.put("status","尚未开始");
+                }
+                practiceInfoList.add(map);
+            }
+        }
+
+        resp.getWriter().write(gson.toJson(practiceInfoList));
+    }
+
+    /**
+     * 教师添加对抗练习题目
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void addQuestion(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, Object>>() {
+        }.getType());
+
+        String choiceQuestion = (String) reqObject.get("choiceQuestion");
+        String choiceOption = (String) reqObject.get("choiceOption");
+        int choiceDifficulty = ((Double)reqObject.get("choiceDifficulty")).intValue();
+        String choiceAnswer = (String) reqObject.get("choiceAnswer");
+        String choiceAnalysis = (String) reqObject.get("choiceAnalysis");
+        double choiceScore = (Double) reqObject.get("choiceScore");
+
+        ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
+        int result = choiceQuestionDao.addQuestion(choiceQuestion,choiceOption,choiceDifficulty,choiceAnswer,choiceAnalysis,choiceScore);
+        if(result == 1){
+            resp.getWriter().write("添加成功");
+        }else{
+            resp.getWriter().write("添加失败");
+        }
+    }
+
+    /**
+     * 教师查看题库
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void getQuestion(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException
+    {
+        resp.setContentType("application/json");
+        String reqJson = RequestJsonUtils.getJson(req);
+        Map<String, Object> reqObject = gson.fromJson(reqJson, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        ChoiceQuestionDao choiceQuestionDao = new ChoiceQuestionDaoImpl();
+        List<ChoiceQuestion> choiceQuestionList = choiceQuestionDao.getAllQuestions();
+        if(choiceQuestionList == null){
+            choiceQuestionList = new ArrayList<>();
+        }
+
+        resp.getWriter().write(gson.toJson(choiceQuestionList));
     }
 }
