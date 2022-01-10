@@ -48,12 +48,14 @@ public class AdministrationServiceImpl implements AdministrationService {
     }
 
     @Override
-    public void aduitCourse(String courseID, String result) {
+    public void
+    aduitCourse(String courseID, String result) {
         if("yes".equals(result)){
             courseDao.UpdateFlagOfCourseByCourseID(courseID,1);
         }else{
             //1.先删试验大纲
             courseExpDao.DeleteCourseExpByCourseID(courseID);
+            //2.再删课程
             courseDao.DeleteCourseByCourseID(courseID);
         }
     }
@@ -120,6 +122,10 @@ public class AdministrationServiceImpl implements AdministrationService {
             information.setClassID(takes.getClassID());
             //确定课程名字和责任教师名
             Course course = courseDao.QueryCourseByCourseID(takes.getCourseID());
+            if(course.getFlag()==-1){
+                //课程无效
+                continue;
+            }
             information.setTitle(course.getTitle());
             Instructor instructor = instructorDao.QueryInstructorByInstructorNumber(course.getInstructorNumber());
             information.setChargingTeacher(instructor.getName());
@@ -162,12 +168,18 @@ public class AdministrationServiceImpl implements AdministrationService {
         while(iterator.hasNext()){
             Teaches teaches = iterator.next();
             SectionInformation sectionInformation = new SectionInformation();
+            //获取课程名称
+            Course course = courseDao.QueryCourseByCourseID(teaches.getCourseID());
+            if(course.getFlag()==-1){
+                //课程无效
+                continue;
+            }
+            sectionInformation.setTitle(course.getTitle());
             //获取班级号和课程号
             sectionInformation.setCourseID(teaches.getCourseID());
             sectionInformation.setClassID(teaches.getClassID());
-            //获取课程名称
-            Course course = courseDao.QueryCourseByCourseID(teaches.getCourseID());
-            sectionInformation.setTitle(course.getTitle());
+
+
             //获取任课身份
             if(course.getInstructorNumber().equals(instructorNumber)){
                 sectionInformation.setDuty("教师and责任教师");
@@ -186,6 +198,10 @@ public class AdministrationServiceImpl implements AdministrationService {
         List<Course> courseList = courseDao.QueryCourseByInstructorNumber(instructorNumber);
         if(courseList != null){
             for(Course course : courseList){
+                if(course.getFlag()==-1){
+                    //课程已无效
+                    continue;
+                }
                 String courseID = course.getCourseID();
                 boolean flag = true;
                 if(teachesList != null){

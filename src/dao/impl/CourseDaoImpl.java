@@ -15,7 +15,7 @@ import java.util.List;
 public class CourseDaoImpl extends BaseDao implements CourseDao {
     @Override
     public Course QueryCourseByCourseID(String courseID) {
-        String sql = "select `courseID`,`title`,`instructorNumber` from course where courseID = ?";
+        String sql = "select * from course where courseID = ?";
         return queryForOne(Course.class,sql,courseID);
     }
 

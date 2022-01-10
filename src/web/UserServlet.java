@@ -2,6 +2,8 @@ package web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.reflect.TypeToken;
+import dao.impl.CourseDaoImpl;
+import dao.inter.CourseDao;
 import pojo.*;
 
 import pojo.logicEntity.Attendance;
@@ -612,6 +614,12 @@ public class UserServlet extends BaseServlet {
                         Teaches teaches = (Teaches) sectionList.get(i);
                         courseID = teaches.getCourseID();
                         classID = teaches.getClassID();
+                    }
+                    CourseDao courseDao = new CourseDaoImpl();
+                    Course course = courseDao.QueryCourseByCourseID(courseID);
+                    if(course.getFlag()==-1){
+                        //课程已无效
+                        continue;
                     }
                     //该课程下的试验任务
                     List<Experiment> experimentList = userService.getExperimentListByCourseIDAndClassID(courseID, classID);

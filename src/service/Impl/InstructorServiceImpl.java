@@ -57,6 +57,10 @@ public class InstructorServiceImpl implements InstructorService {
             sectionInfo.put("classID", t.getClassID());
             //获取课程名
             Course course = courseDao.QueryCourseByCourseID(t.getCourseID());
+            if(course.getFlag()==-1){
+                //课程无效
+                continue;
+            }
             sectionInfo.put("title", course.getTitle());
             //获取duty信息
             String duty = "教师";
